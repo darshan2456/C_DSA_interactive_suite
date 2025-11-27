@@ -1,9 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
-typedef struct Node {
-    int data;
-    struct Node* next;
-} Node;
+#include "linkedlist.h"
+
 void printstack(Node* head){
     Node* temp=head;
     while (temp!=NULL){
@@ -52,14 +50,3 @@ void deleteAtEnd(Node** head_ref){
 }
 
 
-int main(){
-    Node* head=NULL;
-    insertAtEnd(&head,46);
-    insertAtEnd(&head,87);
-    insertAtEnd(&head,65);
-    printstack(head);
-    deleteAtEnd(&head);
-    printstack(head);
-    
-    return 0;
-}
