@@ -24,7 +24,7 @@ void insertAtEnd(Node **head_ref,int value){
 
 void deleteAtBeginning(Node** head_ref){
     if(*head_ref==NULL){
-        printf("cannot perform operation as list is empty");
+        printf("\ncannot perform operation as list is empty");
         return;
     }    
     Node* temp=*head_ref;
@@ -107,7 +107,25 @@ void deleteByValue(Node** head_ref,int value){
 }
 
 void reverseList(Node** head_ref){
-    
+    Node* prev=NULL;
+    Node* curr=*head_ref;
+    Node* upcoming=(*head_ref)->next;
+    if(curr==NULL){
+        printf("\n cant perform operation as list is empty.");
+        return;
+    }
+    if(upcoming==NULL){
+        printf("\nsingle node list cannot be reversed.");
+        return;
+    }
+    while(upcoming!=NULL){
+        curr->next=prev;
+        prev=curr;
+        curr=upcoming;
+        upcoming=upcoming->next;
+    }
+    curr->next=prev;
+    *head_ref=curr;
 }
 
 int main(){
@@ -118,8 +136,9 @@ int main(){
     printlist(head);
     insertAtBeginning(&head,62);
     printlist(head);
-    deleteByValue(&head,7);
-    deleteByValue(&head,78);
+    insertAtBeginning(&head,29);
+    printlist(head);
+    reverseList(&head);
     printlist(head);
     return 0;
 }
