@@ -76,6 +76,13 @@ void bst_postorder(Node* head){
     printf("%d,",head->data);
 }
 
+int countnodes(Node* head){
+    if(head==NULL) return 0;
+    if(head->left==NULL&&head->right==NULL){
+        return 1;
+    }
+    return countnodes(head->left) + countnodes(head->right)+1;
+}
 int main(){
     Node* head=NULL;
     bst_insert(&head,78);
@@ -88,5 +95,8 @@ int main(){
     bst_preorder(head);
     printf("\n");
     bst_postorder(head);
+    int count=0;
+    count=countnodes(head);
+    printf("\n number of nodes in tree is :- %d",count);
     return 0;
 }
