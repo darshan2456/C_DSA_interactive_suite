@@ -12,6 +12,7 @@ struct Node* right;
 int bst_insert(Node** head_ref,int value){
     if((*head_ref)==NULL){
         Node* node=malloc(sizeof(Node));
+        if(node==NULL) return -1;
         node->data=value;
         node->left=NULL;
         node->right=NULL;
@@ -23,6 +24,7 @@ int bst_insert(Node** head_ref,int value){
     }
     if((*head_ref)->data>value && (*head_ref)->left==NULL){
        Node* node=malloc(sizeof(Node));
+       if(node==NULL) return -1;
        node->data=value;
        node->left=NULL;
         node->right=NULL;
@@ -34,6 +36,7 @@ int bst_insert(Node** head_ref,int value){
     }
     else if((*head_ref)->data<value && (*head_ref)->right==NULL){
         Node* node=malloc(sizeof(Node));
+        if(node==NULL) return -1;
         node->data=value;
         node->left=NULL;
         node->right=NULL;
@@ -76,7 +79,7 @@ void bst_postorder(Node* head){
 int main(){
     Node* head=NULL;
     bst_insert(&head,78);
-    bst_insert(&head,79);
+    bst_insert(&head,46);
     bst_insert(&head,23);
     bst_insert(&head,12);
     bst_insert(&head,19);
