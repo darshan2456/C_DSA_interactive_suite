@@ -1,11 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
-typedef struct circular_queue{
-    int rear;
-    int front;
-    int N;
-    int* arr;
-}circular_queue;
+#include "circular_queue.h"
+
 
 //init function returns -1 on malloc failure and 1 on correct initialization
 
@@ -13,13 +9,50 @@ typedef struct circular_queue{
 
 //dequeue returns -1 when circular queue is empty and value when operation is succesful
 
+void circular_queue_Demo(void){
+    circular_queue rollnos;
+    int capacity;
+    int num1,num2,num3,num4;
+    printf("enter capacity number (N) of circular queue :- ");
+    scanf("%d",&capacity);
+    if(!init_circ_queue(capacity,&rollnos)){
+        printf("\nmalloc allocation failure");
+        return;
+    }
+    else{
+        int count;
+        printf("how many elements you want to enqueue? :- ");
+        scanf("%d",&count);
+        if(count>capacity-1){
+            printf("cannot enqueue more elements than capacity");
+            return;
+        }
+        else{
+            while(count>0){
+                int value;
+                printf("\nenter the element you want to enqueue :- ");
+                scanf("%d",&value);
+                if(enqueue(&rollnos,value)==-1){
+                    printf("\nqueue overflow");
+                    break;
+                }
+                count--;
+            }
+            printf("\nhere is your circular queue :- ");
+            display_circ_queue(&rollnos);
+        }
+    }
+    
+    destroy_circ_queue(&rollnos);
+}
+
 int init_circ_queue(int N, circular_queue* queue_ptr){
-    if(N<2) return -1;
+    if(N<2) return 0;
     queue_ptr->N=N;
     queue_ptr->rear=0;
     queue_ptr->front=0;
     queue_ptr->arr=malloc(sizeof(int)*N);
-    if(queue_ptr->arr==NULL) return -1;
+    if(queue_ptr->arr==NULL) return 0;
     return 1;
 }
 
@@ -51,16 +84,3 @@ void display_circ_queue(circular_queue* queue_ptr){
     }
 }
 
-int main(){
-    circular_queue rollnos;
-    init_circ_queue(5,&rollnos);
-    enqueue(&rollnos,89);
-    enqueue(&rollnos,18);
-    enqueue(&rollnos,40);
-    display_circ_queue(&rollnos);
-    int num=dequeue(&rollnos);
-    printf("\n%d",num);
-    destroy_circ_queue(&rollnos);
-    display_circ_queue(&rollnos);
-    return 0;
-}

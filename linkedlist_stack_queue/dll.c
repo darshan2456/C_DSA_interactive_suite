@@ -1,17 +1,35 @@
 #include<stdio.h>
 #include<stdlib.h>
-
-typedef struct Node{
-    int data;
-    struct Node* prev;
-    struct Node* next;
-}Node;
+#include "dll.h"
 
 //insert functions returns 1 on succesful insertion and -1 on malloc failure 
 //delete functions return 1 on successful deletion and -1 on failure due to empty list
 //methods implemented are - insertAtBeginning, insertAtEnd, printlist, search, deleteAtBeginning, deleteAtEnd and deleteByValue
-int insertAtBeginning(Node** head_ref,int value){
-    Node* newnode=malloc(sizeof(Node));
+
+void dll_Demo(void){
+    doubly_ll_Node* head=NULL;
+    int value,value1,value2;
+    printf("enter number to be inserted at beginning - ");
+    scanf("%d",&value);
+    dll_insertAtBeginning(&head,value);
+    printf("enter number to be inserted at beginning - ");
+    scanf("%d",&value1);
+    dll_insertAtBeginning(&head,value1);
+    printf("\nenter number to be inserted at beginning - ");
+    scanf("%d",&value2);
+    dll_insertAtBeginning(&head,value2);
+    printf("the current list is :-\n");
+    dll_printlist(head);
+    int search_value;
+    printf("\nenter the number whose index you want to search :- ");
+    scanf("%d",&search_value);
+    int index=dll_search(head,search_value);
+    printf("\nentered number found at index %d",index,"\n");
+    dll_printlist(head);
+}
+
+int dll_insertAtBeginning(doubly_ll_Node** head_ref,int value){
+    doubly_ll_Node* newnode=malloc(sizeof(doubly_ll_Node));
     if(newnode==NULL) return -1;
     newnode->data=value;
     if(*head_ref==NULL){
@@ -27,8 +45,8 @@ int insertAtBeginning(Node** head_ref,int value){
     return 1;
 }
 
-int insertAtEnd(Node** head_ref,int value){
-    Node* newnode=malloc(sizeof(Node));
+int dll_insertAtEnd(doubly_ll_Node** head_ref,int value){
+    doubly_ll_Node* newnode=malloc(sizeof(doubly_ll_Node));
     if(newnode==NULL) return -1;
     newnode->data=value;
     if(*head_ref==NULL){
@@ -37,7 +55,7 @@ int insertAtEnd(Node** head_ref,int value){
         *head_ref=newnode;
         return 1;
     }
-    Node* temp=*head_ref;
+    doubly_ll_Node* temp=*head_ref;
     while(temp->next!=NULL){
         temp=temp->next;
     }
@@ -47,7 +65,7 @@ int insertAtEnd(Node** head_ref,int value){
     return 1;
 }
 
-void printlist(Node* head){
+void dll_printlist(doubly_ll_Node* head){
     printf("\n");
     while(head!=NULL){
         printf("%d <->",head->data);
@@ -56,7 +74,7 @@ void printlist(Node* head){
     printf("NULL");
 }
 
-int search(Node* head,int key){
+int dll_search(doubly_ll_Node* head,int key){
     int index=0;
     while(head!=NULL){
         if(head->data==key){
@@ -67,49 +85,49 @@ int search(Node* head,int key){
     }return -1;                     //otherwise returns -1
 }
 
-int deleteAtBeginning(Node** head_ref){
+int dll_deleteAtBeginning(doubly_ll_Node** head_ref){
     if(*head_ref==NULL) return -1;
     if((*head_ref)->next==NULL){
         free(*head_ref);
         *head_ref=NULL;
         return 1;
     }
-    Node* secondnode=(*head_ref)->next;
+    doubly_ll_Node* secondnode=(*head_ref)->next;
     free(*head_ref);
     secondnode->prev=NULL;
     *head_ref=secondnode;
     return 1;
 }
 
-int deleteAtEnd(Node** head_ref){
+int dll_deleteAtEnd(doubly_ll_Node** head_ref){
     if(*head_ref==NULL) return -1;
     if((*head_ref)->next==NULL){
         free(*head_ref);
         *head_ref=NULL;
         return 1;
     }
-    Node* temp=*head_ref;
+    doubly_ll_Node* temp=*head_ref;
     while(temp->next!=NULL){
         temp=temp->next;
     }
-    Node* secondlast=temp->prev;
+    doubly_ll_Node* secondlast=temp->prev;
     free(temp);
     secondlast->next=NULL;
     return 1;
 }
 
-int deleteByValue(Node** head_ref, int key){
+int dll_deleteByValue(doubly_ll_Node** head_ref, int key){
     if(*head_ref==NULL) return -1;
     if((*head_ref)->next==NULL && (*head_ref)->data==key){
         free(*head_ref);
         *head_ref=NULL;
         return 1;
     }
-    Node* temp=*head_ref;
+    doubly_ll_Node* temp=*head_ref;
     while(temp!=NULL){
         if(temp->data==key){
-            Node* beforekey=temp->prev;
-            Node* afterkey=temp->next;
+            doubly_ll_Node* beforekey=temp->prev;
+            doubly_ll_Node* afterkey=temp->next;
             if(beforekey==NULL){
                 *head_ref=temp->next;
                 (*head_ref)->prev=NULL;
@@ -117,7 +135,9 @@ int deleteByValue(Node** head_ref, int key){
                 return 1;
             }
             beforekey->next=afterkey;
-            afterkey->prev=beforekey;
+            if(afterkey!=NULL){
+                afterkey->prev=beforekey;
+            }
             free(temp);
             return 1;
         }
@@ -126,18 +146,3 @@ int deleteByValue(Node** head_ref, int key){
     return -1;
 }
 
-int main(){
-    Node* head=NULL;
-    insertAtBeginning(&head,43);
-    insertAtBeginning(&head,87);
-    insertAtBeginning(&head,19);
-    insertAtEnd(&head,39);
-    printlist(head);
-    deleteAtBeginning(&head);
-    printlist(head);
-    int index=search(head,39);
-    printf("\n39 found at index %d",index);
-    deleteByValue(&head,43);
-    printlist(head);
-    return 0;
-}

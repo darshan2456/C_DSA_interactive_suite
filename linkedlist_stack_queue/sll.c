@@ -1,21 +1,27 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include "linkedlist.h"
+#include "sll.h"
 
 //methods implemented are - insertAtEnd, deleteAtBeginning, insertAtBeginning, deleteAtEnd, printlist, search
 // deleteByValue and reverseList
 
-void linkedlist_Demo(void){
 
-}
-void circular_linkedlist_Demo(void){
 
-}
-void doubly_linkedlist_Demo(void){
-    
+void sll_Demo(void){
+    Node* head=NULL;
+    sll_insertAtBeginning(&head,34);
+    sll_insertAtBeginning(&head,98);
+    sll_insertAtEnd(&head,57);
+    sll_insertAtEnd(&head,19);
+    sll_printlist(head);
+    int index=sll_search(head,98);
+    sll_deleteByValue(&head,57);
+    sll_printlist(head);
+    sll_reverseList(&head);
 }
 
-void insertAtEnd(Node **head_ref,int value){
+
+void sll_insertAtEnd(Node **head_ref,int value){
     Node* newnode=malloc(sizeof(Node));
     newnode -> data=value;
     newnode -> next=NULL;
@@ -32,7 +38,7 @@ void insertAtEnd(Node **head_ref,int value){
     
 }
 
-void deleteAtBeginning(Node** head_ref){
+void sll_deleteAtBeginning(Node** head_ref){
     if(*head_ref==NULL){
         printf("\ncannot perform operation as list is empty");
         return;
@@ -45,7 +51,7 @@ void deleteAtBeginning(Node** head_ref){
 
 //insertAtBeginning function returns 0 on allocation failure and 1 on succesful insertion
 
-int insertAtBeginning(Node** head_ref,int value){
+int sll_insertAtBeginning(Node** head_ref,int value){
     Node* newnode=malloc(sizeof(Node));
     if(newnode==NULL) return 0;
     newnode->data=value;
@@ -54,7 +60,7 @@ int insertAtBeginning(Node** head_ref,int value){
     return 1;
 }
 
-void deleteAtEnd(Node** head_ref){
+void sll_deleteAtEnd(Node** head_ref){
     if(*head_ref==NULL){
         printf("cannot perform operation as list is empty");
         return;
@@ -75,7 +81,7 @@ void deleteAtEnd(Node** head_ref){
     prev->next=NULL;
 }
 
-void printlist(Node* head){
+void sll_printlist(Node* head){
     printf("\n");
     while(head!=NULL){
         printf("%d ->",head->data);
@@ -84,7 +90,7 @@ void printlist(Node* head){
     printf("NULL");
 }
 
-int search(Node* head,int key){
+int sll_search(Node* head,int key){
     int index=0;
     while(head!=NULL){
         if(head->data==key){
@@ -95,7 +101,7 @@ int search(Node* head,int key){
     }return -1;                         //otherwise returns -1
 }
 
-void deleteByValue(Node** head_ref,int value){
+void sll_deleteByValue(Node** head_ref,int value){
     if(*head_ref==NULL){
         printf("cannot perform operation as list is empty");
         return;
@@ -119,14 +125,14 @@ void deleteByValue(Node** head_ref,int value){
     free(curr);
 }
 
-void reverseList(Node** head_ref){
+void sll_reverseList(Node** head_ref){
     Node* prev=NULL;
     Node* curr=*head_ref;
-    Node* upcoming=(*head_ref)->next;
     if(curr==NULL){
         printf("\n cant perform operation as list is empty.");
         return;
     }
+    Node* upcoming=(*head_ref)->next;
     if(upcoming==NULL){
         printf("\nsingle node list cannot be reversed.");
         return;

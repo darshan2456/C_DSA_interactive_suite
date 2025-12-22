@@ -1,5 +1,5 @@
 #include "stack.h"
-#include "linkedlist.h"
+#include "sll.h"
 #include<stdlib.h>
 
 struct stack{
@@ -7,7 +7,7 @@ struct stack{
 };
 
 int push(stack* s,int value){
-    if(insertAtBeginning(&(s->top),value)){
+    if(sll_insertAtBeginning(&(s->top),value)){
         return 1;
     }
     return 0;
@@ -16,7 +16,7 @@ int push(stack* s,int value){
 int pop(stack* s){
     if(s->top==NULL) return -1;
     int top_of_stack=s->top->data;
-    deleteAtBeginning(&(s->top));
+    sll_deleteAtBeginning(&(s->top));
     return top_of_stack;
 }
 
