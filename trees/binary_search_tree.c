@@ -98,21 +98,28 @@ void binary_search_tree_Demo(void){
         bst_insert(&head,value);
         total_bst_nodes--;
     }
+    while(1){
+        int choice;
+        printf("\nenter '1' for inorder, '2' for preorder and '3' for postorder :- ");
+        scanf("%d",&choice);
+        if(choice==1){
+            bst_inorder(head);
+        }
+        else if(choice==2){
+            bst_preorder(head);
+        }
+        else if(choice==3){
+            bst_postorder(head);
+        }
+        else{
+            printf("\nenter only one of the three - 1,2,3");
+        }
 
-    int choice;
-    printf("enter '1' for inorder, '2' for preorder and '3' for postorder :- ");
-    scanf("%d",&choice);
-    if(choice==1){
-        bst_inorder(head);
+        printf("\nenter '-1' to exit and any other number to try different traversal pattern :- ");
+        scanf("%d",&choice);
+        if(choice==-1) break;
+
     }
-    else if(choice==2){
-        bst_preorder(head);
-    }
-    else if(choice==3){
-        bst_postorder(head);
-    }
-    else{
-        printf("\nenter only one of the three - 1,2,3");
-    }
+    
 
 }
