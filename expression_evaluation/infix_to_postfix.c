@@ -18,50 +18,58 @@ static int isOperator(char ch){
 }
 
 void infix_to_postfix_Demo(void){
+    int choice;
     char infix_expr[50];
     stack* operators=createStack();
-    printf("enter a mathematical expression without whitespaces :- ");
-    scanf("%49s",infix_expr);
-    int i=0;
-    while(infix_expr[i]!='\0'){
+    while(1){
+        printf("enter a mathematical expression without whitespaces :- ");
+        scanf("%49s",infix_expr);
+        int i=0;
+        while(infix_expr[i]!='\0'){
         char ch=infix_expr[i];
-        if(isalnum(ch)) printf("%c",ch);
+            if(isalnum(ch)) printf("%c",ch);
 
-        else if(ch=='(') push(operators,ch);
+            else if(ch=='(') push(operators,ch);
 
-        else if(ch==')'){
-            while(!isEmpty(operators) && peek(operators)!='('){
-                char op=pop(operators);
-                printf("%c",op);
-            }
-            pop(operators);
-        }
-
-        else if(isOperator(ch)){
-            if(isEmpty(operators)){
-                push(operators,ch);
-            }
-            else if(precedence(ch) > precedence(peek(operators))){
-                push(operators,ch);
-            }
-
-            else if(precedence(ch) <= precedence(peek(operators))){
-                int prec_lower=precedence(ch);
-                while(!isEmpty(operators) && peek(operators)!='(' && precedence(peek(operators))>=prec_lower){
+            else if(ch==')'){
+                while(!isEmpty(operators) && peek(operators)!='('){
                     char op=pop(operators);
                     printf("%c",op);
                 }
-                push(operators,ch);
+                pop(operators);
             }
+
+            else if(isOperator(ch)){
+                if(isEmpty(operators)){
+                    push(operators,ch);
+                }
+                else if(precedence(ch) > precedence(peek(operators))){
+                    push(operators,ch);
+                }
+
+                else if(precedence(ch) <= precedence(peek(operators))){
+                    int prec_lower=precedence(ch);
+                    while(!isEmpty(operators) && peek(operators)!='(' && precedence(peek(operators))>=prec_lower){
+                        char op=pop(operators);
+                        printf("%c",op);
+                    }
+                    push(operators,ch);
+                }
+            }
+
+        i++;
         }
 
-    i++;
-    }
+        while(!isEmpty(operators)){         //flushing all remaining operators in the stack
+            char op=pop(operators);
+            printf("%c",op);
+        }
 
-    while(!isEmpty(operators)){         //flushing all remaining operators in the stack
-        char op=pop(operators);
-        printf("%c",op);
+        printf("\nenter any number to test another expression and '-1' to exit :- ");
+        scanf("%d",&choice);
+        if(choice==-1) break;
     }
+    
 
     destroyStack(operators);
 }

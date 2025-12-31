@@ -10,9 +10,11 @@
 //neglecting this warning can result in undefined behaviour
 
 int main(){
-    int choice;
-start:  printf(
-        "welcome to DSA library built by Darshan Mukul Parekh\n"
+
+    while(1){
+        int choice;
+    start:  printf(
+        "\nwelcome to DSA library built by Darshan Mukul Parekh\n"
         "click 1 for linked-list\n"
         "click 2 for circular queue\n"
         "click 3 for doubly linked-list\n"
@@ -21,31 +23,39 @@ start:  printf(
         "click 6 for postfix evaluation\n\n"
         "enter choice : "
         );
-    scanf("%d",&choice);
-    if(choice<1 || choice >6){
-        printf("invalid choice try again\n");
-        goto start;
+        scanf("%d",&choice);
+        if(choice<1 || choice >6){
+            printf("invalid choice try again\n");
+            goto start;
+        }
+
+        switch(choice){
+            case 1:
+                sll_Demo();
+                break;
+            case 2:
+                circular_queue_Demo();
+                break;
+            case 3:
+                dll_Demo();
+                break;
+            case 4:
+                binary_search_tree_Demo();
+                break;
+            case 5:
+                infix_to_postfix_Demo();
+                break;
+            case 6:
+                postfix_evaluation_Demo();
+                break;
+        }
+
+        printf("\n\nEnter any number to test another Data Structure / Algorithm and '-1' to exit :- ");
+        scanf("%d",&choice);
+        
+        if(choice==-1) break;
     }
 
-    switch(choice){
-        case 1:
-            sll_Demo();
-            break;
-        case 2:
-            circular_queue_Demo();
-            break;
-        case 3:
-            dll_Demo();
-            break;
-        case 4:
-            binary_search_tree_Demo();
-            break;
-        case 5:
-            infix_to_postfix_Demo();
-            break;
-        case 6:
-            postfix_evaluation_Demo();
-            break;
-    }
+
     return 0;
 }

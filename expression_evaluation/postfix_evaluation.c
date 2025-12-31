@@ -12,47 +12,54 @@ static int isOperator(char ch){
 }
 
 int postfix_evaluation_Demo(void){
+    int choice;
     char postfix_expr[50];
-    stack* operands=createStack();
-    printf("enter valid postfix expression (only single digit operands):- ");
-    scanf("%49s",postfix_expr);
-    int i=0;
-    while(postfix_expr[i]!='\0'){
-        char ch=postfix_expr[i];
-        if(isdigit(ch)) push(operands,ch-'0');
-        else if(isOperator(ch)){
-            if(isEmpty(operands)){
-                destroyStack(operands);
-                return -1;
-            }
-            int right_operand=pop(operands);
-            if(isEmpty(operands)){
-                destroyStack(operands);
-                return -1;
-            }
-            int left_operand=pop(operands);
-            int result=0;
-            if(ch=='+') result= left_operand + right_operand;
-            else if(ch=='-') result= left_operand - right_operand;
-            else if(ch=='*') result= left_operand * right_operand;
-            else if(ch=='/'){
-                if(right_operand==0){
+    while(1){
+        stack* operands=createStack();
+        printf("enter valid postfix expression (only single digit operands):- ");
+        scanf("%49s",postfix_expr);
+        int i=0;
+        while(postfix_expr[i]!='\0'){
+            char ch=postfix_expr[i];
+            if(isdigit(ch)) push(operands,ch-'0');
+            else if(isOperator(ch)){
+                if(isEmpty(operands)){
                     destroyStack(operands);
                     return -1;
                 }
-                result= left_operand / right_operand;
+                int right_operand=pop(operands);
+                if(isEmpty(operands)){
+                    destroyStack(operands);
+                    return -1;
+                }
+                int left_operand=pop(operands);
+                int result=0;
+                if(ch=='+') result= left_operand + right_operand;
+                else if(ch=='-') result= left_operand - right_operand;
+                else if(ch=='*') result= left_operand * right_operand;
+                else if(ch=='/'){
+                    if(right_operand==0){
+                        destroyStack(operands);
+                        return -1;
+                    }
+                    result= left_operand / right_operand;
+                }
+                push(operands,result);
             }
-            push(operands,result);
+            i++;
         }
-        i++;
-    }
-    int final_result=pop(operands);
-    if(!isEmpty(operands)){
+        int final_result=pop(operands);
+        if(!isEmpty(operands)){
+            destroyStack(operands);
+            return -1;
+        }
         destroyStack(operands);
-        return -1;
+        printf("Result of postfix expression is :- %d",final_result);
+        printf("\nif want to enter another expression enter any number and for exit enter '-1' :- ");
+        scanf("%d",&choice);
+        if(choice==-1) break;
     }
-    destroyStack(operands);
-    printf("Result of postfix expression is :- %d",final_result);
+    
     return 0;
 }
 
