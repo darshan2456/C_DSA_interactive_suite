@@ -55,7 +55,7 @@ void swap_adjacent_pairs(int arr[],int length_of_array){
     }
 }
 
-void print_array(int arr[], int length_of_array){
+void print_array(const int arr[], int length_of_array){
     printf("[");
     for(int i=0;i<length_of_array;i++){
         printf("%d",arr[i]);
@@ -64,7 +64,7 @@ void print_array(int arr[], int length_of_array){
     printf("]");
 }
 
-int max_array(int arr[], int length_of_array){
+int max_array(const int arr[], int length_of_array){
     int max_element=arr[0];
     for(int i=1;i<length_of_array;i++){
         if(arr[i]>max_element){
@@ -74,7 +74,7 @@ int max_array(int arr[], int length_of_array){
     return max_element;
 }
 
-int min_array(int arr[], int length_of_array){
+int min_array(const int arr[], int length_of_array){
     int min_element=arr[0];
     for(int i=1;i<length_of_array;i++){
         if(arr[i]<min_element){

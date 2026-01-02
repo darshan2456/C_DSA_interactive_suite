@@ -18,9 +18,11 @@ binary_search_tree.c ^
 ..\expression_evaluation\infix_to_postfix.c ^
 ..\expression_evaluation\postfix_evaluation.c ^
 ..\expression_evaluation\stack.c ^
+..\algorithms\bubble_sort.c ^
 -I. ^
 -I..\expression_evaluation ^
--o main.exe
+-I..\algorithms ^
+-o a.exe
 
 ```
 This project is intentionally compiled using **explicit multi-file compilation and linking** to reinforce understanding of translation units, include paths, and linker behavior.

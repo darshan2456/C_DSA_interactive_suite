@@ -2,10 +2,11 @@
 #include "stack.h"
 #include "sll.h"
 #include "dll.h"
-#include "bst.h"
-#include "expression.h"
 #include "circular_queue.h"
 #include "array.h"
+#include "bst.h"
+#include "expression.h"
+#include "algorithms.h"
 
 //only give input as integer value as prompted through the console by programmer. dont attempt to put any other type of value
 //neglecting this warning can result in undefined behaviour
@@ -23,10 +24,11 @@ int main(){
         "click 5 for binary search tree\n"
         "click 6 for infix to postfix conversion\n"
         "click 7 for postfix evaluation\n"
+        "click 8 for bubble_sort(optimized) demo \n"
         "enter choice : "
         );
         scanf("%d",&choice);
-        if(choice<1 || choice >7){
+        if(choice<1 || choice >8){
             printf("invalid choice try again\n");
             goto start;
         }
@@ -53,6 +55,8 @@ int main(){
             case 7:
                 postfix_evaluation_Demo();
                 break;
+            case 8:
+                bubble_sort_optimized_demo();
         }
 
         printf("\n\nEnter any number to test another Data Structure / Algorithm and '-1' to exit :- ");
