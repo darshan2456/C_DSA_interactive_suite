@@ -5,11 +5,17 @@ void bubble_sort_optimized(int arr[], int length_of_array);
 
 void bubble_sort_optimized_demo(void){
     int length_of_array;
-    int arr[100];
     while(1){
         int choice;
         printf("\nenter no of elements of array you want to sort (dont give greater than 100):- ");
         scanf("%d",&length_of_array);
+
+        if(length_of_array<1 || length_of_array>100){
+            printf("\ninvalid input. try again");
+            continue;
+        }
+        int arr[length_of_array];
+
         for(int i=0;i<length_of_array;i++){
             printf("\nenter element no %d :- ",i);
             scanf("%d",&arr[i]);
@@ -31,7 +37,7 @@ void bubble_sort_optimized(int arr[], int length_of_array){
         int swapped=0;
 
         for(int j=0;j<length_of_array-i-1;j++){
-            if(arr[j]>arr[j+1]){
+            if(arr[j]>arr[j+1]){                                      //swapping happens here
                 int temp=arr[j];
                 arr[j]=arr[j+1];
                 arr[j+1]=temp;

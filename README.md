@@ -19,6 +19,7 @@ binary_search_tree.c ^
 ..\expression_evaluation\postfix_evaluation.c ^
 ..\expression_evaluation\stack.c ^
 ..\algorithms\bubble_sort.c ^
+..\algorithms\insertion_sort.c ^
 -I. ^
 -I..\expression_evaluation ^
 -I..\algorithms ^
@@ -35,7 +36,7 @@ How to use it:
 1️⃣ Clone the repository
 2️⃣ Move into the data_structures directory 📂
 3️⃣ Compile the project using the build command shown above 🛠️
-4️⃣ Run main.exe and start interacting via the console 🧑‍💻✨
+4️⃣ Run a.exe and start interacting via the console 🧑‍💻✨
 From the menu, you can work with:
 🔹 Singly Linked List
 🔹 Doubly Linked List

@@ -25,10 +25,11 @@ int main(){
         "click 6 for infix to postfix conversion\n"
         "click 7 for postfix evaluation\n"
         "click 8 for bubble_sort(optimized) demo \n"
+        "click 9 for insertion sort demo\n"
         "enter choice : "
         );
         scanf("%d",&choice);
-        if(choice<1 || choice >8){
+        if(choice<1 || choice >9){
             printf("invalid choice try again\n");
             goto start;
         }
@@ -57,6 +58,8 @@ int main(){
                 break;
             case 8:
                 bubble_sort_optimized_demo();
+            case 9:
+                insertion_sort_demo();
         }
 
         printf("\n\nEnter any number to test another Data Structure / Algorithm and '-1' to exit :- ");
