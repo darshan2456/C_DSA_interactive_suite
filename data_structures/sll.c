@@ -66,13 +66,16 @@ void sll_Demo(void){
 }
 
 
-void sll_insertAtEnd(Node **head_ref,int value){
+//insert at end returns 0 on allocation failure and 1 on successful insertion
+
+int sll_insertAtEnd(Node **head_ref,int value){
     Node* newnode=malloc(sizeof(Node));
+    if(newnode==NULL)   return 0;
     newnode -> data=value;
     newnode -> next=NULL;
     if(*head_ref==NULL){
         *head_ref=newnode;
-        return;
+        return 1;
     }
 
     Node* temp=*head_ref;
@@ -80,7 +83,7 @@ void sll_insertAtEnd(Node **head_ref,int value){
         temp=temp->next;
     }
     temp->next=newnode;
-    
+    return 1;
 }
 
 void sll_deleteAtBeginning(Node** head_ref){

@@ -11,7 +11,7 @@ void insertion_sort_demo(void){
         scanf("%d",&length_of_array);
 
         if(length_of_array<1 || length_of_array>100){
-            printf("\ninvalid input. try again.");
+            printf("\nenter length of array between 1 and 100\n");
             continue;
         }
         int arr[length_of_array];
