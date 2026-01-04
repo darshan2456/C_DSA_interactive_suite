@@ -21,6 +21,7 @@ binary_search_tree.c ^
 ..\algorithms\bubble_sort.c ^
 ..\algorithms\insertion_sort.c ^
 ..\algorithms\selection_sort.c ^
+..\algorithms\algorithms_demo.c ^
 -I. ^
 -I..\expression_evaluation ^
 -I..\algorithms ^

@@ -24,9 +24,7 @@ int main(){
         "click 5 for binary search tree\n"
         "click 6 for infix to postfix conversion\n"
         "click 7 for postfix evaluation\n"
-        "click 8 for bubble_sort(optimized) demo \n"
-        "click 9 for insertion sort demo\n"
-        "click 10 for selection sort demo\n"
+        "click 8 for sorting algorithms demo\n"
         "enter choice : "
         );
         scanf("%d",&choice);
@@ -58,13 +56,7 @@ int main(){
                 postfix_evaluation_Demo();
                 break;
             case 8:
-                bubble_sort_optimized_demo();
-                break;
-            case 9:
-                insertion_sort_demo();
-                break;
-            case 10:
-                selection_sort_demo();
+                sorting_algorithm_demo();
                 break;
         }
 
