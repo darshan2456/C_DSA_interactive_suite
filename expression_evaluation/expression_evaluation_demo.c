@@ -1,32 +1,29 @@
 #include<stdio.h>
 #include "expression.h"
+#include "safe_input.h"
 
 void expression_evaluation_demo(void){
+    int choice;
+    int status;
     while(1){
-        int choice;
-        printf("\nenter 1 for infix to postfix conversion"
-            "\nenter 2 for postfix evaluation");
-        scanf("%d",&choice);
+        status=safe_input_int(
+            &choice,
+            "\nenter 1 for infix to postfix conversion"
+            "\nenter 2 for postfix evaluation"
+            "\nenter choice : ",
+            1,3
+        );
+        
+        if(status==-111)    break;
 
-        if(choice<1 || choice>2){
-            printf("\nenter only from the given menu");
-            continue;
-        }
+        if(status==0)   continue;
 
         if(choice==1){
             infix_to_postfix_Demo();
-
-            printf("\nenter any number to test again or '-1' to exit");
-            scanf("%d",&choice);
-            if(choice==-1)  break;
             continue;
         }
         else if(choice==2){
             postfix_evaluation_Demo();
-            printf("\nenter any number to test again or '-1' to exit");
-
-            scanf("%d",&choice);
-            if(choice==-1)  break;
             continue;
         }
     }

@@ -7,6 +7,7 @@
 #include "bst.h"
 #include "expression.h"
 #include "algorithms.h"
+#include "safe_input.h"
 
 void data_structures_demo(void);
 
@@ -17,16 +18,22 @@ int main(){
 
     while(1){
         int choice;
-        printf(
-        "\nwelcome to DSA library built by Darshan Mukul Parekh\n"
+        int status=safe_input_int(
+        &choice,                                                            //variable in which value is to be inserted
+        "\nWelcome to DSA library built by Darshan Mukul Parekh"
+        "\n(at any point enter '-1' to exit that particular demo)\n\n"
         "click 1 for data structures demo\n"
         "click 2 for expression evaluation (infix to postfix and postfix evaluation) demo\n"
         "click 3 for sorting algorithms demo\n"
-        "enter choice : "
+        "enter choice : ",
+        1,3                                                             //limits
         );
-        scanf("%d",&choice);
-        if(choice<1 || choice >3){
-            printf("invalid choice try again\n");
+        
+        if(status==-111){
+            break;
+        }
+
+        if(status==0){
             continue;
         }
 
@@ -42,11 +49,6 @@ int main(){
                 break;
             }
 
-        printf("\n\nEnter any number to test another Data Structure / Algorithm and '-1' to exit :- ");
-        scanf("%d",&choice);
-        
-        
-        if(choice==-1) break;
     }
 
 

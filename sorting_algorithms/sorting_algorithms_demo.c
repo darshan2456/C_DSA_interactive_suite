@@ -1,22 +1,22 @@
 #include "algorithms.h"
+#include "safe_input.h"
 #include<stdio.h>
 
 void sorting_algorithms_demo(void){
-
+    int status,choice;
     while(1){
-        int repeat,choice;
-        printf(
+        status=safe_input_int(
+            &choice,
             "\nenter 1 for bubble sort"
             "\nenter 2 for insertion sort"
             "\nenter 3 for selection sort"
-            "\nenter choice : "
+            "\nenter choice : ",
+            1,3
         );
-        scanf("%d",&choice);
 
-        if(choice<1 || choice>3){
-            printf("\nenter only between '1','2' and '3'");
-            continue;
-        }
+        if(status==-111)    break;
+
+        if(status==0)   continue;
 
         switch(choice){
             case 1:
@@ -28,12 +28,8 @@ void sorting_algorithms_demo(void){
             case 3:
                 selection_sort_demo();
                 break;
-            }
+        }
 
-        printf("\nif you want to test another sorting algorithm enter any number, for exit enter '-1' :- ");
-        scanf("%d",&repeat);
-
-        if(repeat==-1)  break;
     }
     
 }
