@@ -17,7 +17,7 @@ void data_structures_demo(void){
                 "\nenter choice : ",1,3);
 
         if(data_structures_status==INPUT_EXIT_SIGNAL){
-            printf("Exiting data structures demo....\n");
+            printf("\nExiting data structures demo....\n");
             return;
         }
 
@@ -96,7 +96,7 @@ void data_structures_demo(void){
         }       
 
     
-    printf("\nreturning to main menu.");
+    printf("\nreturning to main menu....\n");
 
     }
 }      

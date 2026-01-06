@@ -14,7 +14,10 @@ void sorting_algorithms_demo(void){
             1,3
         );
 
-        if(status==-111)    break;
+        if(status==-111){
+            printf("\nExiting sorting_algorithms_demo.....\n");
+            return;
+        };
 
         if(status==0)   continue;
 
