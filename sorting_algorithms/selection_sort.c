@@ -36,7 +36,7 @@ void selection_sort(int arr[],int length_of_array){
     for(int i=0;i<length_of_array-1;i++){
         int min_index=i;
 
-        for(int j=i;j<length_of_array;j++){
+        for(int j=i+1;j<length_of_array;j++){
             if(arr[j]<arr[min_index]){
                 min_index=j;
             }
@@ -48,7 +48,7 @@ void selection_sort(int arr[],int length_of_array){
             arr[i]=temp;
         }
         
-
+        printf("after iteration no %d - ",i+1);
         print_array(arr,length_of_array);
         printf("\n");
     }

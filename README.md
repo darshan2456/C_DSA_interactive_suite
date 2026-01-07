@@ -16,7 +16,9 @@ array.c ^
 circular_queue.c ^
 binary_search_tree.c ^
 data_structures_demo.c ^
-safe_input.c ^
+safe_input_int.c ^
+safe_input_infix.c ^
+safe_input_postfix.c ^
 ..\expression_evaluation\infix_to_postfix.c ^
 ..\expression_evaluation\postfix_evaluation.c ^
 ..\expression_evaluation\stack.c ^

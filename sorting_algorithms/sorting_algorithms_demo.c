@@ -1,6 +1,7 @@
+#include<stdio.h>
 #include "algorithms.h"
 #include "safe_input.h"
-#include<stdio.h>
+
 
 void sorting_algorithms_demo(void){
     int status,choice;

@@ -44,6 +44,7 @@ void insertion_sort(int arr[], int length_of_array){
         }
         arr[j+1]=key;
 
+        printf("after iteration no %d - ",i);
         print_array(arr,length_of_array);
         printf("\n");
     }

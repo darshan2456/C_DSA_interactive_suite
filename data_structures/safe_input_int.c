@@ -34,7 +34,7 @@ int safe_input_int(int *input, const char *prompt, int min_val, int max_val){
         *input=value;
         return 1;                           //represents successful insertion of value into the given variable
 
-        clear_buffer:      while((c=getchar())!='\n' && c!=EOF);                     //clears buffer
+        clear_buffer:      while((c=getchar())!='\n' && c!=EOF);                     //clears buffer for next attempt
         if(c==EOF){                                             //if EOF is encountered
             printf("input ended unexpectedly\n");
             return 0;
