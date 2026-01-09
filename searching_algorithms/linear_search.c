@@ -11,7 +11,8 @@ void linear_search_demo(void){
             int target=0;
             int linear_search_status=0;
 
-retry_len:  linear_search_status=safe_input_int(&length_of_array,
+retry_len:  printf("\nLinear search demo\n");
+            linear_search_status=safe_input_int(&length_of_array,
             "\nenter length of array, (between 1 and 100), enter '-1' to exit:- ",
             1,100);
 

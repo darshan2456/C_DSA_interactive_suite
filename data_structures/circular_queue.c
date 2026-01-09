@@ -12,7 +12,6 @@
 void circular_queue_Demo(void){
     circular_queue rollnos;
     int capacity;
-    int num1,num2,num3,num4;
     printf("enter capacity number (N) of circular queue :- ");
     scanf("%d",&capacity);
     if(!init_circ_queue(capacity,&rollnos)){

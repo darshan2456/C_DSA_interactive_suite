@@ -19,11 +19,11 @@
     }
 
     void infix_to_postfix_Demo(void){
-        int infix_to_postfix_choice;
         char infix_expr[50];
         while(1){
             stack* operators=createStack();
 
+            printf("\nInfix to Postfix demo\n");
             int infix_expr_status=validate_infix_expr(infix_expr,sizeof(infix_expr),
             "\nenter a mathematical expression without whitespaces, enter 'X' to exit:- ");
 
@@ -81,6 +81,7 @@
 
             destroyStack(operators);
 
+            printf("\n");
         }
         
     }

@@ -7,8 +7,6 @@
 #include "safe_input.h"
 
 void data_structures_demo(void){
-    int choice;
-    int status;
     while(1){
         int data_structures_choice;
         int data_structures_status=safe_input_int(&data_structures_choice,"\nenter 1 for standard linear data structures"

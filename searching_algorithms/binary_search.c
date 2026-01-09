@@ -11,8 +11,9 @@ void binary_search_demo(void){
         int target;
         int binary_search_status;
         
-retry_len:  binary_search_status=safe_input_int(&length_of_array,
-            "\n\nenter length of array, (between 1 and 100), enter '-1' to exit:- ",
+retry_len:  printf("\nBinary search demo :- \n");
+            binary_search_status=safe_input_int(&length_of_array,
+            "\nenter length of array, (between 1 and 100), enter '-1' to exit:- ",
             1,100);
 
             if(binary_search_status==INPUT_EXIT_SIGNAL){
@@ -70,18 +71,18 @@ void binary_search(int arr[], int target, int length_of_array){
 
     if(length_of_array==1){
         if(arr[0]==target){
-            printf("\ntarget found at index 0.");
+            printf("\ntarget found at index 0.\n");
             return;
         }
         printf("\ntarget element is not present in the given array");
         return;
     }
 
-    while(low<=high){
+    while(low<=high){                //main loop which performs the binary search algorithm
         mid=low+(high-low)/2;
         //printf("DEBUG: low=%d, mid=%d, high=%d, arr[mid]=%d\n", low, mid, high, arr[mid]);
         if(arr[mid]==target){
-            printf("\ntarget found at index %d.",mid);
+            printf("\ntarget found at index %d.\n",mid);
             return;
         }
         else if(arr[mid]<target){

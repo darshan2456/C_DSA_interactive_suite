@@ -54,5 +54,5 @@ int validate_postfix_expr(char *buff,size_t size,const char *prompt){
         if(depth==1){
             return 1;
         }
-    
+    return 1;
 }

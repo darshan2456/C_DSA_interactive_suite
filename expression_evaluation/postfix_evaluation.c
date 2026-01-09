@@ -13,11 +13,11 @@ static int isOperator(char ch){
 }
 
 void postfix_evaluation_Demo(void){
-    int choice;
     char postfix_expr[50];
     while(1){
         stack* operands=createStack();
 
+        printf("\nPostfix Evaluation demo\n");
         int postfix_expr_status=validate_postfix_expr(postfix_expr,sizeof(postfix_expr),
         "\nenter valid postfix expression (only single digit operands), enter 'X' to exit:- ");
         
@@ -69,7 +69,7 @@ void postfix_evaluation_Demo(void){
             return;
         }
         destroyStack(operands);
-        printf("Result of postfix expression is :- %d",final_result);
+        printf("Result of postfix expression is :- %d\n",final_result);
         
     }
     

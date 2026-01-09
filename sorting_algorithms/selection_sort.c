@@ -7,7 +7,7 @@ void selection_sort(int arr[],int length_of_array);
 void selection_sort_demo(void){
     int length_of_array;
     while(1){
-
+        printf("\n\nSelection sort demo");
         int selection_sort_status=safe_input_int(&length_of_array,
         "\nenter the number of elements in the array (between 1 and 100), enter '-1' to exit:- ",
         1,100);
@@ -30,7 +30,6 @@ void selection_sort_demo(void){
                 }
             
                 if(element_status==0){
-                    printf("\nEntered out of range value or character other than numbers. Try again\n");
                     goto retry;
                 }
         }
@@ -64,6 +63,6 @@ void selection_sort(int arr[],int length_of_array){
         // printf("\n");
     }
 
-    printf("\narray sorted by selection sort is:- ");
+    printf("\nfinal array sorted by selection sort is:- ");
     print_array(arr,length_of_array);
 }

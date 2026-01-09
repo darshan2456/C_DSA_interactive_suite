@@ -8,7 +8,7 @@ void bubble_sort_optimized(int arr[], int length_of_array);
 void bubble_sort_optimized_demo(void){
     int length_of_array;
     while(1){
-
+        printf("\n\nBubble sort (optimized) demo");
         int bubble_sort_status=safe_input_int(&length_of_array,
         "\nenter no of elements of array you want to sort (between 1 and 100), enter '-1' to exit:- ",
         1,100);
@@ -32,7 +32,6 @@ void bubble_sort_optimized_demo(void){
                 }
 
                 if(element_status==0){
-                    printf("\nEntered out of range value or character other than numbers. Try again\n");
                     goto retry;
                 }
         }
@@ -62,4 +61,7 @@ void bubble_sort_optimized(int arr[], int length_of_array){
         print_array(arr,length_of_array);
         printf("\n");
     }
+
+    printf("\nfinal array sorted by bubble sort is - ");
+    print_array(arr,length_of_array);
 }
