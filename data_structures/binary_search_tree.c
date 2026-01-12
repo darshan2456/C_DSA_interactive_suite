@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "bst.h"
-
+#include "safe_input.h"
 
 
 //insert function returns -1 on malloc failure, 0 when value already exists in the tree and 1 on successful insertion
@@ -83,41 +83,72 @@ int countnodes(const bstNode* head){
 }
 
 void binary_search_tree_Demo(void){
-    bstNode* head=NULL;
-    int total_bst_nodes;
-    printf("enter total number of nodes you want in the bst :- ");
-    scanf("%d",&total_bst_nodes);
 
-    int i=1;
-    while(total_bst_nodes>0){
-        int value;
-        printf("\nenter value of %d bst node - ",i);
-        scanf("%d",&value);
-        bst_insert(&head,value);
-        i++;
-        total_bst_nodes--;
-    }
     while(1){
-        int choice;
-        printf("\nenter '1' for inorder, '2' for preorder and '3' for postorder :- ");
-        scanf("%d",&choice);
-        if(choice==1){
-            bst_inorder(head);
+        bstNode* head=NULL;
+        int total_bst_nodes;
+        int total_bst_nodes_status;
+
+        total_bst_nodes_status=safe_input_int(&total_bst_nodes,
+        "enter total number of nodes you want in the bst, (between 1 and 100), enter '-1' to exit:- ",
+        1,100);
+
+        if(total_bst_nodes_status==INPUT_EXIT_SIGNAL){
+            printf("\nExiting binary search tree demo\n");
+            return;
         }
-        else if(choice==2){
-            bst_preorder(head);
-        }
-        else if(choice==3){
-            bst_postorder(head);
-        }
-        else{
-            printf("\nenter only one of the three - 1,2,3");
+        if(total_bst_nodes_status==0){
             continue;
         }
 
-        printf("\nenter '-1' to exit and any other number to try different traversal pattern :- ");
-        scanf("%d",&choice);
-        if(choice==-1) break;
+
+        int i=1;
+        while(total_bst_nodes>0){
+            int bst_node_value;
+            int bst_node_value_status;
+            printf("\nenter value of %d bst node - ",i);
+            bst_node_value_status=safe_input_int(&bst_node_value,NULL,1,100);
+            
+            if(bst_node_value_status==INPUT_EXIT_SIGNAL){
+                printf("\nExiting binary search tree demo\n");
+                return;
+            }
+            if(bst_node_value_status==0){
+                continue;
+            }
+
+            bst_insert(&head,bst_node_value);
+            i++;
+            total_bst_nodes--;
+        }
+
+        while(1){
+            int bst_traversal_choice;
+            int bst_traversal_status;
+
+            bst_traversal_status=safe_input_int(&bst_traversal_choice,
+            "\nenter '1' for inorder, '2' for preorder and '3' for postorder and '-1' to exit:- ",
+            1,3);
+            
+            if(bst_traversal_status==INPUT_EXIT_SIGNAL){
+                printf("\nExiting binary search demo\n");
+                return;
+            }
+            if(bst_traversal_choice==0){
+                continue;
+            }
+            if(bst_traversal_choice==1){
+                bst_inorder(head);
+            }
+            else if(bst_traversal_choice==2){
+                bst_preorder(head);
+            }
+            else if(bst_traversal_choice==3){
+                bst_postorder(head);
+            }
+
+
+        }
 
     }
     

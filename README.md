@@ -50,15 +50,15 @@ make clean
 
 If you prefer manual compilation:
 
-gcc -Wall -Wextra -std=c11 -g \
--Idata_structures \
--Iexpression_evaluation \
--Isorting_algorithms \
--Isearching_algorithms \
-data_structures/*.c \
-expression_evaluation/*.c \
-sorting_algorithms/*.c \
-searching_algorithms/*.c \
+gcc -Wall -Wextra -std=c11 -g ^
+-Idata_structures ^
+-Iexpression_evaluation ^
+-Isorting_algorithms ^
+-Isearching_algorithms ^
+data_structures/*.c ^
+expression_evaluation/*.c ^
+sorting_algorithms/*.c ^
+searching_algorithms/*.c ^
 -o demo
 
 This mirrors exactly what the Makefile does.

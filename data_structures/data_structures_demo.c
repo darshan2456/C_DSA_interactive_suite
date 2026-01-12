@@ -20,8 +20,7 @@ void data_structures_demo(void){
         }
 
         if(data_structures_status==0){
-            printf("input ended unexpectedly. Exiting....");
-            return;
+            continue;
         }   
 
 
@@ -31,7 +30,8 @@ void data_structures_demo(void){
             case 1:                                                 //sll,dll and arrays case
                 while(1){
                     int linear_ds_choice;
-                    int linear_ds_status=safe_input_int(&linear_ds_choice,"\nenter 1 for singly linked list demo"
+                    int linear_ds_status=safe_input_int(&linear_ds_choice,
+                    "\nenter 1 for singly linked list demo"
                     "\nenter 2 for doubly linked list demo"
                     "\nenter 3 for arrays demo"
                     "\nenter choice : ",1,3);
@@ -42,15 +42,15 @@ void data_structures_demo(void){
 
                     if(linear_ds_choice==1){
                         sll_Demo();
-                        break;
+                        continue;
                     }
                     if(linear_ds_choice==2){
                         dll_demo();
-                        break;
+                        continue;
                     }
                     if(linear_ds_choice==3){
                         array_demo();
-                        break;
+                        continue;
                     }
                 }
                 break;

@@ -1,18 +1,41 @@
 #include<stdio.h>
 #include "array.h"
+#include "safe_input.h"
 
 void array_demo(void){
-    int length_of_array;
-    int choice;
 
     while(1){
-        printf("enter the length of array :- ");
-        scanf("%d",&length_of_array);
+        int arr_length_status;
+        int length_of_array;
+
+start_array:                                                
+        arr_length_status=safe_input_int(&length_of_array,                                      //taking length of the array
+        "\n\nenter length of the array, (between 1 and 100), enter '-1' to exit :- ",
+        1,100);
+
+        if(arr_length_status==INPUT_EXIT_SIGNAL){
+                printf("\nExiting array demo\n");
+                return;
+            }
+        if(arr_length_status==0){
+            goto start_array;
+        }
+        
         int arr[length_of_array];
 
-        for(int i=0;i<length_of_array;i++){
-            printf("enter array element %d :- ",i);
-            scanf("%d",&arr[i]);
+        for(int i=0;i<length_of_array;i++){                               //main loop which accepts arr elements value
+            int arr_element_status;
+enter_arr_element:
+            printf("enter array element %d, (between 1 and 100), enter '-1' to exit:- ",i);
+            arr_element_status=safe_input_int(&arr[i],NULL,1,100);
+
+            if(arr_element_status==INPUT_EXIT_SIGNAL){
+                printf("\nExiting array demo");
+                return;
+            }
+            if(arr_element_status==0){
+                goto enter_arr_element;
+            }
             printf("\n");
         }
 
@@ -34,12 +57,6 @@ void array_demo(void){
 
         int min_element=min_array(arr, length_of_array);                    //min element of array
         printf("\nminimum element is :- %d",min_element);
-
-
-        printf("\nenter any number to test another array and '-1' to exit :- ");
-        scanf("%d",&choice);
-
-        if(choice==-1) break;
 
     }
     

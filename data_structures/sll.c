@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include "sll.h"
+#include "safe_input.h"
 
 //methods implemented are - insertAtEnd, deleteAtBeginning, insertAtBeginning, deleteAtEnd, printlist, search
 // deleteByValue and reverseList
@@ -8,31 +9,83 @@
 
 
 void sll_Demo(void){
-    Node* head=NULL;
-    int element_count;
-    printf("enter how many elements you want to insert :- ");
-    scanf("%d",&element_count);
-    while(element_count>0){
-        int choice,value;
-        printf("\nenter '1' for inserting at end and '0' for inserting at beginning :- ");
-        scanf("%d",&choice);
-        if(choice==1){
-            printf("enter the element you want to insert at end :- ");
-            scanf("%d",&value);
-            sll_insertAtEnd(&head,value);
-            sll_printlist(head);
-        }
-        else if(choice==0){
-            printf("enter the element you want to insert at beginning :- ");
-            scanf("%d",&value);
-            sll_insertAtBeginning(&head,value);
-            sll_printlist(head);
-        }
-        else{
-            printf("only select one between 0 and 1. now this chance is gone lol.");
-        }
-        element_count--;
-    }
+            Node* head=NULL;
+            int sll_element_count;
+            int sll_length_status;
+
+start_sll:  sll_length_status=safe_input_int(&sll_element_count,
+            "enter how many elements you want to insert, (between 1 and 100), enter '-1' to exit :- ",
+            1,100);
+            
+            if(sll_length_status==INPUT_EXIT_SIGNAL){
+                printf("\nExiting sll demo\n");
+                return;
+            }
+
+            if(sll_length_status==0){
+                goto start_sll;
+            }
+
+            while(sll_element_count>0){
+                int sll_position_choice;
+                int sll_position_status;
+
+sll_position_selection:
+                sll_position_status=safe_input_int(&sll_position_choice,
+                "\nenter '1' for inserting at end and '0' for inserting at beginning, enter '-1' to exit :- ",
+                0,1);
+
+                if(sll_position_status==INPUT_EXIT_SIGNAL){
+                    printf("\nExiting sll demo\n");
+                    return;
+                }
+
+                if(sll_position_status==0){
+                    goto sll_position_selection;
+                }
+
+                if(sll_position_choice==1){
+                    int sll_end_status;
+                    int sll_end_value;
+sll_enter_end_value:sll_end_status=safe_input_int(&sll_end_value,
+                    "enter the no. you want to insert at end, (between 1 and 100), enter '-1' to exit :- ",
+                    1,100);
+
+                    if(sll_end_status==INPUT_EXIT_SIGNAL){
+                        printf("\nExiting sll demo\n");
+                        return;
+                    }
+
+                    if(sll_end_status==0){
+                        goto sll_enter_end_value;
+                    }
+
+                    sll_insertAtEnd(&head,sll_end_value);
+                    sll_printlist(head);
+                }
+                else if(sll_position_choice==0){
+                    int sll_start_status;
+                    int sll_start_value;
+
+sll_enter_start_value:  
+                    sll_start_status=safe_input_int(&sll_start_value,
+                    "enter the no. you want to insert at beginning, (between 1 and 100), enter '-1' to exit :- ",
+                    1,100);
+
+                    if(sll_start_status==INPUT_EXIT_SIGNAL){
+                        printf("\nExiting sll demo\n");
+                        return;
+                    }
+
+                    if(sll_start_status==0){
+                        goto sll_enter_start_value;
+                    }
+                    sll_insertAtBeginning(&head,sll_start_value);
+                    sll_printlist(head);
+                }
+
+                sll_element_count--;
+            }
 
     printf("\n\nReverse of the given list is :-");
     sll_reverseList(&head);
@@ -40,34 +93,48 @@ void sll_Demo(void){
     sll_reverseList(&head);
     printf("\n\ncurrent list is :- ");
     sll_printlist(head);
+
+
     //searching elements in sll
     while(1){
-        int value,choice;
-        printf("\n\nenter the element to be searched :- ");
-        scanf("%d",&value);
-        int index=sll_search(head,value);
-        printf("\nelement found at index :- %d",index);
-        printf("\nenter '-1' to exit or any number to search again :- ");
-        scanf("%d",&choice);
-        if(choice==-1){
+        int sll_search_status;
+        int sll_search_value;
+        sll_search_status=safe_input_int(&sll_search_value,
+        "\nenter the element to be searched, (between 1 and 100), enter '-1' to exit :- ",
+        1,100);
+        if(sll_search_status==INPUT_EXIT_SIGNAL){
             break;
         }
+        if(sll_search_status==0){
+            continue;
+        }
+
+        int index=sll_search(head,sll_search_value);
+        printf("\nelement found at index :- %d",index);
+                
     }
     
 
     //deleting elements in sll
     while(1){
-        int value,choice;
-        printf("\nenter the element to be deleted :- ");
-        scanf("%d",&value);
-        sll_deleteByValue(&head,value);
+        int sll_delete_status;
+        int sll_delete_value;
+        sll_delete_status=safe_input_int(&sll_delete_value,
+        "\nenter the element to be deleted, (between 1 and 100), enter '-1' to exit :- ",
+        1,100);
+        
+        if(sll_delete_status==INPUT_EXIT_SIGNAL){
+            printf("\nExiting sll demo\n");
+            return;
+        }
+        if(sll_delete_status==0){
+            continue;
+        }
+
+        sll_deleteByValue(&head,sll_delete_value);
         printf("\nsll after deletion - ");
         sll_printlist(head);
-        printf("\nenter '-1' to exit or any number to delete again :- ");
-        scanf("%d",&choice);
-        if(choice==-1){
-            break;
-        }
+    
     }
 }
 
@@ -200,4 +267,3 @@ void sll_reverseList(Node** head_ref){
     curr->next=prev;
     *head_ref=curr;
 }
-
