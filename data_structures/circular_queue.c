@@ -11,7 +11,7 @@
 
 void circular_queue_Demo(void){
 
-    while(1){
+    
 
 circular_queue_start:
         circular_queue rollnos;
@@ -35,97 +35,65 @@ circular_queue_start:
 
         //taking number of elements user want to enqueue
         else{
-            int queue_count_value;
-
-            while(1){
-                int queue_count_status;
-                queue_count_status=safe_input_int(&queue_count_value,
-                "\nhow many elements you want to enqueue? (between 1 and circular queue capacity -1), enter '-1' to exit:- ",
-                1,100);
-                
-                if(queue_count_status==INPUT_EXIT_SIGNAL){
+            
+            while (1) {
+                int circ_queue_choice;
+                int circ_queue_status = safe_input_int(
+                    &circ_queue_choice,
+                    "\n\nenter 1 for enqueue, 2 for dequeue and '-1' for exit:- ",
+                    1, 2
+                );
+            
+                if (circ_queue_status == INPUT_EXIT_SIGNAL) {
                     printf("\nExiting circular queue demo\n");
                     destroy_circ_queue(&rollnos);
                     return;
                 }
-                if(queue_count_value==0){
+            
+                if (circ_queue_status == 0) {           //invalid input, (chars or number+chars) loopback to start
                     continue;
                 }
-
-                if(queue_count_value>queue_capacity_value-1){
-                    printf("cannot enqueue more elements than capacity");
-                    continue;
-                }
-                else if(queue_count_value<=0){
-                    printf("cannot enqueue less elements than 1");
-                    continue;
-                }
-                else{
-                    break;
-                }
-            }
-
-            //enqueue logic
-                while(queue_count_value>0){
-                    int circular_queue_element;
-                    int circ_queue_elem_status;
-                    circ_queue_elem_status=safe_input_int(&circular_queue_element,
-                    "\nenter the element you want to enqueue, (between 1 and 100), enter '-1' to exit:- ",
-                    1,100);
-
-                    if(circ_queue_elem_status==INPUT_EXIT_SIGNAL){
+            
+                if (circ_queue_choice == 1) {
+                    int enqueue_val;
+                    int enqueue_val_status = safe_input_int(
+                        &enqueue_val,
+                        "\nEnter value to enqueue (between 1 and 100), enter '-1' to exit:- ",
+                        1, 100
+                    );
+                
+                    if (enqueue_val_status == INPUT_EXIT_SIGNAL) {
                         printf("\nExiting circular queue demo\n");
                         destroy_circ_queue(&rollnos);
                         return;
                     }
-                    if(circ_queue_elem_status==0){
+                
+                    if (enqueue_val_status == 0) {          //invalid input, (chars or number+chars) loopback to start
                         continue;
                     }
-                    if(enqueue(&rollnos,circular_queue_element)==-1){
-                        printf("\nqueue overflow");
-                        break;
+                
+                    if (enqueue(&rollnos, enqueue_val) == -1) {
+                        printf("\nQueue is full (circular overflow)\n");
                     }
-                    queue_count_value--;
-                }
-                printf("\nhere is your circular queue :- ");
-                display_circ_queue(&rollnos);
-            }
 
-            //dequeue logic
-            while(1){
-                int circ_queue_deque_status;
-                int circ_queue_deque_signal;
-                circular_queue* curr=&rollnos;
-
-                circ_queue_deque_status=safe_input_int(&circ_queue_deque_signal,
-                "\nif you want to dequeue one element press '1' otherwise exit on '-1' :- ",
-                1,1);
-
-                if(circ_queue_deque_status==INPUT_EXIT_SIGNAL){
-                    printf("\nExiting circular queue demo\n");
-                    destroy_circ_queue(&rollnos);
-                    return;
-                }
-                if(circ_queue_deque_status==0){
-                    continue;
-                }
-        
-                if(circ_queue_deque_signal==1){
-                    if(curr->front==curr->rear){
-                        printf("\ncannot deque empty queue. exiting.\n");
-                        break;
-                    }
-                    dequeue(&rollnos);
-                    printf("\nhere is your circular queue after dequeue :- ");
                     display_circ_queue(&rollnos);
                 }
+            
+                else if (circ_queue_choice == 2) {
+                    int removed = dequeue(&rollnos);
                 
-                else{
-                    continue;
+                    if (removed == -1) {
+                        printf("\nQueue is empty\n");
+                    } else {
+                        printf("\nDequeued element: %d\n", removed);
+                    }
+
+                    display_circ_queue(&rollnos);
                 }
+            
+                
             }
 
-            destroy_circ_queue(&rollnos);
         }
     
 
