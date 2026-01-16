@@ -1,12 +1,15 @@
 #include<stdio.h>
 #include "safe_input.h"
 #include "sorting_algorithms.h"
+#include<time.h>
 
 void binary_search(int arr[], int target, int length_of_array);
 
 void binary_search_demo(void){
 
     while(1){
+        clock_t start_t,end_t;
+        double total_t;
         int length_of_array;
         int target;
         int binary_search_status;
@@ -60,7 +63,13 @@ retry_target:   target_status=safe_input_int(&target,
             }
 
         selection_sort(arr,length_of_array);
+
+        start_t=clock();
         binary_search(arr,target,length_of_array);
+        end_t=clock();
+        total_t=(double)(end_t-start_t)/CLOCKS_PER_SEC;
+        printf("\ntotal CPU time taken for binary search:- %f seconds",total_t);
+        printf("\n(most probably execution time would be lesser than clock resolution, resulting in 0.00)");
     }
 }
 

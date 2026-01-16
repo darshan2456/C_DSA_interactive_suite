@@ -100,4 +100,3 @@ int min_array(const int arr[], int length_of_array){
     }
     return min_element;
 }
-

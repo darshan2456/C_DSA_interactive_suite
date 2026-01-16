@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include "array.h"
+#include<time.h>
 #include "safe_input.h"
 
 
@@ -43,12 +44,22 @@ void bubble_sort_optimized_demo(void){
     
 }
 
-void bubble_sort_optimized(int arr[], int length_of_array){
+
+//note: the time measured by clock() function includes the time for bubble sort computation and 
+//printing the array state after each iteration. the CPU time must not be treated as a measure of efficiency of 
+//the algorithm and is for demonstration only.
+void  bubble_sort_optimized(int arr[], int length_of_array){
+
+    clock_t start_t,end_t;
+    double total_t;
+
+    start_t=clock();        //time recorded at the start of the algorithm
+
     for(int i=0;i<length_of_array-1;i++){
         int swapped=0;
 
-        for(int j=0;j<length_of_array-i-1;j++){
-            if(arr[j]>arr[j+1]){                                      //swapping happens here
+        for(int j=0;j<length_of_array-i-1;j++){                         //Swapping happens here
+            if(arr[j]>arr[j+1]){                                      
                 int temp=arr[j];
                 arr[j]=arr[j+1];
                 arr[j+1]=temp;
@@ -62,6 +73,11 @@ void bubble_sort_optimized(int arr[], int length_of_array){
         printf("\n");
     }
 
+    end_t=clock();          //time recorded at the end of the algorithm
+
+    total_t=(double)(end_t-start_t)/CLOCKS_PER_SEC;
+
     printf("\nfinal array sorted by bubble sort is - ");
     print_array(arr,length_of_array);
+    printf("\nTotal CPU time taken:- %f seconds",total_t);
 }
