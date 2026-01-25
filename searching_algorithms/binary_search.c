@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include "safe_input.h"
-#include "sorting_algorithms.h"
+#include "sorting_algorithms_n2.h"
 #include<time.h>
 
 void binary_search(int arr[], int target, int length_of_array);

@@ -1,9 +1,9 @@
 #include<stdio.h>
-#include "sorting_algorithms.h"
+#include "sorting_algorithms_n2.h"
 #include "safe_input.h"
 
 
-void sorting_algorithms_demo(void){
+void sorting_algorithms_n2_demo(void){
     int sorting_algo_status,sorting_algo_choice;
     while(1){
         sorting_algo_status=safe_input_int(

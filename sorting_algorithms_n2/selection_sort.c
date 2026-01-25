@@ -74,9 +74,8 @@ void selection_sort(int arr[],int length_of_array){
     end_t=clock();
     total_t=(double)(end_t-start_t);
 
-    printf("\n(per iteration array state is not displayed as this function is also used in binary search algorithm)");
-    printf("\n\nfinal array sorted by selection sort is:- ");
+    printf("\nfinal array sorted by selection sort is:- ");
     print_array(arr,length_of_array);
     printf("\nTotal CPU time taken for selection sort:- %f seconds",total_t);
-    printf("\n(most probably execution time would be lesser than clock resolution, resulting in 0.00)");
+    printf("\n(most probably execution time would be lesser than clock resolution, resulting in 0.00)\n");
 }

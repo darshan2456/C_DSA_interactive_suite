@@ -139,4 +139,3 @@ void display_circ_queue(circular_queue* queue_ptr){
         i=(i+1)%queue_ptr->N;
     }
 }
-

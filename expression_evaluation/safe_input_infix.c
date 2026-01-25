@@ -45,7 +45,7 @@ int validate_infix_expr(char *buff,size_t size,const char *prompt){
             else{
                 printf("\ninvalid character: %c\n",c);
                 printf("\nonly alphanumeric character, parantheses, +,-,*,/ operators are supported.\neg - A+B-C*D/E+(F-G) is a valid"
-                    "infix expression where alphabets can be any alphanumeric character - A,b,1,2 etc");
+                    " infix expression where alphabets can be any alphanumeric character - A,b,1,2 etc");
                 
                 return 0;                       
             }

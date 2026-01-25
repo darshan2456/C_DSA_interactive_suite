@@ -6,8 +6,9 @@
 #include "array.h"
 #include "bst.h"
 #include "expression.h"
-#include "sorting_algorithms.h"
+#include "sorting_algorithms_n2.h"
 #include "searching_algorithms.h"
+#include "graph_traversals.h"
 #include "safe_input.h"
 
 void data_structures_demo(void);
@@ -25,10 +26,11 @@ int main(){
         "\n(at any point enter '-1' to exit that particular demo)\n\n"
         "click 1 for data structures demo\n"
         "click 2 for expression evaluation (infix to postfix and postfix evaluation) demo\n"
-        "click 3 for sorting algorithms demo\n"
+        "click 3 for sorting algorithms (the n^2 family) demo\n"
         "click 4 for searching algorithms demo\n"
+        "click 5 for graph traversals (bfs/dfs) demo\n"
         "enter choice : ",
-        1,4                                                             //limits
+        1,5                                                             //limits
         );
         
         if(status==-111){
@@ -47,10 +49,13 @@ int main(){
                 expression_evaluation_demo();
                 break;
             case 3:
-                sorting_algorithms_demo();
+                sorting_algorithms_n2_demo();
                 break;
             case 4:
                 searching_algorithms_demo();
+                break;
+            case 5:
+                graph_traversals_demo();
                 break;
             }
 

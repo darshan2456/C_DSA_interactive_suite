@@ -2,14 +2,16 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -g \
 	-Idata_structures \
 	-Iexpression_evaluation \
-	-Isorting_algorithms \
-	-Isearching_algorithms
+	-Isorting_algorithms_n2 \
+	-Isearching_algorithms \
+	-Igraph_traversals_bfs_dfs
 
 SRCS = \
 	data_structures/*.c \
 	expression_evaluation/*.c \
-	sorting_algorithms/*.c \
-	searching_algorithms/*.c
+	sorting_algorithms_n2/*.c \
+	searching_algorithms/*.c \
+	graph_traversals_bfs_dfs/*.c
 
 TARGET = demo
 
