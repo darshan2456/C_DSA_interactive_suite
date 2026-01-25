@@ -22,6 +22,9 @@ void graph_traversals_demo(void){
             case 1:
                 bfs_demo();
                 break;
+            case 2:
+                dfs_demo();
+                break;
         }
         
     }
