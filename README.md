@@ -1,14 +1,15 @@
-🧠 DSA_using_C
+C_DSA_interactive_suite
 
-A modular, console-based Data Structures & Algorithms library written entirely in C, built from scratch with pointer-level control, manual memory management, and robust input validation.
+A modular, console-based Data Structures & Algorithms library written entirely in C, built from scratch with pointer-level control, manual memory management,(malloc/free) and unbreakable/uncrashable input validation.
 
-This project emphasizes foundational correctness, systems-level thinking, and engineering discipline over shortcuts, abstractions, or library crutches.
+This project emphasizes conceptual clarity, low-level fundamentals and memory allocation understanding and also it has an educational approach to it. I have made it in a way that it can be used to help future generations understand data structures with visualizations and experimentations.
 
-⚙️ Implemented as a reusable DSA core with an interactive, console-driven demo layer on top. Designed to be run from a terminal to observe algorithm behavior step-by-step
+The codebase is implemented as a reusable DSA core with an interactive, console-driven demo layer on top.
+It is designed to be run from a terminal to observe algorithm behavior step-by-step.
 
-📁 Project Overview
+Project Overview:-
 
-📦 Data Structures
+Data Structures
 
 Singly Linked List (SLL)
 
@@ -16,75 +17,128 @@ Doubly Linked List (DLL)
 
 Circular Queue (array-based)
 
+Stack (array / linked implementation as required)
+
 Binary Search Tree (BST)
 
-⚙️ Algorithms
+Algorithms
+
+Expression Processing
 
 Infix → Postfix conversion
 
 Postfix expression evaluation
 
-Linear Search, Binary Search
+Searching
 
-Bubble Sort, Selection Sort, Insertion Sort
+Linear Search
 
-🛠️ Build Instructions (Recommended)
+Binary Search
+
+Sorting (O(n²) family)
+
+Bubble Sort
+
+Selection Sort
+
+Insertion Sort
+
+Graph Traversals
+
+Breadth-First Search (BFS)
+
+Depth-First Search (DFS)
+
+Graph traversals are implemented using:
+
+an adjacency matrix representation
+
+an explicit queue (for BFS)
+
+an explicit stack (for DFS)
+
+Both traversals are iterative.
+
+Build Instructions (Recommended)
 
 This project includes a Makefile to simplify building across multiple directories.
 
-✅ Requirements
+Requirements
 
 GNU Make ≥ 3.81
 
-GCC (or compatible C compiler)
+GCC (or a compatible C compiler)
 
-▶️ Build
+Build
 make
 
-This generates a single executable:     demo (or demo.exe on Windows)
 
-🧹 Clean
+This generates a single executable:
+
+demo (Linux / macOS)
+
+demo.exe (Windows)
+
+Clean
 make clean
 
-🔧 Manual Build (Without Make)
+Manual Build (Without Make):-
 
-If you prefer manual compilation:
+(If you prefer manual compilation)
+
+(Linux/macOS):
+
+gcc -Wall -Wextra -std=c11 -g \
+-Idata_structures \
+-Iexpression_evaluation \
+-Isorting_algorithms \
+-Isearching_algorithms \
+-Igraph_traversals_bfs_dfs \
+data_structures/*.c \
+expression_evaluation/*.c \
+sorting_algorithms/*.c \
+searching_algorithms/*.c \
+graph_traversals_bfs_dfs/*.c \
+-o demo
+
+For windows:
 
 gcc -Wall -Wextra -std=c11 -g ^
 -Idata_structures ^
 -Iexpression_evaluation ^
 -Isorting_algorithms ^
 -Isearching_algorithms ^
+-Igraph_traversals_bfs_dfs ^
 data_structures/*.c ^
 expression_evaluation/*.c ^
 sorting_algorithms/*.c ^
 searching_algorithms/*.c ^
+graph_traversals_bfs_dfs/*.c ^
 -o demo
 
-This mirrors exactly what the Makefile does.
+This mirrors exactly what the Makefile performs.
 
-⏱️ Time Complexity
+Time Complexity
+Searching Algorithms-
+Algorithm	Time Complexity
+Linear Search	O(n)
+Binary Search	O(log n)
+Sorting Algorithms-
+Algorithm	Time Complexity
+Bubble Sort	O(n²)
+Selection Sort	O(n²)
+Insertion Sort	O(n²)
+Graph Traversals-
+Algorithm	Time Complexity
+BFS	O(V²) (Adjacency Matrix)
+DFS	O(V²) (Adjacency Matrix)
 
-🔍 Searching Algorithms
+Design & Implementation Philosophy:-
 
-Algorithm	    | Time Complexity
-                |
-Linear Search	| O(n)
-Binary Search	| O(log n)
+It is structured as a small but REAL C software system.
+This is an interconnected program where you can go to any module from anywhere just by following the instructions on the screen. You can test all data structures and algorithms from one execution of the .exe file...
 
-🔃 Sorting Algorithms
-
-Algorithm	       | Time Complexity
-                   |
-Bubble Sort	       | O(n²)
-Selection Sort	   | O(n²)
-Insertion Sort	   | O(n²)
-
-🧠 Design & Implementation Philosophy
-
-This project is not a collection of snippets — it is structured as a small but real C software system.
-
-🔨 Built Completely from Scratch
+Built Completely from Scratch
 
 No STL
 
@@ -102,31 +156,29 @@ dynamic memory allocation (malloc, free)
 
 explicit ownership and lifetime reasoning
 
-🔁 Pointer-Level Reasoning (SLL & DLL)
+Pointer-Level Reasoning (SLL & DLL)
 
 The linked list implementations focus on explicit pointer manipulation, not abstract reasoning.
 
-🔹 Singly Linked List (SLL)
+Singly Linked List (SLL):-
 
 Traversal using next pointers
 
-Safe insertion and deletion, Edge cases handled for head and tail operations
+Safe insertion and deletion
 
-In-place list reversal implemented and integrated into the console application
+Edge cases handled for head and tail
 
-Uses classic prev, curr, next pointer reassignment
+In-place list reversal using classic three pointers technique (prev, curr and next)
 
-No extra memory or auxiliary structures
-
-🔹 Doubly Linked List (DLL)
+Doubly Linked List (DLL):-
 
 Bidirectional traversal via prev / next
 
 Correct invariant maintenance during insertion and deletion
 
-Edge cases handled for head and tail operations
+Edge cases handled for head and tail
 
-All operations are written with strict attention to:
+Strict attention to:
 
 pointer validity
 
@@ -134,7 +186,21 @@ memory ownership
 
 avoiding dangling references
 
-🧩 Modularity & Header Discipline
+Graph Traversals (BFS & DFS):-
+
+Graph traversal logic is implemented with the same discipline as core data structures.
+
+Graphs are represented using an adjacency matrix
+
+BFS uses a circular queue implementation from the data_structures module
+
+DFS uses an explicit stack implementation from the expression_evaluation module
+
+visited[] invariants are strictly enforced
+
+Traversals are iterative (no recursion)
+
+Modularity & Header Discipline
 
 The codebase follows strict modular design rules:
 
@@ -146,48 +212,46 @@ No duplicate symbols across translation units
 
 Explicit namespacing via function prefixes
 
-🔐 Language Features Used Deliberately
+Each directory acts as an independent module, making the system easy to extend, debug or refactor.
 
-'static' for file-local helper functions
+Language Features Used Deliberately
 
-'const' for API correctness and pointer safety
+static for file-local helper functions
 
-Macro 'INPUT_EXIT_SIGNAL' (defined in safe_input.h) for:   exit signal
+const for API correctness and pointer safety
 
-consistent validation behavior
+Macro INPUT_EXIT_SIGNAL (defined in safe_input.h) for:
 
-Each directory acts as an independent module, making the system easy to extend or refactor.
+consistent exit signaling
 
-🛡️ Robust Input Validation (Key Highlight)
+uniform validation behavior
 
-The following modules implement dedicated, unbreakable input validation:
+Robust Input Validation (Key Highlight):-
 
-/expression_evaluation
-
-/sorting_algorithms
-
-/searching_algorithms
+input anywhere and everywhere is taken via a function 'safe_input_int()'
 
 Validation is handled via custom-built helper functions, not ad-hoc checks.
 
 Examples:
 
-Infix expression validation (lexical, not semantic):- 
+Infix expression validation:(validate_infix_expr())
 
 allowed tokens
-parentheses balance
 
-Postfix expression validation:- 
+balanced parentheses
+
+Postfix expression validation:(validate_postfix_expr())
 
 stack depth invariants
-Numeric range validation for searching and sorting
 
-❌ Invalid input cannot crash the program
-✅ It is rejected, cleaned, and retried safely
+Numeric range validation for searching, sorting, and graph input
 
-🧮 Expression Evaluation (Stack-Driven)
+Invalid input cannot crash the program.
+It is rejected, cleaned, and retried safely.
 
-Stack implementation lives inside /expression_evaluation
+Expression Evaluation (Stack-Driven):- 
+
+Stack implementation lives inside expression_evaluation
 
 Infix → Postfix conversion using:
 
@@ -197,9 +261,9 @@ parentheses handling
 
 Postfix evaluation via a stack execution model
 
-This is a classic two-phase algorithm, implemented with full control over flow and state.
+This is a classic two-phase algorithm implemented with full control over flow and state.
 
-🎯 Purpose of the Project
+Purpose of the Project:- 
 
 Strengthen low-level C fundamentals
 
@@ -209,11 +273,10 @@ Practice real debugging (linker errors, input desync, infinite loops)
 
 Develop confidence in systems-level programming
 
-
-👤 Author
+Author
 
 Darshan Parekh
-🎓 B.Sc. Computer Science
+B.Sc. Computer Science
 
 Interests
 
