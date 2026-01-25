@@ -69,17 +69,14 @@ GNU Make ≥ 3.81
 
 GCC (or a compatible C compiler)
 
-Build
+Build-
 make
-
 
 This generates a single executable:
 
-demo (Linux / macOS)
+demo (Linux / macOS) OR demo.exe (Windows)
 
-demo.exe (Windows)
-
-Clean
+Clean-
 make clean
 
 Manual Build (Without Make):-
@@ -118,16 +115,12 @@ graph_traversals_bfs_dfs/*.c ^
 
 This mirrors exactly what the Makefile performs.
 
-Time Complexity
+Time Complexity:-
+
 Searching Algorithms-
-Algorithm	Time Complexity
-Linear Search	O(n)
-Binary Search	O(log n)
+Linear Search	O(n), Binary Search	O(log n)
 Sorting Algorithms-
-Algorithm	Time Complexity
-Bubble Sort	O(n²)
-Selection Sort	O(n²)
-Insertion Sort	O(n²)
+Bubble Sort	O(n²), Selection Sort	O(n²), Insertion Sort	O(n²)
 Graph Traversals-
 Algorithm	Time Complexity
 BFS	O(V²) (Adjacency Matrix)
@@ -140,13 +133,7 @@ This is an interconnected program where you can go to any module from anywhere j
 
 Built Completely from Scratch
 
-No STL
-
-No external libraries
-
-No code generators
-
-No copy-paste templates
+No STL/external libraries
 
 All data structures and algorithms are implemented manually using:
 
@@ -273,17 +260,10 @@ Practice real debugging (linker errors, input desync, infinite loops)
 
 Develop confidence in systems-level programming
 
-Author
+Author-
 
 Darshan Parekh
 B.Sc. Computer Science
 
-Interests
-
-Systems programming
-
-Open-source software
-
-Cybersecurity
-
-Low-level engineering
+Interests:
+Systems programming - Open-source software - Cybersecurity - Low-level engineering
