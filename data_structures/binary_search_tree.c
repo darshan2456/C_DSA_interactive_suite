@@ -34,7 +34,7 @@ int bst_insert(bstNode** head_ref,int value){
             return bst_insert(&(*head_ref)->left,value);
         }
     }
-    else if((*head_ref)->data<value && (*head_ref)->right==NULL){
+    else if((*head_ref)->data<value){
         if((*head_ref)->right==NULL){
             bstNode* node=malloc(sizeof(bstNode));
             if(node==NULL) return -1;
@@ -80,10 +80,16 @@ void bst_postorder(const bstNode* head){
 
 int countnodes(const bstNode* head){
     if(head==NULL) return 0;
-    if(head->left==NULL&&head->right==NULL){
-        return 1;
-    }
     return countnodes(head->left) + countnodes(head->right)+1;
+}
+
+void destroy_bst(bstNode* head){
+    if(head==NULL){
+        return;
+    }
+    destroy_bst(head->left);
+    destroy_bst(head->right);
+    free(head);
 }
 
 void binary_search_tree_Demo(void){
@@ -122,7 +128,15 @@ void binary_search_tree_Demo(void){
                 continue;
             }
 
-            bst_insert(&head,bst_node_value);
+            int insertion_status=bst_insert(&head,bst_node_value);
+            if(insertion_status==0){
+                printf("\nentered same value. only unique values please");
+                continue;
+            }
+            if(insertion_status==-1){
+                printf("\ncouldnt insert node due to malloc failure");
+                return;
+            }
             i++;
             total_bst_nodes--;
         }
@@ -136,6 +150,7 @@ void binary_search_tree_Demo(void){
             1,3);
             
             if(bst_traversal_status==INPUT_EXIT_SIGNAL){
+                destroy_bst(head);
                 break;
             }
             if(bst_traversal_choice==0){

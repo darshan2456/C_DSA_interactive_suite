@@ -88,7 +88,7 @@ void data_structures_demo(void){
                         binary_search_tree_Demo();
                     }
                     break;
-                    }
+                }
                 break;
                     
         }       
