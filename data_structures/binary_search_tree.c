@@ -20,29 +20,33 @@ int bst_insert(bstNode** head_ref,int value){
     if((*head_ref)->data==value){
         return 0;
     }
-    if((*head_ref)->data>value && (*head_ref)->left==NULL){
-       bstNode* node=malloc(sizeof(bstNode));
-       if(node==NULL) return -1;
-       node->data=value;
-       node->left=NULL;
-        node->right=NULL;
-       (*head_ref)->left=node;
-       return 1;
-    }
-    else if((*head_ref)->data>value && (*head_ref)->left!=NULL){
-        return bst_insert(&(*head_ref)->left,value);
+    if((*head_ref)->data>value){
+        if((*head_ref)->left==NULL){
+            bstNode* node=malloc(sizeof(bstNode));
+            if(node==NULL) return -1;
+            node->data=value;
+            node->left=NULL;
+            node->right=NULL;
+            (*head_ref)->left=node;
+            return 1;
+        }
+        else{
+            return bst_insert(&(*head_ref)->left,value);
+        }
     }
     else if((*head_ref)->data<value && (*head_ref)->right==NULL){
-        bstNode* node=malloc(sizeof(bstNode));
-        if(node==NULL) return -1;
-        node->data=value;
-        node->left=NULL;
-        node->right=NULL;
-        (*head_ref)->right=node;
-        return 1;
-    }
-    else if((*head_ref)->data<value && (*head_ref)->right!=NULL){
-        return bst_insert(&(*head_ref)->right,value);
+        if((*head_ref)->right==NULL){
+            bstNode* node=malloc(sizeof(bstNode));
+            if(node==NULL) return -1;
+            node->data=value;
+            node->left=NULL;
+            node->right=NULL;
+            (*head_ref)->right=node;
+            return 1;
+        }
+        else{
+            return bst_insert(&(*head_ref)->right,value);
+        }
     }
     return -1;
 }
@@ -89,6 +93,7 @@ void binary_search_tree_Demo(void){
         int total_bst_nodes;
         int total_bst_nodes_status;
 
+        printf("\n");
         total_bst_nodes_status=safe_input_int(&total_bst_nodes,
         "enter total number of nodes you want in the bst, (between 1 and 100), enter '-1' to exit:- ",
         1,100);
@@ -131,8 +136,7 @@ void binary_search_tree_Demo(void){
             1,3);
             
             if(bst_traversal_status==INPUT_EXIT_SIGNAL){
-                printf("\nExiting binary search demo\n");
-                return;
+                break;
             }
             if(bst_traversal_choice==0){
                 continue;
