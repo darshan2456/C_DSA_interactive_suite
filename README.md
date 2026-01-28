@@ -1,4 +1,4 @@
-````markdown
+
 # C_DSA_interactive_suite
 
 A modular, console-based **Data Structures & Algorithms library** written entirely in **C**, built from scratch with pointer-level control, manual memory management (`malloc` / `free`), and defensive input validation.
@@ -8,7 +8,8 @@ This project emphasizes **conceptual clarity**, **low-level fundamentals**, and 
 The codebase is structured as a reusable **DSA core**, with an interactive, console-driven **demo layer** built on top.
 
 ---
-## Demo: Bubble Sort (step-by-step) 
+
+## Demo: Bubble Sort (step-by-step)
 
 [![asciinema demo](https://asciinema.org/a/750uLyKqEysvvL34.svg)](https://asciinema.org/a/750uLyKqEysvvL34)
 
@@ -16,9 +17,7 @@ The codebase is structured as a reusable **DSA core**, with an interactive, cons
 
 [![asciicast](https://asciinema.org/a/nmJbUTDtEnjjGk5k.svg)](https://asciinema.org/a/nmJbUTDtEnjjGk5k?speed=1.5)
 
-
 ---
-
 
 ## Project Overview
 
@@ -67,9 +66,9 @@ This project includes a **Makefile** to simplify building across multiple direct
 
 ### Build
 ```bash
-
 make
-````
+```
+
 This generates a single executable:
 
 * `demo` (Linux / macOS)
@@ -80,6 +79,7 @@ This generates a single executable:
 ```bash
 make clean
 ```
+
 ---
 
 ## Manual Build (Without Make)
@@ -182,8 +182,6 @@ Strict attention is paid to:
 
 ## Graph Traversals (BFS & DFS)
 
-Graph traversal logic follows the same discipline as core data structures.
-
 * Graphs are represented using an adjacency matrix
 * BFS uses the circular queue from the `data_structures` module
 * DFS uses an explicit stack from the `expression_evaluation` module
@@ -216,7 +214,7 @@ Each directory acts as an independent module, making the system easy to extend, 
 
 ---
 
-## Robust Input Validation (Key Highlight)
+## Robust Input Validation
 
 All user input across the entire application is handled via:
 
@@ -244,7 +242,7 @@ Invalid input:
 
 ---
 
-## Expression Evaluation (Stack-Driven)
+## Expression Evaluation
 
 * Stack implementation resides in `expression_evaluation`
 * Infix → Postfix conversion using:
@@ -277,6 +275,3 @@ B.Sc. Computer Science
 * Open-Source Software
 * Cybersecurity
 * Low-Level Engineering
-
-```
-```
