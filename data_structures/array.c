@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include "array.h"
 #include "safe_input.h"
 
@@ -40,24 +41,32 @@ enter_arr_element:
         }
 
 
-        printf("before swap, the array is :- ");                    //print before swap, as user gave, same to same
+        printf("array you inserted is :- ");                    //print before swap, as user gave, same to same
         print_array(arr,length_of_array);
 
-
-        swap_adjacent_pairs(arr,length_of_array);              //main swapping happens here
-
-
-        printf("\nafter swap, the array is :- ");                           //print swapped array
+        swap_adjacent_pairs(arr,length_of_array);              //swapping happens here
+        printf("\nafter swap, the array is :- ");                           
         print_array(arr, length_of_array);                      
 
+        swap_adjacent_pairs(arr,length_of_array);               //revert to normal
+        printf("\noriginal array:- ");
+        print_array(arr,length_of_array);
 
+        
         int max_element=max_array(arr, length_of_array);                     //max element of array
         printf("\n\nmaximum element is :- %d",max_element);
-
 
         int min_element=min_array(arr, length_of_array);                    //min element of array
         printf("\nminimum element is :- %d",min_element);
 
+
+        reverse_array(arr,length_of_array);                 //array is reversed in memory
+        printf("\n\nreverse of the array is :- ");
+        print_array(arr,length_of_array);
+
+        reverse_array(arr,length_of_array);                 //revert to normal
+        printf("\noriginal array :- ");
+        print_array(arr,length_of_array);
     }
     
 }
@@ -69,6 +78,15 @@ void swap_adjacent_pairs(int arr[],int length_of_array){
         int temp=arr[i];
         arr[i]=arr[i+1];
         arr[i+1]=temp;
+    }
+}
+
+
+void reverse_array(int arr[], int length_of_array){
+    for(int i=0;i<(length_of_array/2);i++){
+        int temp=arr[i];
+        arr[i]=arr[length_of_array-i-1];
+        arr[length_of_array-i-1]=temp;
     }
 }
 

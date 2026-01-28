@@ -13,5 +13,6 @@ void bst_inorder(const bstNode* head);
 void bst_preorder(const bstNode* head);
 void bst_postorder(const bstNode* head);
 int countnodes(const bstNode* head);
+void destroy_bst(bstNode* head);
 
 #endif

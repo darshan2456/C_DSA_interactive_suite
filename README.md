@@ -1,13 +1,24 @@
 ````markdown
 # C_DSA_interactive_suite
 
-A modular, console-based **Data Structures & Algorithms library** written entirely in **C**, built from scratch with pointer-level control, manual memory management (`malloc` / `free`), and robust, uncrashable input validation.
+A modular, console-based **Data Structures & Algorithms library** written entirely in **C**, built from scratch with pointer-level control, manual memory management (`malloc` / `free`), and defensive input validation.
 
-This project emphasizes **conceptual clarity**, **low-level fundamentals**, and **explicit memory reasoning**. It is designed with an educational intent, allowing future generations to observe, experiment with, and understand data structures and algorithms step-by-step inculcating deep understanding through an interactive terminal-based interface.
+This project emphasizes **conceptual clarity**, **low-level fundamentals**, and **explicit memory reasoning**. It is designed with an educational intent, allowing learners to observe, experiment with, and understand data structures and algorithms step-by-step through an interactive terminal-based interface.
 
 The codebase is structured as a reusable **DSA core**, with an interactive, console-driven **demo layer** built on top.
 
 ---
+## Demo: Bubble Sort (step-by-step) 
+
+[![asciinema demo](https://asciinema.org/a/750uLyKqEysvvL34.svg)](https://asciinema.org/a/750uLyKqEysvvL34)
+
+## Demo: Binary Search Tree (step-by-step)
+
+[![asciicast](https://asciinema.org/a/nmJbUTDtEnjjGk5k.svg)](https://asciinema.org/a/nmJbUTDtEnjjGk5k?speed=1.5)
+
+
+---
+
 
 ## Project Overview
 
