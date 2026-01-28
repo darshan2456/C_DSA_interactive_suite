@@ -18,6 +18,7 @@ start_dll:  dll_length_status=safe_input_int(&dll_element_count,
             
             if(dll_length_status==INPUT_EXIT_SIGNAL){
                 printf("\nExiting dll demo\n");
+                delete_dll(head);
                 return;
             }
             if(dll_length_status==0){
@@ -36,13 +37,14 @@ dll_position_selection:
 
         if(dll_position_status==INPUT_EXIT_SIGNAL){
             printf("\nExiting dll demo\n");
+            delete_dll(head);
             return;
         }
         if(dll_position_status==0){
             goto dll_position_selection;
         }
         
-        if(dll_position_choice==0){                 //enter element at end
+        if(dll_position_choice==0){                 //enter element at start
             int dll_end_status;
             int dll_end_value;
 
@@ -53,15 +55,16 @@ dll_enter_end_value:
 
             if(dll_end_status==INPUT_EXIT_SIGNAL){
                 printf("\nExiting dll demo\n");
+                delete_dll(head);
                 return;
             }
             if(dll_end_status==0){
                 goto dll_enter_end_value;
             }
-            dll_insertAtEnd(&head,dll_end_value);
+            dll_insertAtBeginning(&head,dll_end_value);
             dll_printlist(head);
         }
-        else if(dll_position_choice==1){                    //enter element at start
+        else if(dll_position_choice==1){                    //enter element at end
             int dll_start_status;
             int dll_start_value;
 
@@ -72,12 +75,13 @@ dll_enter_start_value:
 
             if(dll_start_status==INPUT_EXIT_SIGNAL){
                 printf("\nExiting dll demo\n");
+                delete_dll(head);
                 return;
             }
             if(dll_start_status==0){
                 goto dll_enter_start_value;
             }
-            dll_insertAtBeginning(&head,dll_start_value);
+            dll_insertAtEnd(&head,dll_start_value);
             dll_printlist(head);
         }
         dll_element_count--;
@@ -119,6 +123,7 @@ dll_enter_start_value:
 
         if(dll_delete_status==INPUT_EXIT_SIGNAL){
             printf("\nExiting dll demo\n");
+            delete_dll(head);
             return;
         }
         if(dll_delete_status==0){
@@ -222,7 +227,7 @@ int dll_deleteAtEnd(doubly_ll_Node** head_ref){
 }
 
 int dll_deleteByValue(doubly_ll_Node** head_ref, int key){
-    if(*head_ref==NULL) return -1;
+    if(*head_ref==NULL) return 0;
     if((*head_ref)->next==NULL && (*head_ref)->data==key){
         free(*head_ref);
         *head_ref=NULL;
@@ -249,5 +254,13 @@ int dll_deleteByValue(doubly_ll_Node** head_ref, int key){
         temp=temp->next;
     }
     printf("\nNode not found!!!");
-    return -1;
+    return 0;
+}
+
+void delete_dll(doubly_ll_Node* head){
+    while(head!=NULL){
+        doubly_ll_Node* upcoming=head->next;
+        free(head);
+        head=upcoming;
+    }
 }

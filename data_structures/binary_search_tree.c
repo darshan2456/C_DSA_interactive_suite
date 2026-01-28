@@ -106,6 +106,7 @@ void binary_search_tree_Demo(void){
 
         if(total_bst_nodes_status==INPUT_EXIT_SIGNAL){
             printf("\nExiting binary search tree demo\n");
+            destroy_bst(head);
             return;
         }
         if(total_bst_nodes_status==0){
@@ -122,6 +123,7 @@ void binary_search_tree_Demo(void){
             
             if(bst_node_value_status==INPUT_EXIT_SIGNAL){
                 printf("\nExiting binary search tree demo\n");
+                destroy_bst(head);
                 return;
             }
             if(bst_node_value_status==0){
@@ -134,8 +136,8 @@ void binary_search_tree_Demo(void){
                 continue;
             }
             if(insertion_status==-1){
-                printf("\ncouldnt insert node due to malloc failure");
-                return;
+                printf("\ncouldnt insert node due to malloc failure. try again\n");
+                continue;
             }
             i++;
             total_bst_nodes--;

@@ -15,5 +15,6 @@ int sll_insertAtBeginning(Node** head_ref,int value);
 void sll_Demo(void);
 int sll_search(const Node* head,int key);
 void sll_reverseList(Node** head_ref);
+void delete_sll(Node* head);
 
 #endif

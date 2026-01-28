@@ -19,6 +19,7 @@ start_sll:  sll_length_status=safe_input_int(&sll_element_count,
             
             if(sll_length_status==INPUT_EXIT_SIGNAL){
                 printf("\nExiting sll demo\n");
+                delete_sll(head);
                 return;
             }
 
@@ -37,6 +38,7 @@ sll_position_selection:
 
                 if(sll_position_status==INPUT_EXIT_SIGNAL){
                     printf("\nExiting sll demo\n");
+                    delete_sll(head);
                     return;
                 }
 
@@ -53,6 +55,7 @@ sll_enter_end_value:sll_end_status=safe_input_int(&sll_end_value,
 
                     if(sll_end_status==INPUT_EXIT_SIGNAL){
                         printf("\nExiting sll demo\n");
+                        delete_sll(head);
                         return;
                     }
 
@@ -60,7 +63,11 @@ sll_enter_end_value:sll_end_status=safe_input_int(&sll_end_value,
                         goto sll_enter_end_value;
                     }
 
-                    sll_insertAtEnd(&head,sll_end_value);
+                    int status=sll_insertAtEnd(&head,sll_end_value);
+                    if(status==0){
+                        printf("\nmalloc allocation failure. try again\n");
+                        goto sll_enter_end_value;
+                    }
                     sll_printlist(head);
                 }
                 else if(sll_position_choice==0){
@@ -74,13 +81,18 @@ sll_enter_start_value:
 
                     if(sll_start_status==INPUT_EXIT_SIGNAL){
                         printf("\nExiting sll demo\n");
+                        delete_sll(head);
                         return;
                     }
 
                     if(sll_start_status==0){
                         goto sll_enter_start_value;
                     }
-                    sll_insertAtBeginning(&head,sll_start_value);
+                    int status=sll_insertAtBeginning(&head,sll_start_value);
+                    if(status==0){
+                        printf("\nmalloc allocation failure. try again\n");
+                        goto sll_enter_start_value;
+                    }
                     sll_printlist(head);
                 }
 
@@ -125,6 +137,7 @@ sll_enter_start_value:
         
         if(sll_delete_status==INPUT_EXIT_SIGNAL){
             printf("\nExiting sll demo\n");
+            delete_sll(head);
             return;
         }
         if(sll_delete_status==0){
@@ -266,4 +279,12 @@ void sll_reverseList(Node** head_ref){
     }
     curr->next=prev;
     *head_ref=curr;
+}
+
+void delete_sll(Node* head){
+    while (head!=NULL){
+        Node* upcoming=head->next;
+        free(head);
+        head=upcoming;
+    }
 }
