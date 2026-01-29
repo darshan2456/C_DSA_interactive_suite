@@ -68,6 +68,7 @@ sll_enter_end_value:sll_end_status=safe_input_int(&sll_end_value,
                         printf("\nmalloc allocation failure. try again\n");
                         goto sll_enter_end_value;
                     }
+                    printf("\n");
                     sll_printlist(head);
                 }
                 else if(sll_position_choice==0){
@@ -93,6 +94,7 @@ sll_enter_start_value:
                         printf("\nmalloc allocation failure. try again\n");
                         goto sll_enter_start_value;
                     }
+                    printf("\n");
                     sll_printlist(head);
                 }
 
@@ -216,7 +218,7 @@ void sll_deleteAtEnd(Node** head_ref){
 }
 
 void sll_printlist(const Node* head){
-    printf("\nHEAD->");
+    printf("HEAD->");
     while(head!=NULL){
         printf("%d ->",head->data);
         head=head->next;

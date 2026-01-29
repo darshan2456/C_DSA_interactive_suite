@@ -9,6 +9,7 @@
 #include "sorting_algorithms_n2.h"
 #include "searching_algorithms.h"
 #include "graph_traversals.h"
+#include "hash.h"
 #include "safe_input.h"
 
 void data_structures_demo(void);
@@ -29,8 +30,9 @@ int main(){
         "click 3 for sorting algorithms (the n^2 family) demo\n"
         "click 4 for searching algorithms demo\n"
         "click 5 for graph traversals (bfs/dfs) demo\n"
+        "click 6 for hashing algorithms demo\n"
         "enter choice : ",
-        1,5                                                             //limits
+        1,6                                                             //limits
         );
         
         if(status==-111){
@@ -57,8 +59,10 @@ int main(){
             case 5:
                 graph_traversals_demo();
                 break;
-            }
-
+            case 6:
+                hashing_algorithms_demo();
+                break;
+        }
     }
 
 

@@ -9,11 +9,13 @@ The codebase is structured as a reusable **DSA core**, with an interactive, cons
 
 ---
 
-## Demo: Bubble Sort (step-by-step)
+## Demos: 
+
+## Bubble Sort (step-by-step)
 
 [![asciinema demo](https://asciinema.org/a/750uLyKqEysvvL34.svg)](https://asciinema.org/a/750uLyKqEysvvL34)
 
-## Demo: Binary Search Tree (step-by-step)
+## Binary Search Tree (step-by-step)
 
 [![asciicast](https://asciinema.org/a/nmJbUTDtEnjjGk5k.svg)](https://asciinema.org/a/nmJbUTDtEnjjGk5k?speed=1.5)
 
@@ -53,6 +55,13 @@ Graph traversals are implemented using:
 - An explicit stack for DFS
 
 Both BFS and DFS are implemented **iteratively** (no recursion).
+
+#### Hashing Algorithms
+-Linear Probing
+-Separate Chaining
+
+Linear Probing uses modulo arithmetic to wrap-around the hash table/array when last index is full, optimizing resources and using the full array. 
+Separate Chaining uses sll API from the 'data_structures' folders
 
 ---
 

@@ -4,14 +4,16 @@ CFLAGS = -Wall -Wextra -std=c11 -g \
 	-Iexpression_evaluation \
 	-Isorting_algorithms_n2 \
 	-Isearching_algorithms \
-	-Igraph_traversals
+	-Igraph_traversals \
+	-Ihashing
 
 SRCS = \
 	data_structures/*.c \
 	expression_evaluation/*.c \
 	sorting_algorithms_n2/*.c \
 	searching_algorithms/*.c \
-	graph_traversals/*.c
+	graph_traversals/*.c \
+	hashing/*.c
 
 TARGET = demo
 
