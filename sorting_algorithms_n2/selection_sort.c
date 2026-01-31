@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include "array.h"
 #include "safe_input.h"
-#include<time.h>
 
 void selection_sort(int arr[],int length_of_array);
 
@@ -42,12 +41,7 @@ void selection_sort_demo(void){
 
 }
 
-//note: the time measured by the clock() function is only for the selection sort computation
 void selection_sort(int arr[],int length_of_array){
-    clock_t start_t,end_t;
-    double total_t;
-
-    start_t=clock();
     
     for(int i=0;i<length_of_array-1;i++){
         int min_index=i;
@@ -67,15 +61,9 @@ void selection_sort(int arr[],int length_of_array){
         // printf("after iteration no %d - ",i+1);
         // print_array(arr,length_of_array);
         // printf("\n");
-
-        
     }
 
-    end_t=clock();
-    total_t=(double)(end_t-start_t);
 
     printf("\nfinal array sorted by selection sort is:- ");
     print_array(arr,length_of_array);
-    printf("\nTotal CPU time taken for selection sort:- %f seconds",total_t);
-    printf("\n(most probably execution time would be lesser than clock resolution, resulting in 0.00)\n");
 }

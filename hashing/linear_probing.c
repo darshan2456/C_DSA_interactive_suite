@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<safe_input.h>
+#include<string.h>
 #include "array.h"
 #include "hash.h"
 
@@ -38,40 +39,39 @@ void linear_probing_demo(void){
 
         int arr[length_of_array];           //allocate memory for the array
 
-        for(int i=0;i<length_of_array;i++){         //initialize all elements to 0
-            arr[i]=0;
-        }
-take_value:
-        int value_status=safe_input_int(&value,
-        "\nenter a value between 1 and 1000 (enter '-1' to exit):- ",1,1000);
-        
-        if(value_status==INPUT_EXIT_SIGNAL){
-            printf("\nExiting linear_probing demo.....");
-            return;
-        }
-        if(value_status==0){
-            goto take_value;
-        }
+        memset(arr,0,sizeof(arr));          //setting all values to zero
 
-        int hash_location=hash_function(value,length_of_array);             //calling the hash function on user input value
- 
-        if(!arr[hash_location]){
-            arr[hash_location]=value;           //inserting value at its hash location
-            print_array(arr,length_of_array);
-            goto take_value;
-        }
+        while(1){
+            int value_status=safe_input_int(&value,
+            "\nenter a value between 1 and 1000 (enter '-1' to exit):- ",1,1000);
         
-        int start=hash_location;            //the modulo arithmetic for wrap-around logic, same as circular queue
-        do{
-            hash_location=(hash_location+1)%length_of_array;
-            if(hash_location==start){
-                printf("\nhash table full....\n");
-                goto take_value;
+            if(value_status==INPUT_EXIT_SIGNAL){
+                printf("\nExiting linear_probing demo.....");
+                return;
             }
-        }while (arr[hash_location]);
-        arr[hash_location]=value;           //inserting value at its hash location
+            if(value_status==0){
+                continue;
+            }
+
+            int hash_location=hash_function(value,length_of_array);             //calling the hash function on user input value
  
-        print_array(arr,length_of_array);
-        goto take_value;
+            if(!arr[hash_location]){
+                arr[hash_location]=value;           //inserting value at its hash location
+                print_array(arr,length_of_array);
+                continue;
+            }
+        
+            int start=hash_location;            //the modulo arithmetic for wrap-around logic, same as circular queue
+            do{
+                hash_location=(hash_location+1)%length_of_array;
+                if(hash_location==start){
+                    printf("\nhash table full....\n");
+                    continue;
+                }
+            }while (arr[hash_location]);
+            arr[hash_location]=value;           //inserting value at its hash location
+ 
+            print_array(arr,length_of_array);
+        }
     }
 }

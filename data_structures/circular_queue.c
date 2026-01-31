@@ -11,9 +11,7 @@
 
 void circular_queue_Demo(void){
 
-    
-
-circular_queue_start:
+    while(1){
         circular_queue rollnos;
         int queue_capacity_value;
         int queue_capacity_status=safe_input_int(&queue_capacity_value,
@@ -26,16 +24,15 @@ circular_queue_start:
             return;
         }
         if(queue_capacity_status==0){
-            goto circular_queue_start;
+            continue;
         }
         if(!init_circ_queue(queue_capacity_value,&rollnos)){
             printf("\nmalloc allocation failure");
             return;
         }
 
-        //taking number of elements user want to enqueue
+        //loop of enqueue and dequeue (interleaved enqueue and dequeue)
         else{
-            
             while (1) {
                 int circ_queue_choice;
                 int circ_queue_status = safe_input_int(
@@ -90,13 +87,9 @@ circular_queue_start:
 
                     display_circ_queue(&rollnos);
                 }
-            
-                
             }
-
         }
-    
-
+    }
 }
     
     

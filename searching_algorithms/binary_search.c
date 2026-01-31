@@ -14,7 +14,7 @@ void binary_search_demo(void){
         int target;
         int binary_search_status;
         
-retry_len:  printf("\nBinary search demo :- \n");
+            printf("\nBinary search demo :- \n");
             binary_search_status=safe_input_int(&length_of_array,
             "\nenter length of array, (between 1 and 100), enter '-1' to exit:- ",
             1,100);
@@ -25,7 +25,7 @@ retry_len:  printf("\nBinary search demo :- \n");
             }
 
             if(binary_search_status==0){
-                goto retry_len;
+                continue;
             }
 
             int arr[length_of_array];
@@ -49,19 +49,24 @@ retry_element:  printf("\nenter element no %d, (between 1 and 100), enter '-1' t
 
             int target_status;
 
-retry_target:   target_status=safe_input_int(&target,
+            while (1){          //loop to validate target value insertion by user
+
+                target_status=safe_input_int(&target,
                 "\nEnter target which you want to search, (between 1 and 100), enter '-1' to exit:- ",
                 1,100);
 
-            if(target_status==INPUT_EXIT_SIGNAL){
-                printf("\nExiting binary search demo....\n");
-                return;
-            }
+                if(target_status==INPUT_EXIT_SIGNAL){
+                    printf("\nExiting binary search demo....\n");
+                    return;
+                }
 
-            if(target_status==0){
-                goto retry_target;
-            }
+                if(target_status==0){
+                    continue;
+                }
 
+                break;
+            }
+            
         selection_sort(arr,length_of_array);
 
         start_t=clock();

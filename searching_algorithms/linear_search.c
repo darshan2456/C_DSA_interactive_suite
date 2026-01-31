@@ -14,7 +14,7 @@ void linear_search_demo(void){
             int target=0;
             int linear_search_status=0;
 
-retry_len:  printf("\nLinear search demo\n");
+            printf("\nLinear search demo\n");
             linear_search_status=safe_input_int(&length_of_array,
             "\nenter length of array, (between 1 and 100), enter '-1' to exit:- ",
             1,100);
@@ -25,7 +25,7 @@ retry_len:  printf("\nLinear search demo\n");
             }
 
             if(linear_search_status==0){
-                goto retry_len;
+                continue;
             }
 
             int arr[length_of_array];
@@ -49,18 +49,22 @@ retry_element:      printf("\nenter element no %d, (between 1 and 100), enter '-
             }
 
                 int target_status;
-retry_target:       target_status=safe_input_int(&target,
+
+                while(1){
+                    target_status=safe_input_int(&target,
                     "\nEnter target which you want to search, (between 1 and 100), enter '-1' to exit:- ",
                     1,100);
 
-                if(target_status==INPUT_EXIT_SIGNAL){
-                    printf("\nExiting linear search demo....\n");
-                    return;
+                    if(target_status==INPUT_EXIT_SIGNAL){
+                        printf("\nExiting linear search demo....\n");
+                        return;
+                        }
+
+                    if(target_status==0){
+                        continue;
                     }
 
-                if(target_status==0){
-                    printf("\nentered invalid input or characters other than numbers. Try again\n");
-                    goto retry_target;
+                    break;
                 }
 
         start_t=clock();

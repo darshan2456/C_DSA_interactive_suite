@@ -39,21 +39,22 @@ void dfs_demo(void){
             }
         }
 
-starting_node_input:
-        printf("\nenter starting node, (between 0 to graph_capacity-1) : ");
-        int starting_node;
-        int starting_node_status=safe_input_int(&starting_node,NULL,0,graph_capacity-1);
+        while(1){
+            printf("\nenter starting node, (between 0 to graph_capacity-1) : ");
+            int starting_node;
+            int starting_node_status=safe_input_int(&starting_node,NULL,0,graph_capacity-1);
 
-        if(starting_node_status==INPUT_EXIT_SIGNAL){
-            printf("\nexiting dfs demo...\n");
-            return;
+            if(starting_node_status==INPUT_EXIT_SIGNAL){
+                printf("\nexiting dfs demo...\n");
+                return;
+            }
+            if(starting_node_status==0){
+                continue;
+            }
+
+            dfs(graph_capacity,adj_matrix,starting_node);
+            break;
         }
-
-        if(starting_node_status==0){
-            goto starting_node_input;
-        }
-
-        dfs(graph_capacity,adj_matrix,starting_node);
     }
     
 }
