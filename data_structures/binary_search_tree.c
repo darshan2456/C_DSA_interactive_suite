@@ -83,6 +83,15 @@ int countnodes(const bstNode* head){
     return countnodes(head->left) + countnodes(head->right)+1;
 }
 
+int tree_height(const bstNode* root){
+    if(root==NULL)  return 0;
+    int left_height=tree_height(root->left)+1;
+    int right_height=tree_height(root->right)+1;
+
+    if(left_height>right_height)    return left_height;
+    else return right_height;
+}
+
 void destroy_bst(bstNode* head){
     if(head==NULL){
         return;
@@ -113,7 +122,6 @@ void binary_search_tree_Demo(void){
             continue;
         }
 
-
         int i=1;
         while(total_bst_nodes>0){
             int bst_node_value;
@@ -143,6 +151,9 @@ void binary_search_tree_Demo(void){
             total_bst_nodes--;
         }
 
+        printf("\nheight of the tree is:- %d\n",tree_height(head));
+
+
         while(1){
             int bst_traversal_choice;
             int bst_traversal_status;
@@ -167,10 +178,6 @@ void binary_search_tree_Demo(void){
             else if(bst_traversal_choice==3){
                 bst_postorder(head);
             }
-
-
         }
-
     }
-    
 }

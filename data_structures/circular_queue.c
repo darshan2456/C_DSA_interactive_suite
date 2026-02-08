@@ -32,7 +32,7 @@ void circular_queue_Demo(void){
         }
 
         //loop of enqueue and dequeue (interleaved enqueue and dequeue)
-        else{
+        
             while (1) {
                 int circ_queue_choice;
                 int circ_queue_status = safe_input_int(
@@ -88,7 +88,7 @@ void circular_queue_Demo(void){
                     display_circ_queue(&rollnos);
                 }
             }
-        }
+        
     }
 }
     

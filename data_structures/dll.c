@@ -88,6 +88,14 @@ dll_enter_start_value:
 
     }
 
+    //doubly linked list reversal
+    printf("\n\nreverse of the list is:- ");
+    dll_reverselist(&head);
+    dll_printlist(head);
+
+    printf("\ncurrent list is:- ");
+    dll_reverselist(&head);
+    dll_printlist(head);
 
     //searching elements in the dll
     while(1){
@@ -263,4 +271,26 @@ void delete_dll(doubly_ll_Node* head){
         free(head);
         head=upcoming;
     }
+}
+
+void dll_reverselist(doubly_ll_Node** head_ref){
+    doubly_ll_Node* prev=NULL;
+    doubly_ll_Node* curr=*head_ref;
+    if(curr==NULL){
+        printf("\ncant perform operation as list is empty\n");
+        return;
+    }
+    doubly_ll_Node* upcoming=curr->next;
+    if(upcoming==NULL){
+        printf("\nsingle node list cannot be reversed\n");
+        return;
+    }
+    while (upcoming!=NULL){
+        curr->next=prev;
+        prev=curr;
+        curr=upcoming;
+        upcoming=upcoming->next;
+    }
+    curr->next=prev;
+    *head_ref=curr;
 }

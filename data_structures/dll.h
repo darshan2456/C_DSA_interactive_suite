@@ -16,5 +16,6 @@ int dll_deleteAtEnd(doubly_ll_Node** head_ref);
 int dll_deleteByValue(doubly_ll_Node** head_ref, int key);
 void delete_dll(doubly_ll_Node* head);
 void dll_demo(void);
+void dll_reverselist(doubly_ll_Node** head_ref);
 
 #endif
