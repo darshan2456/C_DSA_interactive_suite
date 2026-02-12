@@ -8,7 +8,7 @@
 
 static int next_prime(int n){
     int size=sizeof(PRIMES)/sizeof(PRIMES[0]);
-    for(int i=n;i<size;i++){
+    for(int i=n+1;i<size;i++){
         if(PRIMES[i]){
             return i;
         }
