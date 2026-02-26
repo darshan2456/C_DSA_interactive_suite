@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "stack.h"
 #include "safe_input.h"
+#include <string.h>
 
 void dfs(int size,int adj[size][size],int start);
 
@@ -60,9 +61,9 @@ void dfs_demo(void){
 }
 void dfs(int size,int adj[size][size],int start){
     int visited[size];
-    for(int i=0;i<size;i++){        //initializing array with all zeros
-        visited[i]=0;
-    }
+
+    memset(visited,0,sizeof(visited));          //initializing the array with all zeroes
+
     if(start<0 || start>=size){
         printf("\ninvalid node passed as starting node");
         return;
@@ -74,13 +75,14 @@ void dfs(int size,int adj[size][size],int start){
         printf("stack could not be initialized due to a malloc failure");
         return;
     }
+
     visited[start]=1;
     push(nodes,start);
-    while(1){                                   //main loop which performs dfs
+
+    while(!isEmpty(nodes)){                                   //main loop which performs dfs
         int curr=pop(nodes);
-        if(curr==-1)    break;
         printf("%d->",curr);
-        for(int i=0;i<size;i++){
+        for(int i=size-1;i>=0;i--){
             if(adj[curr][i] && !visited[i]){
                 visited[i]=1;
                 push(nodes,i);

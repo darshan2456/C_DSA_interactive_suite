@@ -273,6 +273,11 @@ This is a classic two-phase algorithm implemented with full control over executi
 
 ---
 
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
 ## Author
 
 **Darshan Parekh**
