@@ -23,7 +23,7 @@ The codebase is structured as a reusable **DSA core**, with an interactive, cons
 
 ## Continuous Integration
 
-[![CI](https://github.com/darshan2456/C_DSA_interactive_suite/actions/workflows/ci.yml/badge.svg)] (https://github.com/darshan2456/C_DSA_interactive_suite/actions/workflows/ci.yml)
+[![CI](https://github.com/darshan2456/C_DSA_interactive_suite/actions/workflows/ci.yml/badge.svg)](https://github.com/darshan2456/C_DSA_interactive_suite/actions/workflows/ci.yml)
 
 Individual tests for circular queues and binary_search_trees
 
