@@ -1,19 +1,19 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -g \
-	-Idata_structures \
-	-Iexpression_evaluation \
-	-Isorting_algorithms_n2 \
-	-Isearching_algorithms \
-	-Igraph_traversals \
-	-Ihashing
+CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
+	-Isrc/data_structures \
+	-Isrc/expression_evaluation \
+	-Isrc/sorting_algorithms_n2 \
+	-Isrc/searching_algorithms \
+	-Isrc/graph_traversals \
+	-Isrc/hashing
 
 SRCS = \
-	data_structures/*.c \
-	expression_evaluation/*.c \
-	sorting_algorithms_n2/*.c \
-	searching_algorithms/*.c \
-	graph_traversals/*.c \
-	hashing/*.c
+	src/data_structures/*.c \
+	src/expression_evaluation/*.c \
+	src/sorting_algorithms_n2/*.c \
+	src/searching_algorithms/*.c \
+	src/graph_traversals/*.c \
+	src/hashing/*.c
 
 TARGET = demo
 
@@ -31,6 +31,30 @@ $(TARGET): $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE)
 
 clean:
-	$(RM) $(TARGET)$(EXE)
+	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE)
 
-.PHONY: all clean
+# =========================
+# Test Section
+# =========================
+
+CIRC_QUEUE_TEST_SRC = \
+	src/data_structures/circular_queue.c \
+	src/data_structures/safe_input_int.c \
+	tests/test_circ_queue.c
+
+BST_TEST_SRC = \
+	src/data_structures/binary_search_tree.c \
+	src/data_structures/safe_input_int.c \
+	tests/test_bst.c
+
+test_circ_queue:
+	$(CC) $(CFLAGS) $(CIRC_QUEUE_TEST_SRC) -o test_circ_queue$(EXE)
+	./test_circ_queue$(EXE)
+
+test_bst:
+	$(CC) $(CFLAGS) $(BST_TEST_SRC) -o test_bst$(EXE)
+	./test_bst$(EXE)
+
+test: test_circ_queue test_bst
+
+.PHONY: all clean test test_circ_queue test_bst

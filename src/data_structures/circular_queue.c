@@ -97,11 +97,11 @@ void circular_queue_Demo(void){
 
 int init_circ_queue(int N, circular_queue* queue_ptr){
     if(N<1) return 0;
+    queue_ptr->arr=malloc(sizeof(int)*N);
+    if(queue_ptr->arr==NULL) return 0;
     queue_ptr->N=N;
     queue_ptr->rear=0;
     queue_ptr->front=0;
-    queue_ptr->arr=malloc(sizeof(int)*N);
-    if(queue_ptr->arr==NULL) return 0;
     return 1;
 }
 
@@ -109,9 +109,13 @@ void destroy_circ_queue(circular_queue* queue_ptr){
     if(queue_ptr->arr==NULL) return;
     free(queue_ptr->arr);
     queue_ptr->arr=NULL;
+    queue_ptr->front = 0;
+    queue_ptr->rear = 0;
+    queue_ptr->N = 0;
 }
 
-int enqueue(circular_queue* queue_ptr,int value){
+
+int enqueue(circular_queue* queue_ptr,int value){           //one slot is kept empty to differentiate between full and empty queue
     if(((queue_ptr->rear)+1)%(queue_ptr->N)==queue_ptr->front) return -1;
     queue_ptr->arr[queue_ptr->rear]=value;
     queue_ptr->rear=((queue_ptr->rear)+1)%(queue_ptr->N);

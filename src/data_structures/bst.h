@@ -13,6 +13,7 @@ void bst_inorder(const bstNode* head);
 void bst_preorder(const bstNode* head);
 void bst_postorder(const bstNode* head);
 int countnodes(const bstNode* head);
+int tree_height(const bstNode* root);
 void destroy_bst(bstNode* head);
 
 #endif
