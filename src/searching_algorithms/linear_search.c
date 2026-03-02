@@ -2,7 +2,9 @@
 #include "safe_input.h"
 #include<time.h>
 
-void linear_search(int arr[], int target, int length_of_array);
+//linear_search() returns -1 if element is not present and the index number if the element is present
+
+int linear_search(int arr[], int target, int length_of_array);
 
 void linear_search_demo(void){
 
@@ -68,7 +70,9 @@ retry_element:      printf("\nenter element no %d, (between 1 and 100), enter '-
                 }
 
         start_t=clock();
-            linear_search(arr,target,length_of_array);
+            int res=linear_search(arr,target,length_of_array);
+            printf("the value found at index %d.",res);
+            if(res==-1)      printf("\nthe value is not found in the given array");
         end_t=clock();
         total_t=(double)(end_t-start_t)/CLOCKS_PER_SEC;
         printf("\ntotal CPU time taken for linear search:- %f seconds",total_t);
@@ -76,13 +80,11 @@ retry_element:      printf("\nenter element no %d, (between 1 and 100), enter '-
     }
 }
 
-void linear_search(int arr[], int target, int length_of_array){
+int linear_search(int arr[], int target, int length_of_array){
     for(int i=0;i<length_of_array;i++){
         if(arr[i]==target){
-            printf("\nTarget variable found at index %d.\n",i);
-            return;
+            return i;
         }
     }
-    printf("\nTarget variable not found in the given array.\n");
-    return;
+    return -1;
 }

@@ -3,7 +3,7 @@
 #include "sorting_algorithms_n2.h"
 #include<time.h>
 
-void binary_search(int arr[], int target, int length_of_array);
+int binary_search(int arr[], int target, int length_of_array);
 
 void binary_search_demo(void){
 
@@ -70,7 +70,9 @@ retry_element:  printf("\nenter element no %d, (between 1 and 100), enter '-1' t
         selection_sort(arr,length_of_array);
 
         start_t=clock();
-        binary_search(arr,target,length_of_array);
+        int res=binary_search(arr,target,length_of_array);
+        printf("\nelement found at index %d.",res);
+        if(res==-1)     printf("\nelement not found in the given array");
         end_t=clock();
         total_t=(double)(end_t-start_t)/CLOCKS_PER_SEC;
         printf("\ntotal CPU time taken for binary search:- %f seconds",total_t);
@@ -78,26 +80,23 @@ retry_element:  printf("\nenter element no %d, (between 1 and 100), enter '-1' t
     }
 }
 
-void binary_search(int arr[], int target, int length_of_array){
+int binary_search(int arr[], int target, int length_of_array){
     int low=0;
     int high=length_of_array-1;
     int mid=0;
 
     if(length_of_array==1){
         if(arr[0]==target){
-            printf("\ntarget found at index 0.\n");
-            return;
+            return 0;
         }
-        printf("\ntarget element is not present in the given array");
-        return;
+        return -1;
     }
 
     while(low<=high){                //main loop which performs the binary search algorithm
         mid=low+(high-low)/2;
         //printf("DEBUG: low=%d, mid=%d, high=%d, arr[mid]=%d\n", low, mid, high, arr[mid]);
         if(arr[mid]==target){
-            printf("\ntarget found at index %d.\n",mid);
-            return;
+            return mid;
         }
         else if(arr[mid]<target){
             low=mid+1;
@@ -107,6 +106,5 @@ void binary_search(int arr[], int target, int length_of_array){
         }
     }
 
-    printf("\ntarget element not found in the given array.");
-    return;
+    return -1;
 }
