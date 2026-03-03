@@ -12,6 +12,7 @@ void test_hash_range() {
             assert(h < size);
         }
     }
+    printf("Hash range test passed\n");
 }
 
 void test_hash_deterministic() {
@@ -22,6 +23,7 @@ void test_hash_deterministic() {
             assert(h1 == h2);
         }
     }
+    printf("Hash determinism test passed\n");
 }
 
 void test_hash_basic_behavior() {
@@ -30,10 +32,10 @@ void test_hash_basic_behavior() {
     int h1 = hash_function(5, size);
     int h2 = hash_function(15, size);
 
-    /* Just ensure values produce valid indices */
     assert(h1 >= 0 && h1 < size);
     assert(h2 >= 0 && h2 < size);
 
+    printf("Hash basic behavior test passed\n");
 }
 
 int main() {

@@ -31,7 +31,7 @@ $(TARGET): $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE)
 
 clean:
-	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash$(EXE)
+	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash$(EXE) test_sll$(EXE)
 
 # =========================
 # Test Section
@@ -61,6 +61,11 @@ HASH_TEST_SRC = \
 	src/data_structures/array.c \
 	tests/test_hash.c
 
+SLL_TEST_SRC = \
+    src/data_structures/sll.c \
+	src/data_structures/safe_input_int.c \
+    tests/test_sll.c
+
 test_circ_queue:
 	$(CC) $(CFLAGS) $(CIRC_QUEUE_TEST_SRC) -o test_circ_queue$(EXE)
 	./test_circ_queue$(EXE)
@@ -77,6 +82,10 @@ test_hash:
 	$(CC) $(CFLAGS) $(HASH_TEST_SRC) -o test_hash$(EXE)
 	./test_hash$(EXE)
 
-test: test_circ_queue test_bst test_search test_hash
+test_sll:
+	$(CC) $(CFLAGS) $(SLL_TEST_SRC) -o test_sll$(EXE)
+	./test_sll$(EXE)
 
-.PHONY: all clean test test_circ_queue test_bst test_search test_hash
+test: test_circ_queue test_bst test_search test_hash test_sll
+
+.PHONY: all clean test test_circ_queue test_bst test_search test_hash test_sll

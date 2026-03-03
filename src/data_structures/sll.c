@@ -64,7 +64,7 @@ sll_enter_end_value:sll_end_status=safe_input_int(&sll_end_value,
                     }
 
                     int status=sll_insertAtEnd(&head,sll_end_value);
-                    if(status==0){
+                    if(status==-1){
                         printf("\nmalloc allocation failure. try again\n");
                         goto sll_enter_end_value;
                     }
@@ -90,7 +90,7 @@ sll_enter_start_value:
                         goto sll_enter_start_value;
                     }
                     int status=sll_insertAtBeginning(&head,sll_start_value);
-                    if(status==0){
+                    if(status==-1){
                         printf("\nmalloc allocation failure. try again\n");
                         goto sll_enter_start_value;
                     }
@@ -101,12 +101,23 @@ sll_enter_start_value:
                 sll_element_count--;
             }
 
-    printf("\n\nReverse of the given list is :-");
-    sll_reverseList(&head);
-    sll_printlist(head);
-    sll_reverseList(&head);
-    printf("\n\ncurrent list is :- ");
-    sll_printlist(head);
+    int rev_sll_status = sll_reverseList(&head);
+
+    if (rev_sll_status == 1) {
+        printf("\nReverse of the given list is :- ");
+        sll_printlist(head);
+
+        sll_reverseList(&head);
+
+        printf("\nRestored original list :- ");
+        sll_printlist(head);
+    }
+    else if (rev_sll_status == -1) {
+        printf("\nSingle node list cannot be reversed.");
+    }
+    else if (rev_sll_status == -2) {
+        printf("\nEmpty list cannot be reversed.");
+    }
 
 
     //searching elements in sll
@@ -154,11 +165,10 @@ sll_enter_start_value:
 }
 
 
-//insert at end returns 0 on allocation failure and 1 on successful insertion
-
+//insert at end returns -1 on allocation failure and 1 on successful insertion
 int sll_insertAtEnd(Node **head_ref,int value){
     Node* newnode=malloc(sizeof(Node));
-    if(newnode==NULL)   return 0;
+    if(newnode==NULL)   return -1;
     newnode -> data=value;
     newnode -> next=NULL;
     if(*head_ref==NULL){
@@ -174,38 +184,38 @@ int sll_insertAtEnd(Node **head_ref,int value){
     return 1;
 }
 
-void sll_deleteAtBeginning(Node** head_ref){
+//returns -1 if list and 1 on successful deletion
+int sll_deleteAtBeginning(Node** head_ref){
     if(*head_ref==NULL){
-        printf("\ncannot perform operation as list is empty");
-        return;
+        return -1;
     }    
     Node* temp=*head_ref;
     temp=temp->next;
     free(*head_ref);
     *head_ref=temp;
+    return 1;
 }
 
-//insertAtBeginning function returns 0 on allocation failure and 1 on succesful insertion
-
+//insertAtBeginning function returns -1 on allocation failure and 1 on succesful insertion
 int sll_insertAtBeginning(Node** head_ref,int value){
     Node* newnode=malloc(sizeof(Node));
-    if(newnode==NULL) return 0;
+    if(newnode==NULL) return -1;
     newnode->data=value;
     newnode->next=*head_ref;
     *head_ref=newnode;
     return 1;
 }
 
-void sll_deleteAtEnd(Node** head_ref){
+//return -1 if list is empty and 1 on successful deletion
+int sll_deleteAtEnd(Node** head_ref){
     if(*head_ref==NULL){
-        printf("cannot perform operation as list is empty");
-        return;
+        return -1;
     }    
     Node* temp=*head_ref;
     if(temp->next==NULL){
         free(temp);
         *head_ref=NULL;
-        return;
+        return 1;
     }
     Node* curr=*head_ref;
     Node* prev=NULL;
@@ -215,6 +225,7 @@ void sll_deleteAtEnd(Node** head_ref){
     }
     free(curr);
     prev->next=NULL;
+    return 1;
 }
 
 void sll_printlist(const Node* head){
@@ -237,41 +248,40 @@ int sll_search(const Node* head,int key){
     }return -1;                         //otherwise returns -1
 }
 
-void sll_deleteByValue(Node** head_ref,int value){
+//return -2 if list is empty, -1 if element not found and 1 on successful deletion
+int sll_deleteByValue(Node** head_ref,int value){
     if(*head_ref==NULL){
-        printf("cannot perform operation as list is empty");
-        return;
+        return -2;
     }
     Node* curr=*head_ref;
     Node* prev=NULL;
     if(curr->data==value){
         *head_ref=curr->next;
         free(curr);
-        return;
+        return 1;
     }
     while(curr->data!=value){
         prev=curr;
         curr=curr->next;
         if(curr==NULL){
-            printf("\nNode not found!!!");
-            return;
+            return -1;
         }
     }
     prev->next=curr->next;
     free(curr);
+    return 1;
 }
 
-void sll_reverseList(Node** head_ref){
+//returns -2 if list is empty, -1 if list has only 1 element and 1 on successful reversal
+int sll_reverseList(Node** head_ref){
     Node* prev=NULL;
     Node* curr=*head_ref;
     if(curr==NULL){
-        printf("\n cant perform operation as list is empty.");
-        return;
+        return -2;
     }
-    Node* upcoming=(*head_ref)->next;
+    Node* upcoming=curr->next;
     if(upcoming==NULL){
-        printf("\nsingle node list cannot be reversed.");
-        return;
+        return -1;
     }
     while(upcoming!=NULL){
         curr->next=prev;
@@ -281,7 +291,9 @@ void sll_reverseList(Node** head_ref){
     }
     curr->next=prev;
     *head_ref=curr;
+    return 1;
 }
+
 
 void delete_sll(Node* head){
     while (head!=NULL){

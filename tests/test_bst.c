@@ -12,17 +12,21 @@ void test_insert_and_count() {
     assert(countnodes(root) == 3);
 
     destroy_bst(root);
+
+    printf("BST insert and count test passed\n");
 }
 
 void test_duplicate_insert() {
     bstNode* root = NULL;
 
     assert(bst_insert(&root, 10) == 1);
-    assert(bst_insert(&root, 10) == 0);  // duplicate
+    assert(bst_insert(&root, 10) == 0);
 
     assert(countnodes(root) == 1);
 
     destroy_bst(root);
+
+    printf("BST duplicate insert test passed\n");
 }
 
 void test_height_balanced() {
@@ -32,10 +36,11 @@ void test_height_balanced() {
     bst_insert(&root, 5);
     bst_insert(&root, 15);
 
-    // Balanced tree of 3 nodes
     assert(tree_height(root) == 2);
 
     destroy_bst(root);
+
+    printf("BST balanced height test passed\n");
 }
 
 void test_height_skewed() {
@@ -46,10 +51,11 @@ void test_height_skewed() {
     bst_insert(&root, 3);
     bst_insert(&root, 4);
 
-    // Completely right-skewed
     assert(tree_height(root) == 4);
 
     destroy_bst(root);
+
+    printf("BST skewed height test passed\n");
 }
 
 void test_empty_tree() {
@@ -59,6 +65,8 @@ void test_empty_tree() {
     assert(tree_height(root) == 0);
 
     destroy_bst(root);
+
+    printf("BST empty tree test passed\n");
 }
 
 int main() {
