@@ -16,9 +16,9 @@ The codebase is structured as a reusable **DSA core**, with an interactive, cons
 [![asciinema demo](https://asciinema.org/a/jOr0YxJx25MnjKVK.svg)](https://asciinema.org/a/jOr0YxJx25MnjKVK)
 
 
-## Bubble Sort (step-by-step)
+## Hashing algorithms (step-by-step)
 
-[![asciinema demo](https://asciinema.org/a/750uLyKqEysvvL34.svg)](https://asciinema.org/a/750uLyKqEysvvL34)
+[![asciinema demo](https://asciinema.org/a/jmMx2LTJSQJX8Re4.svg)](https://asciinema.org/a/jmMx2LTJSQJX8Re4)
 
 ## Binary Search Tree (step-by-step)
 
