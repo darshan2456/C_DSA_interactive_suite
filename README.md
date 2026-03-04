@@ -11,13 +11,18 @@ The codebase is structured as a reusable **DSA core**, with an interactive, cons
 
 ## Demos: 
 
+## Infix to Postfix and Postfix evaluation (step by step)
+
+[![asciinema demo](https://asciinema.org/a/jOr0YxJx25MnjKVK.svg)](https://asciinema.org/a/jOr0YxJx25MnjKVK)
+
+
 ## Bubble Sort (step-by-step)
 
 [![asciinema demo](https://asciinema.org/a/750uLyKqEysvvL34.svg)](https://asciinema.org/a/750uLyKqEysvvL34)
 
 ## Binary Search Tree (step-by-step)
 
-[![asciicast](https://asciinema.org/a/nmJbUTDtEnjjGk5k.svg)](https://asciinema.org/a/nmJbUTDtEnjjGk5k?speed=1.5)
+[![asciinema demo](https://asciinema.org/a/nmJbUTDtEnjjGk5k.svg)](https://asciinema.org/a/nmJbUTDtEnjjGk5k?speed=1.5)
 
 ---
 
