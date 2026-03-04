@@ -31,7 +31,7 @@ $(TARGET): $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE)
 
 clean:
-	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash$(EXE) test_sll$(EXE)
+	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE)
 
 # =========================
 # Test Section
@@ -55,16 +55,26 @@ SEARCH_TEST_SRC = \
 	src/data_structures/array.c \
 	tests/test_search.c
 
-HASH_TEST_SRC = \
+HASH_FUNCTION_TEST_SRC = \
 	src/hashing/linear_probing.c \
 	src/data_structures/safe_input_int.c \
 	src/data_structures/array.c \
-	tests/test_hash.c
+	tests/test_hash_function.c
 
 SLL_TEST_SRC = \
     src/data_structures/sll.c \
 	src/data_structures/safe_input_int.c \
     tests/test_sll.c
+
+DLL_TEST_SRC = \
+	src/data_structures/dll.c \
+	src/data_structures/safe_input_int.c \
+	tests/test_dll.c
+
+ARRAY_TEST_SRC = \
+	src/data_structures/array.c \
+	src/data_structures/safe_input_int.c \
+	tests/test_array.c
 
 test_circ_queue:
 	$(CC) $(CFLAGS) $(CIRC_QUEUE_TEST_SRC) -o test_circ_queue$(EXE)
@@ -78,14 +88,22 @@ test_search:
 	$(CC) $(CFLAGS) $(SEARCH_TEST_SRC) -o test_search$(EXE)
 	./test_search$(EXE)
 
-test_hash:
-	$(CC) $(CFLAGS) $(HASH_TEST_SRC) -o test_hash$(EXE)
-	./test_hash$(EXE)
+test_hash_func:
+	$(CC) $(CFLAGS) $(HASH_FUNCTION_TEST_SRC) -o test_hash_func$(EXE)
+	./test_hash_func$(EXE)
 
 test_sll:
 	$(CC) $(CFLAGS) $(SLL_TEST_SRC) -o test_sll$(EXE)
 	./test_sll$(EXE)
 
-test: test_circ_queue test_bst test_search test_hash test_sll
+test_dll:
+	$(CC) $(CFLAGS) $(DLL_TEST_SRC) -o test_dll$(EXE)
+	./test_dll$(EXE)
 
-.PHONY: all clean test test_circ_queue test_bst test_search test_hash test_sll
+test_array:
+	$(CC) $(CFLAGS) $(ARRAY_TEST_SRC) -o test_array$(EXE)
+	./test_array$(EXE)
+
+test: test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array
+
+.PHONY: all clean test test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array

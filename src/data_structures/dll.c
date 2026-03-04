@@ -89,13 +89,23 @@ dll_enter_start_value:
     }
 
     //doubly linked list reversal
-    printf("\n\nreverse of the list is:- ");
-    dll_reverselist(&head);
-    dll_printlist(head);
+    int dll_rev_status=dll_reverselist(&head);
 
-    printf("\ncurrent list is:- ");
-    dll_reverselist(&head);
-    dll_printlist(head);
+    switch (dll_rev_status)
+    {
+    case -2:
+        printf("\nempty list cannot be reversed.");
+        break;
+    case -1:
+        printf("\nsingle node list cannot be reversed");
+        break;
+    case 1:
+        printf("\nreversed list is:- ");
+        dll_printlist(head);
+        printf("\nthe restored list is:- ");
+        dll_reverselist(&head);
+        dll_printlist(head);
+    }
 
     //searching elements in the dll
     while(1){
@@ -273,17 +283,16 @@ void delete_dll(doubly_ll_Node* head){
     }
 }
 
-void dll_reverselist(doubly_ll_Node** head_ref){
+//returns -2 if list is empty. -1 if list is a single node list and 1 on successful reversal.
+int dll_reverselist(doubly_ll_Node** head_ref){
     doubly_ll_Node* prev=NULL;
     doubly_ll_Node* curr=*head_ref;
     if(curr==NULL){
-        printf("\ncant perform operation as list is empty\n");
-        return;
+        return -2;
     }
     doubly_ll_Node* upcoming=curr->next;
     if(upcoming==NULL){
-        printf("\nsingle node list cannot be reversed\n");
-        return;
+        return -1;
     }
     while (upcoming!=NULL){
         curr->next=prev;
@@ -293,4 +302,5 @@ void dll_reverselist(doubly_ll_Node** head_ref){
     }
     curr->next=prev;
     *head_ref=curr;
+    return 1;
 }
