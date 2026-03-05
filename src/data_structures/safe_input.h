@@ -1,5 +1,6 @@
 #ifndef SAFE_INPUT_H
 #define SAFE_INPUT_H
+#include <stddef.h>
 
 #define INPUT_EXIT_SIGNAL -111
 
