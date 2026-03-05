@@ -95,8 +95,8 @@ make
 
 This generates a single executable:
 
-* `demo` (Linux / macOS)
-* `demo.exe` (Windows)
+* `dsa` (Linux / macOS)
+* `dsa.exe` (Windows)
 
 ### Clean
 
@@ -112,34 +112,38 @@ make clean
 
 ```bash
 gcc -Wall -Wextra -std=c11 -g \
--Idata_structures \
--Iexpression_evaluation \
--Isorting_algorithms \
--Isearching_algorithms \
--Igraph_traversals_bfs_dfs \
-data_structures/*.c \
-expression_evaluation/*.c \
-sorting_algorithms/*.c \
-searching_algorithms/*.c \
-graph_traversals_bfs_dfs/*.c \
--o demo
+-Isrc/data_structures \
+-Isrc/expression_evaluation \
+-Isrc/sorting_algorithms_n2 \
+-Isrc/searching_algorithms \
+-Isrc/graph_traversals \
+-Isrc/hashing \
+src/data_structures/*.c \
+src/expression_evaluation/*.c \
+src/sorting_algorithms_n2/*.c \
+src/searching_algorithms/*.c \
+src/graph_traversals/*.c \
+src/hashing/*.c \
+-o dsa
 ```
 
 ### Windows
 
 ```bash
 gcc -Wall -Wextra -std=c11 -g ^
--Idata_structures ^
--Iexpression_evaluation ^
--Isorting_algorithms ^
--Isearching_algorithms ^
--Igraph_traversals_bfs_dfs ^
-data_structures/*.c ^
-expression_evaluation/*.c ^
-sorting_algorithms/*.c ^
-searching_algorithms/*.c ^
-graph_traversals_bfs_dfs/*.c ^
--o demo
+-Isrc/data_structures ^
+-Isrc/expression_evaluation ^
+-Isrc/sorting_algorithms_n2 ^
+-Isrc/searching_algorithms ^
+-Isrc/graph_traversals ^
+-Isrc/hashing ^
+src/data_structures/*.c ^
+src/expression_evaluation/*.c ^
+src/sorting_algorithms_n2/*.c ^
+src/searching_algorithms/*.c ^
+src/graph_traversals/*.c ^
+src/hashing/*.c ^
+-o dsa.exe
 ```
 
 This mirrors exactly what the Makefile performs.
