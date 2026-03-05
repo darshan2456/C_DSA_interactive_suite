@@ -1,20 +1,24 @@
+#include "dll.h"
 #include <assert.h>
 #include <stdio.h>
-#include "dll.h"
 
 /* Helper: build list */
-static doubly_ll_Node* build_list(int arr[], int n) {
+static doubly_ll_Node* build_list(int arr[], int n)
+{
     doubly_ll_Node* head = NULL;
-    for(int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         assert(dll_insertAtEnd(&head, arr[i]) == 1);
     }
     return head;
 }
 
 /* Helper: list -> array */
-static int list_to_array(doubly_ll_Node* head, int arr[], int max) {
+static int list_to_array(doubly_ll_Node* head, int arr[], int max)
+{
     int i = 0;
-    while(head != NULL && i < max) {
+    while (head != NULL && i < max)
+    {
         arr[i++] = head->data;
         head = head->next;
     }
@@ -22,7 +26,8 @@ static int list_to_array(doubly_ll_Node* head, int arr[], int max) {
 }
 
 /* Insert tests */
-void test_insert() {
+void test_insert()
+{
     doubly_ll_Node* head = NULL;
 
     assert(dll_insertAtBeginning(&head, 10) == 1);
@@ -45,14 +50,15 @@ void test_insert() {
 }
 
 /* Delete at beginning */
-void test_delete_begin() {
-    int arr[] = {1,2,3};
-    doubly_ll_Node* head = build_list(arr,3);
+void test_delete_begin()
+{
+    int arr[] = {1, 2, 3};
+    doubly_ll_Node* head = build_list(arr, 3);
 
     assert(dll_deleteAtBeginning(&head) == 1);
 
     int out[3];
-    int n = list_to_array(head,out,3);
+    int n = list_to_array(head, out, 3);
 
     assert(n == 2);
     assert(out[0] == 2 && out[1] == 3);
@@ -63,14 +69,15 @@ void test_delete_begin() {
 }
 
 /* Delete at end */
-void test_delete_end() {
-    int arr[] = {1,2,3};
-    doubly_ll_Node* head = build_list(arr,3);
+void test_delete_end()
+{
+    int arr[] = {1, 2, 3};
+    doubly_ll_Node* head = build_list(arr, 3);
 
     assert(dll_deleteAtEnd(&head) == 1);
 
     int out[3];
-    int n = list_to_array(head,out,3);
+    int n = list_to_array(head, out, 3);
 
     assert(n == 2);
     assert(out[0] == 1 && out[1] == 2);
@@ -81,14 +88,15 @@ void test_delete_end() {
 }
 
 /* Delete by value */
-void test_delete_by_value() {
-    int arr[] = {1,2,3,4};
-    doubly_ll_Node* head = build_list(arr,4);
+void test_delete_by_value()
+{
+    int arr[] = {1, 2, 3, 4};
+    doubly_ll_Node* head = build_list(arr, 4);
 
-    assert(dll_deleteByValue(&head,3) == 1);
+    assert(dll_deleteByValue(&head, 3) == 1);
 
     int out[4];
-    int n = list_to_array(head,out,4);
+    int n = list_to_array(head, out, 4);
 
     assert(n == 3);
     assert(out[0] == 1 && out[1] == 2 && out[2] == 4);
@@ -99,13 +107,14 @@ void test_delete_by_value() {
 }
 
 /* Search test */
-void test_search() {
-    int arr[] = {5,10,15};
-    doubly_ll_Node* head = build_list(arr,3);
+void test_search()
+{
+    int arr[] = {5, 10, 15};
+    doubly_ll_Node* head = build_list(arr, 3);
 
-    assert(dll_search(head,5) == 0);
-    assert(dll_search(head,15) == 2);
-    assert(dll_search(head,99) == -1);
+    assert(dll_search(head, 5) == 0);
+    assert(dll_search(head, 15) == 2);
+    assert(dll_search(head, 99) == -1);
 
     delete_dll(head);
 
@@ -113,14 +122,15 @@ void test_search() {
 }
 
 /* Reverse test */
-void test_reverse() {
-    int arr[] = {1,2,3};
-    doubly_ll_Node* head = build_list(arr,3);
+void test_reverse()
+{
+    int arr[] = {1, 2, 3};
+    doubly_ll_Node* head = build_list(arr, 3);
 
     dll_reverselist(&head);
 
     int out[3];
-    int n = list_to_array(head,out,3);
+    int n = list_to_array(head, out, 3);
 
     assert(n == 3);
     assert(out[0] == 3 && out[1] == 2 && out[2] == 1);
@@ -131,22 +141,24 @@ void test_reverse() {
 }
 
 /* Edge cases */
-void test_edge_cases() {
+void test_edge_cases()
+{
     doubly_ll_Node* head = NULL;
 
     assert(dll_deleteAtBeginning(&head) == -1);
     assert(dll_deleteAtEnd(&head) == -1);
 
-    assert(dll_insertAtEnd(&head,42) == 1);
+    assert(dll_insertAtEnd(&head, 42) == 1);
 
-    dll_reverselist(&head);   // single node
+    dll_reverselist(&head); // single node
 
     delete_dll(head);
 
     printf("DLL edge case tests passed\n");
 }
 
-int main() {
+int main()
+{
 
     test_insert();
     test_delete_begin();

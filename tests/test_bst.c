@@ -1,8 +1,9 @@
+#include "bst.h"
 #include <assert.h>
 #include <stdio.h>
-#include "bst.h"
 
-void test_insert_and_count() {
+void test_insert_and_count()
+{
     bstNode* root = NULL;
 
     assert(bst_insert(&root, 10) == 1);
@@ -16,7 +17,8 @@ void test_insert_and_count() {
     printf("BST insert and count test passed\n");
 }
 
-void test_duplicate_insert() {
+void test_duplicate_insert()
+{
     bstNode* root = NULL;
 
     assert(bst_insert(&root, 10) == 1);
@@ -29,7 +31,8 @@ void test_duplicate_insert() {
     printf("BST duplicate insert test passed\n");
 }
 
-void test_height_balanced() {
+void test_height_balanced()
+{
     bstNode* root = NULL;
 
     bst_insert(&root, 10);
@@ -43,7 +46,8 @@ void test_height_balanced() {
     printf("BST balanced height test passed\n");
 }
 
-void test_height_skewed() {
+void test_height_skewed()
+{
     bstNode* root = NULL;
 
     bst_insert(&root, 1);
@@ -58,7 +62,8 @@ void test_height_skewed() {
     printf("BST skewed height test passed\n");
 }
 
-void test_empty_tree() {
+void test_empty_tree()
+{
     bstNode* root = NULL;
 
     assert(countnodes(root) == 0);
@@ -69,7 +74,8 @@ void test_empty_tree() {
     printf("BST empty tree test passed\n");
 }
 
-int main() {
+int main()
+{
     test_insert_and_count();
     test_duplicate_insert();
     test_height_balanced();

@@ -1,8 +1,9 @@
-#include <assert.h>
 #include "circular_queue.h"
+#include <assert.h>
 #include <stdio.h>
 
-void test_init() {
+void test_init()
+{
     circular_queue q;
     assert(init_circ_queue(5, &q) == 1);
     assert(q.N == 5);
@@ -13,7 +14,8 @@ void test_init() {
     printf("Circular queue init test passed\n");
 }
 
-void test_basic_enqueue_dequeue() {
+void test_basic_enqueue_dequeue()
+{
     circular_queue q;
     init_circ_queue(5, &q);
 
@@ -28,7 +30,8 @@ void test_basic_enqueue_dequeue() {
     printf("Circular queue basic enqueue/dequeue test passed\n");
 }
 
-void test_underflow() {
+void test_underflow()
+{
     circular_queue q;
     init_circ_queue(5, &q);
 
@@ -39,7 +42,8 @@ void test_underflow() {
     printf("Circular queue underflow test passed\n");
 }
 
-void test_overflow() {
+void test_overflow()
+{
     circular_queue q;
     init_circ_queue(4, &q);
 
@@ -54,7 +58,8 @@ void test_overflow() {
     printf("Circular queue overflow test passed\n");
 }
 
-void test_wraparound() {
+void test_wraparound()
+{
     circular_queue q;
     init_circ_queue(4, &q);
 
@@ -77,7 +82,8 @@ void test_wraparound() {
     printf("Circular queue wraparound test passed\n");
 }
 
-int main() {
+int main()
+{
     test_init();
     test_basic_enqueue_dequeue();
     test_underflow();

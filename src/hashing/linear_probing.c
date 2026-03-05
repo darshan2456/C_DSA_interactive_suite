@@ -1,77 +1,94 @@
-#include<stdio.h>
-#include<safe_input.h>
-#include<string.h>
 #include "array.h"
 #include "hash.h"
+#include <safe_input.h>
+#include <stdio.h>
+#include <string.h>
 
-//below two functions are helper functions local to this file and not supposed to used as an API in other modules
+// below two functions are helper functions local to this file and not supposed to used as an API in
+// other modules
 
-static int next_prime(int n){
-    int size=sizeof(PRIMES)/sizeof(PRIMES[0]);
-    for(int i=n+1;i<size;i++){
-        if(PRIMES[i]){
+static int next_prime(int n)
+{
+    int size = sizeof(PRIMES) / sizeof(PRIMES[0]);
+    for (int i = n + 1; i < size; i++)
+    {
+        if (PRIMES[i])
+        {
             return i;
         }
     }
     return -1;
 }
- 
-int hash_function(int value,int length_of_array){
-    int next_prime_no=next_prime(length_of_array);
-    return ((value+1)*next_prime_no)%length_of_array;
+
+int hash_function(int value, int length_of_array)
+{
+    int next_prime_no = next_prime(length_of_array);
+    return ((value + 1) * next_prime_no) % length_of_array;
 }
- 
-void linear_probing_demo(void){
-    while(1){
+
+void linear_probing_demo(void)
+{
+    while (1)
+    {
         int value;
         int length_of_array;
 
-        int length_arr_status=safe_input_int(&length_of_array,
-        "\n\nenter length of the array (between 1 and 1000):- ",1,1000);
- 
-        if(length_arr_status==INPUT_EXIT_SIGNAL){
+        int length_arr_status = safe_input_int(
+            &length_of_array, "\n\nenter length of the array (between 1 and 1000):- ", 1, 1000);
+
+        if (length_arr_status == INPUT_EXIT_SIGNAL)
+        {
             printf("\nExiting linear_probing demo");
             return;
         }
-        if(length_arr_status==0){
+        if (length_arr_status == 0)
+        {
             continue;
         }
 
-        int arr[length_of_array];           //allocate memory for the array
+        int arr[length_of_array]; // allocate memory for the array
 
-        memset(arr,0,sizeof(arr));          //setting all values to zero
+        memset(arr, 0, sizeof(arr)); // setting all values to zero
 
-        while(1){
-            int value_status=safe_input_int(&value,
-            "\nenter a value between 1 and 1000 (enter '-1' to exit):- ",1,1000);
-        
-            if(value_status==INPUT_EXIT_SIGNAL){
+        while (1)
+        {
+            int value_status = safe_input_int(
+                &value, "\nenter a value between 1 and 1000 (enter '-1' to exit):- ", 1, 1000);
+
+            if (value_status == INPUT_EXIT_SIGNAL)
+            {
                 printf("\nExiting linear_probing demo.....");
                 return;
             }
-            if(value_status==0){
+            if (value_status == 0)
+            {
                 continue;
             }
 
-            int hash_location=hash_function(value,length_of_array);             //calling the hash function on user input value
- 
-            if(!arr[hash_location]){
-                arr[hash_location]=value;           //inserting value at its hash location
-                print_array(arr,length_of_array);
+            int hash_location = hash_function(
+                value, length_of_array); // calling the hash function on user input value
+
+            if (!arr[hash_location])
+            {
+                arr[hash_location] = value; // inserting value at its hash location
+                print_array(arr, length_of_array);
                 continue;
             }
-        
-            int start=hash_location;            //the modulo arithmetic for wrap-around logic, same as circular queue
-            do{
-                hash_location=(hash_location+1)%length_of_array;
-                if(hash_location==start){
+
+            int start = hash_location; // the modulo arithmetic for wrap-around logic, same as
+                                       // circular queue
+            do
+            {
+                hash_location = (hash_location + 1) % length_of_array;
+                if (hash_location == start)
+                {
                     printf("\nhash table full....\n");
                     continue;
                 }
-            }while (arr[hash_location]);
-            arr[hash_location]=value;           //inserting value at its hash location
- 
-            print_array(arr,length_of_array);
+            } while (arr[hash_location]);
+            arr[hash_location] = value; // inserting value at its hash location
+
+            print_array(arr, length_of_array);
         }
     }
 }

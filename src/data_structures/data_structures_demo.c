@@ -1,100 +1,112 @@
-#include<stdio.h>
-#include "sll.h"
-#include "dll.h"
 #include "array.h"
-#include "circular_queue.h"
 #include "bst.h"
+#include "circular_queue.h"
+#include "dll.h"
 #include "safe_input.h"
+#include "sll.h"
+#include <stdio.h>
 
-void data_structures_demo(void){
-    while(1){
+void data_structures_demo(void)
+{
+    while (1)
+    {
         int data_structures_choice;
-        int data_structures_status=safe_input_int(&data_structures_choice,"\nenter 1 for standard linear data structures"
-                "\nenter 2 for circular variants of linear data structures"
-                "\nenter 3 for non-linear data structures"
-                "\nenter choice : ",1,3);
+        int data_structures_status =
+            safe_input_int(&data_structures_choice,
+                           "\nenter 1 for standard linear data structures"
+                           "\nenter 2 for circular variants of linear data structures"
+                           "\nenter 3 for non-linear data structures"
+                           "\nenter choice : ",
+                           1, 3);
 
-        if(data_structures_status==INPUT_EXIT_SIGNAL){
+        if (data_structures_status == INPUT_EXIT_SIGNAL)
+        {
             printf("\nExiting data structures demo....\n");
             return;
         }
 
-        if(data_structures_status==0){
+        if (data_structures_status == 0)
+        {
             continue;
-        }   
+        }
 
+        switch (data_structures_choice)
+        {
 
-
-        switch(data_structures_choice){
-
-            case 1:                                                 //sll,dll and arrays case
-                while(1){
+            case 1: // sll,dll and arrays case
+                while (1)
+                {
                     int linear_ds_choice;
-                    int linear_ds_status=safe_input_int(&linear_ds_choice,
-                    "\nenter 1 for singly linked list demo"
-                    "\nenter 2 for doubly linked list demo"
-                    "\nenter 3 for arrays demo"
-                    "\nenter choice : ",1,3);
-                    
-                    if(linear_ds_status==INPUT_EXIT_SIGNAL)    break;
-                    
-                    if(linear_ds_status==0)     continue;
+                    int linear_ds_status = safe_input_int(&linear_ds_choice,
+                                                          "\nenter 1 for singly linked list demo"
+                                                          "\nenter 2 for doubly linked list demo"
+                                                          "\nenter 3 for arrays demo"
+                                                          "\nenter choice : ",
+                                                          1, 3);
 
-                    if(linear_ds_choice==1){
+                    if (linear_ds_status == INPUT_EXIT_SIGNAL)
+                        break;
+
+                    if (linear_ds_status == 0)
+                        continue;
+
+                    if (linear_ds_choice == 1)
+                    {
                         sll_Demo();
                         continue;
                     }
-                    if(linear_ds_choice==2){
+                    if (linear_ds_choice == 2)
+                    {
                         dll_demo();
                         continue;
                     }
-                    if(linear_ds_choice==3){
+                    if (linear_ds_choice == 3)
+                    {
                         array_demo();
                         continue;
                     }
                 }
                 break;
 
-            case 2:                                                     //circular variants case
-                
-                while(1){
-                    int circular_variant_choice=0;                                           
-                    int circular_variant_status=safe_input_int(
-                    &circular_variant_choice,
-                    "enter 1 for circular queue demo : ",
-                    1,1
-                    );
-                    if(circular_variant_status==0)  continue;
-                    if(circular_variant_status==INPUT_EXIT_SIGNAL)    break;
-                    if(circular_variant_choice==1){
+            case 2: // circular variants case
+
+                while (1)
+                {
+                    int circular_variant_choice = 0;
+                    int circular_variant_status = safe_input_int(
+                        &circular_variant_choice, "enter 1 for circular queue demo : ", 1, 1);
+                    if (circular_variant_status == 0)
+                        continue;
+                    if (circular_variant_status == INPUT_EXIT_SIGNAL)
+                        break;
+                    if (circular_variant_choice == 1)
+                    {
                         circular_queue_Demo();
                     }
                     break;
-                    }
-                
+                }
+
                 break;
-                    
-            case 3:                                                 //non linear data structures case
-                while(1){                                      
+
+            case 3: // non linear data structures case
+                while (1)
+                {
                     int non_linear_ds_choice;
-                    int non_linear_ds_status=safe_input_int(
-                    &non_linear_ds_choice,
-                    "enter 1 for binary search tree demo : ",
-                    1,1
-                    );
-                    if(non_linear_ds_status==INPUT_EXIT_SIGNAL)    break;
-                    if(non_linear_ds_status==0)     continue;
-                    if(non_linear_ds_choice==1){
+                    int non_linear_ds_status = safe_input_int(
+                        &non_linear_ds_choice, "enter 1 for binary search tree demo : ", 1, 1);
+                    if (non_linear_ds_status == INPUT_EXIT_SIGNAL)
+                        break;
+                    if (non_linear_ds_status == 0)
+                        continue;
+                    if (non_linear_ds_choice == 1)
+                    {
                         binary_search_tree_Demo();
                     }
                     break;
                 }
                 break;
-                    
-        }       
+        }
 
-    
-    printf("\nreturning to main menu....\n");
-
+        printf("\nreturning to main menu....\n");
     }
-}      
+}

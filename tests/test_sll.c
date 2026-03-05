@@ -1,21 +1,25 @@
+#include "sll.h"
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
-#include "sll.h"
 
 /* Helper: build list from array */
-static Node* build_list(int arr[], int n) {
+static Node* build_list(int arr[], int n)
+{
     Node* head = NULL;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         assert(sll_insertAtEnd(&head, arr[i]) == 1);
     }
     return head;
 }
 
 /* Helper: convert list to array */
-static int list_to_array(Node* head, int arr[], int max) {
+static int list_to_array(Node* head, int arr[], int max)
+{
     int i = 0;
-    while (head != NULL && i < max) {
+    while (head != NULL && i < max)
+    {
         arr[i++] = head->data;
         head = head->next;
     }
@@ -23,7 +27,8 @@ static int list_to_array(Node* head, int arr[], int max) {
 }
 
 /* Test insert operations */
-void test_insert() {
+void test_insert()
+{
     Node* head = NULL;
 
     assert(sll_insertAtEnd(&head, 10) == 1);
@@ -38,8 +43,9 @@ void test_insert() {
 }
 
 /* Test delete at beginning */
-void test_delete_begin() {
-    int arr[] = {1,2,3};
+void test_delete_begin()
+{
+    int arr[] = {1, 2, 3};
     Node* head = build_list(arr, 3);
 
     assert(sll_deleteAtBeginning(&head) == 1);
@@ -50,8 +56,9 @@ void test_delete_begin() {
 }
 
 /* Test delete at end */
-void test_delete_end() {
-    int arr[] = {1,2,3};
+void test_delete_end()
+{
+    int arr[] = {1, 2, 3};
     Node* head = build_list(arr, 3);
 
     assert(sll_deleteAtEnd(&head) == 1);
@@ -66,8 +73,9 @@ void test_delete_end() {
 }
 
 /* Test delete by value */
-void test_delete_by_value() {
-    int arr[] = {1,2,3,4};
+void test_delete_by_value()
+{
+    int arr[] = {1, 2, 3, 4};
     Node* head = build_list(arr, 4);
 
     assert(sll_deleteByValue(&head, 3) == 1);
@@ -84,8 +92,9 @@ void test_delete_by_value() {
 }
 
 /* Test search */
-void test_search() {
-    int arr[] = {5,10,15};
+void test_search()
+{
+    int arr[] = {5, 10, 15};
     Node* head = build_list(arr, 3);
 
     assert(sll_search(head, 5) == 0);
@@ -97,8 +106,9 @@ void test_search() {
 }
 
 /* Test reverse */
-void test_reverse() {
-    int arr[] = {1,2,3};
+void test_reverse()
+{
+    int arr[] = {1, 2, 3};
     Node* head = build_list(arr, 3);
 
     assert(sll_reverseList(&head) == 1);
@@ -113,7 +123,8 @@ void test_reverse() {
 }
 
 /* Edge cases */
-void test_edge_cases() {
+void test_edge_cases()
+{
     Node* head = NULL;
 
     assert(sll_reverseList(&head) == -2);
@@ -128,7 +139,8 @@ void test_edge_cases() {
     printf("sll Edge case tests passed\n");
 }
 
-int main() {
+int main()
+{
     test_insert();
     test_delete_begin();
     test_delete_end();
