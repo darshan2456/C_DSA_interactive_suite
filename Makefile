@@ -3,6 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/data_structures \
 	-Isrc/expression_evaluation \
 	-Isrc/sorting_algorithms_n2 \
+	-Isrc/advanced_sorting_algorithms \
 	-Isrc/searching_algorithms \
 	-Isrc/graph_traversals \
 	-Isrc/hashing
@@ -11,6 +12,7 @@ SRCS = \
 	src/data_structures/*.c \
 	src/expression_evaluation/*.c \
 	src/sorting_algorithms_n2/*.c \
+	src/advanced_sorting_algorithms/*.c \
 	src/searching_algorithms/*.c \
 	src/graph_traversals/*.c \
 	src/hashing/*.c

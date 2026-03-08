@@ -1,3 +1,4 @@
+#include "advanced_sorting.h"
 #include "array.h"
 #include "bst.h"
 #include "circular_queue.h"
@@ -30,9 +31,10 @@ int main()
             "click 1 for data structures demo\n"
             "click 2 for expression evaluation (infix to postfix and postfix evaluation) demo\n"
             "click 3 for sorting algorithms (the n^2 family) demo\n"
-            "click 4 for searching algorithms demo\n"
-            "click 5 for graph traversals (bfs/dfs) demo\n"
-            "click 6 for hashing algorithms demo\n"
+            "click 4 for advanced sorting algorithms demo\n"
+            "click 5 for searching algorithms demo\n"
+            "click 6 for graph traversals (bfs/dfs) demo\n"
+            "click 7 for hashing algorithms demo\n"
             "enter choice : ",
             1, 6 // limits
         );
@@ -59,12 +61,15 @@ int main()
                 sorting_algorithms_n2_demo();
                 break;
             case 4:
-                searching_algorithms_demo();
+                advanced_sorting_demo();
                 break;
             case 5:
-                graph_traversals_demo();
+                searching_algorithms_demo();
                 break;
             case 6:
+                graph_traversals_demo();
+                break;
+            case 7:
                 hashing_algorithms_demo();
                 break;
         }

@@ -14,7 +14,7 @@ void sorting_algorithms_n2_demo(void)
                                              "\nenter choice : ",
                                              1, 3);
 
-        if (sorting_algo_status == -111)
+        if (sorting_algo_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting sorting_algorithms_demo.....\n");
             return;
