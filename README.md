@@ -60,6 +60,10 @@ on push:
 - Selection Sort
 - Insertion Sort
 
+#### Advanced Sorting Algorithms
+- Quick sort
+- Merge sort
+
 #### Graph Traversals
 - Breadth-First Search (BFS)
 - Depth-First Search (DFS)
@@ -115,12 +119,14 @@ gcc -Wall -Wextra -std=c11 -g \
 -Isrc/data_structures \
 -Isrc/expression_evaluation \
 -Isrc/sorting_algorithms_n2 \
+-Isrc/advanced_sorting_algorithms \
 -Isrc/searching_algorithms \
 -Isrc/graph_traversals \
 -Isrc/hashing \
 src/data_structures/*.c \
 src/expression_evaluation/*.c \
 src/sorting_algorithms_n2/*.c \
+src/advanced_sorting_algorithms/*.c \
 src/searching_algorithms/*.c \
 src/graph_traversals/*.c \
 src/hashing/*.c \
@@ -134,12 +140,14 @@ gcc -Wall -Wextra -std=c11 -g ^
 -Isrc/data_structures ^
 -Isrc/expression_evaluation ^
 -Isrc/sorting_algorithms_n2 ^
+-Isrc/advanced_sorting_algorithms ^
 -Isrc/searching_algorithms ^
 -Isrc/graph_traversals ^
 -Isrc/hashing ^
 src/data_structures/*.c ^
 src/expression_evaluation/*.c ^
 src/sorting_algorithms_n2/*.c ^
+src/advanced_sorting_algorithms/*.c ^
 src/searching_algorithms/*.c ^
 src/graph_traversals/*.c ^
 src/hashing/*.c ^
@@ -163,6 +171,11 @@ This mirrors exactly what the Makefile performs.
 * Selection Sort: **O(n²)**
 * Insertion Sort: **O(n²)**
 
+### Advanced Sorting Algorithms
+
+* Quick sort: **O(n²)**
+* Merge sort: **O(nlogn)**
+
 ### Graph Traversals (Adjacency Matrix)
 
 * BFS: **O(V²)**
@@ -170,22 +183,9 @@ This mirrors exactly what the Makefile performs.
 
 ---
 
-## Design & Implementation Philosophy
 
-This project is structured as a **real C software system**, not a collection of isolated snippets.
-All modules are interconnected and accessible through a single executable via an interactive menu-driven interface.
 
-### Built Completely from Scratch
-
-All implementations rely on:
-
-* Raw pointers
-* Dynamic memory allocation (`malloc`, `free`)
-* Explicit ownership and lifetime reasoning
-
----
-
-## Pointer-Level Reasoning
+## Project Features
 
 ### Singly Linked List (SLL)
 
@@ -208,7 +208,7 @@ Strict attention is paid to:
 
 ---
 
-## Graph Traversals (BFS & DFS)
+### Graph Traversals (BFS & DFS)
 
 * Graphs are represented using an adjacency matrix
 * BFS uses the circular queue from the `data_structures` module
@@ -218,7 +218,7 @@ Strict attention is paid to:
 
 ---
 
-## Modularity & Header Discipline
+### Modularity & Header Discipline
 
 The codebase follows strict modular design rules:
 
@@ -231,7 +231,7 @@ Each directory acts as an independent module, making the system easy to extend, 
 
 ---
 
-## Language Features Used Deliberately
+### Language Features Used Deliberately
 
 * `static` for file-local helper functions
 * `const` for API correctness and pointer safety
@@ -242,7 +242,7 @@ Each directory acts as an independent module, making the system easy to extend, 
 
 ---
 
-## Robust Input Validation
+### Robust Input Validation
 
 All user input across the entire application is handled via:
 
@@ -270,7 +270,7 @@ Invalid input:
 
 ---
 
-## Expression Evaluation
+### Expression Evaluation
 
 * Stack implementation resides in `expression_evaluation`
 * Infix → Postfix conversion using:

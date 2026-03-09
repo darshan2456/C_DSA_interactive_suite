@@ -108,4 +108,4 @@ test_array:
 
 test: test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array
 
-.PHONY: all clean test test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array
+.PHONY: dsa test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array

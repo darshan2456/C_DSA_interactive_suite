@@ -1,14 +1,14 @@
 #include "safe_input.h"
 #include <stdio.h>
 
-void swap(int* a, int* b)
+static void swap(int* a, int* b)
 {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
 
-int partition(int arr[], int low, int high)
+static int partition(int arr[], int low, int high)
 {
     int pivot = arr[low];
     int left = low + 1;
@@ -75,7 +75,7 @@ void quicksort_demo(void)
 
             if (element_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting quicksort demo.....\n");
+                printf("\nExiting quicksort demo.....\n\n");
                 return;
             }
 
