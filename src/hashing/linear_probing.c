@@ -1,6 +1,7 @@
 #include "array.h"
 #include "hash.h"
 #include <safe_input.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -75,6 +76,8 @@ void linear_probing_demo(void)
                 continue;
             }
 
+            bool array_full = false;
+
             int start = hash_location; // the modulo arithmetic for wrap-around logic, same as
                                        // circular queue
             do
@@ -82,10 +85,14 @@ void linear_probing_demo(void)
                 hash_location = (hash_location + 1) % length_of_array;
                 if (hash_location == start)
                 {
-                    printf("\nhash table full....\n");
-                    continue;
+                    array_full = true;
+                    printf("\nhash table full, old table destroyed, new table created\n");
+                    break;
                 }
             } while (arr[hash_location]);
+
+            if (array_full)
+                break;
             arr[hash_location] = value; // inserting value at its hash location
 
             print_array(arr, length_of_array);

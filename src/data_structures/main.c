@@ -36,7 +36,7 @@ int main()
             "click 6 for graph traversals (bfs/dfs) demo\n"
             "click 7 for hashing algorithms demo\n"
             "enter choice : ",
-            1, 6 // limits
+            1, 7 // limits
         );
 
         if (status == -111)
