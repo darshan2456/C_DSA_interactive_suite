@@ -1,4 +1,7 @@
 CC = gcc
+
+VGFLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1
+
 CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/data_structures \
 	-Isrc/expression_evaluation \
@@ -34,6 +37,12 @@ $(TARGET): $(SRCS)
 
 clean:
 	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE)
+
+valgrind:
+	for t in $(TEST_BINS); do \
+		echo "Running valgrind on $$t..."; \
+		valgrind $(VGFLAGS) ./$$t || exit 1; \
+	done
 
 # =========================
 # Test Section
@@ -106,6 +115,8 @@ test_array:
 	$(CC) $(CFLAGS) $(ARRAY_TEST_SRC) -o test_array$(EXE)
 	./test_array$(EXE)
 
-test: test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array
 
-.PHONY: dsa test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array
+TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array
+test: $(TEST_BINS)
+
+.PHONY: $(TARGET) test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array

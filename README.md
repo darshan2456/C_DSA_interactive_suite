@@ -15,7 +15,6 @@ The codebase is structured as a reusable **DSA core**, with an interactive, cons
 
 [![asciinema demo](https://asciinema.org/a/jOr0YxJx25MnjKVK.svg)](https://asciinema.org/a/jOr0YxJx25MnjKVK)
 
-
 ## Hashing algorithms (step-by-step)
 
 [![asciinema demo](https://asciinema.org/a/jmMx2LTJSQJX8Re4.svg)](https://asciinema.org/a/jmMx2LTJSQJX8Re4)
@@ -30,11 +29,21 @@ The codebase is structured as a reusable **DSA core**, with an interactive, cons
 
 [![CI](https://github.com/darshan2456/C_DSA_interactive_suite/actions/workflows/ci.yml/badge.svg)](https://github.com/darshan2456/C_DSA_interactive_suite/actions/workflows/ci.yml)
 
-Individual tests for circular queues and binary_search_trees
+This project includes a **GitHub Actions CI pipeline** that automatically verifies code correctness and memory safety.
 
-on push:
-- Spins up a new VM instance with latest ubuntu version
-- Runs make test
+On every push or pull request:
+
+1. A fresh **Ubuntu VM** is allocated
+2. The project is **compiled using GCC**
+3. The complete **unit test suite is executed**
+4. All test binaries are run under **Valgrind** to check for:
+
+   - memory leaks  
+   - invalid reads / writes  
+   - use-after-free errors  
+   - uninitialized memory usage
+
+If any test fails or Valgrind detects a memory error, the CI job fails automatically.
 
 ## Project Overview
 
@@ -187,27 +196,6 @@ This mirrors exactly what the Makefile performs.
 
 ## Project Features
 
-### Singly Linked List (SLL)
-
-* Traversal using `next` pointers
-* Safe insertion and deletion
-* Head and tail edge cases handled
-* In-place list reversal using the classic three-pointer technique (`prev`, `curr`, `next`)
-
-### Doubly Linked List (DLL)
-
-* Bidirectional traversal using `prev` / `next`
-* Correct invariant maintenance during insertion and deletion
-* Head and tail edge cases handled
-
-Strict attention is paid to:
-
-* Pointer validity
-* Memory ownership
-* Avoiding dangling references
-
----
-
 ### Graph Traversals (BFS & DFS)
 
 * Graphs are represented using an adjacency matrix
@@ -215,6 +203,19 @@ Strict attention is paid to:
 * DFS uses an explicit stack from the `expression_evaluation` module
 * `visited[]` invariants are strictly enforced
 * Traversals are iterative (non-recursive)
+
+---
+
+### Expression Evaluation
+
+* Stack implementation resides in `expression_evaluation`
+* Infix → Postfix conversion using:
+
+  * Operator precedence
+  * Parentheses handling
+* Postfix evaluation via a stack execution model
+
+This is a classic two-phase algorithm implemented with full control over execution flow and state.
 
 ---
 
@@ -270,27 +271,6 @@ Invalid input:
 
 ---
 
-### Expression Evaluation
-
-* Stack implementation resides in `expression_evaluation`
-* Infix → Postfix conversion using:
-
-  * Operator precedence
-  * Parentheses handling
-* Postfix evaluation via a stack execution model
-
-This is a classic two-phase algorithm implemented with full control over execution flow and state.
-
----
-
-## Purpose of the Project
-
-* Strengthen low-level C fundamentals
-* Understand how abstractions are built, not just used
-* Practice real debugging (linker errors, input desynchronization, infinite loops)
-* Develop confidence in systems-level programming
-
----
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
