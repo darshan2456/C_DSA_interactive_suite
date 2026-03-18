@@ -119,4 +119,4 @@ test_array:
 TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array
 test: $(TEST_BINS)
 
-.PHONY: $(TARGET) test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array
+.PHONY: $(TARGET) $(TEST_BINS)

@@ -1,18 +1,23 @@
 #include "safe_input.h"
+#include "graph_traversals.h"
 #include "stack.h"
 #include <stdio.h>
 #include <string.h>
 
-void dfs(int size, int adj[size][size], int start);
+void dfs(Graph* graph, int start);
 
 void dfs_demo(void)
 {
+    int edges;
+    int graph_capacity;
+    int starting_node;
+    Graph* graph = NULL;
+
     while (1)
     {
-        int graph_capacity;
         int graph_capacity_status = safe_input_int(
             &graph_capacity,
-            "\nenter the number of nodes in the graph, (between 1 and 10), enter '-1' to exit : ",
+            "\nenter the number of vertices in the graph, (between 1 and 10), enter '-1' to exit : ",
             1, 10);
 
         if (graph_capacity_status == INPUT_EXIT_SIGNAL)
@@ -26,54 +31,107 @@ void dfs_demo(void)
             continue;
         }
 
-        int adj_matrix[graph_capacity][graph_capacity];
+        graph=create_graph(graph_capacity);
 
-        printf("\nenter values in the adjacency matrix: \n");
-
-        for (int i = 0; i < graph_capacity; i++)
-        { // nested for loop to take adjacency matrix at runtime
-            for (int j = 0; j < graph_capacity; j++)
-            {
-            dfs_node_start:
-                printf("\nenter the value of %d row of %d column, (either 1 or 0), enter '-1' to "
-                       "exit : ",
-                       i, j);
-                int bfs_node_status = safe_input_int(&adj_matrix[i][j], NULL, 0, 1);
-                if (bfs_node_status == INPUT_EXIT_SIGNAL)
-                {
-                    printf("\nExiting dfs demo\n");
-                    return;
-                }
-                if (bfs_node_status == 0)
-                {
-                    goto dfs_node_start;
-                }
-            }
+        if(!graph){
+            printf("\nmalloc allocation failed\n");
+            free_graph(graph);
+            return;
         }
 
-        while (1)
-        {
-            printf("\nenter starting node, (between 0 to graph_capacity-1) : ");
-            int starting_node;
-            int starting_node_status = safe_input_int(&starting_node, NULL, 0, graph_capacity - 1);
-
-            if (starting_node_status == INPUT_EXIT_SIGNAL)
-            {
-                printf("\nexiting dfs demo...\n");
-                return;
-            }
-            if (starting_node_status == 0)
-            {
-                continue;
-            }
-
-            dfs(graph_capacity, adj_matrix, starting_node);
-            break;
-        }
+        break;
     }
+
+    while (1)
+    {
+        int edges_capacity_status = safe_input_int(
+            &edges, "\nenter number of edges (between 1 and 100), enter '-1' to exit :", 0, 100);
+
+        if (edges_capacity_status == INPUT_EXIT_SIGNAL)
+        {
+            printf("\nExiting dfs demo\n");
+            free_graph(graph);
+            return;
+        }
+
+        if (edges_capacity_status == 0)
+        {
+            continue;
+        }
+
+        break;
+    }
+
+
+    printf("\nenter edges (src dest) (from 0 to vertices-1, enter '-1' to exit):\n");
+
+    for (int i = 0; i < edges; i++)
+    {
+        int src_status;
+        int dest_status;
+        int src;
+        int dest;
+
+    retry:
+        src_status = safe_input_int(&src, "src: ", 0, graph_capacity - 1);
+
+        if (src_status == INPUT_EXIT_SIGNAL)
+        {
+            printf("\nExiting dfs demo\n");
+            free_graph(graph);
+            return;
+        }
+        if (src_status == 0)
+        {
+            goto retry;
+        }
+
+        dest_status = safe_input_int(&dest, "dest: ", 0, graph_capacity - 1);
+
+        if (dest_status == INPUT_EXIT_SIGNAL)
+        {
+            printf("\nExiting dfs demo\n");
+            free_graph(graph);
+            return;
+        }
+        if (dest_status == 0)
+        {
+            goto retry;
+        }
+
+        add_edge_undirected(graph, src, dest);
+    }
+
+    while (1)
+    {
+        int start_status =
+            safe_input_int(&starting_node, "\nenter starting node: ", 0, graph_capacity - 1);
+
+        if (start_status == INPUT_EXIT_SIGNAL)
+        {
+            printf("\nExiting dfs demo.....\n");
+            free_graph(graph);
+            return;
+        }
+        if (start_status == 0)
+            continue;
+
+        if (starting_node < 0 || starting_node >= graph->V)
+        {
+            printf("Invalid start node\n");
+            return;
+        }
+        break;
+    }
+
+    dfs(graph,starting_node);
+    free_graph(graph);
+    
 }
-void dfs(int size, int adj[size][size], int start)
+void dfs(Graph* graph, int start)
 {
+    int size =graph->V;
+
     int visited[size];
 
     memset(visited, 0, sizeof(visited)); // initializing the array with all zeroes
@@ -95,17 +153,25 @@ void dfs(int size, int adj[size][size], int start)
     visited[start] = 1;
     push(nodes, start);
 
-    while (!isEmpty(nodes))
-    { // main loop which performs dfs
+    while (1)
+    {                                                           // main loop which performs dfs
         int curr = pop(nodes);
+        if(curr==-1){
+            break;
+        }
         printf("%d->", curr);
-        for (int i = size - 1; i >= 0; i--)
+
+        Node* temp = graph->array[curr];
+
+        while (temp)
         {
-            if (adj[curr][i] && !visited[i])
+            int v = temp->data;
+            if (!visited[v])
             {
-                visited[i] = 1;
-                push(nodes, i);
+                visited[v] = 1;
+                push(nodes, v);
             }
+            temp = temp->next;
         }
     }
     printf("end\n");
