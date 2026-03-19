@@ -177,7 +177,7 @@ void bfs_demo(void)
         break;
     }
 
-    printf("\nenter edges (src dest):\n");
+    printf("\nenter edges (src dest) (from 0 to vertices-1, enter '-1' to exit):\n");
 
     for (int i = 0; i < edges; i++)
     {

@@ -1,5 +1,5 @@
-#include "safe_input.h"
 #include "graph_traversals.h"
+#include "safe_input.h"
 #include "stack.h"
 #include <stdio.h>
 #include <string.h>
@@ -15,10 +15,10 @@ void dfs_demo(void)
 
     while (1)
     {
-        int graph_capacity_status = safe_input_int(
-            &graph_capacity,
-            "\nenter the number of vertices in the graph, (between 1 and 10), enter '-1' to exit : ",
-            1, 10);
+        int graph_capacity_status = safe_input_int(&graph_capacity,
+                                                   "\nenter the number of vertices in the graph, "
+                                                   "(between 1 and 10), enter '-1' to exit : ",
+                                                   1, 10);
 
         if (graph_capacity_status == INPUT_EXIT_SIGNAL)
         {
@@ -31,9 +31,10 @@ void dfs_demo(void)
             continue;
         }
 
-        graph=create_graph(graph_capacity);
+        graph = create_graph(graph_capacity);
 
-        if(!graph){
+        if (!graph)
+        {
             printf("\nmalloc allocation failed\n");
             free_graph(graph);
             return;
@@ -61,7 +62,6 @@ void dfs_demo(void)
 
         break;
     }
-
 
     printf("\nenter edges (src dest) (from 0 to vertices-1, enter '-1' to exit):\n");
 
@@ -124,13 +124,12 @@ void dfs_demo(void)
         break;
     }
 
-    dfs(graph,starting_node);
+    dfs(graph, starting_node);
     free_graph(graph);
-    
 }
 void dfs(Graph* graph, int start)
 {
-    int size =graph->V;
+    int size = graph->V;
 
     int visited[size];
 
@@ -154,9 +153,10 @@ void dfs(Graph* graph, int start)
     push(nodes, start);
 
     while (1)
-    {                                                           // main loop which performs dfs
+    { // main loop which performs dfs
         int curr = pop(nodes);
-        if(curr==-1){
+        if (curr == -1)
+        {
             break;
         }
         printf("%d->", curr);

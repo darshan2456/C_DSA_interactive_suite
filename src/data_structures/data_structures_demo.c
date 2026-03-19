@@ -4,6 +4,7 @@
 #include "dll.h"
 #include "safe_input.h"
 #include "sll.h"
+#include "tbt.h"
 #include <stdio.h>
 
 void data_structures_demo(void)
@@ -92,8 +93,11 @@ void data_structures_demo(void)
                 while (1)
                 {
                     int non_linear_ds_choice;
-                    int non_linear_ds_status = safe_input_int(
-                        &non_linear_ds_choice, "enter 1 for binary search tree demo : ", 1, 1);
+                    int non_linear_ds_status =
+                        safe_input_int(&non_linear_ds_choice,
+                                       "\nenter 1 for binary search tree demo\nenter 2 for "
+                                       "threaded binary tree demo:\n",
+                                       1, 2);
                     if (non_linear_ds_status == INPUT_EXIT_SIGNAL)
                         break;
                     if (non_linear_ds_status == 0)
@@ -102,7 +106,10 @@ void data_structures_demo(void)
                     {
                         binary_search_tree_Demo();
                     }
-                    break;
+                    if (non_linear_ds_choice == 2)
+                    {
+                        TBT_demo();
+                    }
                 }
                 break;
         }
