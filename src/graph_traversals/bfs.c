@@ -87,6 +87,12 @@ void add_edge_undirected(Graph* graph, int src, int dest)
     if (!graph)
         return;
 
+    if (src < 0 || src >= graph->V || dest < 0 || dest >= graph->V)
+    {
+        printf("Invalid edge: %d -> %d\n", src, dest);
+        return;
+    }
+
     sll_insertAtBeginning(&graph->array[src], dest);
     sll_insertAtBeginning(&graph->array[dest], src);
 }
