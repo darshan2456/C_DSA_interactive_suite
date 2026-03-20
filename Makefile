@@ -54,7 +54,7 @@ CIRC_QUEUE_TEST_SRC = \
 	tests/test_circ_queue.c
 
 BST_TEST_SRC = \
-	src/data_structures/binary_search_tree.c \
+	src/data_structures/bst.c \
 	src/data_structures/safe_input_int.c \
 	tests/test_bst.c
 

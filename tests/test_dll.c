@@ -93,13 +93,13 @@ void test_delete_by_value()
     int arr[] = {1, 2, 3, 4};
     doubly_ll_Node* head = build_list(arr, 4);
 
-    assert(dll_deleteByValue(&head, 3) == 1);
+    assert(dll_deleteByValue(&head, 4) == 1);
 
     int out[4];
     int n = list_to_array(head, out, 4);
 
     assert(n == 3);
-    assert(out[0] == 1 && out[1] == 2 && out[2] == 4);
+    assert(out[0] == 1 && out[1] == 2 && out[2] == 3);
 
     delete_dll(head);
 
@@ -124,7 +124,7 @@ void test_search()
 /* Reverse test */
 void test_reverse()
 {
-    int arr[] = {1, 2, 3};
+    int arr[] = {1, 2, 5};
     doubly_ll_Node* head = build_list(arr, 3);
 
     dll_reverselist(&head);
@@ -133,7 +133,7 @@ void test_reverse()
     int n = list_to_array(head, out, 3);
 
     assert(n == 3);
-    assert(out[0] == 3 && out[1] == 2 && out[2] == 1);
+    assert(out[0] == 5 && out[1] == 2 && out[2] == 1);
 
     delete_dll(head);
 

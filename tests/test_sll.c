@@ -51,6 +51,11 @@ void test_delete_begin()
     assert(sll_deleteAtBeginning(&head) == 1);
     assert(head->data == 2);
 
+    int out[3];
+    int n=list_to_array(head,out,3);
+    assert(n==2);
+    assert(out[0]==2 && out[1]==3);
+
     delete_sll(head);
     printf("sll Delete at beginning tests passed\n");
 }
@@ -78,12 +83,12 @@ void test_delete_by_value()
     int arr[] = {1, 2, 3, 4};
     Node* head = build_list(arr, 4);
 
-    assert(sll_deleteByValue(&head, 3) == 1);
+    assert(sll_deleteByValue(&head, 2) == 1);
 
     int out[4];
     int n = list_to_array(head, out, 4);
     assert(n == 3);
-    assert(out[0] == 1 && out[1] == 2 && out[2] == 4);
+    assert(out[0] == 1 && out[1] == 3 && out[2] == 4);
 
     assert(sll_deleteByValue(&head, 99) == -1);
 
@@ -108,7 +113,7 @@ void test_search()
 /* Test reverse */
 void test_reverse()
 {
-    int arr[] = {1, 2, 3};
+    int arr[] = {1, 2, 4};
     Node* head = build_list(arr, 3);
 
     assert(sll_reverseList(&head) == 1);
@@ -116,7 +121,7 @@ void test_reverse()
     int out[3];
     int n = list_to_array(head, out, 3);
     assert(n == 3);
-    assert(out[0] == 3 && out[1] == 2 && out[2] == 1);
+    assert(out[0] == 4 && out[1] == 2 && out[2] == 1);
 
     delete_sll(head);
     printf("sll Reverse tests passed\n");

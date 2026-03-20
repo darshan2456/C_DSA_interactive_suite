@@ -9,8 +9,9 @@ void test_insert_and_count()
     assert(bst_insert(&root, 10) == 1);
     assert(bst_insert(&root, 5) == 1);
     assert(bst_insert(&root, 15) == 1);
+    assert(bst_insert(&root, 19) == 1);
 
-    assert(countnodes(root) == 3);
+    assert(countnodes(root) == 4);
 
     destroy_bst(root);
 

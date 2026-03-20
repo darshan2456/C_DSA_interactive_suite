@@ -126,6 +126,27 @@ int insert_node_tbt(TBTnode** root_ref, int key)
     return 1;
 }
 
+void destroy_tbt(TBTnode* node)
+{
+    TBTnode* curr = leftmost(node);
+
+    while (curr)
+    {
+        TBTnode* next;
+        if (curr->rthread)
+        {
+            next = curr->right;
+        }
+        else
+        {
+            next = leftmost(curr->right);
+        }
+
+        free(curr);
+        curr = next;
+    }
+}
+
 void TBT_demo(void)
 {
     TBTnode* root = NULL;
@@ -139,6 +160,7 @@ void TBT_demo(void)
         if (capacity_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting Threaded Binary Tree demo....\n");
+            destroy_tbt(root);
             return;
         }
         if (capacity_status == 0)
@@ -160,6 +182,7 @@ void TBT_demo(void)
         if (val_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting Threaded Binary Tree demo....\n");
+            destroy_tbt(root);
             return;
         }
         if (val_status == 0)
@@ -180,6 +203,7 @@ void TBT_demo(void)
             case INPUT_EXIT_SIGNAL:
             {
                 printf("\nExiting Threaded Binary Tree demo....\n");
+                destroy_tbt(root);
                 return;
             }
             case 0:
@@ -206,4 +230,5 @@ void TBT_demo(void)
 
     printf("\ninorder traversal is: ");
     inorder_tbt(root);
+    destroy_tbt(root);
 }

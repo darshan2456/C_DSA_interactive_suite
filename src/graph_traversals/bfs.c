@@ -233,6 +233,7 @@ void bfs_demo(void)
         if (starting_node < 0 || starting_node >= graph->V)
         {
             printf("Invalid start node\n");
+            free_graph(graph);
             return;
         }
         break;

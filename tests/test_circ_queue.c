@@ -19,10 +19,10 @@ void test_basic_enqueue_dequeue()
     circular_queue q;
     init_circ_queue(5, &q);
 
-    assert(enqueue(&q, 10) == 1);
+    assert(enqueue(&q, 30) == 1);
     assert(enqueue(&q, 20) == 1);
 
-    assert(dequeue(&q) == 10);
+    assert(dequeue(&q) == 30);
     assert(dequeue(&q) == 20);
 
     destroy_circ_queue(&q);

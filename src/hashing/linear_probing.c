@@ -5,9 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 
-// below two functions are helper functions local to this file and not supposed to used as an API in
-// other modules
-
+// below function is a helper function local to this file is not supposed to used as an API in other
+// modules
 static int next_prime(int n)
 {
     int size = sizeof(PRIMES) / sizeof(PRIMES[0]);
