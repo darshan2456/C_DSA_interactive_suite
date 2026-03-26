@@ -11,6 +11,7 @@ void expression_evaluation_demo(void)
         expr_eval_status = safe_input_int(&expr_eval_choice,
                                           "\nenter 1 for infix to postfix conversion"
                                           "\nenter 2 for postfix evaluation"
+                                          "\nenter 3 parantheses checker"
                                           "\nenter choice : ",
                                           1, 3);
 
@@ -31,6 +32,11 @@ void expression_evaluation_demo(void)
         else if (expr_eval_choice == 2)
         {
             postfix_evaluation_Demo();
+            continue;
+        }
+        else if (expr_eval_choice == 3)
+        {
+            parantheses_checker_demo();
             continue;
         }
     }

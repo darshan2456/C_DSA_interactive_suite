@@ -5,5 +5,6 @@
 void infix_to_postfix_Demo(void);
 void postfix_evaluation_Demo(void);
 void expression_evaluation_demo(void);
+void parantheses_checker_demo(void);
 
 #endif

@@ -66,7 +66,9 @@ void quicksort_demo(void)
 
         int arr[length_of_array];
 
-        for (int i = 0; i < length_of_array; i++)
+        int i = length_of_array - 1;
+
+        do
         {
 
         retry:
@@ -83,7 +85,9 @@ void quicksort_demo(void)
             {
                 goto retry;
             }
-        }
+
+            i--;
+        } while (i >= 0);
 
         quicksort(arr, 0, length_of_array - 1);
 

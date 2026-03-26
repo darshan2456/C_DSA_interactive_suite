@@ -52,9 +52,9 @@ void test_delete_begin()
     assert(head->data == 2);
 
     int out[3];
-    int n=list_to_array(head,out,3);
-    assert(n==2);
-    assert(out[0]==2 && out[1]==3);
+    int n = list_to_array(head, out, 3);
+    assert(n == 2);
+    assert(out[0] == 2 && out[1] == 3);
 
     delete_sll(head);
     printf("sll Delete at beginning tests passed\n");
