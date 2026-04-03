@@ -93,8 +93,8 @@ void add_edge_undirected(Graph* graph, int src, int dest)
         return;
     }
 
-    sll_insertAtBeginning(&graph->array[src], dest);
-    sll_insertAtBeginning(&graph->array[dest], src);
+    sll_insertAtEnd(&graph->array[src], dest);
+    sll_insertAtEnd(&graph->array[dest], src);
 }
 
 void free_graph(Graph* graph)

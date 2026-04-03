@@ -95,8 +95,9 @@ void data_structures_demo(void)
                     int non_linear_ds_choice;
                     int non_linear_ds_status =
                         safe_input_int(&non_linear_ds_choice,
-                                       "\nenter 1 for binary search tree demo\nenter 2 for "
-                                       "threaded binary tree demo:\n",
+                                       "\nenter 1 for binary search tree demo"
+                                       "\nenter 2 for threaded binary tree demo"
+                                       "\nenter choice: ",
                                        1, 2);
                     if (non_linear_ds_status == INPUT_EXIT_SIGNAL)
                         break;

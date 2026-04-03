@@ -1,8 +1,6 @@
 #include <assert.h>
 #include <stdio.h>
-
-/* Forward declaration */
-int hash_function(int value, int length_of_array);
+#include "hash.h"
 
 void test_hash_range()
 {

@@ -36,7 +36,7 @@ $(TARGET): $(SRCS)
 	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE)
 
 clean:
-	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE)
+	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE)
 
 valgrind:
 	for t in $(TEST_BINS); do \
@@ -87,6 +87,12 @@ ARRAY_TEST_SRC = \
 	src/data_structures/safe_input_int.c \
 	tests/test_array.c
 
+STACK_TEST_SRC = \
+	src/expression_evaluation/stack.c \
+	src/data_structures/sll.c \
+	src/data_structures/safe_input_int.c \
+	tests/test_stack.c
+
 test_circ_queue:
 	$(CC) $(CFLAGS) $(CIRC_QUEUE_TEST_SRC) -o test_circ_queue$(EXE)
 	./test_circ_queue$(EXE)
@@ -115,8 +121,12 @@ test_array:
 	$(CC) $(CFLAGS) $(ARRAY_TEST_SRC) -o test_array$(EXE)
 	./test_array$(EXE)
 
+test_stack:
+	$(CC) $(CFLAGS) $(STACK_TEST_SRC) -o test_stack$(EXE)
+	./test_stack$(EXE)
 
-TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array
+
+TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack
 test: $(TEST_BINS)
 
 .PHONY: $(TARGET) $(TEST_BINS)

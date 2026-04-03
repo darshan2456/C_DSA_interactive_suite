@@ -185,10 +185,10 @@ This mirrors exactly what the Makefile performs.
 * Quick sort: **O(n²)**
 * Merge sort: **O(nlogn)**
 
-### Graph Traversals (Adjacency Matrix)
+### Graph Traversals (Adjacency List)
 
-* BFS: **O(V²)**
-* DFS: **O(V²)**
+* BFS: **O(V+E)**
+* DFS: **O(V+E)**
 
 ---
 
@@ -198,7 +198,7 @@ This mirrors exactly what the Makefile performs.
 
 ### Graph Traversals (BFS & DFS)
 
-* Graphs are represented using an adjacency matrix
+* Graphs are represented using an adjacency list
 * BFS uses the circular queue from the `data_structures` module
 * DFS uses an explicit stack from the `expression_evaluation` module
 * `visited[]` invariants are strictly enforced
@@ -280,11 +280,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Author
 
 **Darshan Parekh**
-B.Sc. Computer Science
 
-### Interests
-
-* Systems Programming
-* Open-Source Software
-* Cybersecurity
-* Low-Level Engineering
+Aspiring systems engineer and cybersecurity engineer
