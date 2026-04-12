@@ -1,6 +1,6 @@
+#include "stack.h"
 #include <assert.h>
 #include <stdio.h>
-#include "stack.h"
 
 void test_push_pop_lifo(void)
 {

@@ -1,6 +1,6 @@
+#include "hash.h"
 #include <assert.h>
 #include <stdio.h>
-#include "hash.h"
 
 void test_hash_range()
 {

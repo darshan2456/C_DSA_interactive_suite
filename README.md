@@ -53,6 +53,7 @@ If any test fails or Valgrind detects a memory error, the CI job fails automatic
 - Circular Queue (array-based)
 - Stack (array-based / linked-list-based as required)
 - Binary Search Tree (BST)
+- Threaded Binary Tree (TBT)
 
 ### Algorithms
 
@@ -78,7 +79,7 @@ If any test fails or Valgrind detects a memory error, the CI job fails automatic
 - Depth-First Search (DFS)
 
 Graph traversals are implemented using:
-- An adjacency matrix representation
+- An adjacency list representation
 - An explicit queue for BFS
 - An explicit stack for DFS
 
@@ -89,7 +90,7 @@ Both BFS and DFS are implemented **iteratively** (no recursion).
 -Separate Chaining
 
 Linear Probing uses modulo arithmetic to wrap-around the hash table/array when last index is full, optimizing resources and using the full array. 
-Separate Chaining uses sll API from the 'data_structures' folders
+Separate Chaining uses sll API from the 'data_structures' folder
 
 ---
 
@@ -213,10 +214,12 @@ This mirrors exactly what the Makefile performs.
 
   * Operator precedence
   * Parentheses handling
+
 * Postfix evaluation via a stack execution model
 
 This is a classic two-phase algorithm implemented with full control over execution flow and state.
 
+* Parantheses checker with a stack to check order of parantheses, not just number.
 ---
 
 ### Modularity & Header Discipline
@@ -270,6 +273,8 @@ Invalid input:
 * Is rejected, cleaned, and retried safely
 
 ---
+
+If you're curious about the thinking and struggles behind building this — I wrote about it here - https://dev.to/darshan2456/i-refused-to-just-know-what-a-data-structure-is-so-i-built-one-in-c-3dfp
 
 
 ## License
