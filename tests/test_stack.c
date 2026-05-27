@@ -2,6 +2,31 @@
 #include <assert.h>
 #include <stdio.h>
 
+void test_printStack_empty(void)
+{
+    stack* s = createStack();
+    printStack(s); 
+    assert(isEmpty(s) == 1);
+    destroyStack(s);
+    printf("test_printStack_empty passed.\n");
+}
+
+void test_printStack_nonempty(void)
+{
+    stack* s = createStack();
+    push(s, 1);
+    push(s, 2);
+    push(s, 3);
+    assert(peek(s) == 3);
+    assert(isEmpty(s) == 0);
+    assert(pop(s) == 3);
+    assert(pop(s) == 2);
+    assert(pop(s) == 1);
+    assert(isEmpty(s) == 1);
+    destroyStack(s);
+    printf("test_printStack_nonempty passed.\n");
+}
+
 void test_push_pop_lifo(void)
 {
     stack* s = createStack();
@@ -74,6 +99,8 @@ int main(void)
     test_peek_no_remove();
     test_isEmpty();
     test_destroy_nonEmpty();
+    test_printStack_empty();
+    test_printStack_nonempty();
     printf("All stack tests passed.\n");
     return 0;
 }
