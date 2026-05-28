@@ -1,4 +1,4 @@
-#include "data_structures.h" // Includes dll.h
+#include "data_structures.h" // Uses Doubly Linked List
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,4 +1,4 @@
-#include "data_structures.h" // Includes array.h
+#include "data_structures.h" // Uses Arrays
 #include "hash.h"
 #include <safe_input.h>
 #include <stdbool.h>

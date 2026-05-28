@@ -1,11 +1,11 @@
-#include "data_structures.h" // Includes sll.h
+#include "data_structures.h" // Uses Singly Linked List
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 // methods implemented are - insertAtEnd, deleteAtBeginning, insertAtBeginning, deleteAtEnd,
 // printlist, search
-//  deleteByValue and reverseList
+// deleteByValue and reverseList
 
 void sll_Demo(void)
 {

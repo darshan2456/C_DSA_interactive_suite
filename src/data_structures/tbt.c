@@ -1,4 +1,4 @@
-#include "data_structures.h" // Includes tbt.h
+#include "data_structures.h" // Uses Threaded Binary Tree
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>

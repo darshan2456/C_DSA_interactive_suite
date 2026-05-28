@@ -1,4 +1,4 @@
-#include "data_structures.h" // Includes sll.h
+#include "data_structures.h" // Uses Singly Linked List
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
