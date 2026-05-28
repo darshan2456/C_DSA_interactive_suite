@@ -1,6 +1,8 @@
 #include "safe_input.h"
 #include "stack.h"
 #include <stdio.h>
+#include <string.h>
+#include <stddef.h>
 
 int check_parantheses(char* s)
 {
@@ -35,13 +37,50 @@ int check_parantheses(char* s)
     return result;
 }
 
+int get_validated_input_parantheses(char* buff, size_t size, const char* prompt)
+{
+    if (prompt)
+    {
+        printf("%s", prompt);
+        fflush(stdout);
+    }
+    if (!fgets(buff, size, stdin))
+    {
+        printf("\ninput ended unexpectedly");
+        return 0;
+    }
+    buff[strcspn(buff, "\n")] = '\0';
+    if (buff[0] == 'X' && buff[1] == '\0')
+    {
+        return INPUT_EXIT_SIGNAL;
+    }
+    size_t i = 0;
+    while (buff[i] != '\0')
+    {
+        char c = buff[i];
+        if (c != '(' && c != ')' && c != '{' && c != '}' && c != '[' && c != ']')
+        {
+            printf("\ninvalid character: %c\n", c);
+            printf("\nonly '(', ')', '{', '}', '[', ']' are allowed.\n");
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
 void parantheses_checker_demo(void)
 {
     char parantheses_expression[50] = {0};
 
-    printf("\nenter an expression with parantheses: ");
+    int status = get_validated_input_parantheses(
+        parantheses_expression,
+        sizeof(parantheses_expression),
+        "\nenter an expression with parantheses: "
+    );
 
-    scanf("%s", parantheses_expression);
+    if (status == INPUT_EXIT_SIGNAL || status == 0)
+        return;
 
     int result = check_parantheses(parantheses_expression);
 
