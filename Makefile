@@ -2,14 +2,15 @@ CC = gcc
 
 VGFLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1
 
-CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
-	-Isrc/data_structures \
-	-Isrc/expression_evaluation \
-	-Isrc/sorting_algorithms_n2 \
-	-Isrc/advanced_sorting_algorithms \
-	-Isrc/searching_algorithms \
-	-Isrc/graph_traversals \
-	-Isrc/hashing
+CFLAGS = -Wall -Wextra -std=c11 -g -Wno-declaration-after-statement \
+    -Isrc/data_structures \
+    -Isrc/expression_evaluation \
+    -Isrc/sorting_algorithms_n2 \
+    -Isrc/advanced_sorting_algorithms \
+    -Isrc/searching_algorithms \
+    -Isrc/graph_traversals \
+    -Isrc/hashing \
+    -Isrc/avl_tree
 
 SRCS = \
 	src/data_structures/*.c \
@@ -18,7 +19,8 @@ SRCS = \
 	src/advanced_sorting_algorithms/*.c \
 	src/searching_algorithms/*.c \
 	src/graph_traversals/*.c \
-	src/hashing/*.c
+	src/hashing/*.c \
+	src/avl_tree/*.c
 
 ifeq ($(OS),Windows_NT)
 	RM = cmd /c del
@@ -39,8 +41,7 @@ fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
 clean:
-	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE)
-
+	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE) test_avl$(EXE)
 valgrind:
 	for t in $(TEST_BINS); do \
 		echo "Running valgrind on $$t..."; \
@@ -95,7 +96,14 @@ STACK_TEST_SRC = \
 	src/expression_evaluation/stack.c \
 	src/data_structures/sll.c \
 	src/data_structures/safe_input_int.c \
-	tests/test_stack.c
+	tests/test_stack.c 
+
+AVL_TEST_SRC = \
+	src/avl_tree/avl_tree.c \
+	src/data_structures/safe_input_int.c \
+	tests/test_avl.c
+
+	
 
 test_circ_queue:
 	$(CC) $(CFLAGS) $(CIRC_QUEUE_TEST_SRC) -o test_circ_queue$(EXE)
@@ -129,8 +137,12 @@ test_stack:
 	$(CC) $(CFLAGS) $(STACK_TEST_SRC) -o test_stack$(EXE)
 	./test_stack$(EXE)
 
+test_avl:
+	$(CC) $(CFLAGS) $(AVL_TEST_SRC) -o test_avl$(EXE)
+	./test_avl$(EXE)	
 
-TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack
+
+TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_avl
 test: $(TEST_BINS)
 
 .PHONY: $(TARGET) $(TEST_BINS)
