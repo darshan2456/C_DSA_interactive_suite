@@ -165,4 +165,4 @@ TEST_BINS = \
 	test_priority_queue
 test: $(TEST_BINS)
 
-.PHONY: $(TARGET) $(TEST_BINS)
+.PHONY: $(TARGET) $(TEST_BINS) clean
