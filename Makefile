@@ -1,10 +1,15 @@
+# Variables
+
+# Compiler
 CC = gcc
 
+#Vlagrind flags
 VGFLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1
 
-CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
-	-Isrc/data_structures \
-	-Isrc/expression_evaluation \
+# Compile flags
+CFLAGS = -Wall -Wextra -Werror -std=c11 -g \ # \ for continue line
+	-Isrc/data_structures \ # -I includes the directory
+	-Isrc/expression_evaluation \ # includes all the src dierctories
 	-Isrc/sorting_algorithms_n2 \
 	-Isrc/advanced_sorting_algorithms \
 	-Isrc/searching_algorithms \
@@ -23,23 +28,23 @@ SRCS = \
 ifeq ($(OS),Windows_NT)
 	RM = cmd /c del
 	EXE = .exe
-else
+else 
 	RM = rm -f
 	EXE =
 endif
 
-TARGET = dsa
+TARGET = dsa 
 
 all: $(TARGET)
 
 $(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE)
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE) # recipe: gcc (compiler flags) (.c files) -o dsa.exe
 
 fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
-clean:
-	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE) test_tbt$(EXE) test_priority_queue$(EXE)
+clean: 
+	$(RM) $(TARGET)$(EXE) $(addsuffix $(EXE),$(TEST_BINS))
 
 valgrind:
 	for t in $(TEST_BINS); do \
@@ -148,8 +153,16 @@ test_priority_queue:
 	$(CC) $(CFLAGS) $(PRIORITY_QUEUE_SRC) -o test_priority_queue$(EXE)
 	./test_priority_queue$(EXE)
 
-
-TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_tbt test_priority_queue
+TEST_BINS = \
+	test_circ_queue \
+	test_bst \
+	test_search \
+	test_hash_func \
+	test_sll \
+	test_dll \
+	test_array \
+	test_stack \
+	test_priority_queue
 test: $(TEST_BINS)
 
 .PHONY: $(TARGET) $(TEST_BINS)
