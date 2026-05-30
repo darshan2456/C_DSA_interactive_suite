@@ -48,12 +48,12 @@ $(TARGET): $(SRCS)
 fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
-clean:
- 	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE)
+#clean:
+# 	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE)
 
 # changed clean target to clean TEST_BINS variable
-# clean: 
-#	$(RM) $(TARGET)$(EXE) $(addsuffix $(EXE),$(TEST_BINS))
+clean: 
+	$(RM) $(TARGET)$(EXE) $(addsuffix $(EXE),$(TEST_BINS))
 
 valgrind:
 	for t in $(TEST_BINS); do \
