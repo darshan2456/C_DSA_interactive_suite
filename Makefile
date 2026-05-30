@@ -166,7 +166,7 @@ test: $(TEST_BINS)
 
 # .PHONY: $(TARGET) $(TEST_BINS)
 
-.PHONY: $(TARGET) $(TEST_BINS)
+.PHONY: $(TARGET) $(TEST_BINS) clean
 
 
 # can we replace TARGET with dsa?
