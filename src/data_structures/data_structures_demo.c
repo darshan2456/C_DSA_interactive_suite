@@ -1,7 +1,8 @@
 #include "data_structures.h"
 /*
 data_structures.h uses the following:
-Arrays, Binary Search Tree, Circular Queue, Doubly Linked List, Singly Linked List, Threaded Binary Tree
+Arrays, Binary Search Tree, Circular Queue, Doubly Linked List, Singly Linked List, Threaded Binary
+Tree
 */
 #include "safe_input.h"
 #include <stdio.h>
@@ -92,13 +93,13 @@ void data_structures_demo(void)
                 while (1)
                 {
                     int non_linear_ds_choice;
-                    int non_linear_ds_status =
-                        safe_input_int(&non_linear_ds_choice,
-                                       "\nenter 1 for binary search tree demo"
-                                       "\nenter 2 for threaded binary tree demo"
-                                       "\nenter 3 for priority queue (array implementation of binary heap) demo"
-                                       "\nenter choice: ",
-                                       1, 3);
+                    int non_linear_ds_status = safe_input_int(
+                        &non_linear_ds_choice,
+                        "\nenter 1 for binary search tree demo"
+                        "\nenter 2 for threaded binary tree demo"
+                        "\nenter 3 for priority queue (array implementation of binary heap) demo"
+                        "\nenter choice: ",
+                        1, 3);
                     if (non_linear_ds_status == INPUT_EXIT_SIGNAL)
                         break;
                     if (non_linear_ds_status == 0)
@@ -111,7 +112,7 @@ void data_structures_demo(void)
                     {
                         TBT_demo();
                     }
-                    if(non_linear_ds_choice == 3)
+                    if (non_linear_ds_choice == 3)
                     {
                         priority_queue_demo();
                     }

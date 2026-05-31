@@ -1,8 +1,8 @@
 #include "data_structures.h"
 #include "safe_input.h"
+#include <limits.h>
 #include <stdio.h>
-#include<stdlib.h>
-#include<limits.h>
+#include <stdlib.h>
 
 void swap(int* a, int* b)
 {
@@ -20,7 +20,8 @@ priority_queue* pq_init(HeapType heapType)
 {
     priority_queue* pq = malloc(sizeof(priority_queue));
 
-    if(pq == NULL) return NULL;
+    if (pq == NULL)
+        return NULL;
     pq->size = 0;
     pq->heapType = heapType;
 
@@ -72,8 +73,8 @@ bool extractTop(priority_queue* pq, int* result)
 
     while (1)
     {
-        int left = 2*i + 1;
-        int right = 2*i + 2;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
         int target = i;
 
         if (pq->heapType == MIN_HEAP)
@@ -107,14 +108,16 @@ bool extractTop(priority_queue* pq, int* result)
 
 bool peek_pq(priority_queue* pq, int* result)
 {
-    if (pq == NULL || result == NULL || pq->size == 0) return false;
+    if (pq == NULL || result == NULL || pq->size == 0)
+        return false;
     *result = pq->heap[0];
     return true;
 }
 
 void destroy_pq(priority_queue* pq)
 {
-    if(pq == NULL) return;
+    if (pq == NULL)
+        return;
 
     free(pq);
 }
@@ -130,56 +133,60 @@ void priority_queue_demo(void)
     while (1)
     {
         int max_min_heap_val;
-        int max_min_heap_status = safe_input_int(&max_min_heap_val, "\nEnter 0 for min heap or 1 for max heap: ", 0, 1);
+        int max_min_heap_status =
+            safe_input_int(&max_min_heap_val, "\nEnter 0 for min heap or 1 for max heap: ", 0, 1);
 
-        if(max_min_heap_status == INPUT_EXIT_SIGNAL)
+        if (max_min_heap_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting priority queue demo.....\n");
             return;
         }
-        
-        if(max_min_heap_status == 0)
+
+        if (max_min_heap_status == 0)
             continue;
-        
+
         priority_queue* pq = pq_init((HeapType)max_min_heap_val);
-        if(pq == NULL)
+        if (pq == NULL)
         {
             printf("\nAllocation failed, Exiting demo.\n");
             return;
         }
 
-
-        while(1)
+        while (1)
         {
             int pq_choice;
-            int pq_choice_status = safe_input_int(&pq_choice, "\nEnter 1 to insert, 2 to remove and extract top, 3 to look at top, -1 to exit demo: ",1,3);
+            int pq_choice_status = safe_input_int(&pq_choice,
+                                                  "\nEnter 1 to insert, 2 to remove and extract "
+                                                  "top, 3 to look at top, -1 to exit demo: ",
+                                                  1, 3);
 
-            if(pq_choice_status == INPUT_EXIT_SIGNAL)
+            if (pq_choice_status == INPUT_EXIT_SIGNAL)
             {
                 destroy_pq(pq);
                 printf("\nExiting priority queue demo.....\n");
                 return;
             }
 
-            if(pq_choice_status == 0)
+            if (pq_choice_status == 0)
                 continue;
 
-            if(pq_choice == 1)
+            if (pq_choice == 1)
             {
                 int insert_val;
-                int insert_status = safe_input_int(&insert_val, "\nEnter a number to insert into heap: ", INT_MIN, INT_MAX);
+                int insert_status = safe_input_int(
+                    &insert_val, "\nEnter a number to insert into heap: ", INT_MIN, INT_MAX);
 
-                if(insert_status == INPUT_EXIT_SIGNAL)
+                if (insert_status == INPUT_EXIT_SIGNAL)
                 {
                     destroy_pq(pq);
                     printf("\nExiting priority queue demo.....\n");
                     return;
                 }
 
-                if(insert_status == 0)
+                if (insert_status == 0)
                     continue;
-                
-                if(insert(pq,insert_val) == 0)
+
+                if (insert(pq, insert_val) == 0)
                 {
                     printf("\nHeap is full.\n");
                     continue;
@@ -187,32 +194,34 @@ void priority_queue_demo(void)
 
                 display_heap(pq);
             }
-            else if(pq_choice == 2)
+            else if (pq_choice == 2)
             {
                 int extracted_element;
                 bool extracted_element_status = extractTop(pq, &extracted_element);
 
-                if(!extracted_element_status)
+                if (!extracted_element_status)
                 {
                     printf("\nHeap is empty.\n");
                     continue;
                 }
 
-                printf("\n%s element extracted: %d", return_heap_type((int)pq->heapType), extracted_element);
+                printf("\n%s element extracted: %d", return_heap_type((int)pq->heapType),
+                       extracted_element);
                 display_heap(pq);
             }
             else
             {
                 int peek_element;
-                bool peek_element_status = peek_pq(pq,&peek_element);
+                bool peek_element_status = peek_pq(pq, &peek_element);
 
-                if(!peek_element_status)
+                if (!peek_element_status)
                 {
                     printf("\nHeap is empty.\n");
                     continue;
                 }
 
-                printf("\n%s element in heap: %d", return_heap_type((int)pq->heapType), peek_element);
+                printf("\n%s element in heap: %d", return_heap_type((int)pq->heapType),
+                       peek_element);
             }
         }
     }
