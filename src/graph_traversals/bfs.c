@@ -1,4 +1,4 @@
-#include "circular_queue.h"
+#include "data_structures.h"
 #include "graph_traversals.h"
 #include "safe_input.h"
 #include <stdio.h>

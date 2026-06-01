@@ -1,10 +1,5 @@
-#include "array.h"
-#include "bst.h"
-#include "circular_queue.h"
-#include "dll.h"
+#include "data_structures.h"
 #include "safe_input.h"
-#include "sll.h"
-#include "tbt.h"
 #include <stdio.h>
 
 void data_structures_demo(void)

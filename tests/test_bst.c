@@ -1,4 +1,4 @@
-#include "bst.h"
+#include "data_structures.h"
 #include <assert.h>
 #include <stdio.h>
 

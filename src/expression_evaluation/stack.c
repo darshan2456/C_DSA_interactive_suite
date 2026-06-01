@@ -1,6 +1,5 @@
 #include "stack.h"
-#include "sll.h"
-#include <stdio.h>
+#include "data_structures.h"
 #include <stdlib.h>
 
 struct stack
