@@ -1,14 +1,10 @@
-# Variables
-
 # Compiler
 CC = gcc
 
-#Vlagrind flags
+#Valgrind flags
 VGFLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1
 
 # Compile flags
-# \ for continue line, 
-# -I includes the directory, includes all the src dierctories
 CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/data_structures \
 	-Isrc/expression_evaluation \
@@ -18,7 +14,6 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/graph_traversals \
 	-Isrc/hashing
 
-# source files are all .c files in src
 SRCS = \
 	src/data_structures/*.c \
 	src/expression_evaluation/*.c \
@@ -28,43 +23,43 @@ SRCS = \
 	src/graph_traversals/*.c \
 	src/hashing/*.c
 
-# checks operating system, works for all of these?
-ifeq ($(OS),Windows_NT) # If on windows, rm command in windows, output file is .exe
+BLD_DIR = build
+
+# convert all .c files into .o files in the build directory
+OBJS = $(patsubst $(SRCS/%.c), $(BLD_DIR)/%.o, $(SRCS))
+
+ifeq ($(OS),Windows_NT)
 	RM = cmd /c del
 	EXE = .exe
-else # if not on windows, i.e. linux, macos, unix, rm command on linux?
+else
 	RM = rm -f
 	EXE =
 endif
 
-# EXEC / name of the output file, the one we want to run: dsa
-TARGET = dsa 
+TARGET = dsa
 
-# dafault target, $(target) accesses the target
-all: $(TARGET) # dsa is dependency
+#all: $(TARGET) 
+all: bld_dir $(TARGET)
 
-# target: we compile dsa, dependencies: all .c source files in src
-# recipe: gcc (compiler flags) (.c files) -o dsa.exe
-$(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE)
+#$(TARGET): $(SRCS)
+#	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE) 
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@
 
-# find . : search recursively from current directory
-# \( -name "*.c" -o -name "*.h" \) : find all files that end in .c and .h, -o means or
-# -not -path "*/build/*" : exclude everything with /build/ in the path
-# | is a pipe in bash, it sends the output of find as an input to xargs
-# xargs : takes filenames from standard input (output of find), and appends to the command clang-format
-# -i : edits the files in-place, rewrites files directly without printing formatted code to the terminal
+# make build directory called build
+bld_dir:
+	@mkdir -p $(BLD_DIR)
+
+# compile source files into .o files in build, no linking
+$(BLD_DIR)/%.o: $(SRCS)/%.c
+	$(CC) $(CFLAGS) -MMD -MP -c -o $@ $<
+
 fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
-#clean:
-# 	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE)
-
-# changed clean target to clean TEST_BINS variable
 clean: 
-	$(RM) $(TARGET)$(EXE) $(addsuffix $(EXE),$(TEST_BINS))
+	$(RM) $(TARGET)$(EXE) $(BLD_DIR) $(addsuffix $(EXE), $(TEST_BINS))
 
-# valgrind command
 valgrind:
 	for t in $(TEST_BINS); do \
 		echo "Running valgrind on $$t..."; \
@@ -121,7 +116,12 @@ STACK_TEST_SRC = \
 	src/data_structures/safe_input_int.c \
 	tests/test_stack.c
 
-# compiles the tests and then runs them
+TBT_TEST_SRC = \
+	src/data_structures/safe_input_int.c \
+	src/data_structures/tbt.c \
+	tests/test_tbt.c
+
+
 test_circ_queue:
 	$(CC) $(CFLAGS) $(CIRC_QUEUE_TEST_SRC) -o test_circ_queue$(EXE)
 	./test_circ_queue$(EXE)
@@ -154,11 +154,11 @@ test_stack:
 	$(CC) $(CFLAGS) $(STACK_TEST_SRC) -o test_stack$(EXE)
 	./test_stack$(EXE)
 
+test_tbt:
+	$(CC) $(CFLAGS) $(TBT_TEST_SRC) -o test_tbt$(EXE)
+	./test_tbt$(EXE)
 
-# TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack
-# test: $(TEST_BINS)
 
-# changed to 
 TEST_BINS = \
 	test_circ_queue \
 	test_bst \
@@ -167,18 +167,12 @@ TEST_BINS = \
 	test_sll \
 	test_dll \
 	test_array \
-	test_stack
+	test_stack \
+	test_tbt
+
 test: $(TEST_BINS)
 
 # phony targets are not associated with other files, recipe is always executed when called with make
 # specifies which targets shouldn't be considered as files
 
-# .PHONY: $(TARGET) $(TEST_BINS)
-
-.PHONY: $(TARGET) $(TEST_BINS) clean
-
-
-# can we replace TARGET with dsa?
-# add clean to phony?
-# should we have a .gitignore file so we can just do git add . everytime cuz right now it's adding 
-# dsa when I run git add .
+.PHONY: $(TARGET) $(TEST_BINS) bld_dir clean valgrind
