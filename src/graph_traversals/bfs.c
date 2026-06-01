@@ -160,7 +160,7 @@ void bfs_demo(void)
     while (1)
     {
         int edges_capacity_status = safe_input_int(
-            &edges, "\nenter number of edges (between 1 and 100), enter '-1' to exit :", 0, 100);
+            &edges, "\nenter number of edges (between 1 and 100), enter '-1' to exit :", 1, 100);
 
         if (edges_capacity_status == INPUT_EXIT_SIGNAL)
         {
