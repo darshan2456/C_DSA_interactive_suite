@@ -43,13 +43,13 @@ bld_dir:
 	@mkdir -p $(BLD_DIR)
 
 $(BLD_DIR)/%.o: $(SRCS)/%.c
-	$(CC) $(CFLAGS) -MMD -MP -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
 clean: 
-	$(RM) $(TARGET)$(EXE) $(BLD_DIR)/*.o $(BLD_DIR)/*.d $(addsuffix $(EXE), $(TEST_BINS))
+	$(RM) $(TARGET)$(EXE) $(BLD_DIR)/*.o $(addsuffix $(EXE), $(TEST_BINS))
 	rmdir $(BLD_DIR) 2>/dev/null || true
 
 valgrind:
