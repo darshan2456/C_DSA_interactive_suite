@@ -177,11 +177,5 @@ test: $(TEST_BINS)
 
 # phony targets are not associated with other files, recipe is always executed when called with make
 # specifies which targets shouldn't be considered as files
-# add clean to phony?
-
-# .PHONY: $(TARGET) $(TEST_BINS)
-
-# phony targets are not associated with other files, recipe is always executed when called with make
-# specifies which targets shouldn't be considered as files
 
 .PHONY: $(TARGET) $(TEST_BINS) bld_dir clean valgrind
