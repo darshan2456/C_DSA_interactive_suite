@@ -7,9 +7,11 @@ CC = gcc
 VGFLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1
 
 # Compile flags
-CFLAGS = -Wall -Wextra -Werror -std=c11 -g \ # \ for continue line
-	-Isrc/data_structures \ # -I includes the directory
-	-Isrc/expression_evaluation \ # includes all the src dierctories
+# \ for continue line, 
+# -I includes the directory, includes all the src dierctories
+CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
+	-Isrc/data_structures \
+	-Isrc/expression_evaluation \
 	-Isrc/sorting_algorithms_n2 \
 	-Isrc/advanced_sorting_algorithms \
 	-Isrc/searching_algorithms \
@@ -27,11 +29,11 @@ SRCS = \
 	src/hashing/*.c
 
 # checks operating system, works for all of these?
-ifeq ($(OS),Windows_NT) # If on windows
-	RM = cmd /c del # rm command in windows
-	EXE = .exe # output file is .exe
-else # if not on windows, i.e. linux, macos, unix
-	RM = rm -f # rm command on linux?
+ifeq ($(OS),Windows_NT) # If on windows, rm command in windows, output file is .exe
+	RM = cmd /c del
+	EXE = .exe
+else # if not on windows, i.e. linux, macos, unix, rm command on linux?
+	RM = rm -f
 	EXE =
 endif
 
@@ -42,9 +44,16 @@ TARGET = dsa
 all: $(TARGET) # dsa is dependency
 
 # target: we compile dsa, dependencies: all .c source files in src
+# recipe: gcc (compiler flags) (.c files) -o dsa.exe
 $(TARGET): $(SRCS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE) # recipe: gcc (compiler flags) (.c files) -o dsa.exe
+	$(CC) $(CFLAGS) $(SRCS) -o $(TARGET)$(EXE)
 
+# find . : search recursively from current directory
+# \( -name "*.c" -o -name "*.h" \) : find all files that end in .c and .h, -o means or
+# -not -path "*/build/*" : exclude everything with /build/ in the path
+# | is a pipe in bash, it sends the output of find as an input to xargs
+# xargs : takes filenames from standard input (output of find), and appends to the command clang-format
+# -i : edits the files in-place, rewrites files directly without printing formatted code to the terminal
 fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
@@ -55,6 +64,7 @@ fmt:
 clean: 
 	$(RM) $(TARGET)$(EXE) $(addsuffix $(EXE),$(TEST_BINS))
 
+# valgrind command
 valgrind:
 	for t in $(TEST_BINS); do \
 		echo "Running valgrind on $$t..."; \
@@ -162,7 +172,6 @@ test: $(TEST_BINS)
 
 # phony targets are not associated with other files, recipe is always executed when called with make
 # specifies which targets shouldn't be considered as files
-# add clean to phony?
 
 # .PHONY: $(TARGET) $(TEST_BINS)
 
@@ -170,3 +179,6 @@ test: $(TEST_BINS)
 
 
 # can we replace TARGET with dsa?
+# add clean to phony?
+# should we have a .gitignore file so we can just do git add . everytime cuz right now it's adding 
+# dsa when I run git add .
