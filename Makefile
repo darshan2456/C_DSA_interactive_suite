@@ -11,6 +11,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/graph_traversals \
 	-Isrc/hashing
 
+# maybe don't really need wildcard
 SRCS = \
 	$(wildcard src/data_structures/*.c) \
 	$(wildcard src/expression_evaluation/*.c) \
@@ -21,8 +22,13 @@ SRCS = \
 	$(wildcard src/hashing/*.c)
 
 BLD_DIR = build
+OBJS = $(SRCS:%.c=%.o) # prolly worse, compiles more stuff
+#OBJS = $(patsubst $(SRCS/%.c),$(BLD_DIR)/%.o,$(SRCS))
 
-OBJS = $(patsubst $(SRCS/%.c),$(BLD_DIR)/%.o,$(SRCS))
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+DEPS = $(OBJS:%.o=%.d)
 
 ifeq ($(OS),Windows_NT)
 	RM = cmd /c del
@@ -34,7 +40,7 @@ endif
 
 TARGET = dsa
 
-all: bld_dir $(TARGET)
+all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $^ -o $@
@@ -43,13 +49,15 @@ bld_dir:
 	@mkdir -p $(BLD_DIR)
 
 $(BLD_DIR)/%.o: $(SRCS)/%.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -MMD -MP -c -o $@ $<
+
+-include $(DEPS)
 
 fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
 clean: 
-	$(RM) $(TARGET)$(EXE) $(BLD_DIR)/*.o $(addsuffix $(EXE), $(TEST_BINS))
+	$(RM) $(TARGET) $(BLD_DIR)/*.o $(BLD_DIR)/*.d $(addsuffix $(EXE), $(TEST_BINS))
 	rmdir $(BLD_DIR) 2>/dev/null || true
 
 valgrind:
@@ -160,18 +168,9 @@ test_priority_queue:
 	./test_priority_queue$(EXE)
 
 
-TEST_BINS = \
-	test_circ_queue \
-	test_bst \
-	test_search \
-	test_hash_func \
-	test_sll \
-	test_dll \
-	test_array \
-	test_stack \
-	test_tbt \
-	test_priority_queue
+TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
+	test_sll test_dll test_array test_stack test_tbt test_priority_queue
 
 test: $(TEST_BINS)
 
-.PHONY: $(TARGET) $(TEST_BINS) bld_dir clean valgrind
+.PHONY: all test bld_dir clean valgrind
