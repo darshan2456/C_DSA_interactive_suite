@@ -22,7 +22,7 @@ SRCS = \
 
 BLD_DIR = build
 
-OBJS = $(patsubst $(SRCS/%.c), $(BLD_DIR)/%.o, $(SRCS))
+OBJS = $(patsubst $(SRCS/%.c),$(BLD_DIR)/%.o,$(SRCS))
 
 ifeq ($(OS),Windows_NT)
 	RM = cmd /c del
