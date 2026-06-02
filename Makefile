@@ -57,6 +57,11 @@ valgrind:
 # Test Section
 # =========================
 
+TBT_TEST_SRC = \
+	src/utils/safe_input_int.c \
+	src/data_structures/tbt.c \
+	tests/test_tbt.c
+
 CIRC_QUEUE_TEST_SRC = \
 	src/data_structures/circular_queue.c \
 	src/utils/safe_input_int.c \
@@ -109,11 +114,6 @@ AVL_TEST_SRC = \
 	src/utils/safe_input_int.c \
 	tests/test_avl.c
 
-
-TBT_TEST_SRC = \
-	src/utils/safe_input_int.c \
-	src/data_structures/tbt.c \
-	tests/test_tbt.c
 
 PRIORITY_QUEUE_SRC = \
 	src/data_structures/array.c \
