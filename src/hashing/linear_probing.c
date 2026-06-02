@@ -1,5 +1,6 @@
 #include "data_structures.h"
 #include "hash.h"
+#include "searching_algorithms.h"
 #include <safe_input.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -53,12 +54,11 @@ void linear_probing_demo(void)
         while (1)
         {
             int value_status = safe_input_int(
-                &value, "\nenter a value between 1 and 1000 (enter '-1' to exit):- ", 1, 1000);
+                &value, "\nenter a value between 1 and 1000 (enter '-1' to search elements):- ", 1, 1000);
 
             if (value_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting linear_probing demo.....");
-                return;
+                break;
             }
             if (value_status == 0)
             {
@@ -95,6 +95,33 @@ void linear_probing_demo(void)
             arr[hash_location] = value; // inserting value at its hash location
 
             print_array(arr, length_of_array);
+        }
+
+        while (1)
+        {
+            int search_val;
+            int search_status = safe_input_int(
+                &search_val, "\nenter a value to search in the hash table (enter '-1' to exit):- ", 1, 1000);
+
+            if (search_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting linear_probing demo.....\n");
+                return;
+            }
+            if (search_status == 0)
+            {
+                continue;
+            }
+
+            int res = linear_search(arr, search_val, length_of_array);
+            if (res != -1)
+            {
+                printf("\nValue %d found in the hash table at index %d.", search_val, res);
+            }
+            else
+            {
+                printf("\nValue %d not found in the hash table.", search_val);
+            }
         }
     }
 }

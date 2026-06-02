@@ -76,6 +76,7 @@ HASH_FUNCTION_TEST_SRC = \
 	src/hashing/linear_probing.c \
 	src/utils/safe_input_int.c \
 	src/data_structures/array.c \
+	src/searching_algorithms/linear_search.c \
 	tests/test_hash_function.c
 
 SLL_TEST_SRC = \
