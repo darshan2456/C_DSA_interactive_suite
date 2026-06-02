@@ -104,9 +104,8 @@ ARRAY_TEST_SRC = \
 STACK_TEST_SRC = \
 	src/expression_evaluation/stack.c \
 	src/data_structures/sll.c \
-	src/data_structures/safe_input_int.c \
 	tests/test_stack.c \
-  src/utils/safe_input_int.c \
+    src/utils/safe_input_int.c \
 	tests/test_stack.c
 
 AVL_TEST_SRC = \
