@@ -9,5 +9,7 @@ int pop(stack* s);
 int isEmpty(const stack* s);
 void destroyStack(stack* s);
 int peek(const stack* s);
+void printStack(const stack* s);
+void printStackAsInts(const stack* s);
 
 #endif

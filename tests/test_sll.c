@@ -1,4 +1,4 @@
-#include "sll.h"
+#include "data_structures.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -127,6 +127,64 @@ void test_reverse()
     printf("sll Reverse tests passed\n");
 }
 
+/* Test insert at position */
+void test_insert_at_position()
+{
+    Node* head = NULL;
+
+    /* Insert at position 0 in empty list */
+    assert(sll_insertAtPosition(&head, 10, 0) == 1);
+    assert(head->data == 10);
+
+    /* Insert at position 1 (end) */
+    assert(sll_insertAtPosition(&head, 20, 1) == 1);
+    assert(head->next->data == 20);
+
+    /* Insert at position 1 (middle) */
+    assert(sll_insertAtPosition(&head, 15, 1) == 1);
+
+    int out[3];
+    int n = list_to_array(head, out, 3);
+    assert(n == 3);
+    assert(out[0] == 10 && out[1] == 15 && out[2] == 20);
+
+    /* Test invalid position */
+    assert(sll_insertAtPosition(&head, 99, 10) == -2);
+    assert(sll_insertAtPosition(&head, 99, -1) == -2);
+
+    delete_sll(head);
+    printf("sll Insert at position tests passed\n");
+}
+
+/* Test delete at position */
+void test_delete_at_position()
+{
+    int arr[] = {1, 2, 3, 4};
+    Node* head = build_list(arr, 4);
+
+    /* Delete at position 0 */
+    assert(sll_deleteAtPosition(&head, 0) == 1);
+
+    int out[3];
+    int n = list_to_array(head, out, 3);
+    assert(n == 3);
+    assert(out[0] == 2 && out[1] == 3 && out[2] == 4);
+
+    /* Delete at position 1 (middle) */
+    assert(sll_deleteAtPosition(&head, 1) == 1);
+
+    n = list_to_array(head, out, 3);
+    assert(n == 2);
+    assert(out[0] == 2 && out[1] == 4);
+
+    /* Test invalid position */
+    assert(sll_deleteAtPosition(&head, 10) == -2);
+    assert(sll_deleteAtPosition(&head, -1) == -2);
+
+    delete_sll(head);
+    printf("sll Delete at position tests passed\n");
+}
+
 /* Edge cases */
 void test_edge_cases()
 {
@@ -152,6 +210,8 @@ int main()
     test_delete_by_value();
     test_search();
     test_reverse();
+    test_insert_at_position();
+    test_delete_at_position();
     test_edge_cases();
 
     printf("All SLL tests passed\n");

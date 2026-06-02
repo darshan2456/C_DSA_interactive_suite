@@ -1,14 +1,10 @@
 #include "advanced_sorting.h"
-#include "array.h"
-#include "bst.h"
-#include "circular_queue.h"
-#include "dll.h"
+#include "data_structures.h"
 #include "expression.h"
 #include "graph_traversals.h"
 #include "hash.h"
 #include "safe_input.h"
 #include "searching_algorithms.h"
-#include "sll.h"
 #include "sorting_algorithms_n2.h"
 #include "stack.h"
 #include <stdio.h>
@@ -33,7 +29,7 @@ int main()
             "click 3 for sorting algorithms (the n^2 family) demo\n"
             "click 4 for advanced sorting algorithms demo\n"
             "click 5 for searching algorithms demo\n"
-            "click 6 for graph traversals (bfs/dfs) demo\n"
+            "click 6 for graph traversals (bfs/dfs/dijkstra) demo\n"
             "click 7 for hashing algorithms demo\n"
             "enter choice : ",
             1, 7 // limits

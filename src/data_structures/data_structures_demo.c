@@ -1,11 +1,6 @@
-#include "array.h"
+#include "data_structures.h"
 #include "avl_tree.h"
-#include "bst.h"
-#include "circular_queue.h"
-#include "dll.h"
 #include "safe_input.h"
-#include "sll.h"
-#include "tbt.h"
 #include <stdio.h>
 
 void data_structures_demo(void)
@@ -39,12 +34,14 @@ void data_structures_demo(void)
                 while (1)
                 {
                     int linear_ds_choice;
-                    int linear_ds_status = safe_input_int(&linear_ds_choice,
-                                                          "\nenter 1 for singly linked list demo"
-                                                          "\nenter 2 for doubly linked list demo"
-                                                          "\nenter 3 for arrays demo"
-                                                          "\nenter choice : ",
-                                                          1, 3);
+                    int linear_ds_status = safe_input_int(
+                        &linear_ds_choice,
+                        "\nenter 1 for singly linked list demo"
+                        "\nenter 2 for doubly linked list demo"
+                        "\nenter 3 for arrays demo"
+                        "\nenter 4 for priority queue (binary heap implementation with array) demo"
+                        "\nenter choice : ",
+                        1, 4);
 
                     if (linear_ds_status == INPUT_EXIT_SIGNAL)
                         break;
@@ -67,6 +64,11 @@ void data_structures_demo(void)
                         array_demo();
                         continue;
                     }
+                    if (linear_ds_choice == 4)
+                    {
+                        priority_queue_demo();
+                        continue;
+                    }
                 }
                 break;
 
@@ -75,8 +77,12 @@ void data_structures_demo(void)
                 while (1)
                 {
                     int circular_variant_choice = 0;
-                    int circular_variant_status = safe_input_int(
-                        &circular_variant_choice, "enter 1 for circular queue demo : ", 1, 1);
+                    int circular_variant_status =
+                        safe_input_int(&circular_variant_choice,
+                                       "\nenter 1 for circular queue demo"
+                                       "\nenter 2 for singly circular linked list demo"
+                                       "\nenter choice : ",
+                                       1, 2);
                     if (circular_variant_status == 0)
                         continue;
                     if (circular_variant_status == INPUT_EXIT_SIGNAL)
@@ -85,7 +91,10 @@ void data_structures_demo(void)
                     {
                         circular_queue_Demo();
                     }
-                    break;
+                    if (circular_variant_choice == 2)
+                    {
+                        scll_Demo();
+                    }
                 }
 
                 break;

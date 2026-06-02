@@ -1,4 +1,4 @@
-#include "bst.h"
+#include "data_structures.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -126,6 +126,50 @@ void destroy_bst(bstNode* head)
     free(head);
 }
 
+bstNode* bst_delete(bstNode* root, int value)
+{
+    if (root == NULL)
+        return NULL;
+
+    if (value < root->data)
+    {
+        root->left = bst_delete(root->left, value);
+    }
+    else if (value > root->data)
+    {
+        root->right = bst_delete(root->right, value);
+    }
+    else
+    {
+        if (root->left == NULL && root->right == NULL)
+        {
+            free(root);
+            return NULL;
+        }
+        else if (root->left == NULL)
+        {
+            bstNode* temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->right == NULL)
+        {
+            bstNode* temp = root->left;
+            free(root);
+            return temp;
+        }
+        else
+        {
+            bstNode* successor = root->right;
+            while (successor->left != NULL)
+                successor = successor->left;
+            root->data = successor->data;
+            root->right = bst_delete(root->right, successor->data);
+        }
+    }
+    return root;
+}
+
 void binary_search_tree_Demo(void)
 {
 
@@ -194,16 +238,16 @@ void binary_search_tree_Demo(void)
             int bst_traversal_status;
 
             bst_traversal_status = safe_input_int(&bst_traversal_choice,
-                                                  "\nenter '1' for inorder, '2' for preorder and "
-                                                  "'3' for postorder and '-1' to exit:- ",
-                                                  1, 3);
+                                      "\nenter '1' for inorder, '2' for preorder and "
+                                      "'3' for postorder, '4' to delete a node and '-1' to exit:- ",
+                                      1, 4);
 
             if (bst_traversal_status == INPUT_EXIT_SIGNAL)
             {
                 destroy_bst(head);
                 break;
             }
-            if (bst_traversal_choice == 0)
+            if (bst_traversal_status == 0)
             {
                 continue;
             }
@@ -218,6 +262,29 @@ void binary_search_tree_Demo(void)
             else if (bst_traversal_choice == 3)
             {
                 bst_postorder(head);
+            }
+            else if (bst_traversal_choice == 4)
+            {
+                int delete_value;
+                int delete_status;
+                while (1)
+                {
+                    delete_status = safe_input_int(&delete_value,
+                                                "\nenter value to delete, (between 1 and 100), enter '-1' to exit:- ",
+                                                1, 100);
+                    if (delete_status == INPUT_EXIT_SIGNAL)
+                    {
+                        destroy_bst(head);
+                        return;
+                    }
+                    if (delete_status == 0)
+                        continue;
+                    break;
+                }
+                head = bst_delete(head, delete_value);
+                printf("\nnode deleted. updated inorder traversal: ");
+                bst_inorder(head);
+                printf("\n");
             }
         }
     }

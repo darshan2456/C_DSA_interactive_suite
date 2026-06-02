@@ -1,4 +1,4 @@
-#include "bst.h"
+#include "data_structures.h"
 #include <assert.h>
 #include <stdio.h>
 
@@ -75,6 +75,78 @@ void test_empty_tree()
     printf("BST empty tree test passed\n");
 }
 
+void test_delete_leaf()
+{
+    bstNode* root = NULL;
+
+    bst_insert(&root, 10);
+    bst_insert(&root, 5);
+    bst_insert(&root, 15);
+
+    root = bst_delete(root, 5);
+
+    assert(countnodes(root) == 2);
+    assert(bst_insert(&root, 5) == 1); 
+
+    destroy_bst(root);
+
+    printf("BST delete leaf test passed\n");
+}
+
+void test_delete_single_child()
+{
+    bstNode* root = NULL;
+
+    bst_insert(&root, 10);
+    bst_insert(&root, 5);
+    bst_insert(&root, 3);
+
+    root = bst_delete(root, 5); 
+
+    assert(countnodes(root) == 2);
+    assert(bst_insert(&root, 5) == 1); 
+
+    destroy_bst(root);
+
+    printf("BST delete single child test passed\n");
+}
+
+void test_delete_two_children()
+{
+    bstNode* root = NULL;
+
+    bst_insert(&root, 10);
+    bst_insert(&root, 5);
+    bst_insert(&root, 15);
+    bst_insert(&root, 3);
+    bst_insert(&root, 7);
+
+    root = bst_delete(root, 5); 
+
+    assert(countnodes(root) == 4);
+    assert(bst_insert(&root, 5) == 1); 
+
+    destroy_bst(root);
+
+    printf("BST delete two children test passed\n");
+}
+
+void test_delete_nonexistent()
+{
+    bstNode* root = NULL;
+
+    bst_insert(&root, 10);
+    bst_insert(&root, 5);
+
+    root = bst_delete(root, 99);
+
+    assert(countnodes(root) == 2);
+
+    destroy_bst(root);
+
+    printf("BST delete nonexistent node test passed\n");
+}
+
 int main()
 {
     test_insert_and_count();
@@ -82,6 +154,10 @@ int main()
     test_height_balanced();
     test_height_skewed();
     test_empty_tree();
+    test_delete_leaf();
+    test_delete_single_child();
+    test_delete_two_children();
+    test_delete_nonexistent();
 
     printf("All BST tests passed\n");
     return 0;

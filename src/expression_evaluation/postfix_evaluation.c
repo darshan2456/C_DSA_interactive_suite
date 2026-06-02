@@ -38,12 +38,30 @@ void postfix_evaluation_Demo(void)
             destroyStack(operands);
             continue;
         }
+
         int i = 0;
+        int step = 1;
+        char action_msg[200];
+        int current_result = 0;
         while (postfix_expr[i] != '\0')
         {
+            action_msg[0] = '\0';
             char ch = postfix_expr[i];
             if (isdigit(ch))
+            {
                 push(operands, ch - '0');
+                snprintf(action_msg, sizeof(action_msg), "Pushed operand '%c' onto stack", ch);
+                current_result = ch - '0';
+
+                printf("Step    : %d\n", step);
+                printf("Char    : %c\n", ch);
+                printf("Action  : %s\n", action_msg);
+                printf("Stack   : ");
+                printStackAsInts(operands);
+                printf("Result  : %d\n", current_result);
+                printf("-----------------------------------\n\n");
+                step++;
+            }
             else if (isOperator(ch))
             {
                 if (isEmpty(operands))
@@ -60,11 +78,20 @@ void postfix_evaluation_Demo(void)
                 int left_operand = pop(operands);
                 int result = 0;
                 if (ch == '+')
+                {
                     result = left_operand + right_operand;
+                    snprintf(action_msg, sizeof(action_msg), "Popped operands %d and %d, evaluated %d + %d = %d, pushed result back onto stack", left_operand, right_operand, left_operand, right_operand, result);
+                }
                 else if (ch == '-')
+                {
                     result = left_operand - right_operand;
+                    snprintf(action_msg, sizeof(action_msg), "Popped operands %d and %d, evaluated %d - %d = %d, pushed result back onto stack", left_operand, right_operand, left_operand, right_operand, result);
+                }
                 else if (ch == '*')
+                {
                     result = left_operand * right_operand;
+                    snprintf(action_msg, sizeof(action_msg), "Popped operands %d and %d, evaluated %d * %d = %d, pushed result back onto stack", left_operand, right_operand, left_operand, right_operand, result);
+                }
                 else if (ch == '/')
                 {
                     if (right_operand == 0)
@@ -73,9 +100,21 @@ void postfix_evaluation_Demo(void)
                         return;
                     }
                     result = left_operand / right_operand;
+                    snprintf(action_msg, sizeof(action_msg), "Popped operands %d and %d, evaluated %d / %d = %d, pushed result back onto stack", left_operand, right_operand, left_operand, right_operand, result);
                 }
                 push(operands, result);
+                current_result = result;
+
+                printf("Step    : %d\n", step);
+                printf("Char    : %c\n", ch);
+                printf("Action  : %s\n", action_msg);
+                printf("Stack   : ");
+                printStackAsInts(operands);
+                printf("Result  : %d\n", current_result);
+                printf("-----------------------------------\n\n");
+                step++;
             }
+
             i++;
         }
 
@@ -87,7 +126,9 @@ void postfix_evaluation_Demo(void)
             return;
         }
         destroyStack(operands);
-        printf("Result of postfix expression is :- %d\n", final_result);
+        printf("\n===================================\n");
+        printf("Final Evaluated Result : %d\n", final_result);
+        printf("===================================\n\n");
     }
 
     return;

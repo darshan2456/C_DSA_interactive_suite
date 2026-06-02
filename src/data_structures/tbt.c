@@ -1,4 +1,4 @@
-#include "tbt.h"
+#include "data_structures.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,6 +30,37 @@ TBTnode* create_node_tbt(int data)
     node->left = node->right = NULL;
 
     return node;
+}
+
+void preorder_tbt(TBTnode* node)
+{
+    if (node == NULL)
+        return;
+
+    TBTnode* curr = node;
+
+    while (curr != NULL)
+    {
+        printf("%d->", curr->data);
+
+        if (!curr->lthread)
+        {
+            curr = curr->left;
+        }
+        else if (!curr->rthread)
+        {
+            curr = curr->right;
+        }
+        else
+        {
+            while (curr != NULL && curr->rthread)
+                curr = curr->right;
+
+            if (curr != NULL)
+                curr = curr->right;
+        }
+    }
+    printf("end\n");
 }
 
 void inorder_tbt(TBTnode* node)
@@ -174,8 +205,9 @@ void TBT_demo(void)
 
     for (int i = 0; i < tbt_capacity; i++)
     {
+        int val_status;
     retry_capacity:
-        int val_status = safe_input_int(
+        val_status = safe_input_int(
             &tbt_values[i],
             "\nEnter the value to insert: (between 1 and 100), enter '-1' to exit: ", 1, 100);
 
@@ -193,9 +225,9 @@ void TBT_demo(void)
 
     for (int i = 0; i < tbt_capacity; i++)
     {
-
+        int insert_status;
     retry:
-        int insert_status = insert_node_tbt(&root, tbt_values[i]);
+        insert_status = insert_node_tbt(&root, tbt_values[i]);
 
         switch (insert_status)
         {
@@ -230,5 +262,7 @@ void TBT_demo(void)
 
     printf("\ninorder traversal is: ");
     inorder_tbt(root);
+    printf("\npreorder traversal is: ");
+    preorder_tbt(root);
     destroy_tbt(root);
 }

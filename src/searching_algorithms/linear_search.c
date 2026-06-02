@@ -84,11 +84,12 @@ void linear_search_demo(void)
 
         start_t = clock();
         int res = linear_search(arr, target, length_of_array);
+        end_t = clock();
+        total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
         printf("the value found at index %d.", res);
         if (res == -1)
             printf("\nthe value is not found in the given array");
-        end_t = clock();
-        total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
         printf("\ntotal CPU time taken for linear search:- %f seconds", total_t);
         printf("\n(most probably execution time would be lesser than clock resolution, resulting "
                "in 0.00)");

@@ -1,4 +1,4 @@
-#include "dll.h"
+#include "data_structures.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,7 +6,7 @@
 // insert functions returns 1 on succesful insertion and -1 on malloc failure
 // delete functions return 1 on successful deletion and -1 on failure due to empty list
 // methods implemented are - insertAtBeginning, insertAtEnd, printlist, search, deleteAtBeginning,
-// deleteAtEnd and deleteByValue
+// deleteAtEnd, deleteByValue, insertAtPosition, deleteAtPosition and reverselist
 
 void dll_demo(void)
 {
@@ -38,9 +38,11 @@ start_dll:
 
     dll_position_selection:
         dll_position_status = safe_input_int(&dll_position_choice,
-                                             "\nenter '1' for inserting at end and '0' for "
-                                             "inserting at beginning, enter '-1' to exit :- ",
-                                             0, 1);
+                                             "\nenter '0' for inserting at beginning"
+                                             "\nenter '1' for inserting at end"
+                                             "\nenter '2' for inserting at position"
+                                             "\nenter '-1' to exit :- ",
+                                             0, 2);
 
         if (dll_position_status == INPUT_EXIT_SIGNAL)
         {
@@ -101,6 +103,65 @@ start_dll:
             dll_insertAtEnd(&head, dll_start_value);
             dll_printlist(head);
         }
+        else if (dll_position_choice == 2)
+        {
+            int dll_pos_status;
+            int dll_pos_value;
+            int dll_pos_index;
+            char dll_pos_prompt[128];
+
+        dll_enter_pos_value:
+            dll_pos_status = safe_input_int(&dll_pos_value,
+                                            "enter the value to be inserted, (between 1 "
+                                            "and 100), enter '-1' to exit :- ",
+                                            1, 100);
+
+            if (dll_pos_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting dll demo\n");
+                delete_dll(head);
+                return;
+            }
+
+            if (dll_pos_status == 0)
+            {
+                goto dll_enter_pos_value;
+            }
+
+        dll_enter_pos_index:
+            snprintf(dll_pos_prompt, sizeof(dll_pos_prompt), 
+                    "enter the position (0 to %d), enter '-1' to exit :- ", 
+                    dll_getLength(head) - 1);
+                    
+            dll_pos_status = safe_input_int(&dll_pos_index,
+                                            dll_pos_prompt,
+                                            0, dll_getLength(head));
+
+            if (dll_pos_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting dll demo\n");
+                delete_dll(head);
+                return;
+            }
+
+            if (dll_pos_status == 0)
+            {
+                goto dll_enter_pos_index;
+            }
+
+            int status = dll_insertAtPosition(&head, dll_pos_value, dll_pos_index);
+            if (status == -1)
+            {
+                printf("\nmalloc allocation failure. try again\n");
+                goto dll_enter_pos_value;
+            }
+            else if (status == -2)
+            {
+                printf("\ninvalid position. try again\n");
+                goto dll_enter_pos_index;
+            }
+            dll_printlist(head);
+        }
         dll_element_count--;
     }
 
@@ -151,12 +212,15 @@ start_dll:
     // deleting values from dll
     while (1)
     {
+        int dll_delete_choice;
         int dll_delete_status;
-        int dll_delete_value;
 
-        dll_delete_status = safe_input_int(
-            &dll_delete_value,
-            "\nenter element to be deleted, (between 1 and 100), enter '-1' to exit :- ", 1, 100);
+    dll_delete_selection:
+        dll_delete_status = safe_input_int(&dll_delete_choice,
+                                           "\nenter '0' to delete by value"
+                                           "\nenter '1' to delete at position"
+                                           "\nenter '-1' to exit :- ",
+                                           0, 1);
 
         if (dll_delete_status == INPUT_EXIT_SIGNAL)
         {
@@ -166,12 +230,72 @@ start_dll:
         }
         if (dll_delete_status == 0)
         {
-            continue;
+            goto dll_delete_selection;
         }
 
-        dll_deleteByValue(&head, dll_delete_value);
-        printf("\ndll after deletion - ");
-        dll_printlist(head);
+        if (dll_delete_choice == 0)
+        {
+            int dll_delete_value;
+            dll_delete_status = safe_input_int(
+                &dll_delete_value,
+                "\nenter element to be deleted, (between 1 and 100), enter '-1' to exit :- ", 1, 100);
+
+            if (dll_delete_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting dll demo\n");
+                delete_dll(head);
+                return;
+            }
+            if (dll_delete_status == 0)
+            {
+                continue;
+            }
+
+            dll_deleteByValue(&head, dll_delete_value);
+            printf("\ndll after deletion - ");
+            dll_printlist(head);
+        }
+        else if (dll_delete_choice == 1)
+        {
+            int dll_pos_delete_status;
+            int dll_pos_delete_index;
+            char dll_pos_delete_prompt[128];
+
+        dll_delete_pos_input:
+            snprintf(dll_pos_delete_prompt, sizeof(dll_pos_delete_prompt),
+                     "enter the position to delete (0 to %d), enter '-1' to exit :- ",
+                     dll_getLength(head) - 1);
+            dll_pos_delete_status = safe_input_int(&dll_pos_delete_index,
+                                                   dll_pos_delete_prompt,
+                                                   0, dll_getLength(head) - 1);
+
+            if (dll_pos_delete_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting dll demo\n");
+                delete_dll(head);
+                return;
+            }
+
+            if (dll_pos_delete_status == 0)
+            {
+                goto dll_delete_pos_input;
+            }
+
+            int status = dll_deleteAtPosition(&head, dll_pos_delete_index);
+            if (status == -1)
+            {
+                printf("\nList is empty\n");
+            }
+            else if (status == -2)
+            {
+                printf("\nInvalid position\n");
+            }
+            else
+            {
+                printf("\ndll after deletion - ");
+                dll_printlist(head);
+            }
+        }
     }
 }
 
@@ -354,5 +478,116 @@ int dll_reverselist(doubly_ll_Node** head_ref)
     }
     curr->next = prev;
     *head_ref = curr;
+    return 1;
+}
+
+// Helper function to get the length of the doubly linked list
+int dll_getLength(const doubly_ll_Node* head)
+{
+    int length = 0;
+    while (head != NULL)
+    {
+        length++;
+        head = head->next;
+    }
+    return length;
+}
+
+// Insert at a specific position (0-indexed)
+// Returns 1 on success, -1 on malloc failure, -2 on invalid position
+int dll_insertAtPosition(doubly_ll_Node** head_ref, int value, int position)
+{
+    int length = dll_getLength(*head_ref);
+
+    if (position < 0 || position > length)
+    {
+        return -2;
+    }
+
+    doubly_ll_Node* newnode = malloc(sizeof(doubly_ll_Node));
+    if (newnode == NULL)
+        return -1;
+
+    newnode->data = value;
+
+    if (position == 0)
+    {
+        if (*head_ref == NULL)
+        {
+            newnode->next = NULL;
+            newnode->prev = NULL;
+            *head_ref = newnode;
+        }
+        else
+        {
+            newnode->next = *head_ref;
+            newnode->prev = NULL;
+            (*head_ref)->prev = newnode;
+            *head_ref = newnode;
+        }
+        return 1;
+    }
+
+    doubly_ll_Node* temp = *head_ref;
+    for (int i = 0; i < position - 1; i++)
+    {
+        temp = temp->next;
+    }
+
+    newnode->next = temp->next;
+    newnode->prev = temp;
+    if (temp->next != NULL)
+    {
+        temp->next->prev = newnode;
+    }
+    temp->next = newnode;
+    return 1;
+}
+
+// Delete at a specific position (0-indexed)
+// Returns 1 on success, -1 on empty list, -2 on invalid position
+int dll_deleteAtPosition(doubly_ll_Node** head_ref, int position)
+{
+    if (*head_ref == NULL)
+    {
+        return -1;
+    }
+
+    int length = dll_getLength(*head_ref);
+
+    if (position < 0 || position >= length)
+    {
+        return -2;
+    }
+
+    doubly_ll_Node* temp = *head_ref;
+
+    if (position == 0)
+    {
+        if (temp->next != NULL)
+        {
+            temp->next->prev = NULL;
+            *head_ref = temp->next;
+        }
+        else
+        {
+            *head_ref = NULL;
+        }
+        free(temp);
+        return 1;
+    }
+
+    for (int i = 0; i < position; i++)
+    {
+        temp = temp->next;
+    }
+
+    doubly_ll_Node* prevnode = temp->prev;
+    if (temp->next != NULL)
+    {
+        temp->next->prev = prevnode;
+    }
+    prevnode->next = temp->next;
+    free(temp);
     return 1;
 }

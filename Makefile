@@ -10,7 +10,9 @@ CFLAGS = -Wall -Wextra -std=c11 -g -Wno-declaration-after-statement \
     -Isrc/searching_algorithms \
     -Isrc/graph_traversals \
     -Isrc/hashing \
-    -Isrc/avl_tree
+    -Isrc/avl_tree \
+    -Isrc/utils
+	
 
 SRCS = \
 	src/data_structures/*.c \
@@ -21,6 +23,7 @@ SRCS = \
 	src/graph_traversals/*.c \
 	src/hashing/*.c \
 	src/avl_tree/*.c
+	src/utils/*.c
 
 ifeq ($(OS),Windows_NT)
 	RM = cmd /c del
@@ -41,7 +44,8 @@ fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
 clean:
-	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE) test_avl$(EXE)
+	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE) test_tbt$(EXE) test_priority_queue$(EXE) test_scll$(EXE) test_avl$(EXE)
+
 valgrind:
 	for t in $(TEST_BINS); do \
 		echo "Running valgrind on $$t..."; \
@@ -55,17 +59,17 @@ valgrind:
 
 CIRC_QUEUE_TEST_SRC = \
 	src/data_structures/circular_queue.c \
-	src/data_structures/safe_input_int.c \
+	src/utils/safe_input_int.c \
 	tests/test_circ_queue.c
 
 BST_TEST_SRC = \
 	src/data_structures/bst.c \
-	src/data_structures/safe_input_int.c \
+	src/utils/safe_input_int.c \
 	tests/test_bst.c
 
 SEARCH_TEST_SRC = \
 	src/searching_algorithms/linear_search.c \
-	src/data_structures/safe_input_int.c \
+	src/utils/safe_input_int.c \
 	src/searching_algorithms/binary_search.c \
 	src/sorting_algorithms_n2/selection_sort.c \
 	src/data_structures/array.c \
@@ -73,37 +77,58 @@ SEARCH_TEST_SRC = \
 
 HASH_FUNCTION_TEST_SRC = \
 	src/hashing/linear_probing.c \
-	src/data_structures/safe_input_int.c \
+	src/utils/safe_input_int.c \
 	src/data_structures/array.c \
 	tests/test_hash_function.c
 
 SLL_TEST_SRC = \
     src/data_structures/sll.c \
-	src/data_structures/safe_input_int.c \
+	src/utils/safe_input_int.c \
     tests/test_sll.c
 
 DLL_TEST_SRC = \
 	src/data_structures/dll.c \
-	src/data_structures/safe_input_int.c \
+	src/utils/safe_input_int.c \
 	tests/test_dll.c
 
 ARRAY_TEST_SRC = \
 	src/data_structures/array.c \
-	src/data_structures/safe_input_int.c \
+	src/utils/safe_input_int.c \
 	tests/test_array.c
 
 STACK_TEST_SRC = \
 	src/expression_evaluation/stack.c \
 	src/data_structures/sll.c \
 	src/data_structures/safe_input_int.c \
-	tests/test_stack.c 
+	tests/test_stack.c \
+  src/utils/safe_input_int.c \
+	tests/test_stack.c
 
 AVL_TEST_SRC = \
 	src/avl_tree/avl_tree.c \
-	src/data_structures/safe_input_int.c \
+	src/utils/safe_input_int.c \
 	tests/test_avl.c
 
-	
+
+TBT_TEST_SRC = \
+	src/utils/safe_input_int.c \
+	src/data_structures/tbt.c \
+	tests/test_tbt.c
+
+PRIORITY_QUEUE_SRC = \
+	src/data_structures/array.c \
+	src/utils/safe_input_int.c \
+	src/data_structures/priority_queue.c \
+	tests/test_priority_queue.c
+
+SCLL_TEST_SRC = \
+	src/data_structures/scll.c \
+	src/utils/safe_input_int.c \
+	tests/test_scll.c
+
+test_tbt:
+	$(CC) $(CFLAGS) $(TBT_TEST_SRC) -o test_tbt$(EXE)
+	./test_tbt$(EXE)
 
 test_circ_queue:
 	$(CC) $(CFLAGS) $(CIRC_QUEUE_TEST_SRC) -o test_circ_queue$(EXE)
@@ -141,8 +166,16 @@ test_avl:
 	$(CC) $(CFLAGS) $(AVL_TEST_SRC) -o test_avl$(EXE)
 	./test_avl$(EXE)	
 
+test_priority_queue:
+	$(CC) $(CFLAGS) $(PRIORITY_QUEUE_SRC) -o test_priority_queue$(EXE)
+	./test_priority_queue$(EXE)
 
-TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_avl
+test_scll:
+	$(CC) $(CFLAGS) $(SCLL_TEST_SRC) -o test_scll$(EXE)
+	./test_scll$(EXE)
+
+
+TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_tbt test_priority_queue test_scll test_avl
 test: $(TEST_BINS)
 
 .PHONY: $(TARGET) $(TEST_BINS)

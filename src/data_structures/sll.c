@@ -1,11 +1,12 @@
-#include "sll.h"
+#include "data_structures.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 // methods implemented are - insertAtEnd, deleteAtBeginning, insertAtBeginning, deleteAtEnd,
 // printlist, search
-//  deleteByValue and reverseList
+// deleteByValue and reverseList
+
 
 void sll_Demo(void)
 {
@@ -38,9 +39,11 @@ start_sll:
 
     sll_position_selection:
         sll_position_status = safe_input_int(&sll_position_choice,
-                                             "\nenter '1' for inserting at end and '0' for "
-                                             "inserting at beginning, enter '-1' to exit :- ",
-                                             0, 1);
+                                             "\nenter '0' for inserting at beginning"
+                                             "\nenter '1' for inserting at end"
+                                             "\nenter '2' for inserting at specific position"
+                                             "\nenter '-1' to exit :- ",
+                                             0, 2);
 
         if (sll_position_status == INPUT_EXIT_SIGNAL)
         {
@@ -116,6 +119,64 @@ start_sll:
             printf("\n");
             sll_printlist(head);
         }
+        else if (sll_position_choice == 2)
+        {
+            int sll_pos_status;
+            int sll_pos_value;
+            int sll_pos_index;
+            char sll_pos_prompt[128];
+
+        sll_enter_pos_value:
+            sll_pos_status = safe_input_int(&sll_pos_value,
+                                            "enter the no. you want to insert, (between 1 "
+                                            "and 100), enter '-1' to exit :- ",
+                                            1, 100);
+
+            if (sll_pos_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting sll demo\n");
+                delete_sll(head);
+                return;
+            }
+
+            if (sll_pos_status == 0)
+            {
+                goto sll_enter_pos_value;
+            }
+
+        sll_enter_pos_index:
+            snprintf(sll_pos_prompt, sizeof(sll_pos_prompt),
+                     "enter the position (0 to %d), enter '-1' to exit :- ", sll_getLength(head));
+            sll_pos_status = safe_input_int(&sll_pos_index,
+                                            sll_pos_prompt,
+                                            0, sll_getLength(head));
+
+            if (sll_pos_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting sll demo\n");
+                delete_sll(head);
+                return;
+            }
+
+            if (sll_pos_status == 0)
+            {
+                goto sll_enter_pos_index;
+            }
+
+            int status = sll_insertAtPosition(&head, sll_pos_value, sll_pos_index);
+            if (status == -1)
+            {
+                printf("\nmalloc allocation failure. try again\n");
+                goto sll_enter_pos_value;
+            }
+            else if (status == -2)
+            {
+                printf("\ninvalid position. try again\n");
+                goto sll_enter_pos_index;
+            }
+            printf("\n");
+            sll_printlist(head);
+        }
 
         sll_element_count--;
     }
@@ -166,12 +227,15 @@ start_sll:
     // deleting elements in sll
     while (1)
     {
+        int sll_delete_choice;
         int sll_delete_status;
-        int sll_delete_value;
-        sll_delete_status = safe_input_int(
-            &sll_delete_value,
-            "\nenter the element to be deleted, (between 1 and 100), enter '-1' to exit :- ", 1,
-            100);
+
+    sll_delete_selection:
+        sll_delete_status = safe_input_int(&sll_delete_choice,
+                                           "\nenter '0' to delete by value"
+                                           "\nenter '1' to delete at position"
+                                           "\nenter '-1' to exit :- ",
+                                           0, 1);
 
         if (sll_delete_status == INPUT_EXIT_SIGNAL)
         {
@@ -181,12 +245,73 @@ start_sll:
         }
         if (sll_delete_status == 0)
         {
-            continue;
+            goto sll_delete_selection;
         }
 
-        sll_deleteByValue(&head, sll_delete_value);
-        printf("\nsll after deletion - ");
-        sll_printlist(head);
+        if (sll_delete_choice == 0)
+        {
+            int sll_delete_value;
+            sll_delete_status = safe_input_int(
+                &sll_delete_value,
+                "\nenter the element to be deleted, (between 1 and 100), enter '-1' to exit :- ", 1,
+                100);
+
+            if (sll_delete_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting sll demo\n");
+                delete_sll(head);
+                return;
+            }
+            if (sll_delete_status == 0)
+            {
+                continue;
+            }
+
+            sll_deleteByValue(&head, sll_delete_value);
+            printf("\nsll after deletion - ");
+            sll_printlist(head);
+        }
+        else if (sll_delete_choice == 1)
+        {
+            int sll_pos_delete_status;
+            int sll_pos_delete_index;
+            char sll_pos_delete_prompt[128];
+
+        sll_delete_pos_input:
+            snprintf(sll_pos_delete_prompt, sizeof(sll_pos_delete_prompt),
+                     "enter the position to delete (0 to %d), enter '-1' to exit :- ",
+                     sll_getLength(head) - 1);
+            sll_pos_delete_status = safe_input_int(&sll_pos_delete_index,
+                                                   sll_pos_delete_prompt,
+                                                   0, sll_getLength(head) - 1);
+
+            if (sll_pos_delete_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting sll demo\n");
+                delete_sll(head);
+                return;
+            }
+
+            if (sll_pos_delete_status == 0)
+            {
+                goto sll_delete_pos_input;
+            }
+
+            int status = sll_deleteAtPosition(&head, sll_pos_delete_index);
+            if (status == -1)
+            {
+                printf("\nList is empty\n");
+            }
+            else if (status == -2)
+            {
+                printf("\nInvalid position\n");
+            }
+            else
+            {
+                printf("\nsll after deletion - ");
+                sll_printlist(head);
+            }
+        }
     }
 }
 
@@ -354,4 +479,88 @@ void delete_sll(Node* head)
         free(head);
         head = upcoming;
     }
+}
+
+// Helper function to get the length of the list
+int sll_getLength(const Node* head)
+{
+    int length = 0;
+    while (head != NULL)
+    {
+        length++;
+        head = head->next;
+    }
+    return length;
+}
+
+// Insert at a specific position (0-indexed)
+// Returns 1 on success, -1 on malloc failure, -2 on invalid position
+int sll_insertAtPosition(Node** head_ref, int value, int position)
+{
+    int length = sll_getLength(*head_ref);
+
+    if (position < 0 || position > length)
+    {
+        return -2;
+    }
+
+    Node* newnode = malloc(sizeof(Node));
+    if (newnode == NULL)
+        return -1;
+
+    newnode->data = value;
+
+    if (position == 0)
+    {
+        newnode->next = *head_ref;
+        *head_ref = newnode;
+        return 1;
+    }
+
+    Node* temp = *head_ref;
+    for (int i = 0; i < position - 1; i++)
+    {
+        temp = temp->next;
+    }
+
+    newnode->next = temp->next;
+    temp->next = newnode;
+    return 1;
+}
+
+// Delete at a specific position (0-indexed)
+// Returns 1 on success, -1 on empty list, -2 on invalid position
+int sll_deleteAtPosition(Node** head_ref, int position)
+{
+    if (*head_ref == NULL)
+    {
+        return -1;
+    }
+
+    int length = sll_getLength(*head_ref);
+
+    if (position < 0 || position >= length)
+    {
+        return -2;
+    }
+
+    Node* temp = *head_ref;
+
+    if (position == 0)
+    {
+        *head_ref = temp->next;
+        free(temp);
+        return 1;
+    }
+
+    Node* prev = NULL;
+    for (int i = 0; i < position; i++)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    prev->next = temp->next;
+    free(temp);
+    return 1;
 }

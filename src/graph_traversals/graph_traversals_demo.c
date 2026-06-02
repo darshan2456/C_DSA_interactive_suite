@@ -7,8 +7,8 @@ void graph_traversals_demo(void)
     while (1)
     {
         int graph_traversal_choice;
-        int graph_traversal_status =
-            safe_input_int(&graph_traversal_choice, "\nenter 1 for bfs and 2 for dfs : ", 1, 2);
+        int graph_traversal_status = safe_input_int(
+            &graph_traversal_choice, "\nenter 1 for bfs, 2 for dfs and 3 for dijkstra : ", 1, 3);
 
         if (graph_traversal_status == INPUT_EXIT_SIGNAL)
         {
@@ -29,6 +29,8 @@ void graph_traversals_demo(void)
             case 2:
                 dfs_demo();
                 break;
+            case 3:
+                dijkstra_demo();
         }
     }
 }
