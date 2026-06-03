@@ -5,6 +5,152 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct
+{
+    int f;
+    int node;
+} HeapNode;
+
+typedef struct
+{
+    HeapNode* data;
+    int size;
+    int capacity;
+} MinHeap;
+
+MinHeap* create_min_heap(int capacity)
+{
+    MinHeap* heap = malloc(sizeof(MinHeap));
+    if (!heap)
+    {
+        return NULL;
+    }
+    heap->data = malloc(capacity * sizeof(HeapNode));
+    if (!heap->data)
+    {
+        free(heap);
+        return NULL;
+    }
+    heap->size = 0;
+    heap->capacity = capacity;
+    return heap;
+}
+
+void free_min_heap(MinHeap* heap)
+{
+    if (heap)
+    {
+        free(heap->data);
+        free(heap);
+    }
+}
+
+void swap_heap_nodes(HeapNode* a, HeapNode* b)
+{
+    HeapNode temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int compare_nodes(HeapNode a, HeapNode b, int h[])
+{
+    if (a.f < b.f)
+    {
+        return -1;
+    }
+    if (a.f > b.f)
+    {
+        return 1;
+    }
+    // Tie-break: prefer lower h value (more goal-directed)
+    if (h[a.node] < h[b.node])
+    {
+        return -1;
+    }
+    if (h[a.node] > h[b.node])
+    {
+        return 1;
+    }
+    // Further tie-break: prefer lower node ID
+    if (a.node < b.node)
+    {
+        return -1;
+    }
+    if (a.node > b.node)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+void heapify_up(MinHeap* heap, int idx, int h[])
+{
+    while (idx > 0)
+    {
+        int parent = (idx - 1) / 2;
+        if (compare_nodes(heap->data[idx], heap->data[parent], h) < 0)
+        {
+            swap_heap_nodes(&heap->data[idx], &heap->data[parent]);
+            idx = parent;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+
+void heapify_down(MinHeap* heap, int idx, int h[])
+{
+    int smallest = idx;
+    int left = 2 * idx + 1;
+    int right = 2 * idx + 2;
+
+    if (left < heap->size && compare_nodes(heap->data[left], heap->data[smallest], h) < 0)
+    {
+        smallest = left;
+    }
+    if (right < heap->size && compare_nodes(heap->data[right], heap->data[smallest], h) < 0)
+    {
+        smallest = right;
+    }
+
+    if (smallest != idx)
+    {
+        swap_heap_nodes(&heap->data[idx], &heap->data[smallest]);
+        heapify_down(heap, smallest, h);
+    }
+}
+
+int heap_push(MinHeap* heap, int f, int node, int h[])
+{
+    if (heap->size >= heap->capacity)
+    {
+        return 0;
+    }
+    heap->data[heap->size].f = f;
+    heap->data[heap->size].node = node;
+    heapify_up(heap, heap->size, h);
+    heap->size++;
+    return 1;
+}
+
+int heap_pop(MinHeap* heap, HeapNode* popped, int h[])
+{
+    if (heap->size <= 0)
+    {
+        return 0;
+    }
+    *popped = heap->data[0];
+    heap->size--;
+    if (heap->size > 0)
+    {
+        heap->data[0] = heap->data[heap->size];
+        heapify_down(heap, 0, h);
+    }
+    return 1;
+}
+
 int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[])
 {
     int size = graph->V;
@@ -13,6 +159,16 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
     int* fScore = malloc(size * sizeof(int));
 
     if (!visited || !dist || !fScore)
+    {
+        free(visited);
+        free(dist);
+        free(fScore);
+        return -1;
+    }
+
+    // Allocate heap to hold up to size * size entries (to support duplicates)
+    MinHeap* heap = create_min_heap(size * size + 5);
+    if (!heap)
     {
         free(visited);
         free(dist);
@@ -32,31 +188,36 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
 
     dist[start] = 0;
     fScore[start] = h[start];
+    heap_push(heap, fScore[start], start, h);
 
-    while (1)
+    int result = INT_MAX;
+
+    while (heap->size > 0)
     {
-        int minDist = INT_MAX;
-        int u = -1;
-        for (int i = 0; i < size; i++)
+        HeapNode popped;
+        if (!heap_pop(heap, &popped, h))
         {
-            if (!visited[i] && fScore[i] < minDist)
-            {
-                minDist = fScore[i];
-                u = i;
-            }
+            break;
         }
 
-        if (u == -1)
+        int u = popped.node;
+
+        if (visited[u])
         {
+            continue;
+        }
+
+        // Display expansion details for learning/trace
+        printf("[Expansion] Popped Node %d | g = %d, h = %d, f = %d\n", u, dist[u], h[u], popped.f);
+
+        // Goal timing: stop when popped
+        if (u == dest)
+        {
+            result = dist[u];
             break;
         }
 
         visited[u] = 1;
-
-        if (u == dest)
-        {
-            break;
-        }
 
         Edge* current = graph->array[u];
         while (current != NULL)
@@ -81,13 +242,15 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
                         tentative_f = INT_MAX;
                     }
                     fScore[v] = tentative_f;
+
+                    heap_push(heap, fScore[v], v, h);
                 }
             }
             current = current->next;
         }
     }
 
-    int result = dist[dest];
+    free_min_heap(heap);
     free(visited);
     free(dist);
     free(fScore);
@@ -256,81 +419,107 @@ void astar_demo(void)
         add_edge_directed(graph, src, dest, wt);
     }
 
-    h = malloc(graph_capacity * sizeof(int));
-    if (!h)
-    {
-        printf("\nmemory allocation failed for heuristics\n");
-        free_weightedGraph(graph);
-        return;
-    }
-
-    printf("\nEnter heuristic values for each vertex:\n");
-    for (int i = 0; i < graph_capacity; i++)
-    {
-        int h_val;
-        int h_status;
-        char prompt[50];
-        sprintf(prompt, "h(%d): ", i);
-    retry_h:
-        h_status = safe_input_int(&h_val, prompt, 0, INT_MAX);
-        if (h_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting A* demo\n");
-            free(h);
-            free_weightedGraph(graph);
-            return;
-        }
-        if (h_status == 0)
-        {
-            goto retry_h;
-        }
-        h[i] = h_val;
-    }
-
     while (1)
     {
-        int start_status =
-            safe_input_int(&starting_node, "\nenter starting node: ", 0, graph_capacity - 1);
+        if (!h)
+        {
+            h = malloc(graph_capacity * sizeof(int));
+            if (!h)
+            {
+                printf("\nmemory allocation failed for heuristics\n");
+                free_weightedGraph(graph);
+                return;
+            }
 
-        if (start_status == INPUT_EXIT_SIGNAL)
+            printf("\nEnter heuristic values for each vertex:\n");
+            for (int i = 0; i < graph_capacity; i++)
+            {
+                int h_val;
+                int h_status;
+                char prompt[50];
+                sprintf(prompt, "h(%d): ", i);
+            retry_h:
+                h_status = safe_input_int(&h_val, prompt, 0, INT_MAX);
+                if (h_status == INPUT_EXIT_SIGNAL)
+                {
+                    printf("\nExiting A* demo\n");
+                    free(h);
+                    free_weightedGraph(graph);
+                    return;
+                }
+                if (h_status == 0)
+                {
+                    goto retry_h;
+                }
+                h[i] = h_val;
+            }
+        }
+
+        while (1)
+        {
+            int start_status =
+                safe_input_int(&starting_node, "\nenter starting node: ", 0, graph_capacity - 1);
+
+            if (start_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting A* demo.....\n");
+                free(h);
+                free_weightedGraph(graph);
+                return;
+            }
+
+            if (start_status == 0)
+            {
+                continue;
+            }
+
+            break;
+        }
+
+        while (1)
+        {
+            int dest_status =
+                safe_input_int(&destination_node, "\nenter destination node: ", 0, graph_capacity - 1);
+
+            if (dest_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting A* demo.....\n");
+                free(h);
+                free_weightedGraph(graph);
+                return;
+            }
+
+            if (dest_status == 0)
+            {
+                continue;
+            }
+
+            break;
+        }
+
+        printf("\n");
+        astar(graph, starting_node, destination_node, h);
+
+        int choice;
+    retry_choice:
+        printf("\nOptions:\n1. Re-run A* with NEW heuristics\n2. Re-run A* with SAME heuristics (new start/destination)\n0. Exit A* demo\n");
+        int choice_status = safe_input_int(&choice, "Enter choice: ", 0, 2);
+        if (choice_status == INPUT_EXIT_SIGNAL || choice == 0)
         {
             printf("\nExiting A* demo.....\n");
             free(h);
             free_weightedGraph(graph);
             return;
         }
-
-        if (start_status == 0)
+        if (choice_status == 0)
         {
-            continue;
+            goto retry_choice;
         }
 
-        break;
-    }
-
-    while (1)
-    {
-        int dest_status =
-            safe_input_int(&destination_node, "\nenter destination node: ", 0, graph_capacity - 1);
-
-        if (dest_status == INPUT_EXIT_SIGNAL)
+        if (choice == 1)
         {
-            printf("\nExiting A* demo.....\n");
             free(h);
-            free_weightedGraph(graph);
-            return;
+            h = NULL;
         }
-
-        if (dest_status == 0)
-        {
-            continue;
-        }
-
-        break;
     }
-
-    printf("\n");
-    astar(graph, starting_node, destination_node, h);
-    free(h);
-    free_weightedGraph(graph);
 }

@@ -18,8 +18,8 @@ void test_astar_simple_path()
     add_edge_directed(graph, 2, 3, 1);
     add_edge_directed(graph, 3, 4, 3);
 
-    // Heuristics towards node 4
-    int h[] = {7, 6, 3, 2, 0};
+    // Heuristics towards node 4 (consistent and admissible)
+    int h[] = {6, 5, 3, 2, 0};
     int parent[5];
 
     int cost = astar_solve(graph, 0, 4, h, parent);
