@@ -148,6 +148,7 @@ If any test fails or Valgrind detects a memory error, the CI job fails automatic
 #### Advanced Sorting Algorithms
 - Quick sort
 - Merge sort
+- Heap sort
 
 #### Graph Traversals
 - Breadth-First Search (BFS)
@@ -189,6 +190,7 @@ Separate Chaining uses sll API from the 'data_structures' folder
 
 * Quick sort: **O(n²)**
 * Merge sort: **O(nlogn)**
+* Heap sort: **O(nlogn)**
 
 ### Graph Traversals (Adjacency List)
 
