@@ -31,16 +31,15 @@ typedef struct
 {
     int vertex;
     int distance;
-} PQ_dijkstra_node;
+} PQ_graph_node;
 
 typedef struct
 {
     int size;
-    PQ_dijkstra_node heap[HEAP_CAPACITY];
-} PQ_dijkstra;
-int insert_pq_dijkstra(PQ_dijkstra* pq, int vertex, int distance);
-bool extractTop_pq_dijkstra(PQ_dijkstra* pq, PQ_dijkstra_node* result);
-
+    PQ_graph_node heap[HEAP_CAPACITY];
+} PQ_graph;
+int insert_pq_graph(PQ_graph* pq, int vertex, int distance);
+bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result);
 
 // New graph structure which stores the new type of edge node
 typedef struct weightedGraph
@@ -54,7 +53,6 @@ weightedGraph* create_weightedGraph(int V);
 void add_edge_directed(weightedGraph* graph, int src, int dest, int wt);
 int edge_insertAtEnd(Edge** head, int dest, int weight);
 void free_weightedGraph(weightedGraph* graph);
-int minDistance(int visited[], int dist[], int size);
 
 // ------------------For A* search algorithm-----------------------
 
@@ -62,16 +60,15 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
 void astar(weightedGraph* graph, int start, int dest, int h[]);
 void astar_demo(void);
 
-
 // ------------------For Greedy Best-First Search-----------------------
 
-int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest,
-                                   int h[], int parent[],
-                                   int traversal_order[],
-                                   int* traversal_len);
+int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, int h[], int parent[],
+                                   int traversal_order[], int* traversal_len);
 
 void greedy_best_first_search(weightedGraph* graph, int start, int dest, int h[]);
 void greedy_best_first_search_demo(void);
 
+// ------------------For Bellman-ford-----------------------
+void bellman_ford_demo(void);
 
 #endif

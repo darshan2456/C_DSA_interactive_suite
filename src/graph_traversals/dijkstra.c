@@ -4,7 +4,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int insert_pq_dijkstra(PQ_dijkstra* pq, int vertex, int distance)
+// Min-heap ordering for PQ_graph: a node has higher priority when its
+// "distance" (used as a generic priority: g+h for A*, h for Greedy, path
+// cost for Dijkstra) is smaller. Equal priorities are broken by the lower
+// vertex id so expansion order is deterministic and platform-independent.
+static int pq_graph_higher_priority(PQ_graph_node a, PQ_graph_node b)
+{
+    if (a.distance != b.distance)
+        return a.distance < b.distance;
+    return a.vertex < b.vertex;
+}
+
+int insert_pq_graph(PQ_graph* pq, int vertex, int distance)
 {
     if (pq == NULL || pq->size == HEAP_CAPACITY)
         return 0;
@@ -17,10 +28,10 @@ int insert_pq_dijkstra(PQ_dijkstra* pq, int vertex, int distance)
     while (i > 0)
     {
         int parent = (i - 1) / 2;
-        if (pq->heap[i].distance >= pq->heap[parent].distance)
+        if (!pq_graph_higher_priority(pq->heap[i], pq->heap[parent]))
             break;
 
-        PQ_dijkstra_node temp = pq->heap[i];
+        PQ_graph_node temp = pq->heap[i];
         pq->heap[i] = pq->heap[parent];
         pq->heap[parent] = temp;
 
@@ -30,13 +41,13 @@ int insert_pq_dijkstra(PQ_dijkstra* pq, int vertex, int distance)
     return 1;
 }
 
-bool extractTop_pq_dijkstra(PQ_dijkstra* pq, PQ_dijkstra_node* result)
+bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result)
 {
     if (pq == NULL || result == NULL || pq->size == 0)
         return false;
 
     int topIndex = 0;
-    PQ_dijkstra_node topElement = pq->heap[topIndex];
+    PQ_graph_node topElement = pq->heap[topIndex];
     int lastElementIndex = pq->size - 1;
 
     pq->heap[topIndex] = pq->heap[lastElementIndex];
@@ -50,15 +61,15 @@ bool extractTop_pq_dijkstra(PQ_dijkstra* pq, PQ_dijkstra_node* result)
         int right = 2 * i + 2;
         int target = i;
 
-        if (left < pq->size && pq->heap[left].distance < pq->heap[target].distance)
+        if (left < pq->size && pq_graph_higher_priority(pq->heap[left], pq->heap[target]))
             target = left;
-        if (right < pq->size && pq->heap[right].distance < pq->heap[target].distance)
+        if (right < pq->size && pq_graph_higher_priority(pq->heap[right], pq->heap[target]))
             target = right;
 
         if (target == i)
             break;
 
-        PQ_dijkstra_node temp = pq->heap[i];
+        PQ_graph_node temp = pq->heap[i];
         pq->heap[i] = pq->heap[target];
         pq->heap[target] = temp;
 
@@ -80,13 +91,13 @@ void dijkstra(weightedGraph* graph, int start)
 
     dist[start] = 0;
 
-    PQ_dijkstra pq;
+    PQ_graph pq;
     pq.size = 0;
-    insert_pq_dijkstra(&pq, start, 0);
+    insert_pq_graph(&pq, start, 0);
 
-    PQ_dijkstra_node currentNode;
+    PQ_graph_node currentNode;
 
-    while (extractTop_pq_dijkstra(&pq, &currentNode))
+    while (extractTop_pq_graph(&pq, &currentNode))
     {
         int u = currentNode.vertex;
 
@@ -102,7 +113,7 @@ void dijkstra(weightedGraph* graph, int start)
             if (dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
             {
                 dist[v] = dist[u] + currentWeight;
-                insert_pq_dijkstra(&pq, v, dist[v]);
+                insert_pq_graph(&pq, v, dist[v]);
             }
 
             current = current->next;
@@ -174,12 +185,6 @@ void add_edge_directed(weightedGraph* graph, int src, int dest, int wt)
 {
     if (!graph)
         return;
-
-    if (src < 0 || src >= graph->V || dest < 0 || dest >= graph->V || wt < 0)
-    {
-        printf("Invalid edge: %d -> %d\n", src, dest);
-        return;
-    }
 
     edge_insertAtEnd(&graph->array[src], dest, wt);
 }

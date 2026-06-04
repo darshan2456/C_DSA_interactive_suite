@@ -11,8 +11,9 @@ void sorting_algorithms_n2_demo(void)
                                              "\nenter 1 for bubble sort"
                                              "\nenter 2 for insertion sort"
                                              "\nenter 3 for selection sort"
+                                             "\nenter 4 for shell sort"
                                              "\nenter choice : ",
-                                             1, 3);
+                                             1, 4);
 
         if (sorting_algo_status == INPUT_EXIT_SIGNAL)
         {
@@ -33,6 +34,9 @@ void sorting_algorithms_n2_demo(void)
                 break;
             case 3:
                 selection_sort_demo();
+                break;
+            case 4:
+                shell_sort_demo();
                 break;
         }
     }
