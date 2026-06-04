@@ -4,6 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Min-heap ordering for PQ_graph: a node has higher priority when its
+// "distance" (used as a generic priority: g+h for A*, h for Greedy, path
+// cost for Dijkstra) is smaller. Equal priorities are broken by the lower
+// vertex id so expansion order is deterministic and platform-independent.
+static int pq_graph_higher_priority(PQ_graph_node a, PQ_graph_node b)
+{
+    if (a.distance != b.distance)
+        return a.distance < b.distance;
+    return a.vertex < b.vertex;
+}
+
 int insert_pq_graph(PQ_graph* pq, int vertex, int distance)
 {
     if (pq == NULL || pq->size == HEAP_CAPACITY)
@@ -17,7 +28,7 @@ int insert_pq_graph(PQ_graph* pq, int vertex, int distance)
     while (i > 0)
     {
         int parent = (i - 1) / 2;
-        if (pq->heap[i].distance >= pq->heap[parent].distance)
+        if (!pq_graph_higher_priority(pq->heap[i], pq->heap[parent]))
             break;
 
         PQ_graph_node temp = pq->heap[i];
@@ -50,9 +61,9 @@ bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result)
         int right = 2 * i + 2;
         int target = i;
 
-        if (left < pq->size && pq->heap[left].distance < pq->heap[target].distance)
+        if (left < pq->size && pq_graph_higher_priority(pq->heap[left], pq->heap[target]))
             target = left;
-        if (right < pq->size && pq->heap[right].distance < pq->heap[target].distance)
+        if (right < pq->size && pq_graph_higher_priority(pq->heap[right], pq->heap[target]))
             target = right;
 
         if (target == i)
