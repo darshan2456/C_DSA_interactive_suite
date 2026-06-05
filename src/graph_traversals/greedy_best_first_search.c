@@ -1,8 +1,10 @@
+#include "graph_io.h"
 #include "graph_traversals.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, int h[], int parent[],
                                    int traversal_order[], int* traversal_len)
@@ -143,51 +145,24 @@ void greedy_best_first_search_demo(void)
     int graph_capacity;
     int starting_node;
     int destination_node;
+    int input_method;
     weightedGraph* graph = NULL;
     int* h = NULL;
 
     while (1)
     {
-        int graph_capacity_status = safe_input_int(&graph_capacity,
-                                                   "\nenter the number of vertices in the graph, "
-                                                   "(between 1 and 10), enter '-1' to exit : ",
-                                                   1, 10);
+        int method_status = safe_input_int(&input_method,
+                                           "\nenter 1 to build the graph manually, 2 to load it "
+                                           "from a CSV file, enter '-1' to exit : ",
+                                           1, 2);
 
-        if (graph_capacity_status == INPUT_EXIT_SIGNAL)
+        if (method_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting Greedy Best-First Search demo.....\n");
             return;
         }
 
-        if (graph_capacity_status == 0)
-        {
-            continue;
-        }
-
-        graph = create_weightedGraph(graph_capacity);
-
-        if (!graph)
-        {
-            printf("\nmemory allocation failed\n");
-            return;
-        }
-
-        break;
-    }
-
-    while (1)
-    {
-        int edges_capacity_status = safe_input_int(
-            &edges, "\nenter number of edges (between 1 and 100), enter '-1' to exit :", 0, 100);
-
-        if (edges_capacity_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting Greedy Best-First Search demo\n");
-            free_weightedGraph(graph);
-            return;
-        }
-
-        if (edges_capacity_status == 0)
+        if (method_status == 0)
         {
             continue;
         }
@@ -195,60 +170,160 @@ void greedy_best_first_search_demo(void)
         break;
     }
 
-    printf("\nEnter source, destination, weight pairs (Source, Destination must be b/w 0 and %d "
-           "(both inclusive)):\n",
-           graph_capacity - 1);
-
-    for (int i = 0; i < edges; i++)
+    if (input_method == 2)
     {
-        int src_status;
-        int dest_status;
-        int wt_status;
-        int src;
-        int dest;
-        int wt;
-
-    retry:
-        src_status = safe_input_int(&src, "src: ", 0, graph_capacity - 1);
-
-        if (src_status == INPUT_EXIT_SIGNAL)
+        while (1)
         {
-            printf("\nExiting Greedy Best-First Search demo\n");
-            free_weightedGraph(graph);
-            return;
-        }
-        if (src_status == 0)
-        {
-            goto retry;
-        }
+            char path[256];
+            printf("\nenter the path to the CSV file, enter '-1' to exit : ");
+            fflush(stdout);
 
-        dest_status = safe_input_int(&dest, "dest: ", 0, graph_capacity - 1);
+            if (!fgets(path, sizeof(path), stdin))
+            {
+                printf("\ninput ended unexpectedly\n");
+                clearerr(stdin);
+                return;
+            }
 
-        if (dest_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting Greedy Best-First Search demo\n");
-            free_weightedGraph(graph);
-            return;
-        }
-        if (dest_status == 0)
-        {
-            goto retry;
-        }
+            size_t len = strlen(path);
+            while (len > 0 && (path[len - 1] == '\n' || path[len - 1] == '\r'))
+                path[--len] = '\0';
 
-        wt_status = safe_input_int(&wt, "weight: ", 0, INT_MAX);
+            if (strcmp(path, "-1") == 0)
+            {
+                printf("\nExiting Greedy Best-First Search demo.....\n");
+                return;
+            }
 
-        if (wt_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting Greedy Best-First Search demo\n");
-            free_weightedGraph(graph);
-            return;
-        }
-        if (wt_status == 0)
-        {
-            goto retry;
+            if (len == 0)
+            {
+                continue;
+            }
+
+            // Loads the graph and its per-vertex heuristic together, so the
+            // manual heuristic-entry block below is skipped on this path.
+            graph = load_weightedGraph_with_heuristic_from_csv(path, &h);
+
+            if (!graph)
+            {
+                // error already reported by the loader, let the user retry
+                continue;
+            }
+
+            break;
         }
 
-        add_edge_directed(graph, src, dest, wt);
+        graph_capacity = graph->V;
+    }
+    else
+    {
+        while (1)
+        {
+            int graph_capacity_status =
+                safe_input_int(&graph_capacity,
+                               "\nenter the number of vertices in the graph, "
+                               "(between 1 and 10), enter '-1' to exit : ",
+                               1, 10);
+
+            if (graph_capacity_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Greedy Best-First Search demo.....\n");
+                return;
+            }
+
+            if (graph_capacity_status == 0)
+            {
+                continue;
+            }
+
+            graph = create_weightedGraph(graph_capacity);
+
+            if (!graph)
+            {
+                printf("\nmemory allocation failed\n");
+                return;
+            }
+
+            break;
+        }
+
+        while (1)
+        {
+            int edges_capacity_status = safe_input_int(
+                &edges, "\nenter number of edges (between 1 and 100), enter '-1' to exit :", 0,
+                100);
+
+            if (edges_capacity_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Greedy Best-First Search demo\n");
+                free_weightedGraph(graph);
+                return;
+            }
+
+            if (edges_capacity_status == 0)
+            {
+                continue;
+            }
+
+            break;
+        }
+
+        printf(
+            "\nEnter source, destination, weight pairs (Source, Destination must be b/w 0 and %d "
+            "(both inclusive)):\n",
+            graph_capacity - 1);
+
+        for (int i = 0; i < edges; i++)
+        {
+            int src_status;
+            int dest_status;
+            int wt_status;
+            int src;
+            int dest;
+            int wt;
+
+        retry:
+            src_status = safe_input_int(&src, "src: ", 0, graph_capacity - 1);
+
+            if (src_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Greedy Best-First Search demo\n");
+                free_weightedGraph(graph);
+                return;
+            }
+            if (src_status == 0)
+            {
+                goto retry;
+            }
+
+            dest_status = safe_input_int(&dest, "dest: ", 0, graph_capacity - 1);
+
+            if (dest_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Greedy Best-First Search demo\n");
+                free_weightedGraph(graph);
+                return;
+            }
+            if (dest_status == 0)
+            {
+                goto retry;
+            }
+
+            wt_status = safe_input_int(&wt, "weight: ", 0, INT_MAX);
+
+            if (wt_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Greedy Best-First Search demo\n");
+                free_weightedGraph(graph);
+                return;
+            }
+            if (wt_status == 0)
+            {
+                goto retry;
+            }
+
+            add_edge_directed(graph, src, dest, wt);
+        }
     }
 
     while (1)
