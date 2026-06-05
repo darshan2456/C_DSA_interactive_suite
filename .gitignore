@@ -1,0 +1,4 @@
+*.exe
+dsa
+test_*
+output/benchmark_history.csv
