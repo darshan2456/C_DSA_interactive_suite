@@ -45,6 +45,7 @@ int get_validated_input_parantheses(char* buff, size_t size, const char* prompt)
     }
     if (!fgets(buff, size, stdin))
     {
+        clearerr(stdin);
         printf("\ninput ended unexpectedly");
         return 0;
     }

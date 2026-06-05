@@ -229,4 +229,21 @@ void avl_postorder(const avlNode* root);
 void destroy_avl(avlNode* root);
 void avl_demo(void);
 
+// For Trie (Prefix Tree)
+#define TRIE_ALPHA_SIZE 26
+
+typedef struct TrieNode
+{
+    struct TrieNode *children[TRIE_ALPHA_SIZE];
+    int is_end;
+} TrieNode;
+
+TrieNode *trie_create_node(void);
+void      trie_insert(TrieNode *root, const char *word);
+int       trie_search(TrieNode *root, const char *word);
+int       trie_starts_with_prefix(TrieNode *root, const char *prefix);
+void      trie_delete(TrieNode *root, const char *word);
+void      trie_free(TrieNode *node);
+void      trie_demo(void);
+
 #endif

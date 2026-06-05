@@ -131,6 +131,7 @@ DEQUE_TEST_SRC = \
 ASTAR_TEST_SRC = \
 	src/graph_traversals/astar.c \
 	src/graph_traversals/dijkstra.c \
+	src/graph_traversals/graph_io.c \
 	src/utils/safe_input_int.c \
 	tests/test_astar.c
 AVL_TEST_SRC = \
@@ -138,9 +139,17 @@ AVL_TEST_SRC = \
 	src/utils/safe_input_int.c \
 	tests/test_avl.c
 
+TRIE_TEST_SRC = \
+	src/data_structures/trie.c \
+	src/utils/safe_input_int.c \
+	tests/test_trie.c
+
+
+
 GREEDY_BFS_TEST_SRC = \
 	src/graph_traversals/greedy_best_first_search.c \
 	src/graph_traversals/dijkstra.c \
+	src/graph_traversals/graph_io.c \
 	src/utils/safe_input_int.c \
 	tests/test_greedy_best_first_search.c
 
@@ -166,7 +175,13 @@ ADVANCED_SORTING_TEST_SRC = \
 	src/data_structures/array.c \
 	src/utils/safe_input_int.c \
 	src/utils/history_logger.c \
-	tests/test_advanced_sorting.c
+	
+SHELL_SORT_TEST_SRC = \
+	src/sorting_algorithms_n2/shell_sort.c \
+	src/data_structures/array.c \
+	src/utils/safe_input_int.c \
+	src/utils/history_logger.c \
+	tests/test_shell_sort.c
 
 test_tbt:
 	$(CC) $(CFLAGS) $(TBT_TEST_SRC) -o test_tbt$(EXE)
@@ -229,6 +244,12 @@ test_avl:
 	$(CC) $(CFLAGS) $(AVL_TEST_SRC) -o test_avl$(EXE)
 	./test_avl$(EXE)
 
+test_trie:
+	$(CC) $(CFLAGS) $(TRIE_TEST_SRC) -o test_trie$(EXE)
+	./test_trie$(EXE)
+
+
+
 test_greedy_bfs:
 	$(CC) $(CFLAGS) $(GREEDY_BFS_TEST_SRC) -o test_greedy_bfs$(EXE)
 	./test_greedy_bfs$(EXE)
@@ -237,18 +258,9 @@ test_history_logger:
 	$(CC) $(CFLAGS) $(HISTORY_LOGGER_TEST_SRC) -o test_history_logger$(EXE)
 	./test_history_logger$(EXE)
 
-TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
-            test_sll test_dll test_array test_stack test_tbt \
-            test_priority_queue test_scll test_simple_queue \
-            test_deque test_astar test_avl \
-            test_greedy_bfs test_sorting_n2 test_advanced_sorting \
-            test_history_logger
-
-test: $(TEST_BINS)
-
-.PHONY: $(TARGET) $(TEST_BINS)
-
-
+test_shell_sort:
+	$(CC) $(CFLAGS) $(SHELL_SORT_TEST_SRC) -o test_shell_sort$(EXE)
+	./test_shell_sort$(EXE)
 
 # ---- sorting algorithm unit tests (issue #92) ----
 SORTING_N2_TEST_SRC = \
@@ -270,6 +282,7 @@ ADVANCED_SORTING_TEST_SRC = \
 	src/utils/safe_input_int.c \
 	src/utils/history_logger.c \
 	tests/test_advanced_sorting.c
+
 test_sorting_n2:
 	$(CC) $(CFLAGS) $(SORTING_N2_TEST_SRC) -o test_sorting_n2$(EXE)
 	./test_sorting_n2$(EXE)
@@ -278,14 +291,12 @@ test_advanced_sorting:
 	$(CC) $(CFLAGS) $(ADVANCED_SORTING_TEST_SRC) -o test_advanced_sorting$(EXE)
 	./test_advanced_sorting$(EXE)
 
-
-
 TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_sll test_dll test_array test_stack test_tbt \
             test_priority_queue test_scll test_simple_queue \
             test_deque test_astar test_avl \
-            test_greedy_bfs test_sorting_n2 test_advanced_sorting
-
+            test_greedy_bfs test_sorting_n2 test_advanced_sorting \
+            test_history_logger test_shell_sort test_trie
 
 test: $(TEST_BINS)
 

@@ -206,7 +206,7 @@ void TBT_demo(void)
     for (int i = 0; i < tbt_capacity; i++)
     {
         int val_status;
-    retry_capacity:
+    retry_input:
         val_status = safe_input_int(
             &tbt_values[i],
             "\nEnter the value to insert: (between 1 and 100), enter '-1' to exit: ", 1, 100);
@@ -219,7 +219,17 @@ void TBT_demo(void)
         }
         if (val_status == 0)
         {
-            goto retry_capacity;
+            goto retry_input;
+        }
+
+        // Check if value already exists in the previously entered elements
+        for (int j = 0; j < i; j++)
+        {
+            if (tbt_values[j] == tbt_values[i])
+            {
+                printf("\nsame value already exists, enter a unique value.\n");
+                goto retry_input;
+            }
         }
     }
 
@@ -231,21 +241,10 @@ void TBT_demo(void)
 
         switch (insert_status)
         {
-
-            case INPUT_EXIT_SIGNAL:
-            {
-                printf("\nExiting Threaded Binary Tree demo....\n");
-                destroy_tbt(root);
-                return;
-            }
-            case 0:
-            {
-                goto retry;
-            }
             case -1:
             {
-                printf("\nsame value already exists in the tree, try again");
-                goto retry;
+                printf("\nsame value already exists in the tree, skipping");
+                break;
             }
             case -2:
             {

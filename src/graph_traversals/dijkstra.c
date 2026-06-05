@@ -1,10 +1,23 @@
+#include "graph_io.h"
 #include "graph_traversals.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-int insert_pq_dijkstra(PQ_dijkstra* pq, int vertex, int distance)
+// Min-heap ordering for PQ_graph: a node has higher priority when its
+// "distance" (used as a generic priority: g+h for A*, h for Greedy, path
+// cost for Dijkstra) is smaller. Equal priorities are broken by the lower
+// vertex id so expansion order is deterministic and platform-independent.
+static int pq_graph_higher_priority(PQ_graph_node a, PQ_graph_node b)
+{
+    if (a.distance != b.distance)
+        return a.distance < b.distance;
+    return a.vertex < b.vertex;
+}
+
+int insert_pq_graph(PQ_graph* pq, int vertex, int distance)
 {
     if (pq == NULL || pq->size == HEAP_CAPACITY)
         return 0;
@@ -17,10 +30,10 @@ int insert_pq_dijkstra(PQ_dijkstra* pq, int vertex, int distance)
     while (i > 0)
     {
         int parent = (i - 1) / 2;
-        if (pq->heap[i].distance >= pq->heap[parent].distance)
+        if (!pq_graph_higher_priority(pq->heap[i], pq->heap[parent]))
             break;
 
-        PQ_dijkstra_node temp = pq->heap[i];
+        PQ_graph_node temp = pq->heap[i];
         pq->heap[i] = pq->heap[parent];
         pq->heap[parent] = temp;
 
@@ -30,13 +43,13 @@ int insert_pq_dijkstra(PQ_dijkstra* pq, int vertex, int distance)
     return 1;
 }
 
-bool extractTop_pq_dijkstra(PQ_dijkstra* pq, PQ_dijkstra_node* result)
+bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result)
 {
     if (pq == NULL || result == NULL || pq->size == 0)
         return false;
 
     int topIndex = 0;
-    PQ_dijkstra_node topElement = pq->heap[topIndex];
+    PQ_graph_node topElement = pq->heap[topIndex];
     int lastElementIndex = pq->size - 1;
 
     pq->heap[topIndex] = pq->heap[lastElementIndex];
@@ -50,15 +63,15 @@ bool extractTop_pq_dijkstra(PQ_dijkstra* pq, PQ_dijkstra_node* result)
         int right = 2 * i + 2;
         int target = i;
 
-        if (left < pq->size && pq->heap[left].distance < pq->heap[target].distance)
+        if (left < pq->size && pq_graph_higher_priority(pq->heap[left], pq->heap[target]))
             target = left;
-        if (right < pq->size && pq->heap[right].distance < pq->heap[target].distance)
+        if (right < pq->size && pq_graph_higher_priority(pq->heap[right], pq->heap[target]))
             target = right;
 
         if (target == i)
             break;
 
-        PQ_dijkstra_node temp = pq->heap[i];
+        PQ_graph_node temp = pq->heap[i];
         pq->heap[i] = pq->heap[target];
         pq->heap[target] = temp;
 
@@ -80,13 +93,13 @@ void dijkstra(weightedGraph* graph, int start)
 
     dist[start] = 0;
 
-    PQ_dijkstra pq;
+    PQ_graph pq;
     pq.size = 0;
-    insert_pq_dijkstra(&pq, start, 0);
+    insert_pq_graph(&pq, start, 0);
 
-    PQ_dijkstra_node currentNode;
+    PQ_graph_node currentNode;
 
-    while (extractTop_pq_dijkstra(&pq, &currentNode))
+    while (extractTop_pq_graph(&pq, &currentNode))
     {
         int u = currentNode.vertex;
 
@@ -102,7 +115,7 @@ void dijkstra(weightedGraph* graph, int start)
             if (dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
             {
                 dist[v] = dist[u] + currentWeight;
-                insert_pq_dijkstra(&pq, v, dist[v]);
+                insert_pq_graph(&pq, v, dist[v]);
             }
 
             current = current->next;
@@ -175,12 +188,6 @@ void add_edge_directed(weightedGraph* graph, int src, int dest, int wt)
     if (!graph)
         return;
 
-    if (src < 0 || src >= graph->V || dest < 0 || dest >= graph->V || wt < 0)
-    {
-        printf("Invalid edge: %d -> %d\n", src, dest);
-        return;
-    }
-
     edge_insertAtEnd(&graph->array[src], dest, wt);
 }
 
@@ -209,52 +216,23 @@ void dijkstra_demo(void)
     int edges;
     int graph_capacity;
     int starting_node;
+    int input_method;
     weightedGraph* graph = NULL;
 
     while (1)
     {
-        int graph_capacity_status = safe_input_int(&graph_capacity,
-                                                   "\nenter the number of vertices in the graph, "
-                                                   "(between 1 and 10), enter '-1' to exit : ",
-                                                   1, 10);
+        int method_status = safe_input_int(&input_method,
+                                           "\nenter 1 to build the graph manually, 2 to load it "
+                                           "from a CSV file, enter '-1' to exit : ",
+                                           1, 2);
 
-        if (graph_capacity_status == INPUT_EXIT_SIGNAL)
+        if (method_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting Dijkstra demo.....\n");
-            free_weightedGraph(graph);
             return;
         }
 
-        if (graph_capacity_status == 0)
-        {
-            continue;
-        }
-
-        graph = create_weightedGraph(graph_capacity);
-
-        if (!graph)
-        {
-            printf("\nmemory allocation failed\n");
-            free_weightedGraph(graph);
-            return;
-        }
-
-        break;
-    }
-
-    while (1)
-    {
-        int edges_capacity_status = safe_input_int(
-            &edges, "\nenter number of edges (between 1 and 100), enter '-1' to exit :", 0, 100);
-
-        if (edges_capacity_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting Dijkstra demo\n");
-            free_weightedGraph(graph);
-            return;
-        }
-
-        if (edges_capacity_status == 0)
+        if (method_status == 0)
         {
             continue;
         }
@@ -262,60 +240,160 @@ void dijkstra_demo(void)
         break;
     }
 
-    printf("\nEnter source, destination, weight pairs (Source, Destination must be b/w 0 and %d "
-           "(both inclusive)):\n",
-           graph_capacity - 1);
-
-    for (int i = 0; i < edges; i++)
+    if (input_method == 2)
     {
-        int src_status;
-        int dest_status;
-        int wt_status;
-        int src;
-        int dest;
-        int wt;
-
-    retry:
-        src_status = safe_input_int(&src, "src: ", 0, graph_capacity - 1);
-
-        if (src_status == INPUT_EXIT_SIGNAL)
+        while (1)
         {
-            printf("\nExiting Dijkstra demo\n");
-            free_weightedGraph(graph);
-            return;
-        }
-        if (src_status == 0)
-        {
-            goto retry;
-        }
+            char path[256];
+            printf("\nenter the path to the CSV file, enter '-1' to exit : ");
+            fflush(stdout);
 
-        dest_status = safe_input_int(&dest, "dest: ", 0, graph_capacity - 1);
+            if (!fgets(path, sizeof(path), stdin))
+            {
+                printf("\ninput ended unexpectedly\n");
+                clearerr(stdin);
+                return;
+            }
 
-        if (dest_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting Dijsktra demo\n");
-            free_weightedGraph(graph);
-            return;
-        }
-        if (dest_status == 0)
-        {
-            goto retry;
-        }
+            size_t len = strlen(path);
+            while (len > 0 && (path[len - 1] == '\n' || path[len - 1] == '\r'))
+                path[--len] = '\0';
 
-        wt_status = safe_input_int(&wt, "weight: ", 0, INT_MAX);
+            if (strcmp(path, "-1") == 0)
+            {
+                printf("\nExiting Dijkstra demo.....\n");
+                return;
+            }
 
-        if (wt_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting Dijsktra demo\n");
-            free_weightedGraph(graph);
-            return;
-        }
-        if (wt_status == 0)
-        {
-            goto retry;
+            if (len == 0)
+            {
+                continue;
+            }
+
+            graph = load_weightedGraph_from_csv(path);
+
+            if (!graph)
+            {
+                // error already reported by the loader, let the user retry
+                continue;
+            }
+
+            break;
         }
 
-        add_edge_directed(graph, src, dest, wt);
+        graph_capacity = graph->V;
+    }
+    else
+    {
+        while (1)
+        {
+            int graph_capacity_status =
+                safe_input_int(&graph_capacity,
+                               "\nenter the number of vertices in the graph, "
+                               "(between 1 and 10), enter '-1' to exit : ",
+                               1, 10);
+
+            if (graph_capacity_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Dijkstra demo.....\n");
+                free_weightedGraph(graph);
+                return;
+            }
+
+            if (graph_capacity_status == 0)
+            {
+                continue;
+            }
+
+            graph = create_weightedGraph(graph_capacity);
+
+            if (!graph)
+            {
+                printf("\nmemory allocation failed\n");
+                free_weightedGraph(graph);
+                return;
+            }
+
+            break;
+        }
+
+        while (1)
+        {
+            int edges_capacity_status = safe_input_int(
+                &edges, "\nenter number of edges (between 1 and 100), enter '-1' to exit :", 0,
+                100);
+
+            if (edges_capacity_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Dijkstra demo\n");
+                free_weightedGraph(graph);
+                return;
+            }
+
+            if (edges_capacity_status == 0)
+            {
+                continue;
+            }
+
+            break;
+        }
+
+        printf(
+            "\nEnter source, destination, weight pairs (Source, Destination must be b/w 0 and %d "
+            "(both inclusive)):\n",
+            graph_capacity - 1);
+
+        for (int i = 0; i < edges; i++)
+        {
+            int src_status;
+            int dest_status;
+            int wt_status;
+            int src;
+            int dest;
+            int wt;
+
+        retry:
+            src_status = safe_input_int(&src, "src: ", 0, graph_capacity - 1);
+
+            if (src_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Dijkstra demo\n");
+                free_weightedGraph(graph);
+                return;
+            }
+            if (src_status == 0)
+            {
+                goto retry;
+            }
+
+            dest_status = safe_input_int(&dest, "dest: ", 0, graph_capacity - 1);
+
+            if (dest_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Dijsktra demo\n");
+                free_weightedGraph(graph);
+                return;
+            }
+            if (dest_status == 0)
+            {
+                goto retry;
+            }
+
+            wt_status = safe_input_int(&wt, "weight: ", 0, INT_MAX);
+
+            if (wt_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting Dijsktra demo\n");
+                free_weightedGraph(graph);
+                return;
+            }
+            if (wt_status == 0)
+            {
+                goto retry;
+            }
+
+            add_edge_directed(graph, src, dest, wt);
+        }
     }
 
     while (1)

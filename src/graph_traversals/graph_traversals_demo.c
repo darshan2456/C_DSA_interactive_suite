@@ -10,7 +10,8 @@ void graph_traversals_demo(void)
         int graph_traversal_status = safe_input_int(
     &graph_traversal_choice,
     "\nenter 1 for bfs, 2 for dfs, 3 for dijkstra, 4 for astar, "
-    "5 for greedy-bfs, 7 for topological-sort : ",
+
+    "5 for greedy-bfs, 6 for bellman ford, 7 for topological-sort : ",
     1, 7);
 
         if (graph_traversal_status == INPUT_EXIT_SIGNAL)
@@ -40,6 +41,9 @@ void graph_traversals_demo(void)
                 break;
             case 5:
                   greedy_best_first_search_demo();
+                 break;
+            case 6:
+                 bellman_ford_demo();
                  break;
             case 7:
                 topological_sort_demo();

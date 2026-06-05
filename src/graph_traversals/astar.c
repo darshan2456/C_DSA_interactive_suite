@@ -3,153 +3,6 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-typedef struct
-{
-    int f;
-    int node;
-} HeapNode;
-
-typedef struct
-{
-    HeapNode* data;
-    int size;
-    int capacity;
-} MinHeap;
-
-MinHeap* create_min_heap(int capacity)
-{
-    MinHeap* heap = malloc(sizeof(MinHeap));
-    if (!heap)
-    {
-        return NULL;
-    }
-    heap->data = malloc(capacity * sizeof(HeapNode));
-    if (!heap->data)
-    {
-        free(heap);
-        return NULL;
-    }
-    heap->size = 0;
-    heap->capacity = capacity;
-    return heap;
-}
-
-void free_min_heap(MinHeap* heap)
-{
-    if (heap)
-    {
-        free(heap->data);
-        free(heap);
-    }
-}
-
-void swap_heap_nodes(HeapNode* a, HeapNode* b)
-{
-    HeapNode temp = *a;
-    *a = *b;
-    *b = temp;
-}
-
-int compare_nodes(HeapNode a, HeapNode b, int h[])
-{
-    if (a.f < b.f)
-    {
-        return -1;
-    }
-    if (a.f > b.f)
-    {
-        return 1;
-    }
-    // Tie-break: prefer lower h value (more goal-directed)
-    if (h[a.node] < h[b.node])
-    {
-        return -1;
-    }
-    if (h[a.node] > h[b.node])
-    {
-        return 1;
-    }
-    // Further tie-break: prefer lower node ID
-    if (a.node < b.node)
-    {
-        return -1;
-    }
-    if (a.node > b.node)
-    {
-        return 1;
-    }
-    return 0;
-}
-
-void heapify_up(MinHeap* heap, int idx, int h[])
-{
-    while (idx > 0)
-    {
-        int parent = (idx - 1) / 2;
-        if (compare_nodes(heap->data[idx], heap->data[parent], h) < 0)
-        {
-            swap_heap_nodes(&heap->data[idx], &heap->data[parent]);
-            idx = parent;
-        }
-        else
-        {
-            break;
-        }
-    }
-}
-
-void heapify_down(MinHeap* heap, int idx, int h[])
-{
-    int smallest = idx;
-    int left = 2 * idx + 1;
-    int right = 2 * idx + 2;
-
-    if (left < heap->size && compare_nodes(heap->data[left], heap->data[smallest], h) < 0)
-    {
-        smallest = left;
-    }
-    if (right < heap->size && compare_nodes(heap->data[right], heap->data[smallest], h) < 0)
-    {
-        smallest = right;
-    }
-
-    if (smallest != idx)
-    {
-        swap_heap_nodes(&heap->data[idx], &heap->data[smallest]);
-        heapify_down(heap, smallest, h);
-    }
-}
-
-int heap_push(MinHeap* heap, int f, int node, int h[])
-{
-    if (heap->size >= heap->capacity)
-    {
-        return 0;
-    }
-    heap->data[heap->size].f = f;
-    heap->data[heap->size].node = node;
-    heapify_up(heap, heap->size, h);
-    heap->size++;
-    return 1;
-}
-
-int heap_pop(MinHeap* heap, HeapNode* popped, int h[])
-{
-    if (heap->size <= 0)
-    {
-        return 0;
-    }
-    *popped = heap->data[0];
-    heap->size--;
-    if (heap->size > 0)
-    {
-        heap->data[0] = heap->data[heap->size];
-        heapify_down(heap, 0, h);
-    }
-    return 1;
-}
 
 int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[])
 {
@@ -159,16 +12,6 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
     int* fScore = malloc(size * sizeof(int));
 
     if (!visited || !dist || !fScore)
-    {
-        free(visited);
-        free(dist);
-        free(fScore);
-        return -1;
-    }
-
-    // Allocate heap to hold up to size * size entries (to support duplicates)
-    MinHeap* heap = create_min_heap(size * size + 5);
-    if (!heap)
     {
         free(visited);
         free(dist);
@@ -186,29 +29,31 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
         }
     }
 
+    // Reuse the shared graph priority queue: a min-heap keyed on the node's
+    // "distance" field, which here carries the f-score (f = g + h). Duplicate
+    // entries are handled lazily via the visited[] check on pop.
+    PQ_graph pq;
+    pq.size = 0;
+
     dist[start] = 0;
     fScore[start] = h[start];
-    heap_push(heap, fScore[start], start, h);
+    insert_pq_graph(&pq, start, fScore[start]);
 
     int result = INT_MAX;
 
-    while (heap->size > 0)
+    PQ_graph_node popped;
+    while (extractTop_pq_graph(&pq, &popped))
     {
-        HeapNode popped;
-        if (!heap_pop(heap, &popped, h))
-        {
-            break;
-        }
-
-        int u = popped.node;
+        int u = popped.vertex;
 
         if (visited[u])
         {
             continue;
         }
 
-        // Display expansion details for learning/trace
-        printf("[Expansion] Popped Node %d | g = %d, h = %d, f = %d\n", u, dist[u], h[u], popped.f);
+        // Display expansion details for learning/trace (popped.distance == f)
+        printf("[Expansion] Popped Node %d | g = %d, h = %d, f = %d\n", u, dist[u], h[u],
+               popped.distance);
 
         // Goal timing: stop when popped
         if (u == dest)
@@ -243,14 +88,13 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
                     }
                     fScore[v] = tentative_f;
 
-                    heap_push(heap, fScore[v], v, h);
+                    insert_pq_graph(&pq, v, fScore[v]);
                 }
             }
             current = current->next;
         }
     }
 
-    free_min_heap(heap);
     free(visited);
     free(dist);
     free(fScore);
@@ -478,8 +322,8 @@ void astar_demo(void)
 
         while (1)
         {
-            int dest_status =
-                safe_input_int(&destination_node, "\nenter destination node: ", 0, graph_capacity - 1);
+            int dest_status = safe_input_int(&destination_node, "\nenter destination node: ", 0,
+                                             graph_capacity - 1);
 
             if (dest_status == INPUT_EXIT_SIGNAL)
             {
@@ -502,7 +346,8 @@ void astar_demo(void)
 
         int choice;
     retry_choice:
-        printf("\nOptions:\n1. Re-run A* with NEW heuristics\n2. Re-run A* with SAME heuristics (new start/destination)\n0. Exit A* demo\n");
+        printf("\nOptions:\n1. Re-run A* with NEW heuristics\n2. Re-run A* with SAME heuristics "
+               "(new start/destination)\n0. Exit A* demo\n");
         int choice_status = safe_input_int(&choice, "Enter choice: ", 0, 2);
         if (choice_status == INPUT_EXIT_SIGNAL || choice == 0)
         {

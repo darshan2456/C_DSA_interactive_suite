@@ -19,6 +19,7 @@ int validate_postfix_expr(char* buff, size_t size, const char* prompt)
 
     if (!fgets(buff, size, stdin))
     { // return code 0 represents EOF
+        clearerr(stdin);
         printf("\ninput ended unexpectedly");
         return 0;
     }
