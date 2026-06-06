@@ -57,6 +57,10 @@ void add_edge_directed(weightedGraph* graph, int src, int dest, int wt);
 int edge_insertAtEnd(Edge** head, int dest, int weight);
 void free_weightedGraph(weightedGraph* graph);
 
+// -------- Prim's MST --------
+void prim_mst(weightedGraph* graph, int start);
+void prim_mst_demo(void);
+
 // ------------------For A* search algorithm-----------------------
 
 int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]);

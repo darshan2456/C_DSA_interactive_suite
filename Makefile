@@ -32,15 +32,7 @@ SRC_DIRS = \
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
 
-ifeq ($(OS),Windows_NT)
-	RM = cmd /c del
-	RM_DIR = cmd /c rmdir /s /q
-	EXE = .exe
-else
-	RM = rm -f
-	RM_DIR = rm -rf
-	EXE =
-endif
+MKDIR_P = mkdir -p "$(1)"
 
 TARGET = dsa
 
@@ -49,11 +41,6 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)$(EXE)
 
-ifeq ($(OS),Windows_NT)
-MKDIR_P = cmd /c if not exist "$(subst /,\,$(1))" mkdir "$(subst /,\,$(1))"
-else
-MKDIR_P = mkdir -p "$(1)"
-endif
 
 $(OBJ_DIR)/%.o: %.c
 	@$(call MKDIR_P,$(dir $@))
@@ -177,6 +164,21 @@ $(TEST_DIR)/test_astar$(EXE): $(OBJ_DIR)/src/graph_traversals/astar.o $(OBJ_DIR)
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@
 
+test_prim_mst: $(TEST_DIR)/test_prim_mst$(EXE)
+	$(TEST_DIR)/test_prim_mst$(EXE)
+
+$(TEST_DIR)/test_prim_mst$(EXE): \
+	$(OBJ_DIR)/src/graph_traversals/prim_mst.o \
+	$(OBJ_DIR)/src/graph_traversals/dijkstra.o \
+	$(OBJ_DIR)/src/utils/graph_io.o \
+	$(OBJ_DIR)/src/graph_traversals/bfs.o \
+	$(OBJ_DIR)/src/data_structures/circular_queue.o \
+	$(OBJ_DIR)/src/data_structures/sll.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o \
+	tests/test_prim_mst.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@
+
 test_avl: $(TEST_DIR)/test_avl$(EXE)
 	$(TEST_DIR)/test_avl$(EXE)
 
@@ -229,7 +231,7 @@ $(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/advanced_sorting_algorit
 TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_sll test_dll test_array test_stack test_tbt \
             test_priority_queue test_scll test_simple_queue \
-            test_deque test_astar test_avl \
+            test_deque test_astar test_prim_mst test_avl \
             test_greedy_bfs test_sorting_n2 test_advanced_sorting \
             test_history_logger test_shell_sort test_trie
 
