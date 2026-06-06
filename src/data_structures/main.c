@@ -7,6 +7,7 @@
 #include "searching_algorithms.h"
 #include "sorting_algorithms_n2.h"
 #include "stack.h"
+#include "trees.h"
 #include <stdio.h>
 
 void data_structures_demo(void);
@@ -31,8 +32,9 @@ int main()
             "click 5 for searching algorithms demo\n"
             "click 6 for graph traversals (bfs / dfs / dijkstra / astar / greedy bfs / bellman ford) demo\n"
             "click 7 for hashing algorithms demo\n"
+            "click 8 for trees demo\n"
             "enter choice : ",
-            1, 7 // limits
+            1, 8 // limits
         );
 
         if (status == -111)
@@ -67,6 +69,9 @@ int main()
                 break;
             case 7:
                 hashing_algorithms_demo();
+                break;
+            case 8:
+                trees_demo();
                 break;
         }
     }
