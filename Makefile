@@ -32,7 +32,15 @@ SRC_DIRS = \
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
 
-MKDIR_P = mkdir -p "$(1)"
+ifeq ($(OS),Windows_NT)
+	RM = cmd /c del
+	RM_DIR = cmd /c rmdir /s /q
+	EXE = .exe
+else
+	RM = rm -f
+	RM_DIR = rm -rf
+	EXE =
+endif
 
 TARGET = dsa
 
@@ -41,6 +49,11 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)$(EXE)
 
+ifeq ($(OS),Windows_NT)
+MKDIR_P = cmd /c if not exist "$(subst /,\,$(1))" mkdir "$(subst /,\,$(1))"
+else
+MKDIR_P = mkdir -p "$(1)"
+endif
 
 $(OBJ_DIR)/%.o: %.c
 	@$(call MKDIR_P,$(dir $@))
