@@ -112,6 +112,11 @@ void dijkstra(weightedGraph* graph, int start)
         {
             int v = current->destination;
             int currentWeight = current->weight;
+            if (v < 0 || v >= size)
+            {
+                current = current->next;
+                continue;
+            }
             if (dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
             {
                 dist[v] = dist[u] + currentWeight;
@@ -143,7 +148,7 @@ weightedGraph* create_weightedGraph(int V)
 
     graph->V = V;
 
-    graph->array = malloc(V * sizeof(Edge*));
+    graph->array = calloc(V, sizeof(Edge*));
 
     if (!graph->array)
     {
@@ -186,6 +191,9 @@ int edge_insertAtEnd(Edge** head, int dest, int weight)
 void add_edge_directed(weightedGraph* graph, int src, int dest, int wt)
 {
     if (!graph)
+        return;
+
+    if (src < 0 || src >= graph->V || dest < 0 || dest >= graph->V)
         return;
 
     edge_insertAtEnd(&graph->array[src], dest, wt);
