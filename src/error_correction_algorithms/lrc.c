@@ -18,12 +18,15 @@ void lrc_demo(void)
 {
     int rows;
     printf("\n=== LRC (Longitudinal Redundancy Check) ===\n");
-    printf("Enter number of data words (1-%d): ", LRC_MAX_ROWS);
-    scanf("%d", &rows);
-
-    if (rows < 1 || rows > LRC_MAX_ROWS)
-    {
-        printf("Invalid number of data words.\n");
+    
+    // Fix 1: Use safe_input_int() instead of scanf()
+    int result = safe_input_int(&rows, "Enter number of data words (1-20): ", 1, LRC_MAX_ROWS);
+    if (result == -111) {
+        printf("Exiting LRC demo...\n");
+        return;
+    }
+    if (result == 0) {
+        printf("Invalid input. Returning to main menu.\n");
         return;
     }
 
@@ -33,11 +36,23 @@ void lrc_demo(void)
     printf("Enter binary data words (same length, e.g. 10110011):\n");
     for (int i = 0; i < rows; i++)
     {
+        // Fix 2: Use fgets() instead of scanf() for strings
         printf("  Word %d: ", i + 1);
-        scanf("%s", data[i]);
+        fgets(data[i], sizeof(data[i]), stdin);
+        
+        // Remove trailing newline
+        size_t len = strlen(data[i]);
+        if (len > 0 && data[i][len-1] == '\n') {
+            data[i][len-1] = '\0';
+            len--;
+        }
 
         /* validate: only '0' and '1' allowed */
-        int len = (int)strlen(data[i]);
+        if (len == 0) {
+            printf("Error: word cannot be empty.\n");
+            return;
+        }
+        
         for (int j = 0; j < len; j++)
         {
             if (data[i][j] != '0' && data[i][j] != '1')
