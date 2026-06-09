@@ -11,6 +11,7 @@ void error_correction_algorithms_demo(void);
 void checksum_demo(void);
 void checksum_receiver_demo(void);
 void crc_demo(void);
+void crc_receiver_demo(void);
 void lrc_demo(void);
 void vrc_demo(void);
 

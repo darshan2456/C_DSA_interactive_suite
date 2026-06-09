@@ -12,12 +12,13 @@ void error_correction_algorithms_demo(void)
         /*Change the prompt and the range accordingly when new functions get added*/
         int ECA_status = safe_input_int(
             &ECA_choice,
-            "\nEnter 1 for checksum (sender)"
-            "\nEnter 2 for checksum (receiver)"
-            "\nEnter 3 for CRC"
-            "\nEnter 4 for LRC"
-            "\nEnter 5 for VRC"
-            "\nEnter -1 to exit: ", 1, 5);
+            "\nEnter 1 for checksum (Sender)"
+            "\nEnter 2 for checksum (Receiver verification)"
+            "\nEnter 3 for CRC (Sender)"
+            "\nEnter 4 for CRC (Receiver verification)"
+            "\nEnter 5 for LRC"
+            "\nEnter 6 for VRC"
+            "\nEnter -1 to exit: ", 1, 6);
 
         if (ECA_status == INPUT_EXIT_SIGNAL)
         {
@@ -46,10 +47,14 @@ void error_correction_algorithms_demo(void)
                 break;
 
             case 4:
-                lrc_demo();
+                crc_receiver_demo();
                 break;
 
             case 5:
+                lrc_demo();
+                break;
+
+            case 6:
                 vrc_demo();
                 break;
 
