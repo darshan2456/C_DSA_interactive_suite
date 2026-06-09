@@ -87,8 +87,11 @@ void crc_demo(void)
         }
 
         char remainder[CHECKSUM_MAX_BITS + 1];
-
-        strcpy(remainder, &dividend[data_len]);
+        for (int i = 0; i < generator_len - 1; i++)
+        {
+        remainder[i] = dividend[dividend_len - (generator_len - 1) + i];
+        }
+        remainder[generator_len - 1] = '\0';
 
         printf("\nCRC Remainder : %s", remainder);
 
