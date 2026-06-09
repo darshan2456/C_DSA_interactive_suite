@@ -17,7 +17,8 @@ void error_correction_algorithms_demo(void)
             "\nEnter 3 for CRC"
             "\nEnter 4 for LRC"
             "\nEnter 5 for VRC"
-            "\nEnter -1 to exit: ", 1, 5);
+            "\nEnter 6 for VRC Receiver"
+            "\nEnter -1 to exit: ", 1, 6);
 
         if (ECA_status == INPUT_EXIT_SIGNAL)
         {
@@ -51,6 +52,10 @@ void error_correction_algorithms_demo(void)
 
             case 5:
                 vrc_demo();
+                break;
+
+            case 6:
+                vrc_receiver_demo();
                 break;
 
             default:
