@@ -1,11 +1,15 @@
+#include "history_logger.h"
 #include "job_scheduling.h"
 #include <stdio.h>
+#include <time.h>
 
 // Preemptive priority scheduling: at every time unit run the arrived,
 // unfinished job with the highest priority (lowest priority number) for one
 // tick, so a higher-priority arrival preempts the running job. Ties are broken
 // by earlier arrival, then input order, so an equal-priority arrival does not
 // preempt the running job.
+// note: the time measured by clock() covers the scheduling computation only and
+// is for demonstration only, not a measure of the algorithm's efficiency.
 void preemptive_priority_demo(void)
 {
     Process procs[10];
@@ -16,6 +20,11 @@ void preemptive_priority_demo(void)
         printf("\nExiting preemptive priority demo....\n");
         return;
     }
+
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
 
     GanttSegment segments[JS_MAX_SEGMENTS];
     int segment_count = 0;
@@ -62,6 +71,11 @@ void preemptive_priority_demo(void)
         }
     }
 
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
     js_print_result(procs, n);
     js_print_gantt(segments, segment_count);
+    printf("\ntotal CPU time taken for preemptive priority scheduling:- %f seconds\n", total_t);
+    add_to_history("Preemptive Priority Scheduling", n, total_t);
 }

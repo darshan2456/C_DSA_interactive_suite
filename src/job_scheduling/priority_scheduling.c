@@ -1,9 +1,13 @@
+#include "history_logger.h"
 #include "job_scheduling.h"
 #include <stdio.h>
+#include <time.h>
 
 // Priority scheduling, non-preemptive: among the jobs that have arrived, run
 // the one with the highest priority (lowest priority number) to completion.
 // Ties are broken by earlier arrival.
+// note: the time measured by clock() covers the scheduling computation only and
+// is for demonstration only, not a measure of the algorithm's efficiency.
 void priority_scheduling_demo(void)
 {
     Process procs[10];
@@ -14,6 +18,11 @@ void priority_scheduling_demo(void)
         printf("\nExiting priority scheduling demo....\n");
         return;
     }
+
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
 
     GanttSegment segments[JS_MAX_SEGMENTS];
     int segment_count = 0;
@@ -61,6 +70,11 @@ void priority_scheduling_demo(void)
         completed++;
     }
 
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
     js_print_result(procs, n);
     js_print_gantt(segments, segment_count);
+    printf("\ntotal CPU time taken for priority scheduling:- %f seconds\n", total_t);
+    add_to_history("Priority Scheduling", n, total_t);
 }
