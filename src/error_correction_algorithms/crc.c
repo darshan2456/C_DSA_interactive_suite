@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-static void crc_xor_operation(char* dividend, const char* divisor, int pos)
+void crc_xor_operation(char* dividend, const char* divisor, int pos)
 {
     int n = (int)strlen(divisor);
 

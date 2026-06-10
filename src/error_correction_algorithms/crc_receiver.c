@@ -3,16 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-static void crc_xor_operation(char* dividend, const char* divisor, int pos)
-{
-    int n = (int)strlen(divisor);
-
-    for (int i = 0; i < n; i++)
-    {
-        dividend[pos + i] = (dividend[pos + i] == divisor[i]) ? '0' : '1';
-    }
-}
-
 void crc_receiver_demo(void)
 {
     while (1)
