@@ -174,11 +174,10 @@ Quadratic Probing resolves collisions by using quadratic increments (i²) to red
 * BFS: **O(V+E)**
 * DFS: **O(V+E)**
 * Dijkstra's Algorithm: **O((V+E)log V)**
-
-### Threaded Binary Tree (TBT)
-* Binary tree with threads replacing NULL pointers
-* Enables efficient inorder traversal without recursion or stack
-* Search, insertion, and deletion remain O(h), similar to BST
+* A* Search: **O((V+E)log V)**
+* Greedy Best-First Search: **O((V+E)log V)**
+* Bellman-Ford: **O(V·E)**
+* Topological Sort (Kahn's Algorithm): **O(V+E)**
 
 ---
 
