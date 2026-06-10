@@ -1,8 +1,13 @@
 #include "graph_traversals.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
+#include <time.h>
 
+// note: the time measured by clock() covers the shortest-path computation,
+// including the negative-cycle check, and stops before the distance table is
+// printed. it is for demonstration only and not a measure of efficiency.
 void bellman_ford(weightedGraph* graph, int start)
 {
     int size = graph->V;
@@ -13,6 +18,11 @@ void bellman_ford(weightedGraph* graph, int start)
         dist[i] = INT_MAX;
 
     dist[start] = 0;
+
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
 
     for (int count = 0; count < size - 1; count++)
     {
@@ -43,13 +53,20 @@ void bellman_ford(weightedGraph* graph, int start)
             int weight = current->weight;
             if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
             {
+                end_t = clock();
+                total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
                 printf("Negative edge cycle detected. Graph is not suitable for bellman ford.\n");
+                printf("\ntotal CPU time taken for Bellman-Ford:- %f seconds\n", total_t);
+                add_to_history("Bellman-Ford", size, total_t);
                 return;
             }
 
             current = current->next;
         }
     }
+
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
 
     // Print vertex, distance stuff
     printf("Start -> Vertex  \t  Distance\n");
@@ -62,6 +79,9 @@ void bellman_ford(weightedGraph* graph, int start)
         else
             printf("    %d -> %d  \t             %d   \n", start, i, dist[i]);
     }
+
+    printf("\ntotal CPU time taken for Bellman-Ford:- %f seconds\n", total_t);
+    add_to_history("Bellman-Ford", size, total_t);
 }
 
 void bellman_ford_demo(void)

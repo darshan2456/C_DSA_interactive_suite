@@ -1,10 +1,12 @@
 #include "graph_io.h"
 #include "graph_traversals.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[])
 {
@@ -103,6 +105,9 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
     return result;
 }
 
+// note: the time measured by clock() covers the A* search computation only (the
+// astar_solve call); it excludes path reconstruction and printing. it is for
+// demonstration only and must not be treated as a measure of efficiency.
 void astar(weightedGraph* graph, int start, int dest, int h[])
 {
     int size = graph->V;
@@ -113,7 +118,16 @@ void astar(weightedGraph* graph, int start, int dest, int h[])
         return;
     }
 
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
     int cost = astar_solve(graph, start, dest, h, parent);
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
+    printf("\ntotal CPU time taken for A* search:- %f seconds\n", total_t);
+    add_to_history("A* Search", size, total_t);
 
     if (cost == INT_MAX || cost < 0)
     {

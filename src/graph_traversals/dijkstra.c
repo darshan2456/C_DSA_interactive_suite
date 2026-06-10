@@ -1,10 +1,12 @@
 #include "graph_io.h"
 #include "graph_traversals.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 // Min-heap ordering for PQ_graph: a node has higher priority when its
 // "distance" (used as a generic priority: g+h for A*, h for Greedy, path
@@ -83,6 +85,9 @@ bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result)
     return true;
 }
 
+// note: the time measured by clock() covers the shortest-path computation only
+// (it stops before the distance table is printed). it is for demonstration only
+// and must not be treated as a measure of the algorithm's efficiency.
 void dijkstra(weightedGraph* graph, int start)
 {
     int size = graph->V;
@@ -95,6 +100,12 @@ void dijkstra(weightedGraph* graph, int start)
 
     PQ_graph pq;
     pq.size = 0;
+
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
+
     insert_pq_graph(&pq, start, 0);
 
     PQ_graph_node currentNode;
@@ -122,6 +133,9 @@ void dijkstra(weightedGraph* graph, int start)
         }
     }
 
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
     printf("Start -> Vertex  \t  Distance\n");
     printf("---------------  \t  --------\n");
 
@@ -132,6 +146,9 @@ void dijkstra(weightedGraph* graph, int start)
         else
             printf("    %d -> %d  \t             %d   \n", start, i, dist[i]);
     }
+
+    printf("\ntotal CPU time taken for Dijkstra's algorithm:- %f seconds\n", total_t);
+    add_to_history("Dijkstra", size, total_t);
 }
 
 weightedGraph* create_weightedGraph(int V)
