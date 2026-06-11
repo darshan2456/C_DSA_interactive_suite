@@ -41,7 +41,7 @@ void checksum_receiver_demo(void)
         }
 
         char data[CHECKSUM_MAX_BITS + 1];
-        int data_status = checksum_read_binary(
+        int data_status = safe_input_binary_string(
             data, sizeof(data),
             "enter the received binary data (digits 0/1 only), or 'X' to exit:- ");
 
@@ -57,7 +57,7 @@ void checksum_receiver_demo(void)
 
         char check[CHECKSUM_MAX_BITS + 1];
         int check_status =
-            checksum_read_binary(check, sizeof(check),
+            safe_input_binary_string(check, sizeof(check),
                                  "enter the received checksum (exactly k bits), or 'X' to exit:- ");
 
         if (check_status == INPUT_EXIT_SIGNAL)

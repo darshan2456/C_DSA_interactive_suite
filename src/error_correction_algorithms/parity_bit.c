@@ -101,7 +101,7 @@ void parity_bit_demo(void)
     while (1)
     {
         int data_status =
-            checksum_read_binary(data, sizeof(data), "\nEnter binary data or 'X' to exit:- ");
+            safe_input_binary_string(data, sizeof(data), "\nEnter binary data or 'X' to exit:- ");
 
         if (data_status == INPUT_EXIT_SIGNAL)
         {
@@ -162,7 +162,7 @@ void parity_bit_demo(void)
     /* RECEIVER INPUT */
     while (1)
     {
-        int recv_status = checksum_read_binary(received, sizeof(received),
+        int recv_status = safe_input_binary_string(received, sizeof(received),
                                                "\nEnter received binary string or 'X' to exit:- ");
 
         if (recv_status == INPUT_EXIT_SIGNAL)

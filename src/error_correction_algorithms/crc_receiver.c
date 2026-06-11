@@ -10,7 +10,7 @@ void crc_receiver_demo(void)
         char received_codeword[(CHECKSUM_MAX_BITS * 2) + 1];
 
         int codeword_status =
-            checksum_read_binary(received_codeword, sizeof(received_codeword),
+            safe_input_binary_string(received_codeword, sizeof(received_codeword),
                                  "\n\nCRC Receiver Verification\n"
                                  "Enter transmitted codeword (data + CRC bits) or 'X' to exit:- ");
 
@@ -27,7 +27,7 @@ void crc_receiver_demo(void)
 
         char generator[CHECKSUM_MAX_BITS + 1];
 
-        int generator_status = checksum_read_binary(generator, sizeof(generator),
+        int generator_status = safe_input_binary_string(generator, sizeof(generator),
                                                     "Enter generator polynomial or 'X' to exit:- ");
 
         if (generator_status == INPUT_EXIT_SIGNAL)

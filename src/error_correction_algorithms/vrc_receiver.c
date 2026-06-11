@@ -9,7 +9,7 @@ void vrc_receiver_demo(void)
     {
         char received_frame[CHECKSUM_MAX_BITS + 2];
 
-        int frame_status = checksum_read_binary(received_frame, sizeof(received_frame),
+        int frame_status = safe_input_binary_string(received_frame, sizeof(received_frame),
                                                 "\n\nVRC Receiver Verification\n"
                                                 "Enter received frame or 'X' to exit:- ");
 

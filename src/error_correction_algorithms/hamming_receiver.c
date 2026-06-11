@@ -13,7 +13,7 @@ void hamming_receiver_demo(void)
         char frame[CHECKSUM_MAX_BITS + 1];
 
         int frame_status =
-            checksum_read_binary(frame, sizeof(frame),
+            safe_input_binary_string(frame, sizeof(frame),
                                  "\n\nHamming Code Receiver Demo\n"
                                  "enter received Hamming codeword or 'X' to exit:- ");
 

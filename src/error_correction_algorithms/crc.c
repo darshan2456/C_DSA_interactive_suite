@@ -18,7 +18,7 @@ void crc_demo(void)
     while (1)
     {
         char data[CHECKSUM_MAX_BITS + 1];
-        int data_status = checksum_read_binary(data, sizeof(data),
+        int data_status = safe_input_binary_string(data, sizeof(data),
                                                "\n\nCRC Demo\nEnter binary data or 'X' to exit:- ");
 
         if (data_status == INPUT_EXIT_SIGNAL)
@@ -33,7 +33,7 @@ void crc_demo(void)
         }
 
         char generator[CHECKSUM_MAX_BITS + 1];
-        int generator_status = checksum_read_binary(generator, sizeof(generator),
+        int generator_status = safe_input_binary_string(generator, sizeof(generator),
                                                     "Enter generator polynomial or 'X' to exit:- ");
 
         if (generator_status == INPUT_EXIT_SIGNAL)

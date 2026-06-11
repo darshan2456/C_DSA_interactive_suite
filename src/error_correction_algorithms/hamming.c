@@ -12,7 +12,7 @@ void hamming_demo(void)
     {
         char data[CHECKSUM_MAX_BITS + 1];
 
-        int data_status = checksum_read_binary(data, sizeof(data),
+        int data_status = safe_input_binary_string(data, sizeof(data),
                                                "\n\nHamming Code Demo\n"
                                                "enter binary data bits or 'X' to exit:- ");
 
