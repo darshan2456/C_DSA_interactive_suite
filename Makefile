@@ -16,7 +16,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/utils \
 	-Isrc/trees \
 	-Isrc/error_correction_algorithms \
-	-Isrc/job_scheduling
+	-Isrc/job_scheduling \
+	-Isrc/dynamic_programming
 
 SRC_DIRS = \
 	src/data_structures \
@@ -29,7 +30,8 @@ SRC_DIRS = \
 	src/utils \
 	src/trees \
 	src/error_correction_algorithms \
-	src/job_scheduling
+	src/job_scheduling \
+	src/dynamic_programming
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
