@@ -5,29 +5,16 @@
 #include <string.h>
 #include <time.h>
 
-// converts a k-bit binary string into its integer value with timing and logging
+// converts a k-bit binary string into its integer value
 int checksum_bits_to_int(const char* bits, int k)
 {
-    clock_t start_t, end_t;
-    double total_t;
-    
-    start_t = clock();
-    
     int value = 0;
     for (int i = 0; i < k; i++)
     {
         value = (value << 1) | (bits[i] - '0');
     }
-    
-    end_t = clock();
-    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-    
-    // Log to CSV - use "Checksum Receiver" as algorithm name
-    add_to_history("Checksum Receiver", k, total_t);
-    
     return value;
 }
-
 // checksum (receiver side): re-runs the one's-complement block sum over the received
 // data, then folds in the received checksum block. if the one's complement of the
 // total is all zeros the frame is accepted, otherwise an error is detected. this is
@@ -94,7 +81,11 @@ void checksum_receiver_demo(void)
 
         // sum the data blocks (same as the sender), then fold in the received checksum
         int sum = checksum_block_sum(data, len, k);
+        clock_t start_t = clock();
         int checkword = checksum_bits_to_int(check, k);
+        clock_t end_t = clock();
+        double total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+        add_to_history("Checksum Receiver", k, total_t);
         sum = checksum_add(sum, checkword, k);
 
         printf("checksum: ");
