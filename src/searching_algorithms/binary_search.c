@@ -46,7 +46,7 @@ void binary_search_demo(void)
 
             if (element_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting linear search demo....\n");
+                printf("\nExiting binary search demo....\n");
                 return;
             }
 

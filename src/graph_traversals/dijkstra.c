@@ -418,7 +418,7 @@ void dijkstra_demo(void)
 
             if (dest_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting Dijsktra demo\n");
+                printf("\nExiting Dijkstra demo\n");
                 free_weightedGraph(graph);
                 return;
             }
@@ -431,7 +431,7 @@ void dijkstra_demo(void)
 
             if (wt_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting Dijsktra demo\n");
+                printf("\nExiting Dijkstra demo\n");
                 free_weightedGraph(graph);
                 return;
             }
