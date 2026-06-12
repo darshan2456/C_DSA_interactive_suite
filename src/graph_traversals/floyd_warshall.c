@@ -57,6 +57,9 @@ void floyd_warshall(int** graph, int V, int** dist, int** next)
  */
 void print_floyd_warshall_solution(int** dist, int** next, int V)
 {
+    printf("\n=== All-Pairs Shortest Paths (Floyd-Warshall) ===\n");
+    printf("(INF = No Path Exists)\n");
+
     printf("\nDistance Matrix:\n");
     printf("     ");
     for (int i = 0; i < V; i++)

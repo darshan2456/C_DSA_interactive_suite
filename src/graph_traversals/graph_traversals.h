@@ -81,6 +81,11 @@ void greedy_best_first_search_demo(void);
 // ------------------For Bellman-ford-----------------------
 void bellman_ford_demo(void);
 
+// ------------------For Floyd-Warshall-----------------------
+void floyd_warshall(int** graph, int V, int** dist, int** next);
+void print_floyd_warshall_solution(int** dist, int** next, int V);
+void floyd_warshall_demo(void);
+
 // ------------------For MST (Kruskal's)-----------------------
 int kruskal_mst(weightedGraph* graph);
 void kruskal_demo(void);

@@ -119,10 +119,16 @@ If any test fails or Valgrind detects a memory error, the CI job fails automatic
 - Heap sort
 - Radix sort (LSD, interactive demo)
 
-#### Graph Traversals
-- Breadth-First Search (BFS)
-- Depth-First Search (DFS)
-- Dijkstra's algorithm
+#### Graph Algorithms
+- BFS
+- DFS
+- Dijkstra
+- Bellman-Ford
+- Floyd-Warshall
+- A*
+- Topological Sort
+- Kruskal MST
+- Prim MST
 
 Graph traversals are implemented using:
 - An adjacency list representation
@@ -131,6 +137,13 @@ Graph traversals are implemented using:
 - Dijkstra is implemented with a special `Edge` struct for weighted nodes 
 
 Both BFS and DFS are implemented **iteratively** (no recursion).
+
+#### Floyd-Warshall
+
+Computes shortest paths between all pairs of vertices.
+
+* Time Complexity: **O(V³)**
+* Space Complexity: **O(V²)**
 
 
 #### Hashing Algorithms
@@ -177,6 +190,7 @@ Quadratic Probing resolves collisions by using quadratic increments (i²) to red
 * A* Search: **O((V+E)log V)**
 * Greedy Best-First Search: **O((V+E)log V)**
 * Bellman-Ford: **O(V·E)**
+* Floyd-Warshall: **O(V³)**
 * Topological Sort (Kahn's Algorithm): **O(V+E)**
 
 ---
