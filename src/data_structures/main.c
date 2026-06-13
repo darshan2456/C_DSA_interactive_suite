@@ -12,94 +12,96 @@
 #include "sorting_algorithms_n2.h"
 #include "string_algorithms.h"
 #include "trees.h"
+#include "tui.h"
 #include <stdio.h>
+
 
 void data_structures_demo(void);
 
 // only give input as integer value as prompted through the console by programmer. dont attempt to
 // put any other type of value neglecting this warning can result in undefined behaviour
 
+void run_legacy_menu(){
+    while (1)
+        {
+            int choice;
+            int status = safe_input_int(
+                &choice, // variable in which value is to be inserted
+                "\nWelcome to DSA library built by Darshan Mukul Parekh"
+                "\n(at any point enter '-1' to exit that particular demo)\n\n"
+                "click 1 for data structures demo\n"
+                "click 2 for expression evaluation (infix to postfix and postfix evaluation) demo\n"
+                "click 3 for sorting algorithms (the n^2 family) demo\n"
+                "click 4 for advanced sorting algorithms demo\n"
+                "click 5 for searching algorithms demo\n"
+                "click 6 for graph traversals (bfs / dfs / dijkstra / astar / greedy bfs / bellman "
+                "ford) demo\n"
+                "click 7 for hashing algorithms demo\n"
+                "click 8 for trees demo\n"
+                "click 9 for error correction algorithms demo\n"
+                "click 10 for job scheduling (FCFS / SJF / priority / round robin) demo\n"
+                "enter choice : ",
+                1, 10 // limits
+            );
+    
+            if (status == -111)
+            {
+                break;
+            }
+    
+            if (status == 0)
+            {
+                continue;
+            }
+    
+            switch (choice)
+            {
+                case 1:
+                    data_structures_demo();
+                    break;
+                case 2:
+                    expression_evaluation_demo();
+                    break;
+                case 3:
+                    sorting_algorithms_n2_demo();
+                    break;
+                case 4:
+                    advanced_sorting_demo();
+                    break;
+                case 5:
+                    searching_algorithms_demo();
+                    break;
+                case 6:
+                    graph_traversals_demo();
+                    break;
+                case 7:
+                    hashing_algorithms_demo();
+                    break;
+                case 8:
+                    trees_demo();
+                    break;
+                case 9:
+                    error_correction_algorithms_demo();
+                    break;
+                case 10:
+                    job_scheduling_demo();
+                    break;
+            }
+        }
+}
+
+void tui_menu(){
+    tui_run();
+}
+
 int main()
 {
 
-    while (1)
-    {
-        int choice;
-        int status = safe_input_int(
-            &choice, // variable in which value is to be inserted
-            "\nWelcome to DSA library built by Darshan Mukul Parekh"
-            "\n(at any point enter '-1' to exit that particular demo)\n\n"
-            "click 1 for data structures demo\n"
-            "click 2 for expression evaluation (infix to postfix and postfix evaluation) demo\n"
-            "click 3 for sorting algorithms (the n^2 family) demo\n"
-            "click 4 for advanced sorting algorithms demo\n"
-            "click 5 for searching algorithms demo\n"
-            "click 6 for graph algorithms demo (traversal, shortest path, MST, and "
-            "visualization)\n"
-            "click 7 for hashing algorithms demo\n"
-            "click 8 for trees demo\n"
-            "click 9 for error correction algorithms demo\n"
-            "click 10 for job scheduling (FCFS / SJF / priority / round robin / SRTF) demo\n"
-            "click 11 for dynamic programming demo\n"
-            "click 12 for string/pattern matching algorithms demo\n"
-            "click 13 for backtracking algorithms demo\n"
-            "enter choice : ",
-            1, 13 // limits
-        );
-
-        if (status == -111)
-        {
-            break;
-        }
-
-        if (status == 0)
-        {
-            continue;
-        }
-
-        switch (choice)
-        {
-            case 1:
-                data_structures_demo();
-                break;
-            case 2:
-                expression_evaluation_demo();
-                break;
-            case 3:
-                sorting_algorithms_n2_demo();
-                break;
-            case 4:
-                advanced_sorting_demo();
-                break;
-            case 5:
-                searching_algorithms_demo();
-                break;
-            case 6:
-                graph_traversals_demo();
-                break;
-            case 7:
-                hashing_algorithms_demo();
-                break;
-            case 8:
-                trees_demo();
-                break;
-            case 9:
-                error_correction_algorithms_demo();
-                break;
-            case 10:
-                job_scheduling_demo();
-                break;
-            case 11:
-                dynamic_programming_demo();
-                break;
-            case 12:
-                string_algorithms_demo();
-                break;
-            case 13:
-                backtracking_demo();
-                break;
-        }
-    }
+    #ifdef __WIN32
+    run_legacy_menu();
+    #else
+    tui_menu();
+    #endif
 
     return 0;
 }
