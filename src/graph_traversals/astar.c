@@ -1,10 +1,12 @@
 #include "graph_io.h"
 #include "graph_traversals.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[])
 {
@@ -12,14 +14,10 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
     int* visited = calloc(size, sizeof(int));
     int* dist = malloc(size * sizeof(int));
     int* fScore = malloc(size * sizeof(int));
+    int result = INT_MAX;
 
     if (!visited || !dist || !fScore)
-    {
-        free(visited);
-        free(dist);
-        free(fScore);
-        return -1;
-    }
+        goto cleanup;
 
     for (int i = 0; i < size; i++)
     {
@@ -35,13 +33,22 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
     // "distance" field, which here carries the f-score (f = g + h). Duplicate
     // entries are handled lazily via the visited[] check on pop.
     PQ_graph pq;
-    pq.size = 0;
+    init_pq_graph(&pq, 10);
+
+    if (!pq.heap)
+        goto cleanup;
 
     dist[start] = 0;
     fScore[start] = h[start];
-    insert_pq_graph(&pq, start, fScore[start]);
 
-    int result = INT_MAX;
+    if(!insert_pq_graph(&pq, start, fScore[start]))
+    {
+        printf("Malloc failed\n");
+        free(visited);
+        free(dist);
+        free(fScore);
+        return -1;
+    }
 
     PQ_graph_node popped;
     while (extractTop_pq_graph(&pq, &popped))
@@ -90,19 +97,32 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
                     }
                     fScore[v] = tentative_f;
 
-                    insert_pq_graph(&pq, v, fScore[v]);
+                    if(!insert_pq_graph(&pq, v, fScore[v]))
+                    {
+                        printf("Malloc failed\n");
+                        free(visited);
+                        free(dist);
+                        free(fScore);
+                        return -1;
+                    }
                 }
             }
             current = current->next;
         }
     }
 
+    free_pq_graph(&pq);
+
+cleanup:
     free(visited);
     free(dist);
     free(fScore);
     return result;
 }
 
+// note: the time measured by clock() covers the A* search computation only (the
+// astar_solve call); it excludes path reconstruction and printing. it is for
+// demonstration only and must not be treated as a measure of efficiency.
 void astar(weightedGraph* graph, int start, int dest, int h[])
 {
     int size = graph->V;
@@ -113,7 +133,23 @@ void astar(weightedGraph* graph, int start, int dest, int h[])
         return;
     }
 
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
     int cost = astar_solve(graph, start, dest, h, parent);
+    
+    if(cost == -1)
+    {
+        printf("Astar failed");
+        return;
+    }
+
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
+    printf("\ntotal CPU time taken for A* search:- %f seconds\n", total_t);
+    add_to_history("A* Search", size, total_t);
 
     if (cost == INT_MAX || cost < 0)
     {

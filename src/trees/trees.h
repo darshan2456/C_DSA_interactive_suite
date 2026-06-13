@@ -79,17 +79,17 @@ void avl_demo(void);
 
 typedef struct TrieNode
 {
-    struct TrieNode *children[TRIE_ALPHA_SIZE];
+    struct TrieNode* children[TRIE_ALPHA_SIZE];
     int is_end;
 } TrieNode;
 
-TrieNode *trie_create_node(void);
-void      trie_insert(TrieNode *root, const char *word);
-int       trie_search(TrieNode *root, const char *word);
-int       trie_starts_with_prefix(TrieNode *root, const char *prefix);
-void      trie_delete(TrieNode *root, const char *word);
-void      trie_free(TrieNode *node);
-void      trie_demo(void);
+TrieNode* trie_create_node(void);
+void trie_insert(TrieNode* root, const char* word);
+int trie_search(TrieNode* root, const char* word);
+int trie_starts_with_prefix(TrieNode* root, const char* prefix);
+void trie_delete(TrieNode* root, const char* word);
+void trie_free(TrieNode* node);
+void trie_demo(void);
 
 // For B-Tree
 #define BTREE_MAX_DEGREE 10
@@ -103,36 +103,38 @@ typedef struct btreeNode
 } btreeNode;
 
 btreeNode* btree_create_node(int is_leaf);
-int        btree_insert(btreeNode** root_ref, int key, int t);
-int        btree_search(btreeNode* root, int key);
-void       btree_traverse(const btreeNode* root);
+int btree_insert(btreeNode** root_ref, int key, int t);
+int btree_search(btreeNode* root, int key);
+void btree_traverse(const btreeNode* root);
 btreeNode* btree_delete(btreeNode* root, int key, int t);
-void       btree_destroy(btreeNode* root);
-void       btree_demo(void);
+void btree_destroy(btreeNode* root);
+void btree_demo(void);
 
 // For B+ Tree
-typedef struct BPlusNode {
+typedef struct BPlusNode
+{
     bool is_leaf;
     int num_keys;
-    int *keys;
-    struct BPlusNode **children;
-    int *values;
-    struct BPlusNode *next;
-    struct BPlusNode *prev;
+    int* keys;
+    struct BPlusNode** children;
+    int* values;
+    struct BPlusNode* next;
+    struct BPlusNode* prev;
 } BPlusNode;
 
-typedef struct BPlusTree {
-    BPlusNode *root;
+typedef struct BPlusTree
+{
+    BPlusNode* root;
     int order;
 } BPlusTree;
 
 BPlusTree* bplus_tree_create(int order);
-void       bplus_tree_destroy(BPlusTree* tree);
-bool       bplus_tree_search(BPlusTree* tree, int key, int* value_out);
-bool       bplus_tree_insert(BPlusTree* tree, int key, int value);
-bool       bplus_tree_delete(BPlusTree* tree, int key);
-void       bplus_tree_range_query(BPlusTree* tree, int lower, int upper);
-void       bplus_tree_print(BPlusTree* tree);
-void       bplus_tree_demo(void);
+void bplus_tree_destroy(BPlusTree* tree);
+bool bplus_tree_search(BPlusTree* tree, int key, int* value_out);
+bool bplus_tree_insert(BPlusTree* tree, int key, int value);
+bool bplus_tree_delete(BPlusTree* tree, int key);
+void bplus_tree_range_query(BPlusTree* tree, int lower, int upper);
+void bplus_tree_print(BPlusTree* tree);
+void bplus_tree_demo(void);
 
 #endif

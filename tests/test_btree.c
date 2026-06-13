@@ -2,6 +2,54 @@
 #include <assert.h>
 #include <stdio.h>
 
+static int btree_validate_keys(const btreeNode* node)
+{
+    if (node == NULL)
+        return 1;
+
+    for (int i = 0; i < node->num_keys - 1; i++)
+    {
+        if (node->keys[i] >= node->keys[i + 1])
+            return 0;
+    }
+
+    if (!node->is_leaf)
+    {
+        for (int i = 0; i <= node->num_keys; i++)
+        {
+            if (!btree_validate_keys(node->children[i]))
+                return 0;
+        }
+    }
+
+    return 1;
+}
+
+static int btree_validate_invariants(const btreeNode* node, int t, int is_root)
+{
+    if (node == NULL)
+        return 1;
+
+    if (node->num_keys > 2 * t - 1)
+        return 0;
+
+    if (!is_root && node->num_keys < t - 1)
+        return 0;
+
+    if (!node->is_leaf)
+    {
+        for (int i = 0; i <= node->num_keys; i++)
+        {
+            if (node->children[i] == NULL)
+                return 0;
+            if (!btree_validate_invariants(node->children[i], t, 0))
+                return 0;
+        }
+    }
+
+    return 1;
+}
+
 void test_insert_and_search()
 {
     btreeNode* root = NULL;
@@ -137,6 +185,32 @@ void test_traverse()
     printf("btree traverse test passed\n");
 }
 
+void test_stress()
+{
+    btreeNode* root = NULL;
+    int t = 3;
+
+    for (int i = 1; i <= 10000; i++)
+        assert(btree_insert(&root, i, t) == 1);
+
+    for (int i = 1; i <= 10000; i++)
+        assert(btree_search(root, i) == 1);
+
+    for (int i = 1; i <= 10000; i += 2)
+        root = btree_delete(root, i, t);
+
+    for (int i = 1; i <= 10000; i += 2)
+        assert(btree_search(root, i) == 0);
+
+    for (int i = 2; i <= 10000; i += 2)
+        assert(btree_search(root, i) == 1);
+
+    assert(btree_validate_keys(root));
+    assert(btree_validate_invariants(root, t, 1));
+    btree_destroy(root);
+    printf("btree stress test passed\n");
+}
+
 int main()
 {
     test_insert_and_search();
@@ -147,6 +221,7 @@ int main()
     test_delete_nonexistent();
     test_delete_internal_key();
     test_traverse();
+    test_stress();
 
     printf("All btree tests passed\n");
     return 0;

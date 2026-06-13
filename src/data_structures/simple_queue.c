@@ -20,7 +20,7 @@ void simple_queue_Demo(void)
 
     while (1)
     {
-        simple_queue q;
+        Queue q = {0};
         int queue_capacity_value;
         int queue_capacity_status =
             safe_input_int(&queue_capacity_value,
@@ -87,9 +87,18 @@ void simple_queue_Demo(void)
                 { // invalid input, (chars or number+chars) loopback to start
                     continue;
                 }
-
-                if (enqueue_simple(&q, enqueue_val) == -1)
+                
+                int* ptr = malloc(sizeof(int));
+                if(ptr == NULL)
                 {
+                    printf("Malloc failed\n");
+                    continue;
+                }
+                *ptr = enqueue_val;
+
+                if (enqueue_simple(&q, ptr) == -1)
+                {
+                    free(ptr);
                     printf("\nQueue is full (linear overflow - freed front slots cannot be "
                            "reused)\n");
                 }
@@ -99,15 +108,16 @@ void simple_queue_Demo(void)
 
             else if (simple_queue_choice == 2)
             {
-                int removed = dequeue_simple(&q);
+                void* removed = dequeue_simple(&q);
 
-                if (removed == -1)
+                if (removed == NULL)
                 {
                     printf("\nQueue is empty\n");
                 }
                 else
                 {
-                    printf("\nDequeued element: %d\n", removed);
+                    printf("\nDequeued element: %d\n", *(int*)removed);
+                    free(removed);
                 }
 
                 display_simple_queue(&q);
@@ -116,11 +126,11 @@ void simple_queue_Demo(void)
     }
 }
 
-int init_simple_queue(int N, simple_queue* queue_ptr)
+int init_simple_queue(int N, Queue* queue_ptr)
 {
     if (N < 1)
         return 0;
-    queue_ptr->arr = malloc(sizeof(int) * N);
+    queue_ptr->arr = malloc(sizeof(void*) * N);
     if (queue_ptr->arr == NULL)
         return 0;
     queue_ptr->N = N;
@@ -129,10 +139,19 @@ int init_simple_queue(int N, simple_queue* queue_ptr)
     return 1;
 }
 
-void destroy_simple_queue(simple_queue* queue_ptr)
+void destroy_simple_queue(Queue* queue_ptr)
 {
     if (queue_ptr->arr == NULL)
         return;
+
+    if (queue_ptr->front != -1)
+    {
+        for (int i = queue_ptr->front; i <= queue_ptr->rear; i++)
+        {
+            free(queue_ptr->arr[i]);
+        }
+    }
+    
     free(queue_ptr->arr);
     queue_ptr->arr = NULL;
     queue_ptr->front = -1;
@@ -140,9 +159,10 @@ void destroy_simple_queue(simple_queue* queue_ptr)
     queue_ptr->N = 0;
 }
 
-int enqueue_simple(simple_queue* queue_ptr, int value)
-{ // rear never moves backward, so a slot freed by dequeue at the front is not reclaimed
-    if (queue_ptr->rear == queue_ptr->N - 1)
+int enqueue_simple(Queue* queue_ptr, void* value)
+{ 
+    // rear never moves backward, so a slot freed by dequeue at the front is not reclaimed
+    if (queue_ptr == NULL || queue_ptr->arr == NULL || queue_ptr->rear == queue_ptr->N - 1)
         return -1;
     if (queue_ptr->front == -1)
         queue_ptr->front = 0;
@@ -151,18 +171,26 @@ int enqueue_simple(simple_queue* queue_ptr, int value)
     return 1;
 }
 
-int dequeue_simple(simple_queue* queue_ptr)
+void* dequeue_simple(Queue* queue_ptr)
 {
-    if (queue_ptr->front == -1 || queue_ptr->front > queue_ptr->rear)
-        return -1;
-    int front_value = queue_ptr->arr[queue_ptr->front];
-    queue_ptr->front++;
+    if (queue_ptr == NULL || queue_ptr->arr == NULL || queue_ptr->front == -1 || queue_ptr->front > queue_ptr->rear)
+        return NULL;
+    void* front_value = queue_ptr->arr[queue_ptr->front];
+    if (queue_ptr->front == queue_ptr->rear)
+    {
+        queue_ptr->front = -1;
+        queue_ptr->rear = -1;
+    }
+    else
+    {
+        queue_ptr->front++;
+    }
     return front_value;
 }
 
-void display_simple_queue(const simple_queue* queue_ptr)
+void display_simple_queue(const Queue* queue_ptr)
 {
-    if (queue_ptr->front == -1 || queue_ptr->front > queue_ptr->rear)
+    if (queue_ptr == NULL || queue_ptr->arr == NULL || queue_ptr->front == -1 || queue_ptr->front > queue_ptr->rear)
     {
         printf("\nQueue (front -> rear): [empty]\n");
         return;
@@ -170,7 +198,7 @@ void display_simple_queue(const simple_queue* queue_ptr)
     printf("\nQueue (front -> rear): ");
     for (int i = queue_ptr->front; i <= queue_ptr->rear; i++)
     {
-        printf("%d -> ", queue_ptr->arr[i]);
+        printf("%d -> ", *(int*)queue_ptr->arr[i]);
     }
     printf("END\n");
 }

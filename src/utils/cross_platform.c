@@ -1,9 +1,9 @@
 #include "cross_platform.h"
 
 #ifdef _WIN32
-    #include <windows.h>
+#include <windows.h>
 #else
-    #include <unistd.h>
+#include <unistd.h>
 #endif
 
 void sleep_seconds(unsigned int seconds)

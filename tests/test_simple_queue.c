@@ -1,14 +1,17 @@
 #include "data_structures.h"
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include "returnMallocVal.h"
 
 void test_init()
 {
-    simple_queue q;
+    Queue q;
     assert(init_simple_queue(5, &q) == 1);
     assert(q.N == 5);
     assert(q.front == -1);
     assert(q.rear == -1);
+
     destroy_simple_queue(&q);
 
     printf("Simple queue init test passed\n");
@@ -16,15 +19,23 @@ void test_init()
 
 void test_basic_enqueue_dequeue()
 {
-    simple_queue q;
+    Queue q;
     init_simple_queue(5, &q);
 
-    assert(enqueue_simple(&q, 30) == 1);
-    assert(enqueue_simple(&q, 20) == 1);
+    assert(enqueue_simple(&q, returnMallocInt(30)) == 1);
+    assert(enqueue_simple(&q, returnMallocInt(20)) == 1);
 
-    // FIFO: first in, first out
-    assert(dequeue_simple(&q) == 30);
-    assert(dequeue_simple(&q) == 20);
+    int* val;
+
+    val = dequeue_simple(&q);
+    assert(val != NULL);
+    assert(*val == 30);
+    free(val);
+
+    val = dequeue_simple(&q);
+    assert(val != NULL);
+    assert(*val == 20);
+    free(val);
 
     destroy_simple_queue(&q);
 
@@ -33,10 +44,10 @@ void test_basic_enqueue_dequeue()
 
 void test_underflow()
 {
-    simple_queue q;
+    Queue q;
     init_simple_queue(5, &q);
 
-    assert(dequeue_simple(&q) == -1);
+    assert(dequeue_simple(&q) == NULL);
 
     destroy_simple_queue(&q);
 
@@ -45,15 +56,18 @@ void test_underflow()
 
 void test_overflow()
 {
-    simple_queue q;
+    Queue q;
     init_simple_queue(3, &q);
 
-    assert(enqueue_simple(&q, 1) == 1);
-    assert(enqueue_simple(&q, 2) == 1);
-    assert(enqueue_simple(&q, 3) == 1);
+    assert(enqueue_simple(&q, returnMallocInt(1)) == 1);
+    assert(enqueue_simple(&q, returnMallocInt(2)) == 1);
+    assert(enqueue_simple(&q, returnMallocInt(3)) == 1);
 
-    // capacity reached: rear is at the last slot
-    assert(enqueue_simple(&q, 4) == -1);
+    int* ptr = returnMallocInt(4);
+    assert(ptr != NULL);
+
+    assert(enqueue_simple(&q, ptr) == -1);
+    free(ptr);
 
     destroy_simple_queue(&q);
 
@@ -62,26 +76,37 @@ void test_overflow()
 
 void test_false_overflow()
 {
-    // The defining limitation of a linear queue: once rear reaches the last slot the queue
-    // is full even after the front has been dequeued. The freed slots are NOT reusable
-    // (unlike a circular queue, which wraps around). This test pins that behaviour.
-    simple_queue q;
+    Queue q;
     init_simple_queue(3, &q);
 
-    enqueue_simple(&q, 1);
-    enqueue_simple(&q, 2);
-    enqueue_simple(&q, 3); // rear == N-1, queue full
+    enqueue_simple(&q, returnMallocInt(1));
+    enqueue_simple(&q, returnMallocInt(2));
+    enqueue_simple(&q, returnMallocInt(3));
 
-    assert(dequeue_simple(&q) == 1);
-    assert(dequeue_simple(&q) == 2); // two front slots are now free
+    int* val;
 
-    // Only one element (3) remains in a capacity-3 queue, yet enqueue still fails:
-    // rear cannot move past N-1 and the freed front slots cannot be reclaimed.
-    assert(enqueue_simple(&q, 4) == -1);
+    val = dequeue_simple(&q);
+    assert(val != NULL);
+    assert(*val == 1);
+    free(val);
 
-    // The remaining element is still retrievable in order, then the queue is empty.
-    assert(dequeue_simple(&q) == 3);
-    assert(dequeue_simple(&q) == -1);
+    val = dequeue_simple(&q);
+    assert(val != NULL);
+    assert(*val == 2);
+    free(val);
+
+    int* ptr = returnMallocInt(4);
+    assert(ptr != NULL);
+
+    assert(enqueue_simple(&q, ptr) == -1);
+    free(ptr);
+
+    val = dequeue_simple(&q);
+    assert(val != NULL);
+    assert(*val == 3);
+    free(val);
+
+    assert(dequeue_simple(&q) == NULL);
 
     destroy_simple_queue(&q);
 
@@ -90,14 +115,19 @@ void test_false_overflow()
 
 void test_fifo_order()
 {
-    simple_queue q;
+    Queue q;
     init_simple_queue(4, &q);
 
     for (int i = 1; i <= 4; i++)
-        assert(enqueue_simple(&q, i * 10) == 1);
+        assert(enqueue_simple(&q, returnMallocInt(i * 10)) == 1);
 
     for (int i = 1; i <= 4; i++)
-        assert(dequeue_simple(&q) == i * 10);
+    {
+        int* val = dequeue_simple(&q);
+        assert(val != NULL);
+        assert(*val == i * 10);
+        free(val);
+    }
 
     destroy_simple_queue(&q);
 

@@ -1,6 +1,5 @@
 #include "data_structures.h"
 #include "hash.h"
-#include "searching_algorithms.h"
 #include <safe_input.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -115,7 +114,27 @@ void linear_probing_demo(void)
                 continue;
             }
 
-            int res = linear_search(arr, search_val, length_of_array);
+            // search uses the SAME probing sequence as insertion: start at the hash location and
+            // walk forward with wrap-around. instead of placing the value, we record the index
+            // where it is found. this reflects the real cost of a hash-table lookup.
+            int hash_location = hash_function(search_val, length_of_array);
+            int res = -1;
+            int start = hash_location;
+
+            do
+            {
+                if (!arr[hash_location])
+                {
+                    break; // empty slot ends the probe sequence: value is not present
+                }
+                if (arr[hash_location] == search_val)
+                {
+                    res = hash_location; // value found, record its index
+                    break;
+                }
+                hash_location = (hash_location + 1) % length_of_array;
+            } while (hash_location != start); // wrapped all the way around: value is not present
+
             if (res != -1)
             {
                 printf("\nValue %d found in the hash table at index %d.", search_val, res);

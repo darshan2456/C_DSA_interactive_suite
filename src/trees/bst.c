@@ -1,5 +1,5 @@
-#include "trees.h"
 #include "safe_input.h"
+#include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -111,14 +111,14 @@ void printLevel(bstNode* head, int level)
 
 void bst_level_order(struct bstNode* head)
 {
-    if(!head)
+    if (!head)
         return;
 
     int h = tree_height(head);
 
     for (int i = 1; i <= h; i++)
     {
-        printf("Level %d: ",i);
+        printf("Level %d: ", i);
         printLevel(head, i);
         printf("\n");
     }
@@ -266,11 +266,11 @@ void binary_search_tree_Demo(void)
             int bst_traversal_choice;
             int bst_traversal_status;
 
-            bst_traversal_status =
-                safe_input_int(&bst_traversal_choice,
-                               "\nenter '1' for inorder, '2' for preorder and "
-                               "'3' for postorder, '4' for level order, '5' to delete a node  and '-1' to exit: ",
-                               1, 5);
+            bst_traversal_status = safe_input_int(
+                &bst_traversal_choice,
+                "\nenter '1' for inorder, '2' for preorder and "
+                "'3' for postorder, '4' for level order, '5' to delete a node  and '-1' to exit: ",
+                1, 5);
 
             if (bst_traversal_status == INPUT_EXIT_SIGNAL)
             {
@@ -293,7 +293,7 @@ void binary_search_tree_Demo(void)
             {
                 bst_postorder(head);
             }
-            else if(bst_traversal_choice == 4)
+            else if (bst_traversal_choice == 4)
             {
                 bst_level_order(head);
             }

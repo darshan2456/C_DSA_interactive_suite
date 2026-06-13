@@ -456,26 +456,31 @@ void delete_dll(doubly_ll_Node* head)
 // returns -2 if list is empty. -1 if list is a single node list and 1 on successful reversal.
 int dll_reverselist(doubly_ll_Node** head_ref)
 {
-    doubly_ll_Node* prev = NULL;
-    doubly_ll_Node* curr = *head_ref;
-    if (curr == NULL)
+    doubly_ll_Node* temp = NULL;
+    doubly_ll_Node* current = *head_ref;
+
+    if (current == NULL)
     {
         return -2;
     }
-    doubly_ll_Node* upcoming = curr->next;
-    if (upcoming == NULL)
+    if (current->next == NULL)
     {
         return -1;
     }
-    while (upcoming != NULL)
+
+    while (current != NULL)
     {
-        curr->next = prev;
-        prev = curr;
-        curr = upcoming;
-        upcoming = upcoming->next;
+        temp = current->prev;
+        current->prev = current->next;
+        current->next = temp;
+        current = current->prev;
     }
-    curr->next = prev;
-    *head_ref = curr;
+
+    if (temp != NULL)
+    {
+        *head_ref = temp->prev;
+    }
+
     return 1;
 }
 

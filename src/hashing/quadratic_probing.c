@@ -74,9 +74,7 @@ void quadratic_probing_demo(void)
 
             int search_status = safe_input_int(
                 &search_value,
-                "\nenter a value to search in the hash table (enter '-1' to exit):- ",
-                1,
-                1000);
+                "\nenter a value to search in the hash table (enter '-1' to exit):- ", 1, 1000);
 
             if (search_status == INPUT_EXIT_SIGNAL)
             {
@@ -98,8 +96,7 @@ void quadratic_probing_demo(void)
 
                 if (arr[probe_location] == search_value)
                 {
-                    printf("\nValue %d found in the hash table at index %d.",
-                           search_value,
+                    printf("\nValue %d found in the hash table at index %d.", search_value,
                            probe_location);
                     found = true;
                     break;

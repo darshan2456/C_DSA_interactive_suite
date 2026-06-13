@@ -29,22 +29,6 @@ void print_array(const int arr[], int length_of_array);
 void reverse_array(int arr[], int length_of_array);
 void array_demo(void);
 
-
-// For circular queue
-typedef struct circular_queue
-{
-    int rear;
-    int front;
-    int N;
-    int* arr;
-} circular_queue;
-int init_circ_queue(int N, circular_queue* queue_ptr);
-void destroy_circ_queue(circular_queue* queue_ptr);
-int enqueue(circular_queue* queue_ptr, int value);
-int dequeue(circular_queue* queue_ptr);
-void display_circ_queue(circular_queue* queue_ptr);
-void circular_queue_Demo(void);
-
 // For double linked list
 typedef struct doubly_ll_Node
 {
@@ -85,7 +69,6 @@ void delete_sll(Node* head);
 int sll_getLength(const Node* head);
 int sll_insertAtPosition(Node** head_ref, int value, int position);
 int sll_deleteAtPosition(Node** head_ref, int position);
-
 
 // For Priority Queue
 typedef enum
@@ -138,46 +121,43 @@ void scll_printlist(const scll* list);
 void scll_destroy(scll* list);
 void scll_Demo(void);
 
-// For simple (linear) queue
-// A fixed-capacity array queue WITHOUT wrap-around. front and rear are array indices (both -1
-// when empty) and rear only ever advances. Once rear reaches N-1 the queue reports full even
-// if dequeues freed slots at the front - that freed space is never reused. This "false
-// overflow" is the limitation the circular queue (above) solves by wrapping front/rear modulo
-// N; the two live side-by-side for comparison.
-typedef struct simple_queue
+// Universal non-speacial queue structure
+typedef struct Queue
 {
-    int front;
     int rear;
+    int front;
     int N;
-    int* arr;
-} simple_queue;
-int init_simple_queue(int N, simple_queue* queue_ptr);
-void destroy_simple_queue(simple_queue* queue_ptr);
-int enqueue_simple(simple_queue* queue_ptr, int value);
-int dequeue_simple(simple_queue* queue_ptr);
-void display_simple_queue(const simple_queue* queue_ptr);
+    void** arr;
+} Queue;
+
+// For circular queue
+int init_circ_queue(int N, Queue* queue_ptr);
+void destroy_circ_queue(Queue* queue_ptr);
+int enqueue(Queue* queue_ptr, void* value);
+void* dequeue(Queue* queue_ptr);
+void display_circ_queue(Queue* queue_ptr);
+void circular_queue_Demo(void);
+
+// For simple (linear) queue
+int init_simple_queue(int N, Queue* queue_ptr);
+void destroy_simple_queue(Queue* queue_ptr);
+int enqueue_simple(Queue* queue_ptr, void* value);
+void* dequeue_simple(Queue* queue_ptr);
+void display_simple_queue(const Queue* queue_ptr);
 void simple_queue_Demo(void);
 
 // For Double-Ended Queue (Deque)
-typedef struct deque
-{
-    int front;
-    int rear;
-    int N;
-    int* arr;
-} deque;
-int init_deque(int N, deque* dq);
-void destroy_deque(deque* dq);
-int deque_insert_front(deque* dq, int value);
-int deque_insert_rear(deque* dq, int value);
-int deque_delete_front(deque* dq, int* val);
-int deque_delete_rear(deque* dq, int* val);
-int deque_get_front(const deque* dq);
-int deque_get_rear(const deque* dq);
-bool deque_is_empty(const deque* dq);
-bool deque_is_full(const deque* dq);
-void display_deque(const deque* dq);
+int init_deque(int N, Queue* dq);
+void destroy_deque(Queue* dq);
+int deque_insert_front(Queue* dq, void* value);
+int deque_insert_rear(Queue* dq, void* value);
+void* deque_delete_front(Queue* dq);
+void* deque_delete_rear(Queue* dq);
+int deque_get_front(const Queue* dq);
+int deque_get_rear(const Queue* dq);
+bool deque_is_empty(const Queue* dq);
+bool deque_is_full(const Queue* dq);
+void display_deque(const Queue* dq);
 void deque_demo(void);
-
 
 #endif

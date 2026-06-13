@@ -26,8 +26,7 @@ void add_to_history(const char* algo_name, int data_size, double execution_time)
     dir_status = make_dir("output");
     if (dir_status != 0 && errno != EEXIST)
     {
-        fprintf(stderr,
-                "\nError: Unable to create the output directory for benchmark logging.\n");
+        fprintf(stderr, "\nError: Unable to create the output directory for benchmark logging.\n");
         return;
     }
 
@@ -49,8 +48,8 @@ void add_to_history(const char* algo_name, int data_size, double execution_time)
     csv_file = fopen(filename, "a");
     if (csv_file == NULL)
     {
-        fprintf(stderr,
-                "\nError: Unable to open or initialize local metrics log sheet inside output directory.\n");
+        fprintf(stderr, "\nError: Unable to open or initialize local metrics log sheet inside "
+                        "output directory.\n");
         return;
     }
 

@@ -1,10 +1,12 @@
 #include "graph_io.h"
 #include "graph_traversals.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 // Min-heap ordering for PQ_graph: a node has higher priority when its
 // "distance" (used as a generic priority: g+h for A*, h for Greedy, path
@@ -17,10 +19,39 @@ static int pq_graph_higher_priority(PQ_graph_node a, PQ_graph_node b)
     return a.vertex < b.vertex;
 }
 
+void init_pq_graph(PQ_graph* pq, int initial_capacity)
+{
+    if (pq == NULL)
+        return;
+    pq->size = 0;
+    pq->capacity = initial_capacity > 0 ? initial_capacity : 10;
+    pq->heap = malloc(pq->capacity * sizeof(PQ_graph_node));
+}
+
+void free_pq_graph(PQ_graph* pq)
+{
+    if (pq == NULL)
+        return;
+    free(pq->heap);
+    pq->heap = NULL;
+    pq->size = 0;
+    pq->capacity = 0;
+}
+
 int insert_pq_graph(PQ_graph* pq, int vertex, int distance)
 {
-    if (pq == NULL || pq->size == HEAP_CAPACITY)
+    if (pq == NULL || pq->heap == NULL)
         return 0;
+
+    if (pq->size == pq->capacity)
+    {
+        int new_capacity = pq->capacity * 2;
+        PQ_graph_node* new_heap = realloc(pq->heap, new_capacity * sizeof(PQ_graph_node));
+        if (new_heap == NULL)
+            return 0;
+        pq->heap = new_heap;
+        pq->capacity = new_capacity;
+    }
 
     int i = pq->size;
     pq->heap[i].distance = distance;
@@ -45,7 +76,7 @@ int insert_pq_graph(PQ_graph* pq, int vertex, int distance)
 
 bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result)
 {
-    if (pq == NULL || result == NULL || pq->size == 0)
+    if (pq == NULL || result == NULL || pq->size == 0 || pq->heap == NULL)
         return false;
 
     int topIndex = 0;
@@ -83,6 +114,9 @@ bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result)
     return true;
 }
 
+// note: the time measured by clock() covers the shortest-path computation only
+// (it stops before the distance table is printed). it is for demonstration only
+// and must not be treated as a measure of the algorithm's efficiency.
 void dijkstra(weightedGraph* graph, int start)
 {
     int size = graph->V;
@@ -94,8 +128,18 @@ void dijkstra(weightedGraph* graph, int start)
     dist[start] = 0;
 
     PQ_graph pq;
-    pq.size = 0;
-    insert_pq_graph(&pq, start, 0);
+    init_pq_graph(&pq, 10);
+
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
+
+    if(!insert_pq_graph(&pq, start, 0))
+    {
+        printf("Malloc failed\n");
+        return;
+    }
 
     PQ_graph_node currentNode;
 
@@ -115,12 +159,21 @@ void dijkstra(weightedGraph* graph, int start)
             if (dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
             {
                 dist[v] = dist[u] + currentWeight;
-                insert_pq_graph(&pq, v, dist[v]);
+                if(!insert_pq_graph(&pq, v, dist[v]))
+                {
+                    printf("Malloc Failed\n");
+                    return;
+                }
             }
 
             current = current->next;
         }
     }
+
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
+    free_pq_graph(&pq);
 
     printf("Start -> Vertex  \t  Distance\n");
     printf("---------------  \t  --------\n");
@@ -132,6 +185,9 @@ void dijkstra(weightedGraph* graph, int start)
         else
             printf("    %d -> %d  \t             %d   \n", start, i, dist[i]);
     }
+
+    printf("\ntotal CPU time taken for Dijkstra's algorithm:- %f seconds\n", total_t);
+    add_to_history("Dijkstra", size, total_t);
 }
 
 weightedGraph* create_weightedGraph(int V)
@@ -370,7 +426,7 @@ void dijkstra_demo(void)
 
             if (dest_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting Dijsktra demo\n");
+                printf("\nExiting Dijkstra demo\n");
                 free_weightedGraph(graph);
                 return;
             }
@@ -383,7 +439,7 @@ void dijkstra_demo(void)
 
             if (wt_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting Dijsktra demo\n");
+                printf("\nExiting Dijkstra demo\n");
                 free_weightedGraph(graph);
                 return;
             }

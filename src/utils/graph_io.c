@@ -292,8 +292,56 @@ void print_graph(const Graph* graph)
 
     for (int i = 0; i < graph->V; i++)
     {
-        printf("vertex %d: ", i);
-        sll_printlist(graph->array[i]);
+        printf("Vertex %d -> ", i);
+
+        Node* head = graph->array[i];
+        if (head == NULL)
+        {
+            printf("\n");
+            continue;
+        }
+        while (head->next != NULL)
+        {
+            printf("%d, ", head->data);
+            head = head->next;
+        }
+
+        printf("%d", head->data);
+
+        printf("\n");
+    }
+}
+
+// Prints a weighted graph as an adjacency list, one vertex per line. Mirrors the
+// unweighted print_graph / sll_printlist style but walks the Edge list so each
+// neighbour is shown as dest(weight).
+void print_weightedGraph(const weightedGraph* graph)
+{
+    if (!graph)
+    {
+        printf("\nNo graph to display.\n");
+        return;
+    }
+
+    printf("\nAdjacency list (%d vertices):\n", graph->V);
+
+    for (int i = 0; i < graph->V; i++)
+    {
+        printf("Vertex %d -> ", i);
+
+        Edge* edge = graph->array[i];
+        if(edge == NULL)
+        {
+            printf("\n");
+            continue;
+        }
+        while(edge->next != NULL)
+        {
+            printf("%d(%d), ", edge->destination, edge->weight);
+            edge = edge->next;
+        }
+
+        printf("%d(%d) ", edge->destination, edge->weight);
         printf("\n");
     }
 }

@@ -1,5 +1,5 @@
-#include "trees.h"
 #include "safe_input.h"
+#include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -276,10 +276,11 @@ void avl_demo(void)
     {
         avlNode* root = NULL;
         int total_nodes;
-        int total_nodes_status = safe_input_int(&total_nodes,
-                                                "\n\nenter total number of nodes you want in the AVL tree, "
-                                                "(between 1 and 100), enter '-1' to exit:- ",
-                                                1, 100);
+        int total_nodes_status =
+            safe_input_int(&total_nodes,
+                           "\n\nenter total number of nodes you want in the AVL tree, "
+                           "(between 1 and 100), enter '-1' to exit:- ",
+                           1, 100);
 
         if (total_nodes_status == INPUT_EXIT_SIGNAL)
         {
@@ -332,7 +333,8 @@ void avl_demo(void)
             int traversal_choice;
             int traversal_status = safe_input_int(&traversal_choice,
                                                   "\nenter '1' for inorder, '2' for preorder and "
-                                                  "'3' for postorder, '4' to delete a node, '5' to check balance factor, and '-1' to exit:- ",
+                                                  "'3' for postorder, '4' to delete a node, '5' to "
+                                                  "check balance factor, and '-1' to exit:- ",
                                                   1, 5);
 
             if (traversal_status == INPUT_EXIT_SIGNAL)
@@ -367,9 +369,10 @@ void avl_demo(void)
                 int delete_status;
                 while (1)
                 {
-                    delete_status = safe_input_int(&delete_value,
-                                                   "\nenter value to delete (between 1 and 100), enter '-1' to exit:- ",
-                                                   1, 100);
+                    delete_status = safe_input_int(
+                        &delete_value,
+                        "\nenter value to delete (between 1 and 100), enter '-1' to exit:- ", 1,
+                        100);
                     if (delete_status == INPUT_EXIT_SIGNAL)
                     {
                         printf("\nExiting AVL tree demo\n");

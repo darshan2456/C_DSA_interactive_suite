@@ -1,14 +1,17 @@
 #include "data_structures.h"
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include "returnMallocVal.h"
 
 void test_init()
 {
-    circular_queue q;
+    Queue q;
     assert(init_circ_queue(5, &q) == 1);
     assert(q.N == 5);
     assert(q.front == 0);
     assert(q.rear == 0);
+
     destroy_circ_queue(&q);
 
     printf("Circular queue init test passed\n");
@@ -16,14 +19,23 @@ void test_init()
 
 void test_basic_enqueue_dequeue()
 {
-    circular_queue q;
+    Queue q;
     init_circ_queue(5, &q);
 
-    assert(enqueue(&q, 30) == 1);
-    assert(enqueue(&q, 20) == 1);
+    assert(enqueue(&q, returnMallocInt(30)) == 1);
+    assert(enqueue(&q, returnMallocInt(20)) == 1);
 
-    assert(dequeue(&q) == 30);
-    assert(dequeue(&q) == 20);
+    int* val;
+
+    val = dequeue(&q);
+    assert(val != NULL);
+    assert(*val == 30);
+    free(val);
+
+    val = dequeue(&q);
+    assert(val != NULL);
+    assert(*val == 20);
+    free(val);
 
     destroy_circ_queue(&q);
 
@@ -32,10 +44,10 @@ void test_basic_enqueue_dequeue()
 
 void test_underflow()
 {
-    circular_queue q;
+    Queue q;
     init_circ_queue(5, &q);
 
-    assert(dequeue(&q) == -1);
+    assert(dequeue(&q) == NULL);
 
     destroy_circ_queue(&q);
 
@@ -44,14 +56,18 @@ void test_underflow()
 
 void test_overflow()
 {
-    circular_queue q;
+    Queue q;
     init_circ_queue(4, &q);
 
-    assert(enqueue(&q, 1) == 1);
-    assert(enqueue(&q, 2) == 1);
-    assert(enqueue(&q, 3) == 1);
+    assert(enqueue(&q, returnMallocInt(1)) == 1);
+    assert(enqueue(&q, returnMallocInt(2)) == 1);
+    assert(enqueue(&q, returnMallocInt(3)) == 1);
 
-    assert(enqueue(&q, 4) == -1);
+    int* ptr = returnMallocInt(4);
+    assert(ptr != NULL);
+
+    assert(enqueue(&q, ptr) == -1);
+    free(ptr);
 
     destroy_circ_queue(&q);
 
@@ -60,22 +76,42 @@ void test_overflow()
 
 void test_wraparound()
 {
-    circular_queue q;
+    Queue q;
     init_circ_queue(4, &q);
 
-    enqueue(&q, 1);
-    enqueue(&q, 2);
-    enqueue(&q, 3);
+    enqueue(&q, returnMallocInt(1));
+    enqueue(&q, returnMallocInt(2));
+    enqueue(&q, returnMallocInt(3));
 
-    assert(dequeue(&q) == 1);
-    assert(dequeue(&q) == 2);
+    int* val;
 
-    assert(enqueue(&q, 4) == 1);
-    assert(enqueue(&q, 5) == 1);
+    val = dequeue(&q);
+    assert(val != NULL);
+    assert(*val == 1);
+    free(val);
 
-    assert(dequeue(&q) == 3);
-    assert(dequeue(&q) == 4);
-    assert(dequeue(&q) == 5);
+    val = dequeue(&q);
+    assert(val != NULL);
+    assert(*val == 2);
+    free(val);
+
+    assert(enqueue(&q, returnMallocInt(4)) == 1);
+    assert(enqueue(&q, returnMallocInt(5)) == 1);
+
+    val = dequeue(&q);
+    assert(val != NULL);
+    assert(*val == 3);
+    free(val);
+
+    val = dequeue(&q);
+    assert(val != NULL);
+    assert(*val == 4);
+    free(val);
+
+    val = dequeue(&q);
+    assert(val != NULL);
+    assert(*val == 5);
+    free(val);
 
     destroy_circ_queue(&q);
 

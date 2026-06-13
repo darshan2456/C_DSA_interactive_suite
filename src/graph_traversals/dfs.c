@@ -1,9 +1,11 @@
 #include "graph_io.h"
 #include "graph_traversals.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include "stack.h"
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 void dfs(Graph* graph, int start);
 
@@ -79,7 +81,7 @@ void dfs_demo(void)
 
         graph_capacity = graph->V;
     }
-    else
+    else if (input_method == 1)
     {
         while (1)
         {
@@ -190,6 +192,7 @@ void dfs_demo(void)
         if (starting_node < 0 || starting_node >= graph->V)
         {
             printf("Invalid start node\n");
+            free_graph(graph);
             return;
         }
         break;
@@ -198,6 +201,9 @@ void dfs_demo(void)
     dfs(graph, starting_node);
     free_graph(graph);
 }
+// note: the time measured by clock() includes the traversal computation and the printing of each
+// visited node. the CPU time is for demonstration only and must not be treated as a measure of the
+// algorithm's efficiency.
 void dfs(Graph* graph, int start)
 {
     int size = graph->V;
@@ -219,6 +225,11 @@ void dfs(Graph* graph, int start)
         printf("stack could not be initialized due to a malloc failure");
         return;
     }
+
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
 
     visited[start] = 1;
     push(nodes, start);
@@ -245,7 +256,13 @@ void dfs(Graph* graph, int start)
             temp = temp->next;
         }
     }
+
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
     printf("end\n");
+    printf("\ntotal CPU time taken for DFS traversal:- %f seconds\n", total_t);
+    add_to_history("DFS", size, total_t);
     destroyStack(nodes);
     return;
 }

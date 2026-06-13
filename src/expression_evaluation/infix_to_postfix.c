@@ -1,9 +1,9 @@
+#include "cross_platform.h"
 #include "safe_input.h"
 #include "stack.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include "cross_platform.h"
 
 // rn this program only has support for four operators - +-/* and parantheses. this program doesnt
 // support '^ or %' operators maximum expression length is 50 characters

@@ -4,6 +4,8 @@
 /* Forward declarations */
 int linear_search(int arr[], int target, int length_of_array);
 int binary_search(int arr[], int target, int length_of_array);
+int interpolation_search(int arr[], int target, int length_of_array);
+int jump_search(int arr[], int target, int length_of_array);
 
 void test_linear_search()
 {
@@ -43,10 +45,48 @@ void test_binary_search()
     printf("Binary search tests passed\n");
 }
 
+void test_interpolation_search()
+{
+    int arr1[] = {1, 2, 3, 4, 5};
+    assert(interpolation_search(arr1, 1, 5) == 0);
+    assert(interpolation_search(arr1, 5, 5) == 4);
+    assert(interpolation_search(arr1, 3, 5) == 2);
+    assert(interpolation_search(arr1, 10, 5) == -1);
+
+    int arr2[] = {42};
+    assert(interpolation_search(arr2, 42, 1) == 0);
+    assert(interpolation_search(arr2, 1, 1) == -1);
+
+    int arr3[] = {2, 4, 6, 8, 10, 12};
+    assert(interpolation_search(arr3, 8, 6) == 3);
+
+    printf("Interpolation search tests passed\n");
+}
+
+void test_jump_search()
+{
+    int arr1[] = {1, 2, 3, 4, 5};
+    assert(jump_search(arr1, 1, 5) == 0);
+    assert(jump_search(arr1, 5, 5) == 4);
+    assert(jump_search(arr1, 3, 5) == 2);
+    assert(jump_search(arr1, 10, 5) == -1);
+
+    int arr2[] = {42};
+    assert(jump_search(arr2, 42, 1) == 0);
+    assert(jump_search(arr2, 1, 1) == -1);
+
+    int arr3[] = {2, 4, 6, 8, 10, 12};
+    assert(jump_search(arr3, 8, 6) == 3);
+
+    printf("Jump search tests passed\n");
+}
+
 int main()
 {
     test_linear_search();
     test_binary_search();
+    test_interpolation_search();
+    test_jump_search();
     printf("All search tests passed\n");
     return 0;
 }

@@ -18,7 +18,8 @@ void test_greedy_bfs_simple()
     int traversal_order[4];
     int traversal_len = 0;
 
-    int found = greedy_best_first_search_solve(graph, 0, 3, h, parent, traversal_order, &traversal_len);
+    int found =
+        greedy_best_first_search_solve(graph, 0, 3, h, parent, traversal_order, &traversal_len);
 
     assert(found == 1);
     assert(traversal_len == 3);
@@ -44,7 +45,8 @@ void test_greedy_bfs_unreachable()
     int traversal_order[3];
     int traversal_len = 0;
 
-    int found = greedy_best_first_search_solve(graph, 0, 2, h, parent, traversal_order, &traversal_len);
+    int found =
+        greedy_best_first_search_solve(graph, 0, 2, h, parent, traversal_order, &traversal_len);
 
     assert(found == 0);
 
@@ -64,7 +66,8 @@ void test_greedy_bfs_same_src_dest()
     int traversal_order[3];
     int traversal_len = 0;
 
-    int found = greedy_best_first_search_solve(graph, 1, 1, h, parent, traversal_order, &traversal_len);
+    int found =
+        greedy_best_first_search_solve(graph, 1, 1, h, parent, traversal_order, &traversal_len);
 
     assert(found == 1);
     assert(traversal_len == 1);

@@ -107,8 +107,8 @@ void data_structures_demo(void)
                 }
 
                 break;
-            }
-            
+        }
+
         printf("\nreturning to main menu....\n");
     }
 }

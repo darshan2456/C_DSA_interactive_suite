@@ -1,5 +1,5 @@
-#include "safe_input.h"
 #include "history_logger.h"
+#include "safe_input.h"
 #include <stdio.h>
 #include <time.h>
 

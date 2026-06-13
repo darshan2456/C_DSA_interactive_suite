@@ -1,7 +1,7 @@
 #include "advanced_sorting.h"
 #include "data_structures.h" // priority_queue API (pq_init, insert, extractTop, destroy_pq)
-#include "safe_input.h"
 #include "history_logger.h"
+#include "safe_input.h"
 #include <stdio.h>
 #include <time.h>
 

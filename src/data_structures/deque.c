@@ -3,11 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int init_deque(int N, deque* dq)
+int init_deque(int N, Queue* dq)
 {
     if (N < 1)
         return 0;
-    dq->arr = malloc(sizeof(int) * N);
+    dq->arr = malloc(sizeof(void*) * N);
     if (dq->arr == NULL)
         return 0;
     dq->N = N;
@@ -16,10 +16,26 @@ int init_deque(int N, deque* dq)
     return 1;
 }
 
-void destroy_deque(deque* dq)
+void destroy_deque(Queue* dq)
 {
-    if (dq->arr == NULL)
+    if (dq == NULL || dq->arr == NULL)
         return;
+
+    if (!deque_is_empty(dq))
+    {
+        int i = dq->front;
+
+        while (1)
+        {
+            free(dq->arr[i]);
+
+            if (i == dq->rear)
+                break;
+
+            i = (i + 1) % dq->N;
+        }
+    }
+
     free(dq->arr);
     dq->arr = NULL;
     dq->front = -1;
@@ -27,19 +43,21 @@ void destroy_deque(deque* dq)
     dq->N = 0;
 }
 
-bool deque_is_empty(const deque* dq)
+bool deque_is_empty(const Queue* dq)
 {
-    return (dq->front == -1);
+    return (dq == NULL || dq->front == -1);
 }
 
-bool deque_is_full(const deque* dq)
+bool deque_is_full(const Queue* dq)
 {
+    if(dq == NULL)
+        return false;
     return ((dq->front == 0 && dq->rear == dq->N - 1) || (dq->front == dq->rear + 1));
 }
 
-int deque_insert_front(deque* dq, int value)
+int deque_insert_front(Queue* dq, void* value)
 {
-    if (deque_is_full(dq))
+    if (dq == NULL || dq->arr == NULL || deque_is_full(dq))
         return -1;
 
     if (dq->front == -1) // empty
@@ -60,9 +78,9 @@ int deque_insert_front(deque* dq, int value)
     return 1;
 }
 
-int deque_insert_rear(deque* dq, int value)
+int deque_insert_rear(Queue* dq, void* value)
 {
-    if (deque_is_full(dq))
+    if (dq == NULL || dq->arr == NULL || deque_is_full(dq))
         return -1;
 
     if (dq->front == -1) // empty
@@ -83,12 +101,12 @@ int deque_insert_rear(deque* dq, int value)
     return 1;
 }
 
-int deque_delete_front(deque* dq, int* val)
+void* deque_delete_front(Queue* dq)
 {
-    if (deque_is_empty(dq))
-        return -1;
+    if (dq == NULL || dq->arr == NULL || deque_is_empty(dq))
+        return NULL;
 
-    *val = dq->arr[dq->front];
+    void* removed = dq->arr[dq->front];
 
     if (dq->front == dq->rear) // only one element
     {
@@ -104,15 +122,15 @@ int deque_delete_front(deque* dq, int* val)
         dq->front = dq->front + 1;
     }
 
-    return 1;
+    return removed;
 }
 
-int deque_delete_rear(deque* dq, int* val)
+void* deque_delete_rear(Queue* dq)
 {
-    if (deque_is_empty(dq))
-        return -1;
+    if (dq == NULL || dq->arr == NULL || deque_is_empty(dq))
+        return NULL;
 
-    *val = dq->arr[dq->rear];
+    void* removed = dq->arr[dq->rear];
 
     if (dq->front == dq->rear) // only one element
     {
@@ -128,26 +146,26 @@ int deque_delete_rear(deque* dq, int* val)
         dq->rear = dq->rear - 1;
     }
 
-    return 1;
+    return removed;
 }
 
-int deque_get_front(const deque* dq)
+int deque_get_front(const Queue* dq)
 {
-    if (deque_is_empty(dq))
+    if (dq == NULL || dq->arr == NULL || deque_is_empty(dq))
         return -1;
-    return dq->arr[dq->front];
+    return *(int*)dq->arr[dq->front];
 }
 
-int deque_get_rear(const deque* dq)
+int deque_get_rear(const Queue* dq)
 {
-    if (deque_is_empty(dq))
+    if (dq == NULL || dq->arr == NULL || deque_is_empty(dq))
         return -1;
-    return dq->arr[dq->rear];
+    return *(int*)dq->arr[dq->rear];
 }
 
-void display_deque(const deque* dq)
+void display_deque(const Queue* dq)
 {
-    if (deque_is_empty(dq))
+    if (dq == NULL || dq->arr == NULL || deque_is_empty(dq))
     {
         printf("\nDeque is empty\n");
         return;
@@ -156,7 +174,7 @@ void display_deque(const deque* dq)
     int i = dq->front;
     while (1)
     {
-        printf("%d", dq->arr[i]);
+        printf("%d", *(int*)dq->arr[i]);
         if (i == dq->rear)
             break;
         printf("<->");
@@ -169,7 +187,7 @@ void deque_demo(void)
 {
     while (1)
     {
-        deque dq;
+        Queue dq = {0};
         int capacity;
         int status = safe_input_int(&capacity,
                                     "\n\nenter capacity number (N) of deque (between 1 and 100), "
@@ -228,9 +246,18 @@ void deque_demo(void)
                 }
                 if (val_status == 0)
                     continue;
-
-                if (deque_insert_front(&dq, val) == -1)
+                
+                int* ptr = malloc(sizeof(int));
+                if(ptr == NULL)
                 {
+                    printf("Malloc failed\n");
+                    continue;
+                }
+                *ptr = val;
+
+                if (deque_insert_front(&dq, ptr) == -1)
+                {
+                    free(ptr);
                     printf("\nDeque is full (overflow)\n");
                 }
                 display_deque(&dq);
@@ -248,38 +275,47 @@ void deque_demo(void)
                 }
                 if (val_status == 0)
                     continue;
-
-                if (deque_insert_rear(&dq, val) == -1)
+                
+                int* ptr = malloc(sizeof(int));
+                if(ptr == NULL)
                 {
+                    printf("Malloc failed\n");
+                    continue;
+                }
+                *ptr = val;
+
+                if (deque_insert_rear(&dq, ptr) == -1)
+                {
+                    free(ptr);
                     printf("\nDeque is full (overflow)\n");
                 }
                 display_deque(&dq);
             }
             else if (choice == 3)
             {
-                int removed_val;
-                int status_code = deque_delete_front(&dq, &removed_val);
-                if (status_code == -1)
+                void* removed_val = deque_delete_front(&dq);
+                if (removed_val == NULL)
                 {
                     printf("\nDeque is empty (underflow)\n");
                 }
                 else
                 {
-                    printf("\nDeleted element from front: %d\n", removed_val);
+                    printf("\nDeleted element from front: %d\n", *(int*)removed_val);
+                    free(removed_val);
                 }
                 display_deque(&dq);
             }
             else if (choice == 4)
             {
-                int removed_val;
-                int status_code = deque_delete_rear(&dq, &removed_val);
-                if (status_code == -1)
+                void* removed_val = deque_delete_rear(&dq);
+                if (removed_val == NULL)
                 {
                     printf("\nDeque is empty (underflow)\n");
                 }
                 else
                 {
-                    printf("\nDeleted element from rear: %d\n", removed_val);
+                    printf("\nDeleted element from rear: %d\n", *(int*)removed_val);
+                    free(removed_val);
                 }
                 display_deque(&dq);
             }

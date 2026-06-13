@@ -1,5 +1,7 @@
 #include "advanced_sorting.h"
+#include "backtracking.h"
 #include "data_structures.h"
+#include "dynamic_programming.h"
 #include "error_correction_algorithms.h"
 #include "expression.h"
 #include "graph_traversals.h"
@@ -8,7 +10,7 @@
 #include "safe_input.h"
 #include "searching_algorithms.h"
 #include "sorting_algorithms_n2.h"
-#include "stack.h"
+#include "string_algorithms.h"
 #include "trees.h"
 #include "tui.h"
 #include <stdio.h>
@@ -37,7 +39,10 @@ void run_legacy_menu(){
                 "click 7 for hashing algorithms demo\n"
                 "click 8 for trees demo\n"
                 "click 9 for error correction algorithms demo\n"
-                "click 10 for job scheduling (FCFS / SJF / priority / round robin) demo\n"
+                "click 10 for job scheduling (FCFS / SJF / priority / round robin / SRTF) demo\n"
+                "click 11 for dynamic programming demo\n"
+                "click 12 for string/pattern matching algorithms demo\n"
+                "click 13 for backtracking algorithms demo\n"
                 "enter choice : ",
                 1, 10 // limits
             );
@@ -83,6 +88,15 @@ void run_legacy_menu(){
                     break;
                 case 10:
                     job_scheduling_demo();
+                    break;
+                case 11:
+                    dynamic_programming_demo();
+                    break;
+                case 12:
+                    string_algorithms_demo();
+                    break;
+                case 13:
+                    backtracking_demo();
                     break;
             }
         }

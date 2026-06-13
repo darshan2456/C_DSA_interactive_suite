@@ -1,6 +1,6 @@
 #include "data_structures.h"
-#include "safe_input.h"
 #include "history_logger.h"
+#include "safe_input.h"
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
@@ -76,9 +76,9 @@ void selection_sort(int arr[], int length_of_array)
             arr[i] = temp;
         }
 
-        printf("after iteration no %d - ",i+1);
-        print_array(arr,length_of_array);
-        printf("\n");
+        // printf("after iteration no %d - ", i + 1);
+        // print_array(arr, length_of_array);
+        // printf("\n");
     }
 
     end_t = clock();

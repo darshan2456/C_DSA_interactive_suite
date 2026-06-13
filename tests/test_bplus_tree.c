@@ -1,10 +1,11 @@
 #include "trees.h"
 #include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
-void test_basic_search() {
+void test_basic_search()
+{
     BPlusTree* tree = bplus_tree_create(3);
     assert(tree != NULL);
 
@@ -24,7 +25,8 @@ void test_basic_search() {
     printf("test_basic_search passed\n");
 }
 
-void test_leaf_splits() {
+void test_leaf_splits()
+{
     BPlusTree* tree = bplus_tree_create(3);
 
     // Leaf split happens when inserting the 3rd key
@@ -60,12 +62,14 @@ void test_leaf_splits() {
     printf("test_leaf_splits passed\n");
 }
 
-void test_internal_splits() {
+void test_internal_splits()
+{
     BPlusTree* tree = bplus_tree_create(3);
 
     // Insert multiple values to force internal node splits
     int keys[] = {10, 20, 30, 5, 15, 25};
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 6; i++)
+    {
         assert(bplus_tree_insert(tree, keys[i], keys[i] * 10));
     }
     // Verify tree height is 3 (root -> level 1 internal -> leaves)
@@ -89,8 +93,10 @@ void test_internal_splits() {
     assert(leaf->is_leaf);
     int expected_sorted[] = {5, 10, 15, 20, 25, 30};
     int idx = 0;
-    while (leaf) {
-        for (int i = 0; i < leaf->num_keys; i++) {
+    while (leaf)
+    {
+        for (int i = 0; i < leaf->num_keys; i++)
+        {
             assert(leaf->keys[i] == expected_sorted[idx++]);
         }
         leaf = leaf->next;
@@ -101,22 +107,27 @@ void test_internal_splits() {
     printf("test_internal_splits passed\n");
 }
 
-void test_leaf_linking() {
+void test_leaf_linking()
+{
     BPlusTree* tree = bplus_tree_create(4);
-    for (int i = 1; i <= 20; i++) {
+    for (int i = 1; i <= 20; i++)
+    {
         assert(bplus_tree_insert(tree, i, i * 10));
     }
 
     // Traverse leaves forwards
     BPlusNode* leaf = tree->root;
-    while (leaf && !leaf->is_leaf) {
+    while (leaf && !leaf->is_leaf)
+    {
         leaf = leaf->children[0];
     }
 
     BPlusNode* last = NULL;
     int expected = 1;
-    while (leaf) {
-        for (int i = 0; i < leaf->num_keys; i++) {
+    while (leaf)
+    {
+        for (int i = 0; i < leaf->num_keys; i++)
+        {
             assert(leaf->keys[i] == expected);
             expected++;
         }
@@ -128,8 +139,10 @@ void test_leaf_linking() {
     // Traverse leaves backwards
     expected = 20;
     leaf = last;
-    while (leaf) {
-        for (int i = leaf->num_keys - 1; i >= 0; i--) {
+    while (leaf)
+    {
+        for (int i = leaf->num_keys - 1; i >= 0; i--)
+        {
             assert(leaf->keys[i] == expected);
             expected--;
         }
@@ -141,16 +154,18 @@ void test_leaf_linking() {
     printf("test_leaf_linking passed\n");
 }
 
-void test_range_query() {
+void test_range_query()
+{
     BPlusTree* tree = bplus_tree_create(3);
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 10; i++)
+    {
         bplus_tree_insert(tree, i, i * 10);
     }
 
     // Just verifying no crash during range queries
     printf("Range query [3, 7] output: ");
     bplus_tree_range_query(tree, 3, 7);
-    
+
     printf("Range query [0, 15] output: ");
     bplus_tree_range_query(tree, 0, 15);
 
@@ -158,9 +173,11 @@ void test_range_query() {
     printf("test_range_query passed\n");
 }
 
-void test_borrow_and_merge() {
+void test_borrow_and_merge()
+{
     BPlusTree* tree = bplus_tree_create(3);
-    for (int i = 10; i <= 50; i += 10) {
+    for (int i = 10; i <= 50; i += 10)
+    {
         bplus_tree_insert(tree, i, i * 10);
     }
 
@@ -188,7 +205,8 @@ void test_borrow_and_merge() {
     printf("test_borrow_and_merge passed\n");
 }
 
-int main() {
+int main()
+{
     test_basic_search();
     test_leaf_splits();
     test_internal_splits();

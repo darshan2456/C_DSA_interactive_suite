@@ -1,6 +1,6 @@
 #include "advanced_sorting.h"
-#include "safe_input.h"
 #include "history_logger.h"
+#include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

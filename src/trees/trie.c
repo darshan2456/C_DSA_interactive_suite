@@ -1,23 +1,23 @@
-#include "trees.h"
 #include "safe_input.h"
+#include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-TrieNode *trie_create_node(void)
+TrieNode* trie_create_node(void)
 {
-    TrieNode *node = malloc(sizeof(TrieNode));
+    TrieNode* node = malloc(sizeof(TrieNode));
     if (node == NULL)
         return NULL;
     memset(node, 0, sizeof(TrieNode));
     return node;
 }
 
-void trie_insert(TrieNode *root, const char *word)
+void trie_insert(TrieNode* root, const char* word)
 {
     if (root == NULL || word == NULL)
         return;
-    TrieNode *curr = root;
+    TrieNode* curr = root;
     for (int i = 0; word[i] != '\0'; i++)
     {
         int idx = word[i] - 'a';
@@ -30,11 +30,11 @@ void trie_insert(TrieNode *root, const char *word)
     curr->is_end = 1;
 }
 
-int trie_search(TrieNode *root, const char *word)
+int trie_search(TrieNode* root, const char* word)
 {
     if (root == NULL || word == NULL)
         return 0;
-    TrieNode *curr = root;
+    TrieNode* curr = root;
     for (int i = 0; word[i] != '\0'; i++)
     {
         int idx = word[i] - 'a';
@@ -47,11 +47,11 @@ int trie_search(TrieNode *root, const char *word)
     return curr->is_end;
 }
 
-int trie_starts_with_prefix(TrieNode *root, const char *prefix)
+int trie_starts_with_prefix(TrieNode* root, const char* prefix)
 {
     if (root == NULL || prefix == NULL)
         return 0;
-    TrieNode *curr = root;
+    TrieNode* curr = root;
     for (int i = 0; prefix[i] != '\0'; i++)
     {
         int idx = prefix[i] - 'a';
@@ -65,7 +65,7 @@ int trie_starts_with_prefix(TrieNode *root, const char *prefix)
 }
 
 /* Returns 1 if the node has no children and can be freed */
-static int trie_delete_helper(TrieNode *node, const char *word, int depth)
+static int trie_delete_helper(TrieNode* node, const char* word, int depth)
 {
     if (node == NULL)
         return 0;
@@ -94,14 +94,14 @@ static int trie_delete_helper(TrieNode *node, const char *word, int depth)
     return 1;
 }
 
-void trie_delete(TrieNode *root, const char *word)
+void trie_delete(TrieNode* root, const char* word)
 {
     if (root == NULL || word == NULL)
         return;
     trie_delete_helper(root, word, 0);
 }
 
-void trie_free(TrieNode *node)
+void trie_free(TrieNode* node)
 {
     if (node == NULL)
         return;
@@ -112,7 +112,7 @@ void trie_free(TrieNode *node)
 
 void trie_demo(void)
 {
-    TrieNode *root = trie_create_node();
+    TrieNode* root = trie_create_node();
     if (root == NULL)
     {
         printf("memory allocation failed\n");
@@ -178,5 +178,4 @@ void trie_demo(void)
             printf("delete attempted for: %s\n", word);
         }
     }
-
 }

@@ -8,7 +8,7 @@
 
 /**
  * Runs the Floyd-Warshall all-pairs shortest path algorithm.
- * 
+ *
  * @param graph Dynamic 2D array representing adjacency matrix of size V x V
  * @param V Number of vertices
  * @param dist Output distance matrix (already allocated V x V)
@@ -41,8 +41,7 @@ void floyd_warshall(int** graph, int V, int** dist, int** next)
             for (int j = 0; j < V; j++)
             {
                 // Check if paths through vertex k are shorter
-                if (dist[i][k] != INF && dist[k][j] != INF &&
-                    dist[i][k] + dist[k][j] < dist[i][j])
+                if (dist[i][k] != INF && dist[k][j] != INF && dist[i][k] + dist[k][j] < dist[i][j])
                 {
                     dist[i][j] = dist[i][k] + dist[k][j];
                     next[i][j] = next[i][k];
@@ -58,6 +57,9 @@ void floyd_warshall(int** graph, int V, int** dist, int** next)
  */
 void print_floyd_warshall_solution(int** dist, int** next, int V)
 {
+    printf("\n=== All-Pairs Shortest Paths (Floyd-Warshall) ===\n");
+    printf("(INF = No Path Exists)\n");
+
     printf("\nDistance Matrix:\n");
     printf("     ");
     for (int i = 0; i < V; i++)
@@ -65,7 +67,7 @@ void print_floyd_warshall_solution(int** dist, int** next, int V)
         printf("%5d ", i);
     }
     printf("\n");
-    
+
     for (int i = 0; i < V; i++)
     {
         printf("%3d: ", i);
@@ -123,7 +125,8 @@ void floyd_warshall_demo(void)
     while (1)
     {
         int status = safe_input_int(&vertices,
-                                    "\nEnter the number of vertices in the graph (between 1 and 10), or enter '-1' to exit: ",
+                                    "\nEnter the number of vertices in the graph (between 1 and "
+                                    "10), or enter '-1' to exit: ",
                                     1, 10);
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -141,9 +144,8 @@ void floyd_warshall_demo(void)
     while (1)
     {
         int max_edges = vertices * (vertices - 1);
-        int status = safe_input_int(&edges,
-                                    "\nEnter the number of edges, or enter '-1' to exit: ",
-                                    0, max_edges);
+        int status = safe_input_int(
+            &edges, "\nEnter the number of edges, or enter '-1' to exit: ", 0, max_edges);
         if (status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting Floyd-Warshall demo...\n");
@@ -164,9 +166,12 @@ void floyd_warshall_demo(void)
     {
         printf("\nMemory allocation failed.\n");
         // Safe cleanup if allocation partially fails
-        if (graph) free(graph);
-        if (dist) free(dist);
-        if (next) free(next);
+        if (graph)
+            free(graph);
+        if (dist)
+            free(dist);
+        if (next)
+            free(next);
         return;
     }
 
@@ -181,9 +186,12 @@ void floyd_warshall_demo(void)
             // Free everything allocated so far
             for (int j = 0; j <= i; j++)
             {
-                if (graph[j]) free(graph[j]);
-                if (dist[j]) free(dist[j]);
-                if (next[j]) free(next[j]);
+                if (graph[j])
+                    free(graph[j]);
+                if (dist[j])
+                    free(dist[j]);
+                if (next[j])
+                    free(next[j]);
             }
             free(graph);
             free(dist);
@@ -208,7 +216,9 @@ void floyd_warshall_demo(void)
     if (edges > 0)
     {
         printf("\nEnter source, destination, and weight for each edge:\n");
-        printf("(Vertices must be between 0 and %d. Weights can be negative, but avoid negative cycles)\n", vertices - 1);
+        printf("(Vertices must be between 0 and %d. Weights can be negative, but avoid negative "
+               "cycles)\n",
+               vertices - 1);
     }
 
     for (int i = 0; i < edges; i++)
@@ -269,7 +279,8 @@ void floyd_warshall_demo(void)
 
     if (has_negative_cycle)
     {
-        printf("\nWarning: The graph contains a negative weight cycle. Shortest paths are undefined.\n");
+        printf("\nWarning: The graph contains a negative weight cycle. Shortest paths are "
+               "undefined.\n");
     }
     else
     {
