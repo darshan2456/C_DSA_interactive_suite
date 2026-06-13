@@ -17,6 +17,9 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/trees \
 	-Isrc/error_correction_algorithms \
 	-Isrc/job_scheduling
+	# -Isrc/tui
+
+# LDFLAGS = -lncurses
 
 SRC_DIRS = \
 	src/data_structures \
@@ -31,8 +34,8 @@ SRC_DIRS = \
 	src/error_correction_algorithms \
 	src/job_scheduling
 
-SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
-OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
+# SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+# OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 ifeq ($(OS),Windows_NT)
 	RM = cmd /c del
@@ -45,14 +48,21 @@ else
 	EXE =
 	MKDIR_P = mkdir -p "$(1)"
 
+	SRC_DIRS += src/tui 
+	LDFLAGS += -lncurses
+	CFLAGS += -Isrc/tui
+
 endif
+
+SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
 
 TARGET = dsa
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)$(EXE)
+	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)$(EXE) $(LDFLAGS)
 
 run: $(TARGET)
 	./$(TARGET)$(EXE)
