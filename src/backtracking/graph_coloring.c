@@ -1,4 +1,3 @@
-#define _DEFAULT_SOURCE
 #include "backtracking.h"
 #include "cross_platform.h"
 #include "safe_input.h"
@@ -6,14 +5,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-
-#ifdef _WIN32
-#include <windows.h>
-#define clear_screen() system("cls")
-#else
-#include <unistd.h>
-#define clear_screen() printf("\033[H\033[J")
-#endif
 
 #define MAX_V 10
 
@@ -287,6 +278,7 @@ void graph_coloring_demo(void)
 {
     // Set console output to UTF-8 on Windows for Unicode support (●)
 #ifdef _WIN32
+    #include <windows.h>
     UINT old_cp = GetConsoleOutputCP();
     SetConsoleOutputCP(CP_UTF8);
 #endif
