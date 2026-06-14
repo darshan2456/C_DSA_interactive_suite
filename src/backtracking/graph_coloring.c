@@ -6,6 +6,15 @@
 #include <time.h>
 #include <string.h>
 
+#ifdef _WIN32
+    #include <windows.h>
+    #define clear_screen() system("cls")
+#else
+    #define _DEFAULT_SOURCE
+    #include <unistd.h>
+    #define clear_screen() printf("\033[H\033[J")
+#endif
+
 #define MAX_V 10
 
 typedef struct {
