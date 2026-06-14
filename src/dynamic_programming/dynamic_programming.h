@@ -13,4 +13,7 @@ void fibonacci_demo(void);
 long long fibonacci_recursive(int n, long long memo[]);
 long long fibonacci_iterative(int n);
 
+int matrix_chain_order(int p[], int n);
+void mcm_demo(void);
+
 #endif // DYNAMIC_PROGRAMMING_H

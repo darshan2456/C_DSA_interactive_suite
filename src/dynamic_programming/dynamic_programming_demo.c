@@ -11,8 +11,9 @@ void dynamic_programming_demo(void)
                                    "\nenter 1 for 0/1 Knapsack demo"
                                    "\nenter 2 for Longest Common Subsequence (LCS) demo"
                                    "\nenter 3 for Fibonacci sequence demo"
+                                   "\nenter 4 for Matrix Chain Multiplication (MCM) demo"
                                    "\nenter choice : ",
-                                   1, 3);
+                                   1, 4);
 
         if (dp_status == INPUT_EXIT_SIGNAL)
         {
@@ -33,6 +34,9 @@ void dynamic_programming_demo(void)
                 break;
             case 3:
                 fibonacci_demo();
+                break;
+            case 4:
+                mcm_demo();
                 break;
         }
     }
