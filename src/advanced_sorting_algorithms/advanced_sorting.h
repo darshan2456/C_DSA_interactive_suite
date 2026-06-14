@@ -10,5 +10,7 @@ void heap_sort(int arr[], int n);
 void heap_sort_demo(void);
 void radix_sort(int arr[], int n);
 void radix_sort_demo(void);
+void bucket_sort(int arr[], int n);
+void bucket_sort_demo(void);
 
 #endif

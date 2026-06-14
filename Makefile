@@ -281,7 +281,7 @@ $(TEST_DIR)/test_sorting_n2$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/bubble_s
 test_advanced_sorting: $(TEST_DIR)/test_advanced_sorting$(EXE)
 	$(TEST_DIR)/test_advanced_sorting$(EXE)
 
-$(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/advanced_sorting_algorithms/quick_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/merge_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/heap_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/radix_sort.o $(OBJ_DIR)/src/data_structures/priority_queue.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o tests/test_advanced_sorting.c
+$(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/advanced_sorting_algorithms/quick_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/merge_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/heap_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/radix_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/bucket_sort.o $(OBJ_DIR)/src/data_structures/priority_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o tests/test_advanced_sorting.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@
 
