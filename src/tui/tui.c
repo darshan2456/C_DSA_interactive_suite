@@ -364,13 +364,11 @@ static void run_demo(demo_fn fn, const char* name, State* s)
         ;
 
     /* reclaim terminal */
-    // setlocale(LC_ALL, "");
-    initscr();
+    refresh();
     noecho();
     cbreak();
     keypad(stdscr, TRUE);
     curs_set(0);
-    init_colors();
 
     /* update state */
     strncpy(s->last_ran, name, sizeof(s->last_ran) - 1);
