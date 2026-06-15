@@ -47,7 +47,7 @@ void bucket_sort(int arr[], int n)
     {
         // Calculate bucket index relative to range
         long long diff = (long long)arr[i] - min_val;
-        int bucket_idx = (int)((diff * (N - 1)) / (max_val - min_val));
+        int bucket_idx = (int)((diff * (N - 1)) / ((long long)max_val - min_val));
 
         // Insert element into the bucket list using SLL utility
         int insert_status = sll_insertAtBeginning(&buckets[bucket_idx], arr[i]);

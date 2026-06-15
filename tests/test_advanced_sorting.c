@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <limits.h>
 #include <stdio.h>
 
 /* Functions under test (forward-declared, same approach as the other tests).
@@ -317,6 +318,15 @@ void test_bucket_sort()
     assert(random_vals[6] == 90);
     assert(random_vals[7] == 170);
     assert(random_vals[8] == 802);
+
+    /* wide value range: max - min exceeds INT_MAX, so the bucket-index
+       divisor must be computed in a wider type to avoid signed overflow
+       and an out-of-bounds bucket index */
+    int wide[3] = {INT_MAX, 0, INT_MIN};
+    bucket_sort(wide, 3);
+    assert(wide[0] == INT_MIN);
+    assert(wide[1] == 0);
+    assert(wide[2] == INT_MAX);
 
     printf("Bucket sort tests passed\n");
 }
