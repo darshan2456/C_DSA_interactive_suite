@@ -1,4 +1,3 @@
-#include "graph_io.h"
 #include "graph_traversals.h"
 #include "history_logger.h"
 #include "safe_input.h"
@@ -81,7 +80,7 @@ void dfs_demo(void)
 
         graph_capacity = graph->V;
     }
-    else
+    else if (input_method == 1)
     {
         while (1)
         {
@@ -192,6 +191,7 @@ void dfs_demo(void)
         if (starting_node < 0 || starting_node >= graph->V)
         {
             printf("Invalid start node\n");
+            free_graph(graph);
             return;
         }
         break;

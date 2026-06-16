@@ -1,3 +1,4 @@
+#include "cross_platform_timer.h"
 #include "safe_input.h"
 #include "stack.h"
 #include <stdio.h>
@@ -98,6 +99,7 @@ int check_parantheses(char* s)
         }
         printf("-----------------------------------\n");
         i++;
+        sleep_seconds(1);
     }
     int result = isEmpty(parantheses);
     if (!result)

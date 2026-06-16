@@ -41,8 +41,10 @@ void hamming_receiver_demo(void);
 
 /* Shared checksum helpers (implemented in checksum.c) */
 void checksum_print_binary(int value, int bits);
-int checksum_read_binary(char* buff, size_t size, const char* prompt);
+int safe_input_binary_string(char* buff, size_t size, const char* prompt);
 int checksum_add(int sum, int word, int k);
 int checksum_block_sum(const char* data, int len, int k);
+
+void crc_xor_operation(char* dividend, const char* divisor, int pos);
 
 #endif /* ERROR_CORRECTION_ALGORITHMS_H */

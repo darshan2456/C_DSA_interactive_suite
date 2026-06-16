@@ -45,6 +45,12 @@ void lrc_receiver_demo(void)
             data[i][len - 1] = '\0';
             len--;
         }
+        else
+        {
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF)
+                ;
+        }
 
         if (len == 0)
         {
@@ -84,6 +90,12 @@ void lrc_receiver_demo(void)
     {
         received_lrc[lrc_len - 1] = '\0';
         lrc_len--;
+    }
+    else
+    {
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF)
+            ;
     }
 
     if (lrc_len != cols)

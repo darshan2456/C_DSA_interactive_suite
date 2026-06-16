@@ -1,6 +1,7 @@
-#include "cross_platform.h"
+#include "cross_platform_timer.h"
 #include "safe_input.h"
 #include "stack.h"
+#include "clear_screen.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -63,6 +64,7 @@ void infix_to_postfix_Demo(void)
 
         while (infix_expr[i] != '\0')
         {
+            clear_screen();
             char ch = infix_expr[i];
             const char* action_msg = NULL;
             char op;
@@ -149,11 +151,12 @@ void infix_to_postfix_Demo(void)
             printf("----------------------------------\n");
 
             i++;
-            sleep_seconds(1);
+            sleep_seconds(2);
         }
 
         while (!isEmpty(operators))
         {
+            clear_screen();
             char op = pop(operators);
 
             postfix_expr[pf_idx++] = op;
@@ -178,5 +181,7 @@ void infix_to_postfix_Demo(void)
         printf("Conversion Complete\n");
         printf("Final Postfix Expression : %s\n", postfix_expr);
         printf("==================================\n\n");
+
+        sleep_seconds(2);
     }
 }

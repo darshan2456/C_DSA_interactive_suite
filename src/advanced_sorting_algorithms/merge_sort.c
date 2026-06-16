@@ -13,6 +13,16 @@ static void merge(int arr[], int left, int mid, int right)
     int* left_array = malloc(sizeof(int) * left_length);
     int* right_array = malloc(sizeof(int) * right_length);
 
+    if (left_array == NULL || right_array == NULL)
+    {
+        printf("\nMemory allocation failed during merge sort.\n");
+        if (left_array)
+            free(left_array);
+        if (right_array)
+            free(right_array);
+        return;
+    }
+
     for (int i = 0; i < left_length; i++) // copy left half into temp malloc'd array
     {
         left_array[i] = arr[left + i];

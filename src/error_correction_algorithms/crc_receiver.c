@@ -3,26 +3,16 @@
 #include <stdio.h>
 #include <string.h>
 
-static void crc_xor_operation(char* dividend, const char* divisor, int pos)
-{
-    int n = (int)strlen(divisor);
-
-    for (int i = 0; i < n; i++)
-    {
-        dividend[pos + i] = (dividend[pos + i] == divisor[i]) ? '0' : '1';
-    }
-}
-
 void crc_receiver_demo(void)
 {
     while (1)
     {
         char received_codeword[(CHECKSUM_MAX_BITS * 2) + 1];
 
-        int codeword_status =
-            checksum_read_binary(received_codeword, sizeof(received_codeword),
-                                 "\n\nCRC Receiver Verification\n"
-                                 "Enter transmitted codeword (data + CRC bits) or 'X' to exit:- ");
+        int codeword_status = safe_input_binary_string(
+            received_codeword, sizeof(received_codeword),
+            "\n\nCRC Receiver Verification\n"
+            "Enter transmitted codeword (data + CRC bits) or 'X' to exit:- ");
 
         if (codeword_status == INPUT_EXIT_SIGNAL)
         {
@@ -37,8 +27,8 @@ void crc_receiver_demo(void)
 
         char generator[CHECKSUM_MAX_BITS + 1];
 
-        int generator_status = checksum_read_binary(generator, sizeof(generator),
-                                                    "Enter generator polynomial or 'X' to exit:- ");
+        int generator_status = safe_input_binary_string(
+            generator, sizeof(generator), "Enter generator polynomial or 'X' to exit:- ");
 
         if (generator_status == INPUT_EXIT_SIGNAL)
         {
@@ -56,6 +46,15 @@ void crc_receiver_demo(void)
         if (generator_len < 2)
         {
             printf("\nGenerator polynomial must contain at least 2 bits.\n");
+            continue;
+        }
+
+        int codeword_len = (int)strlen(received_codeword);
+        if (codeword_len < generator_len)
+        {
+            printf("\nError: codeword length (%d) must be at least as long as the generator "
+                   "polynomial (%d).\n",
+                   codeword_len, generator_len);
             continue;
         }
 

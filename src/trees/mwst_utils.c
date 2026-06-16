@@ -38,16 +38,35 @@ BPlusNode* bplus_node_create(int order, bool is_leaf)
         return NULL;
     node->is_leaf = is_leaf;
     node->num_keys = 0;
+
     node->keys = calloc(order, sizeof(int));
+    if (!node->keys)
+    {
+        free(node);
+        return NULL;
+    }
+
     if (is_leaf)
     {
         node->values = calloc(order, sizeof(int));
+        if (!node->values)
+        {
+            free(node->keys);
+            free(node);
+            return NULL;
+        }
         node->children = NULL;
     }
     else
     {
         node->values = NULL;
         node->children = calloc(order + 1, sizeof(BPlusNode*));
+        if (!node->children)
+        {
+            free(node->keys);
+            free(node);
+            return NULL;
+        }
     }
     node->next = NULL;
     node->prev = NULL;

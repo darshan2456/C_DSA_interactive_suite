@@ -42,12 +42,18 @@ void lrc_demo(void)
         printf("  Word %d: ", i + 1);
         fgets(data[i], sizeof(data[i]), stdin);
 
-        // Remove trailing newline
+        // Remove trailing newline; if absent, input exceeded buffer — flush stdin
         int len = strlen(data[i]);
         if (len > 0 && data[i][len - 1] == '\n')
         {
             data[i][len - 1] = '\0';
             len--;
+        }
+        else
+        {
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF)
+                ;
         }
 
         /* validate: only '0' and '1' allowed */

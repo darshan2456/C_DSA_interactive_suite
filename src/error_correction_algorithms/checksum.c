@@ -1,7 +1,9 @@
 #include "error_correction_algorithms.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 // prints the low `bits` bits of value, most-significant bit first. shared helper
 // used for displaying k-bit words/checksums in the sender and receiver demos.
@@ -17,7 +19,7 @@ void checksum_print_binary(int value, int bits)
 // convention used by the expression module (validate_infix_expr): returns 1 on a
 // valid non-empty binary string, 0 on EOF / invalid input (caller should re-prompt),
 // and INPUT_EXIT_SIGNAL when the user types 'X' to leave the demo.
-int checksum_read_binary(char* buff, size_t size, const char* prompt)
+int safe_input_binary_string(char* buff, size_t size, const char* prompt)
 {
     if (prompt)
     {
@@ -135,7 +137,7 @@ void checksum_demo(void)
         }
 
         char data[CHECKSUM_MAX_BITS + 1];
-        int data_status = checksum_read_binary(
+        int data_status = safe_input_binary_string(
             data, sizeof(data), "enter the binary data (digits 0/1 only), or 'X' to exit:- ");
 
         if (data_status == INPUT_EXIT_SIGNAL)
@@ -151,7 +153,11 @@ void checksum_demo(void)
         int len = (int)strlen(data);
         int mask = (1 << k) - 1; // keeps only the low k bits
 
+        clock_t start_t = clock();
         int sum = checksum_block_sum(data, len, k);
+        clock_t end_t = clock();
+        double total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+        add_to_history("Checksum Sender", len, total_t);
         int checksum = (~sum) & mask; // one's complement of the final sum, kept to k bits
 
         printf("\nfinal sum       = ");

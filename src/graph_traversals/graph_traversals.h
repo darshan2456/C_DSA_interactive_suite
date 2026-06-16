@@ -17,6 +17,8 @@ void add_edge_undirected(Graph* graph, int src, int dest);
 void free_graph(Graph* graph);
 void print_graph(const Graph* graph);
 void add_edge_directed_unweighted(Graph* graph, int src, int dest);
+
+// ------------------For topological sort----------------------
 void topological_sort_kahn(Graph* graph);
 void topological_sort_demo(void);
 
@@ -41,8 +43,12 @@ typedef struct
 typedef struct
 {
     int size;
-    PQ_graph_node heap[HEAP_CAPACITY];
+    int capacity;
+    PQ_graph_node* heap;
 } PQ_graph;
+
+void init_pq_graph(PQ_graph* pq, int initial_capacity);
+void free_pq_graph(PQ_graph* pq);
 int insert_pq_graph(PQ_graph* pq, int vertex, int distance);
 bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result);
 
@@ -77,4 +83,31 @@ void greedy_best_first_search_demo(void);
 // ------------------For Bellman-ford-----------------------
 void bellman_ford_demo(void);
 
+// ------------------For Floyd-Warshall-----------------------
+void floyd_warshall(int** graph, int V, int** dist, int** next);
+void print_floyd_warshall_solution(int** dist, int** next, int V);
+void floyd_warshall_demo(void);
+
+// ------------------For MST (Kruskal's)-----------------------
+typedef struct DSU
+{
+    int* parent;
+    int* rank;
+    int n;
+} DSU;
+int kruskal_mst(weightedGraph* graph);
+void kruskal_demo(void);
+DSU* create_dsu(int n);
+int find_dsu(DSU* dsu, int i);
+void union_dsu(DSU* dsu, int i, int j);
+void free_dsu(DSU* dsu);
+
+// ------------------For MST (Prim's)-----------------------
+int prim_mst(weightedGraph* graph, int start_node);
+void prim_demo(void);
+
+// ------------------For Graph IO-----------------------
+weightedGraph* load_weightedGraph_from_csv(const char* path);
+weightedGraph* load_weightedGraph_with_heuristic_from_csv(const char* path, int** out_h);
+Graph* load_graph_from_csv(const char* path);
 #endif

@@ -1,10 +1,15 @@
+#include "history_logger.h"
 #include "job_scheduling.h"
 #include "safe_input.h"
 #include <stdio.h>
+#include <time.h>
 
 // Round Robin: processes share the CPU in fixed time slices (the quantum). A
 // job that does not finish within its slice goes to the back of the ready
 // queue. Jobs become ready at their arrival time; ties keep input order.
+// note: the time measured by clock() covers the scheduling computation only (it
+// starts after the quantum is read) and is for demonstration only, not a
+// measure of the algorithm's efficiency.
 void round_robin_demo(void)
 {
     Process procs[10];
@@ -34,6 +39,11 @@ void round_robin_demo(void)
         }
         break;
     }
+
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
 
     GanttSegment segments[JS_MAX_SEGMENTS];
     int segment_count = 0;
@@ -139,6 +149,11 @@ void round_robin_demo(void)
         }
     }
 
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
     js_print_result(procs, n);
     js_print_gantt(segments, segment_count);
+    printf("\ntotal CPU time taken for round robin scheduling:- %f seconds\n", total_t);
+    add_to_history("Round Robin Scheduling", n, total_t);
 }

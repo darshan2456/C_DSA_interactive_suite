@@ -85,9 +85,10 @@ void data_structures_demo(void)
                         safe_input_int(&circular_variant_choice,
                                        "\nenter 1 for circular queue demo"
                                        "\nenter 2 for singly circular linked list demo"
-                                       "\nenter 3 for double-ended queue (deque) demo"
+                                       "\nenter 3 for doubly circular  linked list demo"
+                                       "\nenter 4 for double-ended queue (deque) demo"
                                        "\nenter choice : ",
-                                       1, 3);
+                                       1, 4);
                     if (circular_variant_status == 0)
                         continue;
                     if (circular_variant_status == INPUT_EXIT_SIGNAL)
@@ -101,6 +102,10 @@ void data_structures_demo(void)
                         scll_Demo();
                     }
                     if (circular_variant_choice == 3)
+                    {
+                        dcll_Demo();
+                    }
+                    if (circular_variant_choice == 4)
                     {
                         deque_demo();
                     }

@@ -127,37 +127,70 @@ typedef struct Queue
     int rear;
     int front;
     int N;
-    int* arr;
+    void** arr;
 } Queue;
 
 // For circular queue
 int init_circ_queue(int N, Queue* queue_ptr);
 void destroy_circ_queue(Queue* queue_ptr);
-int enqueue(Queue* queue_ptr, int value);
-int dequeue(Queue* queue_ptr);
+int enqueue(Queue* queue_ptr, void* value);
+void* dequeue(Queue* queue_ptr);
 void display_circ_queue(Queue* queue_ptr);
 void circular_queue_Demo(void);
 
 // For simple (linear) queue
 int init_simple_queue(int N, Queue* queue_ptr);
 void destroy_simple_queue(Queue* queue_ptr);
-int enqueue_simple(Queue* queue_ptr, int value);
-int dequeue_simple(Queue* queue_ptr);
+int enqueue_simple(Queue* queue_ptr, void* value);
+void* dequeue_simple(Queue* queue_ptr);
 void display_simple_queue(const Queue* queue_ptr);
 void simple_queue_Demo(void);
 
 // For Double-Ended Queue (Deque)
 int init_deque(int N, Queue* dq);
 void destroy_deque(Queue* dq);
-int deque_insert_front(Queue* dq, int value);
-int deque_insert_rear(Queue* dq, int value);
-int deque_delete_front(Queue* dq, int* val);
-int deque_delete_rear(Queue* dq, int* val);
+int deque_insert_front(Queue* dq, void* value);
+int deque_insert_rear(Queue* dq, void* value);
+void* deque_delete_front(Queue* dq);
+void* deque_delete_rear(Queue* dq);
 int deque_get_front(const Queue* dq);
 int deque_get_rear(const Queue* dq);
 bool deque_is_empty(const Queue* dq);
 bool deque_is_full(const Queue* dq);
 void display_deque(const Queue* dq);
 void deque_demo(void);
+
+
+// For Doubly cirular linked list 
+
+typedef struct dcll_Node
+{
+    int data;
+    struct dcll_Node * next;
+    struct dcll_Node * prev;
+}dcll_Node;
+
+typedef struct dcll
+{
+    dcll_Node* head;
+    dcll_Node* tail;
+    int length;
+} dcll;
+
+void dcll_init(dcll* list);
+int dcll_insertAtBeginning(dcll* list, int value);
+int dcll_insertAtEnd(dcll* list, int value);
+int dcll_insertAtPosition(dcll* list, int value, int position);
+int dcll_deleteAtBeginning(dcll* list);
+int dcll_deleteAtEnd(dcll* list);
+int dcll_deleteByValue(dcll* list, int value);
+int dcll_deleteAtPosition(dcll* list, int position);
+int dcll_search(const dcll* list, int key);
+int dcll_getLength(const dcll* list);
+void dcll_printlist(const dcll* list);
+void dcll_destroy(dcll* list);
+void dcll_Demo(void);
+
+
 
 #endif
