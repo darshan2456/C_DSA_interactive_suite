@@ -126,65 +126,28 @@ sequenceDiagram
 
 ### Service Pattern
 
-```typescript
-// src/services/users/user.service.ts
-export class UserService {
-  async findById(id: string) {
-    return prisma.user.findUnique({ where: { id } });
-  }
-
-  async create(data: CreateUserDto) {
-    // Validation, business logic, database operations
-  }
-}
-```
+Encapsulate business logic in a service layer. Services call repositories for data access — no direct database queries in controllers.
 
 ### Repository Pattern
 
-```typescript
-// src/repositories/user.repository.ts
-export class UserRepository {
-  async findAll() {
-    /* DB queries only */
-  }
-  async findById(id: string) {
-    /* DB queries only */
-  }
-}
-```
+Repositories handle data access only — no business logic. Controllers call services; services call repositories.
 
 ## How To Guides
 
 ### Add a New API Endpoint
 
-1. **Create route file:** `src/app/api/[name]/route.ts`
-
-   ```typescript
-   export async function GET(req: Request) {
-     // Implementation
-   }
-   ```
-
-2. **Add service logic:** `src/services/[name].service.ts`
-3. **Define types:** `src/types/[name].ts`
-4. **Add tests:** `src/app/api/[name]/route.test.ts`
-5. **Update API docs:** Document in OpenAPI/Swagger
+1. **Create route handler** in the appropriate API layer
+2. **Add service logic** in the service layer
+3. **Define types/structs** in a shared types module
+4. **Add tests** alongside the handler
+5. **Update API docs** in OpenAPI/Swagger or equivalent
 
 ### Add a New Database Model
 
-1. **Update schema:** `prisma/schema.prisma`
-
-   ```prisma
-   model NewModel {
-     id String @id @default(cuid())
-     // fields
-   }
-   ```
-
-2. **Run migration:** `npx prisma migrate dev --name add-new-model`
-3. **Generate types:** `npx prisma generate`
-4. **Create service:** `src/services/new-model.service.ts`
-5. **Add CRUD routes:** `src/app/api/new-model/`
+1. **Update schema** in the data model definition file
+2. **Run migration** using the project's migration tooling
+3. **Create service** in the service layer
+4. **Add CRUD routes** in the API layer
 
 ### Add a New React Component
 

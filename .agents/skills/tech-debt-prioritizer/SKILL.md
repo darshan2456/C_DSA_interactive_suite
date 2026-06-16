@@ -251,32 +251,7 @@ Backlog → Prioritized for Q1
 
 ## Tech Debt Registry
 
-```typescript
-interface TechDebt {
-  id: string;
-  title: string;
-  description: string;
-
-  // Scoring
-  impact: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-  risk: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-  effort: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
-
-  // Metadata
-  owner: string;
-  createdAt: Date;
-  targetQuarter?: string;
-  status: "backlog" | "prioritized" | "in-progress" | "done";
-
-  // Context
-  affectedSystems: string[];
-  relatedDebt: string[];
-
-  // Plan
-  implementationPlan?: string;
-  roi?: "low" | "medium" | "high" | "very-high";
-}
-```
+Each debt item should track: `id`, `title`, `description`, impact score (1–10), risk score (1–10), effort score (1–10), owner, creation date, target quarter, status (`backlog` / `prioritized` / `in-progress` / `done`), affected systems, related debt items, implementation plan, and estimated ROI (`low` / `medium` / `high` / `very-high`).
 
 ## Quarterly Review Process
 
