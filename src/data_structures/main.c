@@ -12,7 +12,9 @@
 #include "sorting_algorithms_n2.h"
 #include "string_algorithms.h"
 #include "trees.h"
+#ifndef _WIN32
 #include "tui.h"
+#endif
 #include <stdio.h>
 
 
@@ -90,6 +92,7 @@ void run_legacy_menu(){
         }
 }
 
+#ifndef _WIN32
 void tui_menu(){
     while(1){
     int choice;
@@ -125,11 +128,12 @@ void tui_menu(){
               }
     }
 }
+#endif
 
 int main()
 {
 
-    #ifdef __WIN32
+    #ifdef _WIN32
     run_legacy_menu();
     #else
     tui_menu();
