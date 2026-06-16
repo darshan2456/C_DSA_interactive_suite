@@ -23,15 +23,10 @@
 | memory-safety-patterns | C memory management (malloc/free), Valgrind, heap analysis |
 | architecture-patterns | Design patterns, DSA structure decisions, system architecture |
 | code-review-excellence | Deep code review, bug hunting, security analysis |
-| tech-debt-prioritizer | Identify & rank technical debt, refactor planning |
-| coverage-strategist | Test coverage analysis, gap identification, test planning |
-| test-data-factory-builder | Generate test data fixtures, mock data builders |
-| load-test-builder | Create load/stress tests, performance testing |
 | c-data-structures | C-specific DSA implementations, pointers, memory patterns |
 | codebase-summarizer | Generate project overviews, understand structure |
 | conventional-commit | Format commits to conventional standard (feat/fix/etc) |
 | github-actions-docs | GitHub Actions workflow documentation & patterns |
-| knip | Find unused imports/exports, dead code cleanup |
 
 ---
 
@@ -56,7 +51,6 @@
 ### Optimizing Algorithm
 ```bash
 /simplify               # Check efficiency
-/performance-budget-setter  # Document Big-O expectations
 ```
 
 ---
