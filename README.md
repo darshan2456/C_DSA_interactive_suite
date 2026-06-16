@@ -45,21 +45,51 @@ This project includes a **Makefile** to simplify building across multiple direct
 - GNU Make ≥ 3.81
 - GCC (or a compatible C compiler)
 
+## TUI Requirements
+
+The Text User Interface (TUI) is built using the **Ncurses** library.
+
+### Ubuntu / Debian
+```bash
+sudo apt install libncurses5-dev libncursesw5-dev
+```
+### Fedora
+```bash
+sudo dnf install ncurses-devel
+```
+### Arch Linux
+```bash
+sudo pacman -S ncurses
+```
+> **Note:** The TUI is supported on Unix/Linux systems. On Windows, the project automatically falls back to the legacy CLI interface.
+
 ### Build
 ```bash
 make
 ```
-
 This generates a single executable:
-
 * `dsa` (Linux / macOS)
 * `dsa.exe` (Windows)
+
+
+```bash
+make run 
+```
+Builds only when necessary and launches the program.
+
+
+```bash
+make test
+```
+Runs all tests
+
 
 ### Clean
 
 ```bash
 make clean
 ```
+Removes executables and generated object files.
 
 ---
 
@@ -85,47 +115,92 @@ If any test fails or Valgrind detects a memory error, the CI job fails automatic
 
 ## Project Overview
 
+### Interface Modes
+- Legacy CLI Menu
+- Ncurses-based TUI Navigator
+
 ### Data Structures
 - Singly Linked List (SLL)
 - Doubly Linked List (DLL)
 - Singly Circular Linked List (SCLL)
+- Doubly circularly Linked list(DCLL)
 - Simple Queue (Linear Queue, array-based)
 - Circular Queue (array-based)
 - Double-Ended Queue (Deque) (array-based)
 - Stack (array-based / linked-list-based as required)
+- Priority Queue(heap based)
+
+### Trees
 - Binary Search Tree (BST)-recursive
 - Threaded Binary Tree (TBT)
-- Priority Queue(heap based)
 - AVL Tree (self-balancing insertions & deletions)
+- Trie
+- B+ Tree
+- B- Tree
+
 
 ### Algorithms
 
 #### Expression Processing
 - Step-by-step visualization for Infix → Postfix conversion
 - Step-by-step visualization for Postfix expression evaluation
+- visualization for Parentheses Checking
 
 #### Searching
 - Linear Search
 - Binary Search
+- Interpolation Search
+- Jump Search
 
 #### Sorting (O(n²) family)
 - Bubble Sort
 - Selection Sort
 - Insertion Sort
+- Shell Sort
 
 #### Advanced Sorting Algorithms
 - Quick sort
 - Merge sort
 - Heap sort
 - Radix sort (LSD, interactive demo)
+- Bucket sort
+ 
+#### Error Correction Algorithms
+- Checksum [Sender and Receiver verification]
+- Cyclic Redundancy Check (CRC) [Sender and Receiver verification]
+- Longitudinal Redundancy Check (LRC) [Sender and Receiver verification]
+- Vertical Redundancy Check (VRC) [Sender and Receiver verification]
+- Hamming Code [Sender and Receiver verification]
+- Parity Bit Generator
+
+#### Backtracking Algorithms
+- Rat in a Maze
+- Graph Coloring
+- Sudoku Solver 6*6
+- Knight's tour
+- N Queen's algorithm
+
+#### Dynamic Programming
+- Fibonacci
+- Longest Common Subsequence (LCS)
+- 0/1 Knapsack
+- Matrix Chain Multiplication (MCM)
+
+#### Job scheduling
+* FCFS(First come,First Served)
+* SJF( Shortest Job First)
+* Priority Scheduling
+* SRTF (Shortest Remaining Time First)
+* Preemptive Scheduling
 
 #### Graph Algorithms
+- GBFS (Greedy Breadth First Search)
 - BFS
 - DFS
 - Dijkstra
 - Bellman-Ford
 - Floyd-Warshall
-- A*
+- A* (Search algorithm)
 - Topological Sort
 - Kruskal MST
 - Prim MST
@@ -160,30 +235,37 @@ Double Hashing uses a second hash function to calculate probe steps, reducing cl
 
 Quadratic Probing resolves collisions by using quadratic increments (i²) to reduce clustering compared to linear probing.
 
+#### String Algorithms
+
+- Naive String Matching
+- Knuth-Morris-Pratt (KMP) Algorithm
+- Rabin-Karp Algorithm
+
 ---
 
 ## Time Complexity
 
 ### Searching Algorithms
-
 * Linear Search: **O(n)**
 * Binary Search: **O(logn)**
+* Interpolation Search: **O(log(logn))**
+* Jump Search: **O(√n)**
 
 ### Sorting Algorithms
-
 * Bubble Sort: **O(n²)**
 * Selection Sort: **O(n²)**
 * Insertion Sort: **O(n²)**
+* Shell sort: **O(nlogn)**
 
 ### Advanced Sorting Algorithms
-
 * Quick sort: **O(n²)**
 * Merge sort: **O(nlogn)**
 * Heap sort: **O(nlogn)**
 * Radix sort (LSD): **O(nk)**
+* Bucket sort :**O(n+k)**
 
 ### Graph Traversals (Adjacency List)
-
+* GBFS: **O(b^m)**
 * BFS: **O(V+E)**
 * DFS: **O(V+E)**
 * Dijkstra's Algorithm: **O((V+E)log V)**
@@ -192,6 +274,32 @@ Quadratic Probing resolves collisions by using quadratic increments (i²) to red
 * Bellman-Ford: **O(V·E)**
 * Floyd-Warshall: **O(V³)**
 * Topological Sort (Kahn's Algorithm): **O(V+E)**
+
+### Job scheduling
+* FCFS(First come,First Served): **O(n)**
+* SJF( Shortest Job First): **O(nlogn+n)**
+* Priority Scheduling: **O(nlogn)**
+* SRTF (Shortest Remaining Time First): **O(nlogn)**
+* Preemptive Priority Scheduling: **O(nlogn)**
+
+### String Algorithms
+* Naive String Matching: **O(n-m+1)**
+* Knuth-Morris-Pratt (KMP) Algorithm: **O(n+m)**
+* Rabin-Karp Algorithm: **O(n.m)**
+
+### Dynamic Programming
+* Fibonacci (DP): **O(n)**
+* Longest Common Subsequence (LCS): **O(nm)**
+* 0/1 Knapsack: **O(nW)**
+* Matrix Chain Multiplication: **O(n³)**
+
+### Backtracking Algorithms
+* Rat in a Maze: **O(4^(n²))** 
+* Graph Coloring: **O(m^V)**
+* Sudoko solver: **O(6^m)**
+* Knight's tour:**O(8^(n^2))**
+* N Queen's algorithm: **O(N!)**
+
 
 ---
 
@@ -224,11 +332,14 @@ Quadratic Probing resolves collisions by using quadratic increments (i²) to red
 * Priority Queue (min-heap) integrated into Dijkstra for efficient vertex extraction
 * Priority Queue support for other graph algorithms and future extensions
 
+
 ### Threaded Binary Tree (TBT)
+
 * Binary tree with threads replacing NULL pointers
 * Enables efficient inorder traversal without recursion or stack
 * Traversal runs in O(n) time with reduced overhead compared to standard BST traversal
 * Useful for educational comparison with BST and AVL Tree
+
 
 ### Priority Queue
 
@@ -236,12 +347,65 @@ Quadratic Probing resolves collisions by using quadratic increments (i²) to red
 * Efficient insertion and removal operations
 * Reusable component for graph algorithms and future extensions
 
+
 ### AVL Tree
+
 * Self-balancing binary search tree  
 * Rotations (LL, RR, LR, RL) ensure height balance  
 * Guarantees O(log n) search, insertion, and deletion
+
   
+### Terminal User Interface (TUI)
+
+- Built using ncurses
+- Provides a structured navigation experience
+- Supports browsing algorithms and data structures from a single interface
+- Includes split-pane visualizations where applicable
+- Can coexist with the traditional menu-driven interface
+
+### Dynamic Programming
+
+- Interactive demonstrations of classic DP problems
+- Educational implementations with clear execution flow
+
+### Backtracking Algorithms
+
+- Recursive solution visualization
+- Educational exploration of state-space search
+
+
+### String Algorithms
+
+- Interactive pattern matching demonstrations
+- Supports user-defined text and pattern input
+- Educational visualization of string searching techniques
+
+#### Naive String Matching
+
+- Compares the pattern at every possible position
+- Simple baseline algorithm for learning purposes
+
+#### Knuth-Morris-Pratt (KMP)
+
+- Uses the LPS (Longest Prefix Suffix) array
+- Avoids redundant comparisons
+- Efficient linear-time pattern matching
+
+#### Rabin-Karp
+
+- Uses rolling hash computation
+- Efficient for multiple pattern matching scenarios
+- Demonstrates hash-based string searching
+
 ---
+
+### Utility Components
+
+- Safe Input System
+- Cross-platform screen clearing
+- Cross-platform delay utilities
+- CSV input support for graph algorithms
+- Benchmark logging framework
 
 ### Expression Evaluation
 
