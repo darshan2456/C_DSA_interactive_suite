@@ -1,6 +1,7 @@
 #include "cross_platform.h"
 #include "safe_input.h"
 #include "stack.h"
+#include "clear_screen.h"
 #include <ctype.h>
 #include <stdio.h>
 
@@ -46,6 +47,7 @@ void postfix_evaluation_Demo(void)
         int current_result = 0;
         while (postfix_expr[i] != '\0')
         {
+            clear_screen();
             action_msg[0] = '\0';
             char ch = postfix_expr[i];
             if (isdigit(ch))
@@ -129,7 +131,7 @@ void postfix_evaluation_Demo(void)
             }
 
             i++;
-            sleep_seconds(1);
+            sleep_seconds(2);
         }
 
         int final_result = pop(operands);
