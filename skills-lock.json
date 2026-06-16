@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "skills": {
+    "architecture-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/backend-development/skills/architecture-patterns/SKILL.md",
+      "computedHash": "abdf3457f8a947a0079acde1517ecbce2cb46ff20b9ce4bf74f3b98827fea7c7"
+    },
+    "c-data-structures": {
+      "source": "thebushidocollective/han",
+      "sourceType": "github",
+      "skillPath": "plugins/languages/c/skills/c-data-structures/SKILL.md",
+      "computedHash": "81fd00854dd94c4fe067fc9ca564bd92ac2e013d03002eb6adba2f610c57093f"
+    },
+    "code-review-excellence": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/developer-essentials/skills/code-review-excellence/SKILL.md",
+      "computedHash": "89b2a6a234f6368b12f0232e1d77bd5ed894115114edf67eb1f2976e153664c0"
+    },
+    "codebase-summarizer": {
+      "source": "patricio0312rev/skills",
+      "sourceType": "github",
+      "skillPath": "foundation/codebase-summarizer/SKILL.md",
+      "computedHash": "8e04c027f7309070b00d085717daa16d95d5019df291b978d2b8dcd6f49de716"
+    },
+    "conventional-commit": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "skillPath": "skills/conventional-commit/SKILL.md",
+      "computedHash": "f29c9486cede6c7b2df0cfb0a2e4aa67446552b991bcf17d1b309e903171f03d"
+    },
+    "coverage-strategist": {
+      "source": "patricio0312rev/skills",
+      "sourceType": "github",
+      "skillPath": "testing/coverage-strategist/SKILL.md",
+      "computedHash": "166c333439053926233b5182f5ee5ae9eeebcf34b090fb2bf703ed24bd2a8bf3"
+    },
+    "github-actions-docs": {
+      "source": "xixu-me/skills",
+      "sourceType": "github",
+      "skillPath": "skills/github-actions-docs/SKILL.md",
+      "computedHash": "ead3fa2aff18e829c468dee593e1dc897aa95dc7a07d9ff8ff9f30c296b19af8"
+    },
+    "knip": {
+      "source": "brianlovin/claude-config",
+      "sourceType": "github",
+      "skillPath": "skills/knip/SKILL.md",
+      "computedHash": "96e70565ccfa71cb56bbb2a25241b9c7c25b83ebe691709c00da6cd9dab537b8"
+    },
+    "load-test-builder": {
+      "source": "patricio0312rev/skills",
+      "sourceType": "github",
+      "skillPath": "testing/load-test-builder/SKILL.md",
+      "computedHash": "2374f40dbcee9516b562cb3c418acd1993ed5770b6ed3d63941d2d2babe94b27"
+    },
+    "memory-safety-patterns": {
+      "source": "wshobson/agents",
+      "sourceType": "github",
+      "skillPath": "plugins/systems-programming/skills/memory-safety-patterns/SKILL.md",
+      "computedHash": "f516e181e086afa8dbd3e18c27a56c2b1271438968a23e5b3fa9261232626699"
+    },
+    "tech-debt-prioritizer": {
+      "source": "patricio0312rev/skills",
+      "sourceType": "github",
+      "skillPath": "architecture/tech-debt-prioritizer/SKILL.md",
+      "computedHash": "992b8fa77a10952d9f77df6b032c00632111aa729cdbf2570e02238957b908d4"
+    },
+    "test-data-factory-builder": {
+      "source": "patricio0312rev/skills",
+      "sourceType": "github",
+      "skillPath": "testing/test-data-factory-builder/SKILL.md",
+      "computedHash": "655f5ba5389241a021313d9a1b384c19a3b0ad3672206cf6bcb8760708fa832d"
+    }
+  }
+}
