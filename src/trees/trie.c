@@ -24,7 +24,11 @@ void trie_insert(TrieNode* root, const char* word)
         if (idx < 0 || idx >= TRIE_ALPHA_SIZE)
             return;
         if (curr->children[idx] == NULL)
+        {
             curr->children[idx] = trie_create_node();
+            if (curr->children[idx] == NULL)
+                return;
+        }
         curr = curr->children[idx];
     }
     curr->is_end = 1;
