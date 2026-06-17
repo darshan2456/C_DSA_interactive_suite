@@ -264,9 +264,17 @@ start_sll:
                 continue;
             }
 
-            sll_deleteByValue(&head, sll_delete_value);
-            printf("\nsll after deletion - ");
-            sll_printlist(head);
+            int status=sll_deleteByValue(&head, sll_delete_value);
+            if(status==-2){
+                printf("\nList is empty.Nothing to delete.");
+            }
+            else if(status==-1){
+                printf("\nelement not found");
+            }
+            else{
+                printf("\nsll after deletion - ");
+                sll_printlist(head);
+            }
         }
         else if (sll_delete_choice == 1)
         {
