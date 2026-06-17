@@ -128,7 +128,7 @@ test_kruskal: $(TEST_DIR)/test_kruskal$(EXE)
 $(TEST_DIR)/test_kruskal$(EXE): $(filter-out $(OBJ_DIR)/src/data_structures/main.o, $(OBJS)) tests/test_kruskal.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-	-objcopy --remove-section=.comment $@
+	
 
 test_floyd_warshall: $(TEST_DIR)/test_floyd_warshall$(EXE)
 	$(TEST_DIR)/test_floyd_warshall$(EXE)
@@ -143,7 +143,7 @@ test_prim: $(TEST_DIR)/test_prim$(EXE)
 $(TEST_DIR)/test_prim$(EXE): $(filter-out $(OBJ_DIR)/src/data_structures/main.o, $(OBJS)) tests/test_prim.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-	-objcopy --remove-section=.comment $@
+	
 
 test_tbt: $(TEST_DIR)/test_tbt$(EXE)
 	$(TEST_DIR)/test_tbt$(EXE)
