@@ -7,20 +7,20 @@
 #include <stdio.h>
 #include <string.h>
 
-static int precedence(char ch)
-{
-    if (ch == '*' || ch == '/')
-        return 2;
-    else if (ch == '+' || ch == '-')
-        return 1;
+// static int precedence(char ch)
+// {
+//     if (ch == '*' || ch == '/')
+//         return 2;
+//     else if (ch == '+' || ch == '-')
+//         return 1;
 
-    return -1;
-}
+//     return -1;
+// }
 
-static int isOperator(char ch)
-{
-    return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
-}
+// static int isOperator(char ch)
+// {
+//     return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
+// }
 
 static void reverse_string(char* str)
 {
