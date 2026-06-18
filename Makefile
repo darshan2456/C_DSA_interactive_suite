@@ -20,7 +20,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/dynamic_programming \
 	-Isrc/string_algorithms \
 	-Isrc/backtracking \
-	-Isrc/job_scheduling
+	-Isrc/process_synchronization
 	# -Isrc/tui
 
 # LDFLAGS = -lncurses
@@ -39,7 +39,8 @@ SRC_DIRS = \
 	src/job_scheduling \
 	src/dynamic_programming \
 	src/string_algorithms \
-	src/backtracking
+	src/backtracking \
+	src/process_synchronization
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))

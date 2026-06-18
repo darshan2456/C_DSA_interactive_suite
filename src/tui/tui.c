@@ -12,6 +12,7 @@
 #include "sorting_algorithms_n2.h"
 #include "searching_algorithms.h"
 #include "job_scheduling.h"
+#include "process_synchronization.h"
 #include "hash.h"
 #include "graph_traversals.h"
 #include "error_correction_algorithms.h"
@@ -144,6 +145,11 @@ static Entry ENTRIES[] = {
     {"Priority (Non-Preemptive)", priority_scheduling_demo, 0, 0, 1},
     {"Preemptive Priority", preemptive_priority_demo, 0, 0, 1},
     {"Round Robin", round_robin_demo, 0, 0, 1},
+
+    {"process_synchronization", NULL, 1, 1, 0},
+    {"Producer-Consumer", producer_consumer_demo, 0, 0, 1},
+    {"Dining Philosophers", dining_philosophers_demo, 0, 0, 1},
+    {"Peterson's Algorithm", petersons_algorithm_demo, 0, 0, 1},
 
     {"string_algorithms", NULL, 1, 1, 0},
     {"Naive String Matching", naive_string_matching_demo, 0, 0, 1},

@@ -7,6 +7,7 @@
 #include "graph_traversals.h"
 #include "hash.h"
 #include "job_scheduling.h"
+#include "process_synchronization.h"
 #include "safe_input.h"
 #include "searching_algorithms.h"
 #include "sorting_algorithms_n2.h"
@@ -45,8 +46,9 @@ void run_legacy_menu(){
                 "click 11 for backtracking algorithms demo\n"
                 "click 12 for dynamic programming algorithms demo\n"
                 "click 13 for string algorithms demo\n"
+                "click 14 for process synchronization algorithms demo\n"
                 "enter choice : ",
-                1, 13 // limits
+                1, 14 // limits
             );
     
             if (status == -111)
@@ -99,6 +101,9 @@ void run_legacy_menu(){
                     break;
                 case 13:
                     string_algorithms_demo();
+                    break;
+                case 14:
+                    process_synchronization_demo();
                     break;
             }
         }
