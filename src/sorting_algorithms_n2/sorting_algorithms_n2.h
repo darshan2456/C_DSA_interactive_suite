@@ -6,6 +6,8 @@ void insertion_sort_demo(void);
 void selection_sort_demo(void);
 void shell_sort_demo(void);
 void sorting_algorithms_n2_demo(void);
+void bubble_sort_optimized(int arr[], int length_of_array);
+void insertion_sort(int arr[], int length_of_array);
 void selection_sort(int arr[], int length_of_array);
 void shell_sort(int arr[], int length_of_array);
 

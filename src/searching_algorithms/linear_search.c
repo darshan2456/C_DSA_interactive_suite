@@ -98,10 +98,13 @@ void linear_search_demo(void)
     }
 }
 
+#include "benchmark.h"
+
 int linear_search(int arr[], int target, int length_of_array)
 {
     for (int i = 0; i < length_of_array; i++)
     {
+        benchmark_comparisons++;
         if (arr[i] == target)
         {
             return i;

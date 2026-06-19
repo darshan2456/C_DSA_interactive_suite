@@ -170,14 +170,14 @@ $(TEST_DIR)/test_bst$(EXE): $(OBJ_DIR)/src/trees/bst.o $(OBJ_DIR)/src/utils/safe
 test_search: $(TEST_DIR)/test_search$(EXE)
 	$(TEST_DIR)/test_search$(EXE)
 
-$(TEST_DIR)/test_search$(EXE): $(OBJ_DIR)/src/searching_algorithms/linear_search.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/searching_algorithms/binary_search.o $(OBJ_DIR)/src/searching_algorithms/interpolation_search.o $(OBJ_DIR)/src/searching_algorithms/jump_search.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o tests/test_search.c
+$(TEST_DIR)/test_search$(EXE): $(OBJ_DIR)/src/utils/benchmark_vars.o $(OBJ_DIR)/src/searching_algorithms/linear_search.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/searching_algorithms/binary_search.o $(OBJ_DIR)/src/searching_algorithms/interpolation_search.o $(OBJ_DIR)/src/searching_algorithms/jump_search.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o tests/test_search.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_hash_func: $(TEST_DIR)/test_hash_func$(EXE)
 	$(TEST_DIR)/test_hash_func$(EXE)
 
-$(TEST_DIR)/test_hash_func$(EXE): $(OBJ_DIR)/src/hashing/linear_probing.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/searching_algorithms/linear_search.o tests/test_hash_function.c
+$(TEST_DIR)/test_hash_func$(EXE): $(OBJ_DIR)/src/utils/benchmark_vars.o $(OBJ_DIR)/src/hashing/linear_probing.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/searching_algorithms/linear_search.o tests/test_hash_function.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -212,7 +212,7 @@ $(TEST_DIR)/test_stack$(EXE): $(OBJ_DIR)/src/expression_evaluation/stack.o $(OBJ
 test_priority_queue: $(TEST_DIR)/test_priority_queue$(EXE)
 	$(TEST_DIR)/test_priority_queue$(EXE)
 
-$(TEST_DIR)/test_priority_queue$(EXE): $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/data_structures/priority_queue.o tests/test_priority_queue.c
+$(TEST_DIR)/test_priority_queue$(EXE): $(OBJ_DIR)/src/utils/benchmark_vars.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/data_structures/priority_queue.o tests/test_priority_queue.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -289,21 +289,21 @@ $(TEST_DIR)/test_history_logger$(EXE): $(OBJ_DIR)/src/utils/history_logger.o tes
 test_shell_sort: $(TEST_DIR)/test_shell_sort$(EXE)
 	$(TEST_DIR)/test_shell_sort$(EXE)
 
-$(TEST_DIR)/test_shell_sort$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/shell_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o tests/test_shell_sort.c
+$(TEST_DIR)/test_shell_sort$(EXE): $(OBJ_DIR)/src/utils/benchmark_vars.o $(OBJ_DIR)/src/sorting_algorithms_n2/shell_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o tests/test_shell_sort.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_sorting_n2: $(TEST_DIR)/test_sorting_n2$(EXE)
 	$(TEST_DIR)/test_sorting_n2$(EXE)
 
-$(TEST_DIR)/test_sorting_n2$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/bubble_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/insertion_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o tests/test_sorting_n2.c
+$(TEST_DIR)/test_sorting_n2$(EXE): $(OBJ_DIR)/src/utils/benchmark_vars.o $(OBJ_DIR)/src/sorting_algorithms_n2/bubble_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/insertion_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o tests/test_sorting_n2.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_advanced_sorting: $(TEST_DIR)/test_advanced_sorting$(EXE)
 	$(TEST_DIR)/test_advanced_sorting$(EXE)
 
-$(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/advanced_sorting_algorithms/quick_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/merge_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/heap_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/radix_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/bucket_sort.o $(OBJ_DIR)/src/data_structures/priority_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o tests/test_advanced_sorting.c
+$(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/utils/benchmark_vars.o $(OBJ_DIR)/src/advanced_sorting_algorithms/quick_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/merge_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/heap_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/radix_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/bucket_sort.o $(OBJ_DIR)/src/data_structures/priority_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o tests/test_advanced_sorting.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

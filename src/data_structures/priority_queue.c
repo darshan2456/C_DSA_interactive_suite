@@ -1,5 +1,6 @@
 #include "data_structures.h"
 #include "safe_input.h"
+#include "benchmark.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,6 +41,7 @@ int insert(priority_queue* pq, int val)
     while (i > 0)
     {
         int parent = (i - 1) / 2;
+        benchmark_comparisons++;
         if (pq->heapType == MIN_HEAP)
         {
             if (pq->heap[i] >= pq->heap[parent])
@@ -50,6 +52,7 @@ int insert(priority_queue* pq, int val)
             if (pq->heap[i] <= pq->heap[parent])
                 break;
         }
+        benchmark_swaps++;
         swap(&pq->heap[i], &pq->heap[parent]);
         i = parent;
     }
@@ -79,24 +82,41 @@ bool extractTop(priority_queue* pq, int* result)
 
         if (pq->heapType == MIN_HEAP)
         {
-            if (left < pq->size && pq->heap[left] < pq->heap[target])
-                target = left;
+            if (left < pq->size)
+            {
+                benchmark_comparisons++;
+                if (pq->heap[left] < pq->heap[target])
+                    target = left;
+            }
 
-            if (right < pq->size && pq->heap[right] < pq->heap[target])
-                target = right;
+            if (right < pq->size)
+            {
+                benchmark_comparisons++;
+                if (pq->heap[right] < pq->heap[target])
+                    target = right;
+            }
         }
         else
         {
-            if (left < pq->size && pq->heap[left] > pq->heap[target])
-                target = left;
+            if (left < pq->size)
+            {
+                benchmark_comparisons++;
+                if (pq->heap[left] > pq->heap[target])
+                    target = left;
+            }
 
-            if (right < pq->size && pq->heap[right] > pq->heap[target])
-                target = right;
+            if (right < pq->size)
+            {
+                benchmark_comparisons++;
+                if (pq->heap[right] > pq->heap[target])
+                    target = right;
+            }
         }
 
         if (target == i)
             break;
 
+        benchmark_swaps++;
         swap(&pq->heap[i], &pq->heap[target]);
         i = target;
     }

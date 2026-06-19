@@ -2,6 +2,7 @@
 #include "history_logger.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
@@ -70,11 +71,20 @@ void insertion_sort(int arr[], int length_of_array)
         int key = arr[i];
         int j = i - 1;
         visualize_sort(arr, length_of_array, i, -1, -1, "Insertion Sort: Selecting key");
-        while (j >= 0 && arr[j] > key)
+        while (j >= 0)
         {
-            visualize_sort(arr, length_of_array, j, j + 1, -1, "Insertion Sort: Shifting element");
-            arr[j + 1] = arr[j];
-            j--;
+            benchmark_comparisons++;
+            if (arr[j] > key)
+            {
+                visualize_sort(arr, length_of_array, j, j + 1, -1, "Insertion Sort: Shifting element");
+                arr[j + 1] = arr[j];
+                benchmark_swaps++;
+                j--;
+            }
+            else
+            {
+                break;
+            }
         }
         arr[j + 1] = key;
         visualize_sort(arr, length_of_array, j + 1, -1, -1, "Insertion Sort: Inserting key");

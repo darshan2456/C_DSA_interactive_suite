@@ -2,6 +2,7 @@
 #include "history_logger.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
@@ -77,11 +78,20 @@ void shell_sort(int arr[], int length_of_array)
             visualize_sort(arr, length_of_array, i, -1, -1,
                            "Shell Sort: Selecting element for insertion");
             // Shift earlier gap-sorted elements up until correct location is found
-            for (j = i; j >= gap && arr[j - gap] > temp; j -= gap)
+            for (j = i; j >= gap; j -= gap)
             {
-                visualize_sort(arr, length_of_array, j, j - gap, -1,
-                               "Shell Sort: Shifting elements");
-                arr[j] = arr[j - gap];
+                benchmark_comparisons++;
+                if (arr[j - gap] > temp)
+                {
+                    visualize_sort(arr, length_of_array, j, j - gap, -1,
+                                   "Shell Sort: Shifting elements");
+                    arr[j] = arr[j - gap];
+                    benchmark_swaps++;
+                }
+                else
+                {
+                    break;
+                }
             }
             arr[j] = temp;
             visualize_sort(arr, length_of_array, j, -1, -1, "Shell Sort: Inserting element");

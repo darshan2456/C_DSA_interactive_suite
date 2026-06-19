@@ -45,6 +45,8 @@ static int integer_sqrt(int n)
     return ans;
 }
 
+#include "benchmark.h"
+
 int jump_search(int arr[], int target, int length_of_array)
 {
     if (length_of_array <= 0)
@@ -55,18 +57,28 @@ int jump_search(int arr[], int target, int length_of_array)
     int step = integer_sqrt(length_of_array);
     int prev = 0;
 
-    while (arr[prev + step - 1 < length_of_array ? prev + step - 1 : length_of_array - 1] < target)
+    while (1)
     {
-        prev += step;
-        if (prev >= length_of_array)
+        int idx = prev + step - 1 < length_of_array ? prev + step - 1 : length_of_array - 1;
+        benchmark_comparisons++;
+        if (arr[idx] < target)
         {
-            return -1;
+            prev += step;
+            if (prev >= length_of_array)
+            {
+                return -1;
+            }
+        }
+        else
+        {
+            break;
         }
     }
 
     int limit = prev + step < length_of_array ? prev + step : length_of_array;
     for (int i = prev; i < limit; i++)
     {
+        benchmark_comparisons++;
         if (arr[i] == target)
         {
             return i;

@@ -1,6 +1,7 @@
 #include "history_logger.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <time.h>
 
@@ -21,24 +22,45 @@ static int partition(int arr[], int low, int high, int total_len)
 
     while (1)
     {
-        while (left <= right && arr[left] <= pivot)
+        while (left <= right)
         {
-            visualize_sort(arr, total_len, left, -1, low, "Quick Sort: Scanning left");
-            left++;
+            benchmark_comparisons++;
+            if (arr[left] <= pivot)
+            {
+                visualize_sort(arr, total_len, left, -1, low, "Quick Sort: Scanning left");
+                left++;
+            }
+            else
+            {
+                break;
+            }
         }
-        while (arr[right] > pivot)
+        while (1)
         {
-            visualize_sort(arr, total_len, right, -1, low, "Quick Sort: Scanning right");
-            right--;
+            benchmark_comparisons++;
+            if (arr[right] > pivot)
+            {
+                visualize_sort(arr, total_len, right, -1, low, "Quick Sort: Scanning right");
+                right--;
+            }
+            else
+            {
+                break;
+            }
         }
         if (left >= right)
             break;
 
         visualize_sort(arr, total_len, left, right, low,
                        "Quick Sort: Swapping out-of-order elements");
+        benchmark_swaps++;
         swap(&arr[left], &arr[right]);
     }
     visualize_sort(arr, total_len, low, right, -1, "Quick Sort: Placing pivot in correct position");
+    if (low != right)
+    {
+        benchmark_swaps++;
+    }
     swap(&arr[low], &arr[right]);
 
     return right;

@@ -97,6 +97,8 @@ void binary_search_demo(void)
     }
 }
 
+#include "benchmark.h"
+
 int binary_search(int arr[], int target, int length_of_array)
 {
     int low = 0;
@@ -105,6 +107,7 @@ int binary_search(int arr[], int target, int length_of_array)
 
     if (length_of_array == 1)
     {
+        benchmark_comparisons++;
         if (arr[0] == target)
         {
             return 0;
@@ -116,17 +119,22 @@ int binary_search(int arr[], int target, int length_of_array)
     { // main loop which performs the binary search algorithm
         mid = low + (high - low) / 2;
         // printf("DEBUG: low=%d, mid=%d, high=%d, arr[mid]=%d\n", low, mid, high, arr[mid]);
+        benchmark_comparisons++;
         if (arr[mid] == target)
         {
             return mid;
         }
-        else if (arr[mid] < target)
-        {
-            low = mid + 1;
-        }
         else
         {
-            high = mid - 1;
+            benchmark_comparisons++;
+            if (arr[mid] < target)
+            {
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
+            }
         }
     }
 

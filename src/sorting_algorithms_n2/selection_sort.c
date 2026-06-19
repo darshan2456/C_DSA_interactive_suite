@@ -2,6 +2,7 @@
 #include "history_logger.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
@@ -66,6 +67,7 @@ void selection_sort(int arr[], int length_of_array)
         {
             visualize_sort(arr, length_of_array, j, min_index, i,
                            "Selection Sort: Comparing elements");
+            benchmark_comparisons++;
             if (arr[j] < arr[min_index])
             {
                 min_index = j;
@@ -77,6 +79,7 @@ void selection_sort(int arr[], int length_of_array)
             int temp = arr[min_index];
             arr[min_index] = arr[i];
             arr[i] = temp;
+            benchmark_swaps++;
             visualize_sort(arr, length_of_array, i, min_index, -1,
                            "Selection Sort: Swapping elements");
         }

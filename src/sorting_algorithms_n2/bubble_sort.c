@@ -2,6 +2,7 @@
 #include "history_logger.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
@@ -71,12 +72,14 @@ void bubble_sort_optimized(int arr[], int length_of_array)
         for (int j = 0; j < length_of_array - i - 1; j++)
         { // Swapping happens here
             visualize_sort(arr, length_of_array, j, j + 1, -1, "Bubble Sort: Comparing elements");
+            benchmark_comparisons++;
             if (arr[j] > arr[j + 1])
             {
                 int temp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
                 swapped = 1;
+                benchmark_swaps++;
                 visualize_sort(arr, length_of_array, j, j + 1, -1,
                                "Bubble Sort: Swapping elements");
             }

@@ -18,15 +18,25 @@
  * Worst Case: O(n)
  */
 
+#include "benchmark.h"
+
 int interpolation_search(int arr[], int target, int length_of_array)
 {
     int low = 0;
     int high = length_of_array - 1;
 
-    while (low <= high && target >= arr[low] && target <= arr[high])
+    while (1)
     {
+        if (!(low <= high)) break;
+        benchmark_comparisons++;
+        if (!(target >= arr[low])) break;
+        benchmark_comparisons++;
+        if (!(target <= arr[high])) break;
+
+        benchmark_comparisons++;
         if (arr[low] == arr[high])
         {
+            benchmark_comparisons++;
             if (arr[low] == target)
                 return low;
             return -1;
@@ -35,9 +45,11 @@ int interpolation_search(int arr[], int target, int length_of_array)
         int pos =
             low + (int)(((double)(high - low) / (arr[high] - arr[low])) * (target - arr[low]));
 
+        benchmark_comparisons++;
         if (arr[pos] == target)
             return pos;
 
+        benchmark_comparisons++;
         if (arr[pos] < target)
             low = pos + 1;
         else

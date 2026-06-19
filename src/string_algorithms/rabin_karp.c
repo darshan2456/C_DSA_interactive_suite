@@ -60,6 +60,8 @@ void rabin_karp_search(char* text, char* pattern, int q)
                 t = (t + q);
         }
     }
+    (void)found;
+    (void)collisions;
 }
 
 void rabin_karp_visualization(char* text, char* pattern, int q)

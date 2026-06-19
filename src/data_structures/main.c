@@ -14,6 +14,7 @@
 #include "sorting_algorithms_n2.h"
 #include "string_algorithms.h"
 #include "trees.h"
+#include "benchmark.h"
 #ifndef _WIN32
 #include "tui.h"
 #endif
@@ -49,8 +50,9 @@ void run_legacy_menu()
             "click 13 for string algorithms demo\n"
             "click 14 for process synchronization algorithms demo\n"
             "click 15 for setting animation speed (by default 2s)\n"
+            "click 16 for performance benchmark mode\n"
             "enter choice : ",
-            1, 15 // limits
+            1, 16 // limits
         );
 
         if (status == -111)
@@ -109,6 +111,9 @@ void run_legacy_menu()
                 break;
             case 15:
                 settings_menu_demo();
+                break;
+            case 16:
+                run_benchmark_menu();
                 break;
         }
     }

@@ -22,6 +22,7 @@
 #include "trees.h"
 #include "tui.h"
 #include "../utils/config.h"
+#include "benchmark.h"
 
 /* ── types ──────────────────────────────────────────────────────────────────── */
 typedef void (*demo_fn)(void);
@@ -55,6 +56,9 @@ static Entry ENTRIES[] = {
     /* name                    fn          folder  expanded  depth */
     {"Animation speed (s)", NULL, 1, 1, 0},
     {"Set Animation Speed", settings_menu_demo, 0, 0, 1},
+
+    {"Benchmarks", NULL, 1, 1, 0},
+    {"Performance Benchmark Mode", run_benchmark_menu, 0, 0, 1},
 
 
     {"data_structures", NULL, 1, 1, 0},

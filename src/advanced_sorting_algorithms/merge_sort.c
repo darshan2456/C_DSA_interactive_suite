@@ -1,6 +1,7 @@
 #include "advanced_sorting.h"
 #include "history_logger.h"
 #include "safe_input.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -37,6 +38,7 @@ static void merge(int arr[], int left, int mid, int right)
 
     while (i < left_length && j < right_length) // merging of two sorted halves back into arr
     {
+        benchmark_comparisons++;
         if (left_array[i] <= right_array[j])
         {
             arr[k++] = left_array[i++];
@@ -45,15 +47,18 @@ static void merge(int arr[], int left, int mid, int right)
         {
             arr[k++] = right_array[j++];
         }
+        benchmark_swaps++;
     }
 
     while (i < left_length) // if right array was completed but left was not
     {
         arr[k++] = left_array[i++];
+        benchmark_swaps++;
     }
     while (j < right_length) // if left array was completed but right was not
     {
         arr[k++] = right_array[j++];
+        benchmark_swaps++;
     }
 
     free(left_array);
