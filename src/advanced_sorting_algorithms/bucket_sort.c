@@ -2,11 +2,12 @@
 #include "data_structures.h"
 #include "history_logger.h"
 #include "safe_input.h"
+#include "sorting_visualizer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-void bucket_sort(int arr[], int n)
+static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_len)
 {
     if (n <= 1)
     {
@@ -77,7 +78,12 @@ void bucket_sort(int arr[], int n)
 
         if (bucket_size == 1)
         {
-            arr[arr_idx++] = buckets[i]->data;
+            arr[arr_idx] = buckets[i]->data;
+            if (is_top_level)
+            {
+                visualize_sort(arr, total_len, arr_idx, -1, -1, "Bucket Sort: Gathering elements back to main array");
+            }
+            arr_idx++;
             delete_sll(buckets[i]);
             buckets[i] = NULL;
         }
@@ -107,12 +113,17 @@ void bucket_sort(int arr[], int n)
             buckets[i] = NULL;
 
             // Recursively sort the elements in the bucket
-            bucket_sort(temp_arr, bucket_size);
+            bucket_sort_internal(temp_arr, bucket_size, 0, bucket_size);
 
             // Copy the sorted elements back to the main array
             for (int temp_idx_gather = 0; temp_idx_gather < bucket_size; temp_idx_gather++)
             {
-                arr[arr_idx++] = temp_arr[temp_idx_gather];
+                arr[arr_idx] = temp_arr[temp_idx_gather];
+                if (is_top_level)
+                {
+                    visualize_sort(arr, total_len, arr_idx, -1, -1, "Bucket Sort: Gathering sorted bucket elements back to main array");
+                }
+                arr_idx++;
             }
 
             free(temp_arr);
@@ -120,6 +131,11 @@ void bucket_sort(int arr[], int n)
     }
 
     free(buckets);
+}
+
+void bucket_sort(int arr[], int n)
+{
+    bucket_sort_internal(arr, n, 1, n);
 }
 
 void bucket_sort_demo(void)
