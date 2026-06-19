@@ -156,3 +156,8 @@ void rat_in_maze_demo(void)
         }
     }
 }
+// --- TEST WRAPPER ---
+bool run_rat_in_maze_test(int test_maze[6][6]) {
+    int solution[6][6] = {0};
+    return solve_maze_util(test_maze, 0, 0, solution);
+}

@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../utils/config.h"
-
 #include "clear_screen.h"
 
 #define N 6
@@ -183,4 +182,27 @@ void sudoku_demo(void)
             printf("\nNo solution exists for this Sudoku.\n");
         }
     }
+}
+// --- TEST WRAPPER ---
+bool run_sudoku_test(int test_grid[6][6]) {
+    // 1. Validate the initial board before attempting to solve!
+    for (int r = 0; r < 6; r++) {
+        for (int c = 0; c < 6; c++) {
+            if (test_grid[r][c] != 0) {
+                int temp = test_grid[r][c];
+                test_grid[r][c] = 0; // Temporarily clear it
+                // Check if this pre-filled number is actually legal
+                if (!is_safe_sudoku(test_grid, r, c, temp)) {
+                    test_grid[r][c] = temp; // Put it back
+                    return false; // Reject: The initial board violates Sudoku rules!
+                }
+                test_grid[r][c] = temp; // Put it back
+            }
+        }
+    }
+
+    // 2. If the initial state is valid, proceed with solving
+    placements = 0;
+    backtracks = 0;
+    return solve_sudoku_util(test_grid, 0, 0);
 }

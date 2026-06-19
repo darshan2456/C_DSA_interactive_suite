@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "../utils/config.h"
 
 #include "cross_platform_timer.h"
@@ -112,4 +113,12 @@ void n_queens_demo(void)
             printf("\nSolution found successfully!\n");
         }
     }
+}
+// --- TEST WRAPPER ---
+bool run_n_queens_test(int n) {
+    char board[MAX_N][MAX_N];
+    for (int i = 0; i < MAX_N; i++)
+        for (int j = 0; j < MAX_N; j++)
+            board[i][j] = '.';
+    return solve_n_queens_util(n, board, 0);
 }

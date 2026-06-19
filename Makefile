@@ -307,6 +307,24 @@ $(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/advanced_sorting_algorit
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
+test_backtracking: $(TEST_DIR)/test_backtracking$(EXE)
+	$(TEST_DIR)/test_backtracking$(EXE)
+
+$(TEST_DIR)/test_backtracking$(EXE): \
+	$(OBJ_DIR)/src/backtracking/n_queens.o \
+	$(OBJ_DIR)/src/backtracking/sudoku.o \
+	$(OBJ_DIR)/src/backtracking/graph_coloring.o \
+	$(OBJ_DIR)/src/backtracking/rat_in_maze.o \
+	$(OBJ_DIR)/src/backtracking/knights_tour.o \
+	$(OBJ_DIR)/src/utils/config.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o\
+	$(OBJ_DIR)/src/utils/clear_screen.o \
+	$(OBJ_DIR)/src/utils/cross_platform_timer.o \
+	$(OBJ_DIR)/src/utils/config.o \
+	tests/test_backtracking.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
 test_string_algorithms: $(TEST_DIR)/test_string_algorithms$(EXE)
 	$(TEST_DIR)/test_string_algorithms$(EXE)
 

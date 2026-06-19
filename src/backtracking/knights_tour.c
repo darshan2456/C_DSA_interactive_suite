@@ -3,6 +3,7 @@
 #include "cross_platform_timer.h"
 #include "safe_input.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
 #include "../utils/config.h"
@@ -64,7 +65,7 @@ static void print_board(int N, int board[8][8], int knight_x, int knight_y)
     printf("\nLegend: ♞ Knight | Numbers show sequence of moves\n");
     printf("Delay: %dms\n", delay_time);
     fflush(stdout);
-    sleep_seconds((float)delay_time / 1000);
+    dynamic_sleep();
 }
 
 // Standard Backtracking solver (no heuristic) - Good for small boards
@@ -224,4 +225,13 @@ void knights_tour_demo(void)
         }
         printf("Time taken: %f seconds\n", total_t);
     }
+}
+// --- TEST WRAPPER ---
+bool run_knights_tour_test(int n) {
+    int board[8][8];
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            board[i][j] = -1;
+    board[0][0] = 0;
+    return solve_standard(0, 0, 1, board, n) == 1;
 }

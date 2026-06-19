@@ -48,7 +48,7 @@ void run_legacy_menu()
             "click 12 for dynamic programming algorithms demo\n"
             "click 13 for string algorithms demo\n"
             "click 14 for process synchronization algorithms demo\n"
-            "click 15 for setting animation speed\n"
+            "click 15 for setting animation speed (by default 2s)\n"
             "enter choice : ",
             1, 15 // limits
         );

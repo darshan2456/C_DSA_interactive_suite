@@ -2,6 +2,7 @@
 #include "cross_platform_timer.h"
 #include "safe_input.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -389,4 +390,11 @@ void graph_coloring_demo(void)
         }
         printf("Time taken: %f seconds\n", total_t);
     }
+}
+// --- TEST WRAPPER ---
+bool run_graph_coloring_test(int colors_allowed) {
+    // Inject a K4 graph directly to bypass the menu selection
+    GraphTopology k4 = {"Test K4", 4, {{0, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 0}}};
+    int colors[MAX_V] = {0};
+    return solve_graph_coloring_util(&k4, colors_allowed, colors, 0, 0) == 1;
 }
