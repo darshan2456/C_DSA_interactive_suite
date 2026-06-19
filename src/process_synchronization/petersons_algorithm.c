@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "../utils/config.h"
 
 static char logs[3][128] = {"", "", ""};
 
