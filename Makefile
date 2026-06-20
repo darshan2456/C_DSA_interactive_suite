@@ -69,8 +69,8 @@ TARGET = dsa
 
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)$(EXE) $(LDFLAGS)
+$(TARGET): $(OBJS) $(OBJ_DIR)/src/main.o
+	$(CC) $(CFLAGS) $^ -o $(TARGET)$(EXE) $(LDFLAGS)
 
 run: $(TARGET)
 	./$(TARGET)$(EXE)
@@ -126,7 +126,7 @@ $(TEST_DIR)/test_mcm$(EXE): $(OBJ_DIR)/src/dynamic_programming/mcm.o $(OBJ_DIR)/
 test_kruskal: $(TEST_DIR)/test_kruskal$(EXE)
 	$(TEST_DIR)/test_kruskal$(EXE)
 
-$(TEST_DIR)/test_kruskal$(EXE): $(filter-out $(OBJ_DIR)/src/data_structures/main.o, $(OBJS)) tests/test_kruskal.c
+$(TEST_DIR)/test_kruskal$(EXE): $(OBJS) tests/test_kruskal.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 	
@@ -141,7 +141,7 @@ $(TEST_DIR)/test_floyd_warshall$(EXE): $(OBJ_DIR)/src/graph_traversals/floyd_war
 test_prim: $(TEST_DIR)/test_prim$(EXE)
 	$(TEST_DIR)/test_prim$(EXE)
 
-$(TEST_DIR)/test_prim$(EXE): $(filter-out $(OBJ_DIR)/src/data_structures/main.o, $(OBJS)) tests/test_prim.c
+$(TEST_DIR)/test_prim$(EXE): $(OBJS) tests/test_prim.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 	
