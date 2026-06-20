@@ -1,5 +1,6 @@
 #include "sorting_visualizer.h"
 #include "cross_platform_timer.h"
+#include "config.h"
 #include <stdio.h>
 
 #ifdef _WIN32
@@ -98,6 +99,6 @@ void visualize_sort(const int arr[], int n, int active_idx1, int active_idx2, in
     printf("\n");
     fflush(stdout);
 
-    // Sleep for 1.0 second to make the animation watchable
-    sleep_seconds(1.0f);
+    // Sleep dynamically based on configuration settings
+    dynamic_sleep();
 }

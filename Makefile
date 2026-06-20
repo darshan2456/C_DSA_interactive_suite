@@ -320,7 +320,6 @@ $(TEST_DIR)/test_backtracking$(EXE): \
 	$(OBJ_DIR)/src/utils/safe_input_int.o\
 	$(OBJ_DIR)/src/utils/clear_screen.o \
 	$(OBJ_DIR)/src/utils/cross_platform_timer.o \
-	$(OBJ_DIR)/src/utils/config.o \
 	tests/test_backtracking.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
