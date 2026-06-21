@@ -36,7 +36,7 @@ foreach(DIR ${SRC_DIRS})
 endforeach()
 
 # Exclude src/data_structures/main.c from the library source files because it contains main()
-list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/data_structures/main.c")
+list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.c")
 
 # Platform specific configurations
 if(NOT WIN32)
@@ -57,7 +57,7 @@ endif()
 add_library(dsa_lib STATIC ${SOURCES})
 
 # Build the main executable
-add_executable(dsa src/data_structures/main.c)
+add_executable(dsa src/main.c)
 target_link_libraries(dsa dsa_lib ${EXTRA_LIBS})
 
 # Enable testing support
