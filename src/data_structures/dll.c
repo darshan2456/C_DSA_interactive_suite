@@ -250,9 +250,20 @@ start_dll:
                 continue;
             }
 
-            dll_deleteByValue(&head, dll_delete_value);
-            printf("\ndll after deletion - ");
-            dll_printlist(head);
+            int status = dll_deleteByValue(&head, dll_delete_value);
+            if (status == 1)
+            {
+                printf("\ndll after deletion - ");
+                dll_printlist(head);
+            }
+            else if (status == -1)
+            {
+                printf("\nError: Node with value %d not found.\n", dll_delete_value);
+            }
+            else if (status == -2)
+            {
+                printf("\nError: List is empty.\n");
+            }
         }
         else if (dll_delete_choice == 1)
         {
@@ -408,7 +419,8 @@ int dll_deleteAtEnd(doubly_ll_Node** head_ref)
 int dll_deleteByValue(doubly_ll_Node** head_ref, int key)
 {
     if (*head_ref == NULL)
-        return 0;
+        return -2; 
+
     if ((*head_ref)->next == NULL && (*head_ref)->data == key)
     {
         free(*head_ref);
@@ -439,8 +451,8 @@ int dll_deleteByValue(doubly_ll_Node** head_ref, int key)
         }
         temp = temp->next;
     }
-    printf("\nNode not found!!!");
-    return 0;
+    
+    return -1; 
 }
 
 void delete_dll(doubly_ll_Node* head)
