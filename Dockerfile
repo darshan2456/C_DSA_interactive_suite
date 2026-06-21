@@ -10,10 +10,20 @@
 #     docker build --target dev -t dsa:dev .
 #     docker run -it dsa:dev
 #
+# Choice of base image. Ubuntu and Debian share the same apt package
+# names, so either works unchanged. Default is ubuntu:24.04; pass a
+# lighter Debian base with --build-arg:
+#
+#     docker build --build-arg BASE_IMAGE=debian:stable-slim \
+#                  --target runtime -t dsa:slim .
+#
 # Note: dsa is an interactive ncurses menu, so it needs `docker run -it`.
 
+# Base image for both stages. Override with `--build-arg BASE_IMAGE=...`.
+ARG BASE_IMAGE=ubuntu:24.04
+
 # ---------- Stage 1: dev — full toolchain, debug-ready (heavyweight) ----------
-FROM ubuntu:24.04 AS dev
+FROM ${BASE_IMAGE} AS dev
 
 # Prevent interactive timezone/keyboard prompts from freezing the build
 ENV DEBIAN_FRONTEND=noninteractive
@@ -39,7 +49,7 @@ RUN make clean && make
 CMD ["./dsa"]
 
 # ---------- Stage 2: runtime — binary + ncurses runtime only (slim) ----------
-FROM ubuntu:24.04 AS runtime
+FROM ${BASE_IMAGE} AS runtime
 
 ENV DEBIAN_FRONTEND=noninteractive
 
