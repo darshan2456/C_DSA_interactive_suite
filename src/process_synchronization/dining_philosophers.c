@@ -46,18 +46,18 @@ static void get_phil_box(PhilosopherState state, int id, char* box_buf)
             break;
     }
     // Printable length inside box is exactly 12 characters, e.g. "P0: THINKING" or "P1: EATING  "
-    sprintf(box_buf, "%sP%d: %s\033[0m", state_color, id, state_name);
+    snprintf(box_buf, 64, "%sP%d: %s\033[0m", state_color, id, state_name);
 }
 
 static void get_chopstick_str(int id, const int* chopsticks, char* buf)
 {
     if (chopsticks[id] == -1)
     {
-        sprintf(buf, "\033[0;37mC%d: FREE\033[0m", id);
+        snprintf(buf, 64, "\033[0;37mC%d: FREE\033[0m", id);
     }
     else
     {
-        sprintf(buf, "\033[1;31mC%d: P%d  \033[0m", id, chopsticks[id]);
+        snprintf(buf, 64, "\033[1;31mC%d: P%d  \033[0m", id, chopsticks[id]);
     }
 }
 
