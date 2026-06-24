@@ -243,6 +243,12 @@ void add_edge_directed(weightedGraph* graph, int src, int dest, int wt)
     if (!graph)
         return;
 
+    if (src < 0 || src >= graph->V || dest < 0 || dest >= graph->V || wt < 0)
+    {
+        printf("Invalid edge: %d -> %d with weight %d\n", src, dest, wt);
+        return;
+    }
+
     edge_insertAtEnd(&graph->array[src], dest, wt);
 }
 
