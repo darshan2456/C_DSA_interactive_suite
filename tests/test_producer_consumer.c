@@ -12,7 +12,7 @@
 #define is_instant() 1
 #define clear_screen() (void)0
 #define sleep_seconds(x) (void)0
-#define getchar() '\n'
+#define getchar() ((void)'\n')
 
 #include "test_utils.h"
 

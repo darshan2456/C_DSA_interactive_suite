@@ -112,7 +112,10 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_greedy_bfs test_sorting_n2 test_advanced_sorting \
             test_history_logger test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit \
             test_prim test_kruskal test_floyd_warshall test_mcm \
-            test_string_algorithms test_expression_evaluation
+            test_string_algorithms test_expression_evaluation \
+            test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort \
+            test_dining_philosophers test_petersons test_producer_consumer
 
 test: $(TEST_BINS)
 
@@ -368,6 +371,90 @@ $(TEST_DIR)/test_expression_evaluation$(EXE): \
 	$(OBJ_DIR)/src/utils/cross_platform_timer.o \
 	$(OBJ_DIR)/src/utils/config.o \
 	tests/test_expression_evaluation.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_fcfs: $(TEST_DIR)/test_fcfs$(EXE)
+	$(TEST_DIR)/test_fcfs$(EXE)
+$(TEST_DIR)/test_fcfs$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/fcfs.o,$(OBJS)) tests/test_fcfs.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_sjf: $(TEST_DIR)/test_sjf$(EXE)
+	$(TEST_DIR)/test_sjf$(EXE)
+$(TEST_DIR)/test_sjf$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/sjf.o,$(OBJS)) tests/test_sjf.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_srtf: $(TEST_DIR)/test_srtf$(EXE)
+	$(TEST_DIR)/test_srtf$(EXE)
+$(TEST_DIR)/test_srtf$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/srtf.o,$(OBJS)) tests/test_srtf.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_round_robin: $(TEST_DIR)/test_round_robin$(EXE)
+	$(TEST_DIR)/test_round_robin$(EXE)
+$(TEST_DIR)/test_round_robin$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/round_robin.o,$(OBJS)) tests/test_round_robin.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_priority_scheduling: $(TEST_DIR)/test_priority_scheduling$(EXE)
+	$(TEST_DIR)/test_priority_scheduling$(EXE)
+$(TEST_DIR)/test_priority_scheduling$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/priority_scheduling.o,$(OBJS)) tests/test_priority_scheduling.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_preemptive_priority: $(TEST_DIR)/test_preemptive_priority$(EXE)
+	$(TEST_DIR)/test_preemptive_priority$(EXE)
+$(TEST_DIR)/test_preemptive_priority$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/preemptive_priority.o,$(OBJS)) tests/test_preemptive_priority.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_dijkstra: $(TEST_DIR)/test_dijkstra$(EXE)
+	$(TEST_DIR)/test_dijkstra$(EXE)
+$(TEST_DIR)/test_dijkstra$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/dijkstra.o,$(OBJS)) tests/test_dijkstra.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_bellman_ford: $(TEST_DIR)/test_bellman_ford$(EXE)
+	$(TEST_DIR)/test_bellman_ford$(EXE)
+$(TEST_DIR)/test_bellman_ford$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/bellman_ford.o,$(OBJS)) tests/test_bellman_ford.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_bfs: $(TEST_DIR)/test_bfs$(EXE)
+	$(TEST_DIR)/test_bfs$(EXE)
+$(TEST_DIR)/test_bfs$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/bfs.o,$(OBJS)) tests/test_bfs.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_dfs: $(TEST_DIR)/test_dfs$(EXE)
+	$(TEST_DIR)/test_dfs$(EXE)
+$(TEST_DIR)/test_dfs$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/dfs.o,$(OBJS)) tests/test_dfs.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_topological_sort: $(TEST_DIR)/test_topological_sort$(EXE)
+	$(TEST_DIR)/test_topological_sort$(EXE)
+$(TEST_DIR)/test_topological_sort$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/topological_sort.o,$(OBJS)) tests/test_topological_sort.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_dining_philosophers: $(TEST_DIR)/test_dining_philosophers$(EXE)
+	$(TEST_DIR)/test_dining_philosophers$(EXE)
+$(TEST_DIR)/test_dining_philosophers$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/dining_philosophers.o,$(OBJS)) tests/test_dining_philosophers.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_petersons: $(TEST_DIR)/test_petersons$(EXE)
+	$(TEST_DIR)/test_petersons$(EXE)
+$(TEST_DIR)/test_petersons$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/petersons_algorithm.o,$(OBJS)) tests/test_petersons.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_producer_consumer: $(TEST_DIR)/test_producer_consumer$(EXE)
+	$(TEST_DIR)/test_producer_consumer$(EXE)
+$(TEST_DIR)/test_producer_consumer$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/producer_consumer.o,$(OBJS)) tests/test_producer_consumer.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
