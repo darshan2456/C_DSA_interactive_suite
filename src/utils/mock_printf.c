@@ -1,19 +1,16 @@
-#ifndef TEST_UTILS_H
-#define TEST_UTILS_H
-
-#include <stdarg.h>
+#include "mock_printf.h"
 #include <stdio.h>
 
-static char g_printf_buf[65536];
-static int g_printf_len = 0;
+char g_printf_buf[65536];
+int g_printf_len = 0;
 
-static void reset_printf_buf(void)
+void reset_printf_buf(void)
 {
     g_printf_buf[0] = '\0';
     g_printf_len = 0;
 }
 
-static int mock_printf(const char* format, ...)
+int mock_printf(const char* format, ...)
 {
     va_list args;
     va_start(args, format);
@@ -21,5 +18,3 @@ static int mock_printf(const char* format, ...)
     va_end(args);
     return 0;
 }
-
-#endif // TEST_UTILS_H

@@ -5,7 +5,7 @@
 #include <string.h>
 #include "graph_traversals.h"
 
-#include "test_utils.h"
+#include "mock_printf.h"
 
 // Redirect printf to our mock
 #define printf mock_printf

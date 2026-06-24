@@ -14,7 +14,7 @@
 #define sleep_seconds(x) (void)0
 #define getchar() ((void)'\n')
 
-#include "test_utils.h"
+#include "mock_printf.h"
 
 // Mocking safe_input_int to feed inputs to the interactive loop
 static int g_inputs[100];
