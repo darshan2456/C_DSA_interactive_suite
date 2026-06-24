@@ -14,6 +14,8 @@
 #define sleep_seconds(x) (void)0
 #define getchar() '\n'
 
+#include "test_utils.h"
+
 // Mocking safe_input_int to feed inputs to the interactive loop
 static int g_inputs[100];
 static int g_inputs_count = 0;
@@ -41,25 +43,6 @@ int mock_safe_input_int(int* var, const char* prompt, int low, int high)
     }
     *var = -1;
     return -111; // INPUT_EXIT_SIGNAL
-}
-
-// Buffer to capture printf outputs from the algorithm
-static char g_printf_buf[65536];
-static int g_printf_len = 0;
-
-void reset_printf_buf()
-{
-    g_printf_buf[0] = '\0';
-    g_printf_len = 0;
-}
-
-int mock_printf(const char* format, ...)
-{
-    va_list args;
-    va_start(args, format);
-    g_printf_len += vsnprintf(g_printf_buf + g_printf_len, sizeof(g_printf_buf) - g_printf_len, format, args);
-    va_end(args);
-    return 0;
 }
 
 // Redirect functions using preprocessor macros
