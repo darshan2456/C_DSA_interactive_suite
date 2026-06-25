@@ -375,55 +375,55 @@ $(TEST_DIR)/test_expression_evaluation$(EXE): \
 
 test_fcfs: $(TEST_DIR)/test_fcfs$(EXE)
 	$(TEST_DIR)/test_fcfs$(EXE)
-$(TEST_DIR)/test_fcfs$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/fcfs.o,$(OBJS)) tests/test_fcfs.c
+$(TEST_DIR)/test_fcfs$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/fcfs.o,$(OBJS)) tests/job_scheduling/test_fcfs.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_sjf: $(TEST_DIR)/test_sjf$(EXE)
 	$(TEST_DIR)/test_sjf$(EXE)
-$(TEST_DIR)/test_sjf$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/sjf.o,$(OBJS)) tests/test_sjf.c
+$(TEST_DIR)/test_sjf$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/sjf.o,$(OBJS)) tests/job_scheduling/test_sjf.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_srtf: $(TEST_DIR)/test_srtf$(EXE)
 	$(TEST_DIR)/test_srtf$(EXE)
-$(TEST_DIR)/test_srtf$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/srtf.o,$(OBJS)) tests/test_srtf.c
+$(TEST_DIR)/test_srtf$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/srtf.o,$(OBJS)) tests/job_scheduling/test_srtf.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_round_robin: $(TEST_DIR)/test_round_robin$(EXE)
 	$(TEST_DIR)/test_round_robin$(EXE)
-$(TEST_DIR)/test_round_robin$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/round_robin.o,$(OBJS)) tests/test_round_robin.c
+$(TEST_DIR)/test_round_robin$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/round_robin.o,$(OBJS)) tests/job_scheduling/test_round_robin.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_priority_scheduling: $(TEST_DIR)/test_priority_scheduling$(EXE)
 	$(TEST_DIR)/test_priority_scheduling$(EXE)
-$(TEST_DIR)/test_priority_scheduling$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/priority_scheduling.o,$(OBJS)) tests/test_priority_scheduling.c
+$(TEST_DIR)/test_priority_scheduling$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/priority_scheduling.o,$(OBJS)) tests/job_scheduling/test_priority_scheduling.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_preemptive_priority: $(TEST_DIR)/test_preemptive_priority$(EXE)
 	$(TEST_DIR)/test_preemptive_priority$(EXE)
-$(TEST_DIR)/test_preemptive_priority$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/preemptive_priority.o,$(OBJS)) tests/test_preemptive_priority.c
+$(TEST_DIR)/test_preemptive_priority$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/preemptive_priority.o,$(OBJS)) tests/job_scheduling/test_preemptive_priority.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_dining_philosophers: $(TEST_DIR)/test_dining_philosophers$(EXE)
 	$(TEST_DIR)/test_dining_philosophers$(EXE)
-$(TEST_DIR)/test_dining_philosophers$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/dining_philosophers.o,$(OBJS)) tests/test_dining_philosophers.c
+$(TEST_DIR)/test_dining_philosophers$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/dining_philosophers.o,$(OBJS)) tests/process_synchronization/test_dining_philosophers.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_petersons: $(TEST_DIR)/test_petersons$(EXE)
 	$(TEST_DIR)/test_petersons$(EXE)
-$(TEST_DIR)/test_petersons$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/petersons_algorithm.o,$(OBJS)) tests/test_petersons.c
+$(TEST_DIR)/test_petersons$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/petersons_algorithm.o,$(OBJS)) tests/process_synchronization/test_petersons.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_producer_consumer: $(TEST_DIR)/test_producer_consumer$(EXE)
 	$(TEST_DIR)/test_producer_consumer$(EXE)
-$(TEST_DIR)/test_producer_consumer$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/producer_consumer.o,$(OBJS)) tests/test_producer_consumer.c
+$(TEST_DIR)/test_producer_consumer$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/producer_consumer.o,$(OBJS)) tests/process_synchronization/test_producer_consumer.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
