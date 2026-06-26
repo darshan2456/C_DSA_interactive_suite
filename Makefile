@@ -118,7 +118,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_benchmark_sorting test_benchmark_searching
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_benchmark_sorting test_benchmark_searching test_benchmark_graphs
 
 test: $(TEST_BINS)
 
@@ -331,6 +331,13 @@ test_benchmark_searching: $(TEST_DIR)/test_benchmark_searching$(EXE)
 	$(TEST_DIR)/test_benchmark_searching$(EXE)
 
 $(TEST_DIR)/test_benchmark_searching$(EXE): $(OBJS) tests/benchmark/test_benchmark_searching.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_benchmark_graphs: $(TEST_DIR)/test_benchmark_graphs$(EXE)
+	$(TEST_DIR)/test_benchmark_graphs$(EXE)
+
+$(TEST_DIR)/test_benchmark_graphs$(EXE): $(OBJS) tests/benchmark/test_benchmark_graphs.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

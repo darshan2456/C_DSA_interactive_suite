@@ -66,6 +66,9 @@ int edge_insertAtEnd(Edge** head, int dest, int weight);
 void free_weightedGraph(weightedGraph* graph);
 void print_weightedGraph(const weightedGraph* graph);
 
+void dijkstra(weightedGraph* graph, int start);
+void bellman_ford(weightedGraph* graph, int start);
+
 // ------------------For A* search algorithm-----------------------
 
 int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]);

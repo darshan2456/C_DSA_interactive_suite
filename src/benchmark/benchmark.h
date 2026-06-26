@@ -42,4 +42,8 @@ void run_sorting_benchmark(int n);
  * Runs benchmarks for searching algorithms with input size N.
  */
 void run_searching_benchmark(int n);
+/**
+ * Runs benchmarks for Graph Shortest Path algorithms with input size V (vertices).
+ */
+void run_graphs_benchmark(int v);
 #endif // BENCHMARK_H

@@ -52,8 +52,7 @@ void benchmark_menu_demo(void)
                 run_searching_benchmark(n);
                 break;
             case 3:
-                printf("\nGraph Shortest Path benchmark selected for N = %d\n", n);
-                printf("Benchmark module not implemented yet. Implementing in PR 5.\n");
+                run_graphs_benchmark(n);
                 break;
             case 4:
                 printf("\nMST benchmark selected for N = %d\n", n);
