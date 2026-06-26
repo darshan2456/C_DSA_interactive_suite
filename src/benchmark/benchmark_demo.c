@@ -46,8 +46,7 @@ void benchmark_menu_demo(void)
         switch (choice)
         {
             case 1:
-                printf("\nSorting benchmark selected for N = %d\n", n);
-                printf("Benchmark module not implemented yet. Implementing in PR 3.\n");
+                run_sorting_benchmark(n);
                 break;
             case 2:
                 printf("\nSearching benchmark selected for N = %d\n", n);

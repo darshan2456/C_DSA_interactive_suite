@@ -34,4 +34,8 @@ int benchmark_export_csv(const char* category_name, const char* algo_name, int i
  */
 void benchmark_menu_demo(void);
 
+/**
+ * Runs benchmarks for sorting algorithms with input size N.
+ */
+void run_sorting_benchmark(int n);
 #endif // BENCHMARK_H
