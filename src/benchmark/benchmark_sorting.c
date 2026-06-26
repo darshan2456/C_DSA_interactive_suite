@@ -1,3 +1,4 @@
+#include "benchmark_chart.h"
 #include "benchmark.h"
 #include "sorting_algorithms_n2.h"
 #include "advanced_sorting.h"
@@ -5,6 +6,38 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+static double benchmark_sorting_single(int algo_idx, int n)
+{
+    int* arr = malloc(n * sizeof(int));
+    if (arr == NULL)
+    {
+        return 0.0;
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        arr[i] = rand() % 100000;
+    }
+
+    double start_time = benchmark_get_time();
+    switch (algo_idx)
+    {
+        case 0: bubble_sort_optimized(arr, n); break;
+        case 1: selection_sort(arr, n); break;
+        case 2: insertion_sort(arr, n); break;
+        case 3: shell_sort(arr, n); break;
+        case 4: merge_sort(arr, n); break;
+        case 5: quicksort(arr, 0, n - 1); break;
+        case 6: heap_sort(arr, n); break;
+        case 7: radix_sort(arr, n); break;
+        case 8: bucket_sort(arr, n); break;
+    }
+    double end_time = benchmark_get_time();
+    free(arr);
+
+    return (end_time - start_time) * 1000.0; // convert to ms
+}
 
 void run_sorting_benchmark(int n)
 {
@@ -111,6 +144,54 @@ void run_sorting_benchmark(int n)
 
     printf("========================================================================\n");
     printf("Exported results to 'benchmarks/sorting.csv'.\n");
+
+    printf("\nGenerating complexity growth chart...\n");
+    AsciiChart chart;
+    chart_init(&chart, "Sorting Complexity Growth", "Input Size (N)", "Time (ms)", 80, 24);
+
+    int chart_algos[] = {0, 2, 5, 4, 6}; // Bubble, Insertion, Quick, Merge, Heap
+    char glyphs[] = {'B', 'I', 'Q', 'M', 'H'};
+    const char* chart_names[] = {"Bubble", "Insertion", "Quick", "Merge", "Heap"};
+
+    int curve_indices[5];
+    for (int i = 0; i < 5; i++)
+    {
+        curve_indices[i] = -1;
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        int algo_idx = chart_algos[i];
+        if (n > 10000 && (algo_idx == 0 || algo_idx == 2))
+        {
+            continue; // Skip slow ones for large N
+        }
+        curve_indices[i] = chart_add_curve(&chart, chart_names[i], glyphs[i]);
+    }
+
+    // Run for 5 steps
+    for (int step = 1; step <= 5; step++)
+    {
+        int current_n = step * (n / 5);
+        if (current_n < 10)
+        {
+            current_n = 10;
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (curve_indices[i] == -1)
+            {
+                continue;
+            }
+            double time_ms = benchmark_sorting_single(chart_algos[i], current_n);
+            chart_add_point(&chart, curve_indices[i], (double)current_n, time_ms);
+        }
+    }
+
+    char chart_buf[4096];
+    chart_render(&chart, chart_buf, sizeof(chart_buf));
+    printf("\n%s\n", chart_buf);
 
     free(master);
 }
