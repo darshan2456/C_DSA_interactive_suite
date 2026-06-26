@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include "benchmark.h"
 #include <errno.h>
 #include <stdio.h>
