@@ -422,6 +422,7 @@ void btree_demo(void)
             {
                 int search_key;
                 int search_status;
+                bool cancelled = false;
                 while (1)
                 {
                     search_status = safe_input_int(&search_key,
@@ -430,13 +431,15 @@ void btree_demo(void)
                                                    1, 1000);
                     if (search_status == INPUT_EXIT_SIGNAL)
                     {
-                        btree_destroy(root);
-                        return;
+                        cancelled = true;
+                        break;
                     }
                     if (search_status == 0)
                         continue;
                     break;
                 }
+                if (cancelled)
+                    continue;
                 if (btree_search(root, search_key))
                     printf("\nkey %d found in B-Tree\n", search_key);
                 else
@@ -446,6 +449,7 @@ void btree_demo(void)
             {
                 int new_key;
                 int new_key_status;
+                bool cancelled = false;
                 while (1)
                 {
                     new_key_status = safe_input_int(&new_key,
@@ -454,13 +458,15 @@ void btree_demo(void)
                                                     1, 1000);
                     if (new_key_status == INPUT_EXIT_SIGNAL)
                     {
-                        btree_destroy(root);
-                        return;
+                        cancelled = true;
+                        break;
                     }
                     if (new_key_status == 0)
                         continue;
                     break;
                 }
+                if (cancelled)
+                    continue;
                 int result = btree_insert(&root, new_key, t);
                 if (result == 0)
                     printf("\nduplicate key. only unique keys please\n");
@@ -477,6 +483,7 @@ void btree_demo(void)
             {
                 int del_key;
                 int del_status;
+                bool cancelled = false;
                 while (1)
                 {
                     del_status = safe_input_int(&del_key,
@@ -485,13 +492,15 @@ void btree_demo(void)
                                                 1, 1000);
                     if (del_status == INPUT_EXIT_SIGNAL)
                     {
-                        btree_destroy(root);
-                        return;
+                        cancelled = true;
+                        break;
                     }
                     if (del_status == 0)
                         continue;
                     break;
                 }
+                if (cancelled)
+                    continue;
                 root = btree_delete(root, del_key, t);
                 printf("\nkey deleted. updated traversal: ");
                 btree_traverse(root);
