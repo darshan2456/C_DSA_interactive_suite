@@ -26,4 +26,9 @@ void aho_corasick_search(char* text, char** patterns, int k);
 void aho_corasick_visualization(char* text, char** patterns, int k);
 void aho_corasick_demo(void);
 
+int* build_suffix_array(char* txt, int n);
+void suffix_array_search(char* text, char* pattern);
+void suffix_array_visualization(char* text, char* pattern);
+void suffix_array_demo(void);
+
 #endif // STRING_ALGORITHMS_H

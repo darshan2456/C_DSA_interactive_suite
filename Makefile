@@ -478,6 +478,7 @@ $(TEST_DIR)/test_string_algorithms$(EXE): \
     $(OBJ_DIR)/src/string_algorithms/boyer_moore.o \
     $(OBJ_DIR)/src/string_algorithms/z_algorithm.o \
     $(OBJ_DIR)/src/string_algorithms/aho_corasick.o \
+    $(OBJ_DIR)/src/string_algorithms/suffix_array.o \
     $(OBJ_DIR)/src/utils/safe_input_string.o \
     $(OBJ_DIR)/src/utils/history_logger.o \
     $(OBJ_DIR)/src/utils/clear_screen.o \
