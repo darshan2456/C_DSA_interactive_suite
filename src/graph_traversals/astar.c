@@ -43,10 +43,9 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
     if (!insert_pq_graph(&pq, start, fScore[start]))
     {
         printf("Malloc failed\n");
-        free(visited);
-        free(dist);
-        free(fScore);
-        return -1;
+        result = -1;
+        free_pq_graph(&pq);
+        goto cleanup;
     }
 
     PQ_graph_node popped;
@@ -99,10 +98,10 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
                     if (!insert_pq_graph(&pq, v, fScore[v]))
                     {
                         printf("Malloc failed\n");
-                        free(visited);
-                        free(dist);
-                        free(fScore);
-                        return -1;
+                        result = -1;
+                        free_pq_graph(&pq);
+                        goto cleanup;
+                        
                     }
                 }
             }
