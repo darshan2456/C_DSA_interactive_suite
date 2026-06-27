@@ -1,3 +1,5 @@
+#include "../utils/config.h"
+#include "clear_screen.h"
 #include "history_logger.h"
 #include "safe_input.h"
 #include "string_algorithms.h"
@@ -110,6 +112,118 @@ void boyer_moore_search(char* text, char* pattern)
     }
 }
 
+void boyer_moore_visualization(char* text, char* pattern)
+{
+    int n = strlen(text);
+    int m = strlen(pattern);
+
+    if (m == 0 || n < m)
+    {
+        printf("Pattern not found in the text.\n");
+        return;
+    }
+
+    int bad_char[256];
+    bad_char_heuristic(pattern, m, bad_char);
+
+    int* shift = (int*)calloc(m + 1, sizeof(int));
+    int* bpos = (int*)malloc((m + 1) * sizeof(int));
+    if (!shift || !bpos)
+    {
+        printf("Memory allocation failed.\n");
+        free(shift);
+        free(bpos);
+        return;
+    }
+
+    strong_suffix_heuristic(shift, bpos, pattern, m);
+    prefix_heuristic(shift, bpos, m);
+
+    int s = 0;
+    int found = 0;
+    int step = 1;
+
+    while (s <= (n - m))
+    {
+        int j = m - 1;
+
+        if (!is_instant())
+        {
+            clear_screen();
+        }
+
+        printf("\nStep %d\n", step++);
+        printf("Text         : %s\n", text);
+        printf("Pattern Align: ");
+        for (int i = 0; i < s; i++)
+            printf(" ");
+        printf("%s\n", pattern);
+
+        printf("Comparison   : ");
+        for (int i = 0; i < s + j; i++)
+            printf(" ");
+        printf("^ (Comparing '%c' with '%c')\n", text[s + j], pattern[j]);
+
+        while (j >= 0 && pattern[j] == text[s + j])
+        {
+            dynamic_sleep();
+            j--;
+            if (j >= 0)
+            {
+                if (!is_instant())
+                {
+                    clear_screen();
+                }
+                printf("\nStep %d (Comparing next character to the left)\n", step - 1);
+                printf("Text         : %s\n", text);
+                printf("Pattern Align: ");
+                for (int i = 0; i < s; i++)
+                    printf(" ");
+                printf("%s\n", pattern);
+                printf("Comparison   : ");
+                for (int i = 0; i < s + j; i++)
+                    printf(" ");
+                printf("^ (Comparing '%c' with '%c')\n", text[s + j], pattern[j]);
+            }
+        }
+
+        if (j < 0)
+        {
+            printf("\nAction       : Match found at index %d!\n", s);
+            printf("Shift Rule   : Good Suffix shift = %d\n", shift[0]);
+            found++;
+            s += shift[0];
+            dynamic_sleep();
+        }
+        else
+        {
+            int bc_shift = j - bad_char[(unsigned char)text[s + j]];
+            int gs_shift = shift[j + 1];
+            int final_shift = (bc_shift > gs_shift) ? bc_shift : gs_shift;
+
+            printf("\nAction       : Mismatch detected!\n");
+            printf("Bad Char Shift: %d (character '%c' at index %d)\n", bc_shift, text[s + j], s + j);
+            printf("Good Suffix Shift: %d\n", gs_shift);
+            printf("Final Shift  : max(Bad Char, Good Suffix) = %d\n", final_shift);
+            s += final_shift;
+            dynamic_sleep();
+        }
+    }
+
+    free(shift);
+    free(bpos);
+
+    printf("\n-----------------------------------\n");
+    if (found == 0)
+    {
+        printf("Pattern not found in the text.\n");
+    }
+    else
+    {
+        printf("Total occurrences found: %d\n", found);
+    }
+}
+
 void boyer_moore_demo(void)
 {
     while (1)
@@ -136,7 +250,7 @@ void boyer_moore_demo(void)
         }
 
         clock_t start_t = clock();
-        boyer_moore_search(text, pattern);
+        boyer_moore_visualization(text, pattern);
         clock_t end_t = clock();
         double total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
 

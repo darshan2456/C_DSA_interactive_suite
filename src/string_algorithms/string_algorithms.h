@@ -15,6 +15,7 @@ void rabin_karp_search(char* text, char* pattern, int q);
 void rabin_karp_visualization(char* text, char* pattern, int q);
 
 void boyer_moore_search(char* text, char* pattern);
+void boyer_moore_visualization(char* text, char* pattern);
 void boyer_moore_demo(void);
 
 #endif // STRING_ALGORITHMS_H
