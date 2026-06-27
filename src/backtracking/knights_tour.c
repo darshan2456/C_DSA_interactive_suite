@@ -175,7 +175,7 @@ void knights_tour_demo(void)
     {
         int N;
         int status =
-            safe_input_int(&N, "\nEnter the board size N (between 4 and 8), or -1 to exit: ", 4, 8);
+            safe_input_int(&N, "\nEnter the board size N (between 4 and 8), or -1 to exit: ", -1, 8);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
