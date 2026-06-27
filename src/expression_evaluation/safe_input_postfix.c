@@ -26,6 +26,12 @@ int validate_postfix_expr(char* buff, size_t size, const char* prompt)
 
     buff[strcspn(buff, "\n")] = '\0';
 
+    if (buff[0] == '\0')
+    {
+        printf("\ninvalid: empty expression");
+        return 0;
+    }
+
     if (buff[0] == 'X' && buff[1] == '\0')
     { // when user enters 'X'
         return INPUT_EXIT_SIGNAL;
