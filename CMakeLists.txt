@@ -21,7 +21,7 @@ set(SRC_DIRS
     src/string_algorithms
     src/backtracking
     src/process_synchronization
-    src/benchmark
+    benchmark
 )
 
 # Header search paths

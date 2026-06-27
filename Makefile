@@ -21,7 +21,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/string_algorithms \
 	-Isrc/backtracking \
 	-Isrc/process_synchronization \
-	-Isrc/benchmark
+	-Ibenchmark
 	# -Isrc/tui
 
 # LDFLAGS = -lncurses
@@ -42,7 +42,7 @@ SRC_DIRS = \
 	src/string_algorithms \
 	src/backtracking \
 	src/process_synchronization \
-	src/benchmark
+	benchmark
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
@@ -356,7 +356,7 @@ $(TEST_DIR)/test_history_logger$(EXE): $(OBJ_DIR)/src/utils/history_logger.o tes
 test_benchmark: $(TEST_DIR)/test_benchmark$(EXE)
 	$(TEST_DIR)/test_benchmark$(EXE)
 
-$(TEST_DIR)/test_benchmark$(EXE): $(OBJ_DIR)/src/benchmark/benchmark.o tests/benchmark/test_benchmark.c
+$(TEST_DIR)/test_benchmark$(EXE): $(OBJ_DIR)/benchmark/benchmark.o tests/benchmark/test_benchmark.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
