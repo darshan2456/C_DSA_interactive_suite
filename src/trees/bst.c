@@ -301,6 +301,7 @@ void binary_search_tree_demo(void)
             {
                 int delete_value;
                 int delete_status;
+                bool cancelled = false;
                 while (1)
                 {
                     delete_status = safe_input_int(
@@ -309,13 +310,15 @@ void binary_search_tree_demo(void)
                         100);
                     if (delete_status == INPUT_EXIT_SIGNAL)
                     {
-                        destroy_bst(head);
-                        return;
+                        cancelled = true;
+                        break;
                     }
                     if (delete_status == 0)
                         continue;
                     break;
                 }
+                if (cancelled)
+                    continue;
                 head = bst_delete(head, delete_value);
                 printf("\nnode deleted. updated inorder traversal: ");
                 bst_inorder(head);
