@@ -34,8 +34,9 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
     if (!insert_pq_graph(&pq, start, h[start]))
     {
         printf("Malloc failed\n");
-        free(visited);
-        return -1;
+        found = -1;
+        free_pq_graph(&pq);
+        goto cleanup;
     }
 
     *traversal_len = 0;
@@ -72,8 +73,9 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
                 if (!insert_pq_graph(&pq, v, h[v]))
                 {
                     printf("Malloc failed\n");
-                    free(visited);
-                    return -1;
+                    found = -1;
+                    free_pq_graph(&pq);
+                    goto cleanup;
                 }
             }
             current = current->next;
