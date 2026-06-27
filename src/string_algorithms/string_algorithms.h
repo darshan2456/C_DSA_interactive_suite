@@ -18,4 +18,8 @@ void boyer_moore_search(char* text, char* pattern);
 void boyer_moore_visualization(char* text, char* pattern);
 void boyer_moore_demo(void);
 
+void z_algorithm_search(char* text, char* pattern);
+void z_algorithm_visualization(char* text, char* pattern);
+void z_algorithm_demo(void);
+
 #endif // STRING_ALGORITHMS_H

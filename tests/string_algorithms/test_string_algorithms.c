@@ -11,6 +11,7 @@ void naive_string_matching(char* text, char* pattern);
 void kmp_search(char* text, char* pattern);
 void rabin_karp_search(char* text, char* pattern, int q);
 void boyer_moore_search(char* text, char* pattern);
+void z_algorithm_search(char* text, char* pattern);
 
 /* Run a matcher with stdout redirected to a temp file, then return how many
    "found at index" lines it printed. */
@@ -77,6 +78,7 @@ void test_basic_matches()
     assert(count_matches(kmp_search, text, pat) == 1);
     assert(count_matches_rk(text, pat, 101) == 1);
     assert(count_matches(boyer_moore_search, text, pat) == 1);
+    assert(count_matches(z_algorithm_search, text, pat) == 1);
 
     /* overlapping matches */
     char t2[] = "aaaaa";
@@ -85,6 +87,7 @@ void test_basic_matches()
     assert(count_matches(kmp_search, t2, p2) == 4);
     assert(count_matches_rk(t2, p2, 101) == 4);
     assert(count_matches(boyer_moore_search, t2, p2) == 4);
+    assert(count_matches(z_algorithm_search, t2, p2) == 4);
 
     /* pattern absent */
     char t3[] = "abcdef";
@@ -93,6 +96,7 @@ void test_basic_matches()
     assert(count_matches(kmp_search, t3, p3) == 0);
     assert(count_matches_rk(t3, p3, 101) == 0);
     assert(count_matches(boyer_moore_search, t3, p3) == 0);
+    assert(count_matches(z_algorithm_search, t3, p3) == 0);
 
     printf("String matching basic tests passed\n");
 }
@@ -109,6 +113,7 @@ void test_non_ascii_bytes()
     assert(count_matches(kmp_search, text, pat) == 2);
     assert(count_matches_rk(text, pat, 101) == 2);
     assert(count_matches(boyer_moore_search, text, pat) == 2);
+    assert(count_matches(z_algorithm_search, text, pat) == 2);
 
     printf("String matching non-ASCII tests passed\n");
 }

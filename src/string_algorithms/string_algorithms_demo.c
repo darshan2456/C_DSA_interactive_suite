@@ -12,8 +12,9 @@ void string_algorithms_demo(void)
                                 "\nenter 2 for Knuth-Morris-Pratt (KMP) demo"
                                 "\nenter 3 for Rabin-Karp demo"
                                 "\nenter 4 for Boyer-Moore demo"
+                                "\nenter 5 for Z-Algorithm demo"
                                 "\nenter choice : ",
-                                1, 4);
+                                1, 5);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -37,6 +38,9 @@ void string_algorithms_demo(void)
                 break;
             case 4:
                 boyer_moore_demo();
+                break;
+            case 5:
+                z_algorithm_demo();
                 break;
         }
     }
