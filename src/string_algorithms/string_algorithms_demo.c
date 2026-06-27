@@ -13,8 +13,9 @@ void string_algorithms_demo(void)
                                 "\nenter 3 for Rabin-Karp demo"
                                 "\nenter 4 for Boyer-Moore demo"
                                 "\nenter 5 for Z-Algorithm demo"
+                                "\nenter 6 for Aho-Corasick demo"
                                 "\nenter choice : ",
-                                1, 5);
+                                1, 6);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -41,6 +42,9 @@ void string_algorithms_demo(void)
                 break;
             case 5:
                 z_algorithm_demo();
+                break;
+            case 6:
+                aho_corasick_demo();
                 break;
         }
     }

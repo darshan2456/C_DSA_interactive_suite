@@ -22,4 +22,8 @@ void z_algorithm_search(char* text, char* pattern);
 void z_algorithm_visualization(char* text, char* pattern);
 void z_algorithm_demo(void);
 
+void aho_corasick_search(char* text, char** patterns, int k);
+void aho_corasick_visualization(char* text, char** patterns, int k);
+void aho_corasick_demo(void);
+
 #endif // STRING_ALGORITHMS_H
