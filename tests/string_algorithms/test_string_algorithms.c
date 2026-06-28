@@ -4,6 +4,17 @@
 #include <string.h>
 #include <unistd.h>
 
+#ifdef _WIN32
+#include <io.h>
+#define dup _dup
+#define dup2 _dup2
+int _fileno(FILE*);
+#ifndef fileno
+#define fileno _fileno
+#endif
+#endif
+
+
 /* Functions under test (forward-declared, same approach as the other tests).
    The string matchers print their results, so each test captures stdout and
    counts the "found at index" lines to compare against the expected count. */

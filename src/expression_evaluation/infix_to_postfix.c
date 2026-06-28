@@ -3,9 +3,9 @@
 #include "cross_platform_timer.h"
 #include "expression.h"
 #include "safe_input.h"
-#include "stack.h"
 #include <ctype.h>
 #include <stdio.h>
+
 #include <string.h>
 
 // rn this program only has support for four operators - +-/* and parantheses. this program doesnt

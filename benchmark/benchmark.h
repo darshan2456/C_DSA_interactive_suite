@@ -3,6 +3,12 @@
 
 #include <stddef.h>
 
+#ifdef _WIN32
+#include <stdio.h>
+int _fileno(FILE*);
+#endif
+
+
 /**
  * Returns a high-resolution monotonic timestamp in seconds.
  * Suitable for measuring code execution duration.

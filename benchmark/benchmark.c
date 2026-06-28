@@ -9,8 +9,9 @@
 
 #ifdef _WIN32
 #include <direct.h>
-#include <psapi.h>
 #include <windows.h>
+#include <psapi.h>
+
 #define make_dir(path) _mkdir(path)
 #else
 #include <sys/resource.h>

@@ -3,9 +3,10 @@
 #include <stdlib.h>
 
 #include "../../src/expression_evaluation/expression.h"
-#include "../../src/expression_evaluation/stack.h"
+#include "data_structures.h"
 
 void test_isOperator()
+
 {
     printf("Running test_isOperator...\n");
 

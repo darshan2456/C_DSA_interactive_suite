@@ -209,4 +209,21 @@ int query_range(SegmentTree* st, int node, int start, int end, int l, int r);
 void preorder_traversal(SegmentTree* st, int node, int start, int end);
 void inorder_traversal(SegmentTree* st, int node, int start, int end);
 void postorder_traversal(SegmentTree* st, int node, int start, int end);
+
+// For Stack
+typedef struct stack
+{
+    Node* top;
+} stack;
+
+stack* createStack(void);
+int push(stack* s, int value);
+int pop(stack* s);
+int isEmpty(const stack* s);
+void destroyStack(stack* s);
+int peek(const stack* s);
+void printStack(const stack* s);
+void printStackAsInts(const stack* s);
+
 #endif
+

@@ -53,6 +53,8 @@ ifeq ($(OS),Windows_NT)
 	EXE = .exe
 	MKDIR_P = cmd /c if not exist "$(subst /,\,$(1))" mkdir "$(subst /,\,$(1))"
 	LDFLAGS += -lpsapi
+	CFLAGS += -D__USE_MINGW_ANSI_STDIO=1 -Wno-format
+
 else
 	RM = rm -f
 	RM_DIR = rm -rf
@@ -272,9 +274,10 @@ $(TEST_DIR)/test_array$(EXE): $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/
 test_stack: $(TEST_DIR)/test_stack$(EXE)
 	$(TEST_DIR)/test_stack$(EXE)
 
-$(TEST_DIR)/test_stack$(EXE): $(OBJ_DIR)/src/expression_evaluation/stack.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/expression_evaluation/test_stack.c
+$(TEST_DIR)/test_stack$(EXE): $(OBJ_DIR)/src/data_structures/stack.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/data_structures/test_stack.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
 
 test_priority_queue: $(TEST_DIR)/test_priority_queue$(EXE)
 	$(TEST_DIR)/test_priority_queue$(EXE)
@@ -503,7 +506,7 @@ test_expression_evaluation: $(TEST_DIR)/test_expression_evaluation$(EXE)
 	$(TEST_DIR)/test_expression_evaluation$(EXE)
 
 $(TEST_DIR)/test_expression_evaluation$(EXE): \
-	$(OBJ_DIR)/src/expression_evaluation/stack.o \
+	$(OBJ_DIR)/src/data_structures/stack.o \
 	$(OBJ_DIR)/src/expression_evaluation/infix_to_postfix.o \
 	$(OBJ_DIR)/src/expression_evaluation/safe_input_infix.o \
 	$(OBJ_DIR)/src/data_structures/sll.o \
@@ -514,6 +517,7 @@ $(TEST_DIR)/test_expression_evaluation$(EXE): \
 	tests/expression_evaluation/test_expression_evaluation.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
 
 test_fcfs: $(TEST_DIR)/test_fcfs$(EXE)
 	$(TEST_DIR)/test_fcfs$(EXE)

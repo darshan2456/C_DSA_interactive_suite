@@ -2,8 +2,9 @@
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "safe_input.h"
-#include "stack.h"
+#include "data_structures.h"
 #include <stdio.h>
+
 #include <string.h>
 
 int check_parantheses(char* s)

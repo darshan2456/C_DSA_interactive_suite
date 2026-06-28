@@ -1,8 +1,8 @@
 #include "graph_traversals.h"
 #include "history_logger.h"
 #include "safe_input.h"
-#include "stack.h"
 #include <stdio.h>
+
 #include <string.h>
 #include <time.h>
 
