@@ -49,6 +49,7 @@ typedef struct
 
 void init_pq_graph(PQ_graph* pq, int initial_capacity);
 void free_pq_graph(PQ_graph* pq);
+void PQ_Destroy(PQ_graph* pq);
 int insert_pq_graph(PQ_graph* pq, int vertex, int distance);
 bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result);
 

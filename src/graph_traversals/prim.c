@@ -25,13 +25,12 @@ int prim_mst(weightedGraph* graph, int start_node)
     int* key = (int*)malloc(V * sizeof(int));
     int* parent = (int*)malloc(V * sizeof(int));
     bool* in_mst = (bool*)malloc(V * sizeof(bool));
+    PQ_graph pq = {0};
+    int mst_weight = -1;
 
     if (!key || !parent || !in_mst)
     {
-        free(key);
-        free(parent);
-        free(in_mst);
-        return -1;
+        goto cleanup;
     }
 
     for (int i = 0; i < V; i++)
@@ -41,28 +40,20 @@ int prim_mst(weightedGraph* graph, int start_node)
         in_mst[i] = false;
     }
 
-    PQ_graph pq;
     init_pq_graph(&pq, V);
     if (!pq.heap)
     {
-        free(key);
-        free(parent);
-        free(in_mst);
-        return -1;
+        goto cleanup;
     }
 
     key[start_node] = 0;
     if (!insert_pq_graph(&pq, start_node, 0))
     {
         printf("Malloc failed\n");
-        free_pq_graph(&pq);
-        free(key);
-        free(parent);
-        free(in_mst);
-        return -1;
+        goto cleanup;
     }
 
-    int mst_weight = 0;
+    mst_weight = 0;
     int nodes_in_mst = 0;
 
     clock_t start_t, end_t;
@@ -111,11 +102,8 @@ int prim_mst(weightedGraph* graph, int start_node)
                 if (!insert_pq_graph(&pq, v, key[v]))
                 {
                     printf("Malloc failed\n");
-                    free_pq_graph(&pq);
-                    free(key);
-                    free(parent);
-                    free(in_mst);
-                    return -1;
+                    mst_weight = -1;
+                    goto cleanup;
                 }
             }
             curr = curr->next;
@@ -135,7 +123,8 @@ int prim_mst(weightedGraph* graph, int start_node)
 
     add_to_history("Prim's MST", V, total_t);
 
-    free_pq_graph(&pq);
+cleanup:
+    PQ_Destroy(&pq);
     free(key);
     free(parent);
     free(in_mst);

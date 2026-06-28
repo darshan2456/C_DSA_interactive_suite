@@ -27,14 +27,22 @@ void init_pq_graph(PQ_graph* pq, int initial_capacity)
     pq->heap = malloc(pq->capacity * sizeof(PQ_graph_node));
 }
 
-void free_pq_graph(PQ_graph* pq)
+void PQ_Destroy(PQ_graph* pq)
 {
     if (pq == NULL)
         return;
-    free(pq->heap);
-    pq->heap = NULL;
+    if (pq->heap != NULL)
+    {
+        free(pq->heap);
+        pq->heap = NULL;
+    }
     pq->size = 0;
     pq->capacity = 0;
+}
+
+void free_pq_graph(PQ_graph* pq)
+{
+    PQ_Destroy(pq);
 }
 
 int insert_pq_graph(PQ_graph* pq, int vertex, int distance)
@@ -126,19 +134,18 @@ void dijkstra(weightedGraph* graph, int start)
 
     dist[start] = 0;
 
-    PQ_graph pq;
+    PQ_graph pq = {0};
     init_pq_graph(&pq, 10);
 
     clock_t start_t, end_t;
-    double total_t;
+    double total_t = 0.0;
 
     start_t = clock();
 
     if (!insert_pq_graph(&pq, start, 0))
     {
         printf("Malloc failed\n");
-        free_pq_graph(&pq);
-        return;
+        goto cleanup;
     }
 
     PQ_graph_node currentNode;
@@ -162,8 +169,7 @@ void dijkstra(weightedGraph* graph, int start)
                 if (!insert_pq_graph(&pq, v, dist[v]))
                 {
                     printf("Malloc Failed\n");
-                    free_pq_graph(&pq);
-                    return;
+                    goto cleanup;
                 }
             }
 
@@ -173,8 +179,6 @@ void dijkstra(weightedGraph* graph, int start)
 
     end_t = clock();
     total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-
-    free_pq_graph(&pq);
 
     printf("Start -> Vertex  \t  Distance\n");
     printf("---------------  \t  --------\n");
@@ -189,6 +193,9 @@ void dijkstra(weightedGraph* graph, int start)
 
     printf("\ntotal CPU time taken for Dijkstra's algorithm:- %f seconds\n", total_t);
     add_to_history("Dijkstra", size, total_t);
+
+cleanup:
+    PQ_Destroy(&pq);
 }
 
 weightedGraph* create_weightedGraph(int V)

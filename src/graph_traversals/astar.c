@@ -14,6 +14,7 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
     int* dist = malloc(size * sizeof(int));
     int* fScore = malloc(size * sizeof(int));
     int result = INT_MAX;
+    PQ_graph pq = {0};
 
     if (!visited || !dist || !fScore)
         goto cleanup;
@@ -31,11 +32,13 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
     // Reuse the shared graph priority queue: a min-heap keyed on the node's
     // "distance" field, which here carries the f-score (f = g + h). Duplicate
     // entries are handled lazily via the visited[] check on pop.
-    PQ_graph pq;
     init_pq_graph(&pq, 10);
 
     if (!pq.heap)
+    {
+        result = -1;
         goto cleanup;
+    }
 
     dist[start] = 0;
     fScore[start] = h[start];
@@ -44,7 +47,6 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
     {
         printf("Malloc failed\n");
         result = -1;
-        free_pq_graph(&pq);
         goto cleanup;
     }
 
@@ -99,9 +101,7 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
                     {
                         printf("Malloc failed\n");
                         result = -1;
-                        free_pq_graph(&pq);
                         goto cleanup;
-                        
                     }
                 }
             }
@@ -109,9 +109,8 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
         }
     }
 
-    free_pq_graph(&pq);
-
 cleanup:
+    PQ_Destroy(&pq);
     free(visited);
     free(dist);
     free(fScore);

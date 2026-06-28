@@ -13,6 +13,7 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
     int size = graph->V;
     int* visited = calloc(size, sizeof(int));
     int found = 0;
+    PQ_graph pq = {0};
 
     if (!visited)
         goto cleanup;
@@ -25,17 +26,18 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
     // Reuse the shared graph priority queue: a min-heap keyed on the node's
     // "distance" field, which here carries the heuristic h. Duplicate entries
     // are handled lazily via the visited[] check on pop.
-    PQ_graph pq;
     init_pq_graph(&pq, 10);
 
     if (!pq.heap)
+    {
+        found = -1;
         goto cleanup;
+    }
 
     if (!insert_pq_graph(&pq, start, h[start]))
     {
         printf("Malloc failed\n");
         found = -1;
-        free_pq_graph(&pq);
         goto cleanup;
     }
 
@@ -74,7 +76,6 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
                 {
                     printf("Malloc failed\n");
                     found = -1;
-                    free_pq_graph(&pq);
                     goto cleanup;
                 }
             }
@@ -82,9 +83,8 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
         }
     }
 
-    free_pq_graph(&pq);
-
 cleanup:
+    PQ_Destroy(&pq);
     free(visited);
     return found;
 }
