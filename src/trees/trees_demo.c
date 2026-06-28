@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "safe_input.h"
 #include "trees.h"
 #include <stdio.h>
@@ -30,26 +31,32 @@ void trees_demo(void)
         switch (tree_choice)
         {
             case 1:
+                display_header("Binary Search Tree");
                 binary_search_tree_demo();
                 break;
 
             case 2:
+                display_header("AVL Tree");
                 avl_demo();
                 break;
 
             case 3:
+                display_header("Threaded Binary Tree");
                 TBT_demo();
                 break;
 
             case 4:
+                display_header("Trie");
                 trie_demo();
                 break;
 
             case 5:
+                display_header("B-Tree");
                 btree_demo();
                 break;
 
             case 6:
+                display_header("B+ Tree");
                 bplus_tree_demo();
                 break;
         }
