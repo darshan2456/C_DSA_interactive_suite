@@ -1,4 +1,5 @@
 #include "advanced_sorting.h"
+#include "display_header.h"
 #include "safe_input.h"
 #include <stdio.h>
 
@@ -30,26 +31,31 @@ void advanced_sorting_demo(void)
 
         if (sorting_algo_choice == 1)
         {
+            display_header("Quick Sort");
             quicksort_demo();
         }
 
         else if (sorting_algo_choice == 2)
         {
+            display_header("Merge Sort");
             merge_sort_demo();
         }
 
         else if (sorting_algo_choice == 3)
         {
+            display_header("Heap Sort");
             heap_sort_demo();
         }
 
         else if (sorting_algo_choice == 4)
         {
+            display_header("Radix Sort");
             radix_sort_demo();
         }
 
         else if (sorting_algo_choice == 5)
         {
+            display_header("Bucket Sort");
             bucket_sort_demo();
         }
     }
