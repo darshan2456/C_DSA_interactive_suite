@@ -209,6 +209,7 @@ int query_range(SegmentTree* st, int node, int start, int end, int l, int r);
 void preorder_traversal(SegmentTree* st, int node, int start, int end);
 void inorder_traversal(SegmentTree* st, int node, int start, int end);
 void postorder_traversal(SegmentTree* st, int node, int start, int end);
+void segment_tree_demo(void);
 
 // For Stack
 typedef struct stack

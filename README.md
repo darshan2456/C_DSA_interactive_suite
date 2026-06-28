@@ -186,6 +186,7 @@ If any test fails or Valgrind detects a memory error, the CI job fails automatic
 - Double-Ended Queue (Deque) (array-based)
 - Stack (array-based / linked-list-based as required)
 - Priority Queue(heap based)
+- Segment Tree (array-based, dynamic range query sum & point update)
 
 ### Trees
 - Binary Search Tree (BST)-recursive
@@ -410,6 +411,13 @@ Quadratic Probing resolves collisions by using quadratic increments (i²) to red
 * Self-balancing binary search tree  
 * Rotations (LL, RR, LR, RL) ensure height balance  
 * Guarantees O(log n) search, insertion, and deletion
+
+
+### Segment Tree
+
+* Tree-based structure built over a dynamically sized array
+* Efficient range queries (sum) and point updates in O(log n) time
+* Includes interactive CLI and TUI demos for queries, updates, and tree traversals
 
   
 ### Terminal User Interface (TUI)

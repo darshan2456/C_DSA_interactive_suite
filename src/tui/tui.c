@@ -123,6 +123,7 @@ static Entry ENTRIES[] = {
     {"Trie", trie_demo, 0, 0, 1},
     {"B-Tree", btree_demo, 0, 0, 1},
     {"B+ Tree", bplus_tree_demo, 0, 0, 1},
+    {"Segment Tree", segment_tree_demo, 0, 0, 1},
 
     {"sorting_algorithms_n2", NULL, 1, 1, 0},
     {"Bubble Sort", bubble_sort_optimized_demo, 0, 0, 1}, /* add fn when known */
