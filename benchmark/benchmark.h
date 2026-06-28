@@ -8,7 +8,6 @@
 int _fileno(FILE*);
 #endif
 
-
 /**
  * Returns a high-resolution monotonic timestamp in seconds.
  * Suitable for measuring code execution duration.
@@ -32,7 +31,8 @@ size_t benchmark_get_peak_memory(void);
  * @param memory_kb Peak RAM consumed by the process in KB.
  * @return 0 on success, -1 on failure.
  */
-int benchmark_export_csv(const char* category_name, const char* algo_name, int input_size, double time_seconds, size_t memory_kb);
+int benchmark_export_csv(const char* category_name, const char* algo_name, int input_size,
+                         double time_seconds, size_t memory_kb);
 
 /**
  * Interactive benchmark menu interface.

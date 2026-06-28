@@ -1,6 +1,6 @@
+#include "advanced_sorting.h"
 #include "benchmark.h"
 #include "sorting_algorithms_n2.h"
-#include "advanced_sorting.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,16 +32,15 @@ void run_sorting_benchmark(int n)
     printf("%-20s %-25s %-15s %-10s\n", "Algorithm", "Execution Time", "Peak Memory", "Status");
     printf("------------------------------------------------------------------------\n");
 
-    const char* algos[] = {
-        "Bubble Sort", "Selection Sort", "Insertion Sort", "Shell Sort",
-        "Merge Sort", "Quick Sort", "Heap Sort", "Radix Sort", "Bucket Sort"
-    };
+    const char* algos[] = {"Bubble Sort", "Selection Sort", "Insertion Sort",
+                           "Shell Sort",  "Merge Sort",     "Quick Sort",
+                           "Heap Sort",   "Radix Sort",     "Bucket Sort"};
 
     for (int i = 0; i < 9; i++)
     {
         const char* name = algos[i];
         int skip = 0;
-        
+
         // Skip O(N^2) algorithms for N > 10000 to prevent long freezes
         if (n > 10000 && (i == 0 || i == 1 || i == 2))
         {
@@ -70,15 +69,33 @@ void run_sorting_benchmark(int n)
         // Run algorithm
         switch (i)
         {
-            case 0: bubble_sort_optimized(clone, n); break;
-            case 1: selection_sort(clone, n); break;
-            case 2: insertion_sort(clone, n); break;
-            case 3: shell_sort(clone, n); break;
-            case 4: merge_sort(clone, n); break;
-            case 5: quicksort(clone, 0, n - 1); break;
-            case 6: heap_sort(clone, n); break;
-            case 7: radix_sort(clone, n); break;
-            case 8: bucket_sort(clone, n); break;
+            case 0:
+                bubble_sort_optimized(clone, n);
+                break;
+            case 1:
+                selection_sort(clone, n);
+                break;
+            case 2:
+                insertion_sort(clone, n);
+                break;
+            case 3:
+                shell_sort(clone, n);
+                break;
+            case 4:
+                merge_sort(clone, n);
+                break;
+            case 5:
+                quicksort(clone, 0, n - 1);
+                break;
+            case 6:
+                heap_sort(clone, n);
+                break;
+            case 7:
+                radix_sort(clone, n);
+                break;
+            case 8:
+                bucket_sort(clone, n);
+                break;
         }
 
         double end_time = benchmark_get_time();

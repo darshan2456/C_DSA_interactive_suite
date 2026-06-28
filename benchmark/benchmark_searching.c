@@ -41,15 +41,14 @@ void run_searching_benchmark(int n)
 
     // Print table header
     printf("\n========================================================================\n");
-    printf("             BENCHMARK REPORT: SEARCHING ALGORITHMS (N = %d, Loops = %d)\n", n, num_queries);
+    printf("             BENCHMARK REPORT: SEARCHING ALGORITHMS (N = %d, Loops = %d)\n", n,
+           num_queries);
     printf("========================================================================\n");
     printf("%-30s %-20s %-12s %-10s\n", "Algorithm", "Execution Time", "Peak Memory", "Status");
     printf("------------------------------------------------------------------------\n");
 
-    const char* algos[] = {
-        "Linear Search", "Binary Search (Iterative)", "Binary Search (Recursive)",
-        "Jump Search", "Interpolation Search"
-    };
+    const char* algos[] = {"Linear Search", "Binary Search (Iterative)",
+                           "Binary Search (Recursive)", "Jump Search", "Interpolation Search"};
 
     for (int i = 0; i < 5; i++)
     {
@@ -79,11 +78,21 @@ void run_searching_benchmark(int n)
             int res = -1;
             switch (i)
             {
-                case 0: res = linear_search(arr, target, n); break;
-                case 1: res = binary_search(arr, target, n); break;
-                case 2: res = binary_search_recursive(arr, target, 0, n - 1); break;
-                case 3: res = jump_search(arr, target, n); break;
-                case 4: res = interpolation_search(arr, target, n); break;
+                case 0:
+                    res = linear_search(arr, target, n);
+                    break;
+                case 1:
+                    res = binary_search(arr, target, n);
+                    break;
+                case 2:
+                    res = binary_search_recursive(arr, target, 0, n - 1);
+                    break;
+                case 3:
+                    res = jump_search(arr, target, n);
+                    break;
+                case 4:
+                    res = interpolation_search(arr, target, n);
+                    break;
             }
             dummy += res;
         }

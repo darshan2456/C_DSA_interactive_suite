@@ -33,7 +33,8 @@ void benchmark_menu_demo(void)
         }
 
         int n;
-        int n_status = safe_input_int(&n, "Enter input size N (between 10 and 100000), or -1 to exit: ", 10, 100000);
+        int n_status = safe_input_int(
+            &n, "Enter input size N (between 10 and 100000), or -1 to exit: ", 10, 100000);
         if (n_status == INPUT_EXIT_SIGNAL)
         {
             continue;

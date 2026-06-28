@@ -1,5 +1,6 @@
 #include "advanced_sorting_algorithms/advanced_sorting.h"
 #include "backtracking/backtracking.h"
+#include "benchmark.h"
 #include "data_structures/data_structures.h"
 #include "dynamic_programming/dynamic_programming.h"
 #include "error_correction_algorithms/error_correction_algorithms.h"
@@ -15,7 +16,6 @@
 #include "utils/config.h"
 #include "utils/display_header.h"
 #include "utils/safe_input.h"
-#include "benchmark.h"
 #ifndef _WIN32
 #include "tui/tui.h"
 #endif

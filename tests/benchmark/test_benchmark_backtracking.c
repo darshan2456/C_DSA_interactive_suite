@@ -1,8 +1,8 @@
+#include "benchmark.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "benchmark.h"
 
 void test_backtracking_benchmark_run(void)
 {
@@ -22,7 +22,9 @@ void test_backtracking_benchmark_run(void)
     // Read header
     char* res = fgets(line, sizeof(line), file);
     assert(res != NULL);
-    assert(strstr(line, "Algorithm,Input Size,Execution Time (Seconds),Peak Memory (KB),Timestamp") != NULL);
+    assert(
+        strstr(line, "Algorithm,Input Size,Execution Time (Seconds),Peak Memory (KB),Timestamp") !=
+        NULL);
 
     // Count data rows
     while (fgets(line, sizeof(line), file))

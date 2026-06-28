@@ -1,8 +1,8 @@
+#include "benchmark.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "benchmark.h"
 
 void test_timing(void)
 {
@@ -56,7 +56,9 @@ void test_csv_export(void)
     // Read header
     char* res = fgets(line, sizeof(line), file);
     assert(res != NULL);
-    assert(strstr(line, "Algorithm,Input Size,Execution Time (Seconds),Peak Memory (KB),Timestamp") != NULL);
+    assert(
+        strstr(line, "Algorithm,Input Size,Execution Time (Seconds),Peak Memory (KB),Timestamp") !=
+        NULL);
 
     // Read data row
     res = fgets(line, sizeof(line), file);

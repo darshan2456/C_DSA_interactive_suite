@@ -8,13 +8,15 @@
 // Fibonacci
 static long long fib_naive(int n)
 {
-    if (n <= 1) return n;
+    if (n <= 1)
+        return n;
     return fib_naive(n - 1) + fib_naive(n - 2);
 }
 
 static long long fib_dp(int n)
 {
-    if (n <= 1) return n;
+    if (n <= 1)
+        return n;
     long long a = 0, b = 1, c = 0;
     for (int i = 2; i <= n; i++)
     {
@@ -28,8 +30,10 @@ static long long fib_dp(int n)
 // Knapsack
 static int knapsack_naive(int W, const int wt[], const int val[], int n)
 {
-    if (n == 0 || W == 0) return 0;
-    if (wt[n - 1] > W) return knapsack_naive(W, wt, val, n - 1);
+    if (n == 0 || W == 0)
+        return 0;
+    if (wt[n - 1] > W)
+        return knapsack_naive(W, wt, val, n - 1);
     int inc = val[n - 1] + knapsack_naive(W - wt[n - 1], wt, val, n - 1);
     int exc = knapsack_naive(W, wt, val, n - 1);
     return (inc > exc) ? inc : exc;
@@ -38,7 +42,8 @@ static int knapsack_naive(int W, const int wt[], const int val[], int n)
 static int knapsack_dp(int W, const int wt[], const int val[], int n)
 {
     int** dp = malloc((n + 1) * sizeof(int*));
-    if (!dp) return 0;
+    if (!dp)
+        return 0;
     for (int i = 0; i <= n; i++)
     {
         dp[i] = malloc((W + 1) * sizeof(int));
@@ -62,7 +67,8 @@ static int knapsack_dp(int W, const int wt[], const int val[], int n)
         }
     }
     int res = dp[n][W];
-    for (int i = 0; i <= n; i++) free(dp[i]);
+    for (int i = 0; i <= n; i++)
+        free(dp[i]);
     free(dp);
     return res;
 }
@@ -70,8 +76,10 @@ static int knapsack_dp(int W, const int wt[], const int val[], int n)
 // LCS
 static int lcs_naive(const char* X, const char* Y, int m, int n)
 {
-    if (m == 0 || n == 0) return 0;
-    if (X[m - 1] == Y[n - 1]) return 1 + lcs_naive(X, Y, m - 1, n - 1);
+    if (m == 0 || n == 0)
+        return 0;
+    if (X[m - 1] == Y[n - 1])
+        return 1 + lcs_naive(X, Y, m - 1, n - 1);
     int a = lcs_naive(X, Y, m, n - 1);
     int b = lcs_naive(X, Y, m - 1, n);
     return (a > b) ? a : b;
@@ -80,7 +88,8 @@ static int lcs_naive(const char* X, const char* Y, int m, int n)
 static int lcs_dp(const char* X, const char* Y, int m, int n)
 {
     int** dp = malloc((m + 1) * sizeof(int*));
-    if (!dp) return 0;
+    if (!dp)
+        return 0;
     for (int i = 0; i <= m; i++)
     {
         dp[i] = malloc((n + 1) * sizeof(int));
@@ -102,7 +111,8 @@ static int lcs_dp(const char* X, const char* Y, int m, int n)
         }
     }
     int res = dp[m][n];
-    for (int i = 0; i <= m; i++) free(dp[i]);
+    for (int i = 0; i <= m; i++)
+        free(dp[i]);
     free(dp);
     return res;
 }
@@ -110,12 +120,14 @@ static int lcs_dp(const char* X, const char* Y, int m, int n)
 // MCM
 static int mcm_naive(const int p[], int i, int j)
 {
-    if (i == j) return 0;
+    if (i == j)
+        return 0;
     int min_val = 1e9;
     for (int k = i; k < j; k++)
     {
         int count = mcm_naive(p, i, k) + mcm_naive(p, k + 1, j) + p[i - 1] * p[k] * p[j];
-        if (count < min_val) min_val = count;
+        if (count < min_val)
+            min_val = count;
     }
     return min_val;
 }
@@ -123,7 +135,8 @@ static int mcm_naive(const int p[], int i, int j)
 static int mcm_dp(const int p[], int n)
 {
     int** m = malloc(n * sizeof(int*));
-    if (!m) return 0;
+    if (!m)
+        return 0;
     for (int i = 0; i < n; i++)
     {
         m[i] = calloc(n, sizeof(int));
@@ -137,12 +150,14 @@ static int mcm_dp(const int p[], int n)
             for (int k = i; k < j; k++)
             {
                 int q = m[i][k] + m[k + 1][j] + p[i - 1] * p[k] * p[j];
-                if (q < m[i][j]) m[i][j] = q;
+                if (q < m[i][j])
+                    m[i][j] = q;
             }
         }
     }
     int res = m[1][n - 1];
-    for (int i = 0; i < n; i++) free(m[i]);
+    for (int i = 0; i < n; i++)
+        free(m[i]);
     free(m);
     return res;
 }
@@ -183,13 +198,15 @@ void run_dp_benchmark(int n)
         double dp_time = benchmark_get_time() - start_dp;
         size_t dp_mem_after = benchmark_get_peak_memory();
         size_t dp_mem_used = (dp_mem_after > dp_mem_before) ? (dp_mem_after - dp_mem_before) : 0;
-        if (dp_mem_used == 0) dp_mem_used = dp_mem_after;
+        if (dp_mem_used == 0)
+            dp_mem_used = dp_mem_after;
 
         char size_str[32];
         sprintf(size_str, "Fibonacci (%d)", fib_n);
         if (rec_time >= 0)
         {
-            printf("%-35s %-15.6f %-15.6f %-10s\n", size_str, rec_time * 1000.0, dp_time * 1000.0, "PASSED");
+            printf("%-35s %-15.6f %-15.6f %-10s\n", size_str, rec_time * 1000.0, dp_time * 1000.0,
+                   "PASSED");
             benchmark_export_csv("dp", "Fibonacci (Recursion)", fib_n, rec_time, mem_used);
         }
         else
@@ -229,19 +246,23 @@ void run_dp_benchmark(int n)
             knapsack_dp(W, wt, val, kp_n);
             double dp_time = benchmark_get_time() - start_dp;
             size_t dp_mem_after = benchmark_get_peak_memory();
-            size_t dp_mem_used = (dp_mem_after > dp_mem_before) ? (dp_mem_after - dp_mem_before) : 0;
-            if (dp_mem_used == 0) dp_mem_used = dp_mem_after;
+            size_t dp_mem_used =
+                (dp_mem_after > dp_mem_before) ? (dp_mem_after - dp_mem_before) : 0;
+            if (dp_mem_used == 0)
+                dp_mem_used = dp_mem_after;
 
             char size_str[32];
             sprintf(size_str, "0/1 Knapsack (%d)", kp_n);
             if (rec_time >= 0)
             {
-                printf("%-35s %-15.6f %-15.6f %-10s\n", size_str, rec_time * 1000.0, dp_time * 1000.0, "PASSED");
+                printf("%-35s %-15.6f %-15.6f %-10s\n", size_str, rec_time * 1000.0,
+                       dp_time * 1000.0, "PASSED");
                 benchmark_export_csv("dp", "Knapsack (Recursion)", kp_n, rec_time, mem_used);
             }
             else
             {
-                printf("%-35s %-15s %-15.6f %-10s\n", size_str, "BYPASSED", dp_time * 1000.0, "PASSED");
+                printf("%-35s %-15s %-15.6f %-10s\n", size_str, "BYPASSED", dp_time * 1000.0,
+                       "PASSED");
             }
             benchmark_export_csv("dp", "Knapsack (DP)", kp_n, dp_time, dp_mem_used);
         }
@@ -280,19 +301,23 @@ void run_dp_benchmark(int n)
             lcs_dp(X, Y, lcs_n, lcs_n);
             double dp_time = benchmark_get_time() - start_dp;
             size_t dp_mem_after = benchmark_get_peak_memory();
-            size_t dp_mem_used = (dp_mem_after > dp_mem_before) ? (dp_mem_after - dp_mem_before) : 0;
-            if (dp_mem_used == 0) dp_mem_used = dp_mem_after;
+            size_t dp_mem_used =
+                (dp_mem_after > dp_mem_before) ? (dp_mem_after - dp_mem_before) : 0;
+            if (dp_mem_used == 0)
+                dp_mem_used = dp_mem_after;
 
             char size_str[32];
             sprintf(size_str, "LCS (%d)", lcs_n);
             if (rec_time >= 0)
             {
-                printf("%-35s %-15.6f %-15.6f %-10s\n", size_str, rec_time * 1000.0, dp_time * 1000.0, "PASSED");
+                printf("%-35s %-15.6f %-15.6f %-10s\n", size_str, rec_time * 1000.0,
+                       dp_time * 1000.0, "PASSED");
                 benchmark_export_csv("dp", "LCS (Recursion)", lcs_n, rec_time, mem_used);
             }
             else
             {
-                printf("%-35s %-15s %-15.6f %-10s\n", size_str, "BYPASSED", dp_time * 1000.0, "PASSED");
+                printf("%-35s %-15s %-15.6f %-10s\n", size_str, "BYPASSED", dp_time * 1000.0,
+                       "PASSED");
             }
             benchmark_export_csv("dp", "LCS (DP)", lcs_n, dp_time, dp_mem_used);
         }
@@ -328,19 +353,23 @@ void run_dp_benchmark(int n)
             mcm_dp(p, mcm_len);
             double dp_time = benchmark_get_time() - start_dp;
             size_t dp_mem_after = benchmark_get_peak_memory();
-            size_t dp_mem_used = (dp_mem_after > dp_mem_before) ? (dp_mem_after - dp_mem_before) : 0;
-            if (dp_mem_used == 0) dp_mem_used = dp_mem_after;
+            size_t dp_mem_used =
+                (dp_mem_after > dp_mem_before) ? (dp_mem_after - dp_mem_before) : 0;
+            if (dp_mem_used == 0)
+                dp_mem_used = dp_mem_after;
 
             char size_str[32];
             sprintf(size_str, "Matrix Chain Mult (%d)", mcm_n);
             if (rec_time >= 0)
             {
-                printf("%-35s %-15.6f %-15.6f %-10s\n", size_str, rec_time * 1000.0, dp_time * 1000.0, "PASSED");
+                printf("%-35s %-15.6f %-15.6f %-10s\n", size_str, rec_time * 1000.0,
+                       dp_time * 1000.0, "PASSED");
                 benchmark_export_csv("dp", "MCM (Recursion)", mcm_n, rec_time, mem_used);
             }
             else
             {
-                printf("%-35s %-15s %-15.6f %-10s\n", size_str, "BYPASSED", dp_time * 1000.0, "PASSED");
+                printf("%-35s %-15s %-15.6f %-10s\n", size_str, "BYPASSED", dp_time * 1000.0,
+                       "PASSED");
             }
             benchmark_export_csv("dp", "MCM (DP)", mcm_n, dp_time, dp_mem_used);
         }

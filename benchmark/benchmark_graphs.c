@@ -76,9 +76,7 @@ void run_graphs_benchmark(int v)
     printf("%-30s %-20s %-12s %-10s\n", "Algorithm", "Execution Time", "Peak Memory", "Status");
     printf("------------------------------------------------------------------------\n");
 
-    const char* algos[] = {
-        "Dijkstra", "Bellman-Ford", "A* Search", "Greedy Best-First Search"
-    };
+    const char* algos[] = {"Dijkstra", "Bellman-Ford", "A* Search", "Greedy Best-First Search"};
 
     int start = 0;
     int dest = v - 1;
@@ -120,10 +118,18 @@ void run_graphs_benchmark(int v)
         // Run algorithm
         switch (i)
         {
-            case 0: dijkstra(graph, start); break;
-            case 1: bellman_ford(graph, start); break;
-            case 2: astar(graph, start, dest, h); break;
-            case 3: greedy_best_first_search(graph, start, dest, h); break;
+            case 0:
+                dijkstra(graph, start);
+                break;
+            case 1:
+                bellman_ford(graph, start);
+                break;
+            case 2:
+                astar(graph, start, dest, h);
+                break;
+            case 3:
+                greedy_best_first_search(graph, start, dest, h);
+                break;
         }
 
         // Restore stdout

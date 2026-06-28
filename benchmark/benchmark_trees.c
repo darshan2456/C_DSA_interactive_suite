@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
-#include "benchmark.h"
 #include "../trees/trees.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,7 +26,8 @@ static void generate_unique_keys(int* keys, int n)
     {
         keys[i] = rand() % (n * 10) + 1;
     }
-    // Sort and remove duplicates (though not strictly necessary to be 100% unique, sorting helps AVL/BST behave consistently)
+    // Sort and remove duplicates (though not strictly necessary to be 100% unique, sorting helps
+    // AVL/BST behave consistently)
     qsort(keys, n, sizeof(int), compare_ints);
 }
 
@@ -41,7 +42,8 @@ void run_trees_benchmark(int n)
     }
 
     int* keys = malloc(n * sizeof(int));
-    if (!keys) return;
+    if (!keys)
+        return;
     generate_unique_keys(keys, n);
 
     printf("\n========================================================================\n");
@@ -50,14 +52,9 @@ void run_trees_benchmark(int n)
     printf("%-30s %-20s %-12s %-10s\n", "Structure", "Execution Time", "Peak Memory", "Status");
     printf("------------------------------------------------------------------------\n");
 
-    const char* algos[] = {
-        "Binary Search Tree (BST)",
-        "Threaded Binary Tree (TBT)",
-        "AVL Tree (Balanced)",
-        "Trie (Prefix Tree)",
-        "B-Tree (t = 3)",
-        "B+ Tree (order = 4)"
-    };
+    const char* algos[] = {"Binary Search Tree (BST)", "Threaded Binary Tree (TBT)",
+                           "AVL Tree (Balanced)",      "Trie (Prefix Tree)",
+                           "B-Tree (t = 3)",           "B+ Tree (order = 4)"};
 
     for (int i = 0; i < 6; i++)
     {
@@ -90,7 +87,8 @@ void run_trees_benchmark(int n)
                 int key = keys[k];
                 while (curr)
                 {
-                    if (curr->data == key) break;
+                    if (curr->data == key)
+                        break;
                     curr = (key < curr->data) ? curr->left : curr->right;
                 }
             }
@@ -109,15 +107,18 @@ void run_trees_benchmark(int n)
                 int key = keys[k];
                 while (curr)
                 {
-                    if (curr->data == key) break;
+                    if (curr->data == key)
+                        break;
                     if (key < curr->data)
                     {
-                        if (curr->lthread) break;
+                        if (curr->lthread)
+                            break;
                         curr = curr->left;
                     }
                     else
                     {
-                        if (curr->rthread) break;
+                        if (curr->rthread)
+                            break;
                         curr = curr->right;
                     }
                 }
@@ -137,7 +138,8 @@ void run_trees_benchmark(int n)
                 int key = keys[k];
                 while (curr)
                 {
-                    if (curr->data == key) break;
+                    if (curr->data == key)
+                        break;
                     curr = (key < curr->data) ? curr->left : curr->right;
                 }
             }
@@ -206,7 +208,8 @@ void run_trees_benchmark(int n)
         double duration = benchmark_get_time() - start_time;
         size_t mem_after = benchmark_get_peak_memory();
         size_t mem_used = (mem_after > mem_before) ? (mem_after - mem_before) : 0;
-        if (mem_used == 0) mem_used = mem_after;
+        if (mem_used == 0)
+            mem_used = mem_after;
 
         printf("%-30s %-20.6f %-12zu %-10s\n", algos[i], duration * 1000.0, mem_used, "PASSED");
         benchmark_export_csv("trees", algos[i], n, duration, mem_used);

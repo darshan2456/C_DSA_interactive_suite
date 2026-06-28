@@ -44,7 +44,9 @@ static void run_benchmark_with_prompt(void (*benchmark_fn)(int), const char* cat
     while (1)
     {
         char prompt[128];
-        snprintf(prompt, sizeof(prompt), "\nEnter input size N for %s (between 10 and 100000), enter '-1' to exit: ", category_name);
+        snprintf(prompt, sizeof(prompt),
+                 "\nEnter input size N for %s (between 10 and 100000), enter '-1' to exit: ",
+                 category_name);
         int status = safe_input_int(&n, prompt, 10, 100000);
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -59,16 +61,46 @@ static void run_benchmark_with_prompt(void (*benchmark_fn)(int), const char* cat
     benchmark_fn(n);
 }
 
-static void run_sorting_benchmark_wrapper(void) { run_benchmark_with_prompt(run_sorting_benchmark, "Sorting"); }
-static void run_searching_benchmark_wrapper(void) { run_benchmark_with_prompt(run_searching_benchmark, "Searching"); }
-static void run_graphs_benchmark_wrapper(void) { run_benchmark_with_prompt(run_graphs_benchmark, "Graphs"); }
-static void run_mst_benchmark_wrapper(void) { run_benchmark_with_prompt(run_mst_benchmark, "MST"); }
-static void run_scheduling_benchmark_wrapper(void) { run_benchmark_with_prompt(run_scheduling_benchmark, "Scheduling"); }
-static void run_strings_benchmark_wrapper(void) { run_benchmark_with_prompt(run_strings_benchmark, "Strings"); }
-static void run_dp_benchmark_wrapper(void) { run_benchmark_with_prompt(run_dp_benchmark, "Dynamic Programming"); }
-static void run_hashing_benchmark_wrapper(void) { run_benchmark_with_prompt(run_hashing_benchmark, "Hashing"); }
-static void run_trees_benchmark_wrapper(void) { run_benchmark_with_prompt(run_trees_benchmark, "Trees"); }
-static void run_backtracking_benchmark_wrapper(void) { run_benchmark_with_prompt(run_backtracking_benchmark, "Backtracking"); }
+static void run_sorting_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_sorting_benchmark, "Sorting");
+}
+static void run_searching_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_searching_benchmark, "Searching");
+}
+static void run_graphs_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_graphs_benchmark, "Graphs");
+}
+static void run_mst_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_mst_benchmark, "MST");
+}
+static void run_scheduling_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_scheduling_benchmark, "Scheduling");
+}
+static void run_strings_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_strings_benchmark, "Strings");
+}
+static void run_dp_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_dp_benchmark, "Dynamic Programming");
+}
+static void run_hashing_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_hashing_benchmark, "Hashing");
+}
+static void run_trees_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_trees_benchmark, "Trees");
+}
+static void run_backtracking_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_backtracking_benchmark, "Backtracking");
+}
 
 typedef struct
 {

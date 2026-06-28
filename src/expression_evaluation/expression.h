@@ -2,7 +2,6 @@
 #define EXPRESSION_H
 #include "data_structures.h"
 
-
 void infix_to_postfix_demo(void);
 void postfix_evaluation_demo(void);
 void expression_evaluation_demo(void);

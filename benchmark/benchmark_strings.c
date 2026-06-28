@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
-#include "benchmark.h"
 #include "../string_algorithms/string_algorithms.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,11 +50,8 @@ void run_strings_benchmark(int n)
     printf("%-30s %-20s %-12s %-10s\n", "Algorithm", "Execution Time", "Peak Memory", "Status");
     printf("------------------------------------------------------------------------\n");
 
-    const char* algos[] = {
-        "Naive String Matching",
-        "Knuth-Morris-Pratt (KMP)",
-        "Rabin-Karp Search"
-    };
+    const char* algos[] = {"Naive String Matching", "Knuth-Morris-Pratt (KMP)",
+                           "Rabin-Karp Search"};
 
     for (int i = 0; i < 3; i++)
     {
@@ -110,7 +107,8 @@ void run_strings_benchmark(int n)
         double duration = benchmark_get_time() - start_time;
         size_t mem_after = benchmark_get_peak_memory();
         size_t mem_used = (mem_after > mem_before) ? (mem_after - mem_before) : 0;
-        if (mem_used == 0) mem_used = mem_after;
+        if (mem_used == 0)
+            mem_used = mem_after;
 
         printf("%-30s %-20.6f %-12zu %-10s\n", algos[i], duration * 1000.0, mem_used, "PASSED");
         benchmark_export_csv("strings", algos[i], n, duration, mem_used);

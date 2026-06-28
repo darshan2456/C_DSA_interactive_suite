@@ -9,8 +9,8 @@
 
 #ifdef _WIN32
 #include <direct.h>
-#include <windows.h>
 #include <psapi.h>
+#include <windows.h>
 
 #define make_dir(path) _mkdir(path)
 #else
@@ -63,7 +63,8 @@ size_t benchmark_get_peak_memory(void)
 #endif
 }
 
-int benchmark_export_csv(const char* category_name, const char* algo_name, int input_size, double time_seconds, size_t memory_kb)
+int benchmark_export_csv(const char* category_name, const char* algo_name, int input_size,
+                         double time_seconds, size_t memory_kb)
 {
     char filepath[256];
     FILE* check_file = NULL;
@@ -112,7 +113,8 @@ int benchmark_export_csv(const char* category_name, const char* algo_name, int i
     // Write header if new file
     if (is_new)
     {
-        fprintf(csv_file, "Algorithm,Input Size,Execution Time (Seconds),Peak Memory (KB),Timestamp\n");
+        fprintf(csv_file,
+                "Algorithm,Input Size,Execution Time (Seconds),Peak Memory (KB),Timestamp\n");
     }
 
     // Format timestamp
@@ -128,7 +130,8 @@ int benchmark_export_csv(const char* category_name, const char* algo_name, int i
     }
 
     // Write data row
-    fprintf(csv_file, "%s,%d,%.6f,%zu,%s\n", algo_name, input_size, time_seconds, memory_kb, timestamp);
+    fprintf(csv_file, "%s,%d,%.6f,%zu,%s\n", algo_name, input_size, time_seconds, memory_kb,
+            timestamp);
     fclose(csv_file);
 
     return 0;

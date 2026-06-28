@@ -1,8 +1,8 @@
 #include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
-#include "safe_input.h"
 #include "data_structures.h"
+#include "safe_input.h"
 #include <stdio.h>
 
 #include <string.h>

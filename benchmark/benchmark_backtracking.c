@@ -1,7 +1,7 @@
 #define _GNU_SOURCE
-#include "benchmark.h"
 #include "../backtracking/backtracking.h"
 #include "../utils/config.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,13 +28,8 @@ void run_backtracking_benchmark(int n)
     printf("%-30s %-20s %-12s %-10s\n", "Algorithm", "Execution Time", "Peak Memory", "Status");
     printf("------------------------------------------------------------------------\n");
 
-    const char* algos[] = {
-        "N-Queens Solver",
-        "Sudoku Solver",
-        "Rat in a Maze",
-        "Graph Coloring",
-        "Knight's Tour"
-    };
+    const char* algos[] = {"N-Queens Solver", "Sudoku Solver", "Rat in a Maze", "Graph Coloring",
+                           "Knight's Tour"};
 
     // Set animation speed to Instant (choice = 4)
     set_animation_speed(4);
@@ -63,26 +58,14 @@ void run_backtracking_benchmark(int n)
         }
         else if (i == 1) // Sudoku
         {
-            int sudoku_grid[6][6] = {
-                {1, 5, 3, 4, 6, 0},
-                {4, 6, 2, 0, 1, 3},
-                {2, 4, 5, 6, 3, 1},
-                {0, 1, 6, 2, 4, 5},
-                {5, 3, 4, 1, 2, 6},
-                {6, 0, 1, 3, 5, 4}
-            };
+            int sudoku_grid[6][6] = {{1, 5, 3, 4, 6, 0}, {4, 6, 2, 0, 1, 3}, {2, 4, 5, 6, 3, 1},
+                                     {0, 1, 6, 2, 4, 5}, {5, 3, 4, 1, 2, 6}, {6, 0, 1, 3, 5, 4}};
             run_sudoku_test(sudoku_grid);
         }
         else if (i == 2) // Rat in a Maze
         {
-            int maze[6][6] = {
-                {1, 1, 1, 1, 0, 1},
-                {1, 0, 0, 1, 0, 1},
-                {1, 1, 1, 1, 1, 1},
-                {0, 1, 0, 0, 0, 1},
-                {1, 1, 0, 1, 1, 1},
-                {1, 0, 0, 1, 0, 1}
-            };
+            int maze[6][6] = {{1, 1, 1, 1, 0, 1}, {1, 0, 0, 1, 0, 1}, {1, 1, 1, 1, 1, 1},
+                              {0, 1, 0, 0, 0, 1}, {1, 1, 0, 1, 1, 1}, {1, 0, 0, 1, 0, 1}};
             run_rat_in_maze_test(maze);
         }
         else if (i == 3) // Graph Coloring
@@ -109,7 +92,8 @@ void run_backtracking_benchmark(int n)
         double duration = benchmark_get_time() - start_time;
         size_t mem_after = benchmark_get_peak_memory();
         size_t mem_used = (mem_after > mem_before) ? (mem_after - mem_before) : 0;
-        if (mem_used == 0) mem_used = mem_after;
+        if (mem_used == 0)
+            mem_used = mem_after;
 
         printf("%-30s %-20.6f %-12zu %-10s\n", algos[i], duration * 1000.0, mem_used, "PASSED");
         benchmark_export_csv("backtracking", algos[i], n, duration, mem_used);

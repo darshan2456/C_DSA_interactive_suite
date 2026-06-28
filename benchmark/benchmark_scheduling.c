@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
-#include "benchmark.h"
 #include "../job_scheduling/job_scheduling.h"
+#include "benchmark.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -68,7 +68,8 @@ static void benchmark_fcfs(Process* procs, int n)
 static void benchmark_sjf(Process* procs, int n)
 {
     int* done = calloc(n, sizeof(int));
-    if (!done) return;
+    if (!done)
+        return;
     int completed = 0;
     int current_time = 0;
 
@@ -117,7 +118,8 @@ static void benchmark_srtf(Process* procs, int n)
                 continue;
 
             if (chosen == -1 || procs[i].remaining < procs[chosen].remaining ||
-                (procs[i].remaining == procs[chosen].remaining && procs[i].arrival < procs[chosen].arrival))
+                (procs[i].remaining == procs[chosen].remaining &&
+                 procs[i].arrival < procs[chosen].arrival))
             {
                 chosen = i;
             }
@@ -145,7 +147,8 @@ static void benchmark_srtf(Process* procs, int n)
 static void benchmark_priority(Process* procs, int n)
 {
     int* done = calloc(n, sizeof(int));
-    if (!done) return;
+    if (!done)
+        return;
     int completed = 0;
     int current_time = 0;
 
@@ -158,7 +161,8 @@ static void benchmark_priority(Process* procs, int n)
                 continue;
 
             if (chosen == -1 || procs[i].priority < procs[chosen].priority ||
-                (procs[i].priority == procs[chosen].priority && procs[i].arrival < procs[chosen].arrival))
+                (procs[i].priority == procs[chosen].priority &&
+                 procs[i].arrival < procs[chosen].arrival))
             {
                 chosen = i;
             }
@@ -194,7 +198,8 @@ static void benchmark_preemptive_priority(Process* procs, int n)
                 continue;
 
             if (chosen == -1 || procs[i].priority < procs[chosen].priority ||
-                (procs[i].priority == procs[chosen].priority && procs[i].arrival < procs[chosen].arrival))
+                (procs[i].priority == procs[chosen].priority &&
+                 procs[i].arrival < procs[chosen].arrival))
             {
                 chosen = i;
             }
@@ -342,14 +347,9 @@ void run_scheduling_benchmark(int n)
     printf("%-30s %-20s %-12s %-10s\n", "Algorithm", "Execution Time", "Peak Memory", "Status");
     printf("------------------------------------------------------------------------\n");
 
-    const char* algos[] = {
-        "First-Come, First-Served",
-        "Shortest Job First (SJF)",
-        "Shortest Remaining Time First",
-        "Non-preemptive Priority",
-        "Preemptive Priority",
-        "Round Robin"
-    };
+    const char* algos[] = {"First-Come, First-Served",      "Shortest Job First (SJF)",
+                           "Shortest Remaining Time First", "Non-preemptive Priority",
+                           "Preemptive Priority",           "Round Robin"};
 
     for (int i = 0; i < 6; i++)
     {
@@ -360,18 +360,31 @@ void run_scheduling_benchmark(int n)
 
         switch (i)
         {
-            case 0: benchmark_fcfs(temp, n); break;
-            case 1: benchmark_sjf(temp, n); break;
-            case 2: benchmark_srtf(temp, n); break;
-            case 3: benchmark_priority(temp, n); break;
-            case 4: benchmark_preemptive_priority(temp, n); break;
-            case 5: benchmark_rr(temp, n); break;
+            case 0:
+                benchmark_fcfs(temp, n);
+                break;
+            case 1:
+                benchmark_sjf(temp, n);
+                break;
+            case 2:
+                benchmark_srtf(temp, n);
+                break;
+            case 3:
+                benchmark_priority(temp, n);
+                break;
+            case 4:
+                benchmark_preemptive_priority(temp, n);
+                break;
+            case 5:
+                benchmark_rr(temp, n);
+                break;
         }
 
         double duration = benchmark_get_time() - start_time;
         size_t mem_after = benchmark_get_peak_memory();
         size_t mem_used = (mem_after > mem_before) ? (mem_after - mem_before) : 0;
-        if (mem_used == 0) mem_used = mem_after; // fallback
+        if (mem_used == 0)
+            mem_used = mem_after; // fallback
 
         printf("%-30s %-20.6f %-12zu %-10s\n", algos[i], duration * 1000.0, mem_used, "PASSED");
         benchmark_export_csv("scheduling", algos[i], n, duration, mem_used);

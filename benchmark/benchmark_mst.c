@@ -63,9 +63,7 @@ void run_mst_benchmark(int v)
     printf("%-30s %-20s %-12s %-10s\n", "Algorithm", "Execution Time", "Peak Memory", "Status");
     printf("------------------------------------------------------------------------\n");
 
-    const char* algos[] = {
-        "Kruskal's Algorithm", "Prim's Algorithm"
-    };
+    const char* algos[] = {"Kruskal's Algorithm", "Prim's Algorithm"};
 
     for (int i = 0; i < 2; i++)
     {
@@ -91,8 +89,12 @@ void run_mst_benchmark(int v)
         // Run algorithm
         switch (i)
         {
-            case 0: kruskal_mst(graph); break;
-            case 1: prim_mst(graph, 0); break;
+            case 0:
+                kruskal_mst(graph);
+                break;
+            case 1:
+                prim_mst(graph, 0);
+                break;
         }
 
         // Restore stdout

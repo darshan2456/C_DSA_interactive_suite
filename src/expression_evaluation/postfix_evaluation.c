@@ -6,7 +6,6 @@
 #include <ctype.h>
 #include <stdio.h>
 
-
 // if postfix expression attempts to divide by zero or the stack doesnt get emptied at the end of
 // main while loop, it indicates malformed postfix expression and program exits with error code '-1'
 // and on succesful evaluation returns '0' maximum expression length is 50 characters
@@ -69,14 +68,18 @@ void postfix_evaluation_demo(void)
             {
                 if (isEmpty(operands))
                 {
-                    printf("\n[Error] Invalid expression: Stack underflow (missing operands for operator '%c')\n", ch);
+                    printf("\n[Error] Invalid expression: Stack underflow (missing operands for "
+                           "operator '%c')\n",
+                           ch);
                     error_occurred = 1;
                     break;
                 }
                 int right_operand = pop(operands);
                 if (isEmpty(operands))
                 {
-                    printf("\n[Error] Invalid expression: Stack underflow (missing operands for operator '%c')\n", ch);
+                    printf("\n[Error] Invalid expression: Stack underflow (missing operands for "
+                           "operator '%c')\n",
+                           ch);
                     error_occurred = 1;
                     break;
                 }

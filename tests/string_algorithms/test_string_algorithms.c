@@ -14,7 +14,6 @@ int _fileno(FILE*);
 #endif
 #endif
 
-
 /* Functions under test (forward-declared, same approach as the other tests).
    The string matchers print their results, so each test captures stdout and
    counts the "found at index" lines to compare against the expected count. */

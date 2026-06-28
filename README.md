@@ -44,10 +44,10 @@ The codebase is structured as a reusable **DSA library**, with an interactive, c
 
 ## Build Instructions
 
-This project includes a **Makefile** to simplify building across multiple directories.
+This project includes a **Makefile** and **CMakeLists.txt** to simplify building across multiple directories.
 
 ### Requirements
-- GNU Make ≥ 3.81
+- GNU Make ≥ 4.4.1
 - GCC (or a compatible C compiler)
 
 ## TUI Requirements
@@ -90,7 +90,6 @@ ctest --output-on-failure
 ```
 
 
-
 ```bash
 make run 
 ```
@@ -100,7 +99,17 @@ Builds only when necessary and launches the program.
 ```bash
 make test
 ```
-Runs all tests
+Runs all tests and generates test binaries
+
+```bash
+make fmt
+```
+Organizes code style according to the standards defined in `.clang-format`
+
+```bash
+make valgrind
+```
+Runs Valgrind over test binaries to look for memory leaks / use after free errors
 
 
 ### Clean
@@ -108,7 +117,7 @@ Runs all tests
 ```bash
 make clean
 ```
-Removes executables and generated object files.
+Removes executables and generated object/test binaries.
 
 ---
 
@@ -143,10 +152,6 @@ Each component serves a different purpose:
 - CMakeLists.txt provides an alternative build system that can generate platform-specific build files while supporting testing and future expansion.
 
 These tools are complementary rather than competing solutions.
-
-### Future-Proofing With CMake
-
-The project currently uses a Makefile as its primary build system while also providing CMake support. As the project grows and introduces additional dependencies, CMake can simplify dependency management, testing integration, and cross-platform development while continuing to work inside the Docker environment.
 
 ---
 
@@ -367,7 +372,7 @@ Quadratic Probing resolves collisions by using quadratic increments (i²) to red
 
 * **Simple Queue (Linear Queue)**  
   - Basic array-based queue with straightforward enqueue/dequeue operations  
-  - Limited by “false overflow” when rear reaches the end  
+  - Limited by "false overflow" when rear reaches the end
 
 * **Circular Queue**  
   - Optimized array-based queue with wrap-around indexing  
@@ -553,6 +558,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Author
 
-**Darshan Parekh**
+**Darshan Parekh** and many contributors....
 
 Aspiring systems engineer and cybersecurity engineer
