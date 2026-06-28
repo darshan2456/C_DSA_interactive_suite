@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "job_scheduling.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -193,26 +194,32 @@ void job_scheduling_demo(void)
         switch (sched_choice)
         {
             case 1:
+                display_header("FCFS");
                 fcfs_demo();
                 break;
 
             case 2:
+                display_header("SJF (Non-Preemptive)");
                 sjf_demo();
                 break;
 
             case 3:
+                display_header("SRTF (Preemptive SJF)");
                 srtf_demo();
                 break;
 
             case 4:
+                display_header("Priority (Non-Preemptive)");
                 priority_scheduling_demo();
                 break;
 
             case 5:
+                display_header("Priority (Preemptive)");
                 preemptive_priority_demo();
                 break;
 
             case 6:
+                display_header("Round Robin");
                 round_robin_demo();
                 break;
         }
