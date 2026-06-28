@@ -138,9 +138,7 @@ void segment_tree_demo(void)
     {
         int n;
         int n_status = safe_input_int(
-            &n,
-            "\n\nenter length of the array, (between 1 and 50), enter '-1' to exit :- ",
-            1, 50);
+            &n, "\n\nenter length of the array, (between 1 and 50), enter '-1' to exit :- ", 1, 50);
 
         if (n_status == INPUT_EXIT_SIGNAL)
         {
@@ -165,7 +163,9 @@ void segment_tree_demo(void)
         {
             int val;
             char prompt[128];
-            snprintf(prompt, sizeof(prompt), "enter array element %d, (between -10000 and 10000), enter '-1' to exit:- ", i);
+            snprintf(prompt, sizeof(prompt),
+                     "enter array element %d, (between -10000 and 10000), enter '-1' to exit:- ",
+                     i);
             int val_status = safe_input_int(&val, prompt, -10000, 10000);
 
             if (val_status == INPUT_EXIT_SIGNAL)
@@ -204,14 +204,14 @@ void segment_tree_demo(void)
         while (1)
         {
             int choice;
-            int choice_status = safe_input_int(
-                &choice,
-                "\nenter '1' to query range sum"
-                "\nenter '2' to update an element"
-                "\nenter '3' to print traversals (preorder, inorder, postorder)"
-                "\nenter '4' to print array and segment tree array representation"
-                "\nenter '-1' to exit segment tree demo:- ",
-                1, 4);
+            int choice_status =
+                safe_input_int(&choice,
+                               "\nenter '1' to query range sum"
+                               "\nenter '2' to update an element"
+                               "\nenter '3' to print traversals (preorder, inorder, postorder)"
+                               "\nenter '4' to print array and segment tree array representation"
+                               "\nenter '-1' to exit segment tree demo:- ",
+                               1, 4);
 
             if (choice_status == INPUT_EXIT_SIGNAL)
             {
@@ -230,14 +230,16 @@ void segment_tree_demo(void)
                 char prompt_l[128];
                 char prompt_r[128];
 
-                snprintf(prompt_l, sizeof(prompt_l), "enter query range start index (0 to %d), enter '-1' to exit: ", n - 1);
+                snprintf(prompt_l, sizeof(prompt_l),
+                         "enter query range start index (0 to %d), enter '-1' to exit: ", n - 1);
                 l_status = safe_input_int(&l, prompt_l, 0, n - 1);
                 if (l_status == INPUT_EXIT_SIGNAL)
                     continue;
                 if (l_status == 0)
                     continue;
 
-                snprintf(prompt_r, sizeof(prompt_r), "enter query range end index (%d to %d), enter '-1' to exit: ", l, n - 1);
+                snprintf(prompt_r, sizeof(prompt_r),
+                         "enter query range end index (%d to %d), enter '-1' to exit: ", l, n - 1);
                 r_status = safe_input_int(&r, prompt_r, l, n - 1);
                 if (r_status == INPUT_EXIT_SIGNAL)
                     continue;
@@ -253,14 +255,18 @@ void segment_tree_demo(void)
                 int idx_status, val_status;
                 char prompt_idx[128];
 
-                snprintf(prompt_idx, sizeof(prompt_idx), "enter index to update (0 to %d), enter '-1' to exit: ", n - 1);
+                snprintf(prompt_idx, sizeof(prompt_idx),
+                         "enter index to update (0 to %d), enter '-1' to exit: ", n - 1);
                 idx_status = safe_input_int(&idx, prompt_idx, 0, n - 1);
                 if (idx_status == INPUT_EXIT_SIGNAL)
                     continue;
                 if (idx_status == 0)
                     continue;
 
-                val_status = safe_input_int(&val, "enter new value (between -10000 and 10000), enter '-1' to exit: ", -10000, 10000);
+                val_status = safe_input_int(
+                    &val,
+                    "enter new value (between -10000 and 10000), enter '-1' to exit: ", -10000,
+                    10000);
                 if (val_status == INPUT_EXIT_SIGNAL)
                     continue;
                 if (val_status == 0)
