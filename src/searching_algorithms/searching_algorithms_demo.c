@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "safe_input.h"
 #include "searching_algorithms.h"
 #include <stdio.h>
@@ -28,18 +29,23 @@ void searching_algorithms_demo(void)
         switch (searching_algo_choice)
         {
             case 1:
+                display_header("Linear Search");
                 linear_search_demo();
                 break;
             case 2:
+                display_header("Binary Search");
                 binary_search_demo();
                 break;
             case 3:
+                display_header("Recursive Binary Search");
                 binary_search_recursive_demo();
                 break;
             case 4:
+                display_header("Interpolation Search");
                 interpolation_search_demo();
                 break;
             case 5:
+                display_header("Jump Search");
                 jump_search_demo();
                 break;
         }
