@@ -23,8 +23,9 @@ void graph_traversals_demo(void)
                                                     "9. Kruskal MST\n"
                                                     "10. Prim MST\n"
                                                     "11. Floyd-Warshall\n"
+                                                    "12. Strongly Connected Components (SCC)\n"
                                                     "\nEnter choice (-1 to return): ",
-                                                    1, 11);
+                                                    1, 12);
 
         if (graph_traversal_status == INPUT_EXIT_SIGNAL)
         {
@@ -82,6 +83,10 @@ void graph_traversals_demo(void)
             case 11:
                 display_header("Floyd-Warshall");
                 floyd_warshall_demo();
+                break;
+            case 12:
+                display_header("Strongly Connected Components (SCC)");
+                scc_demo();
                 break;
         }
     }

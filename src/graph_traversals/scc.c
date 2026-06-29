@@ -138,7 +138,7 @@ static void kosaraju_dfs1(Graph* graph, int u, bool* visited, stack* st)
     push(st, u);
 }
 
-static Graph* transpose_graph(Graph* graph)
+Graph* transpose_graph(Graph* graph)
 {
     int V = graph->V;
     Graph* trans = create_graph(V);
