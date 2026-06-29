@@ -1,16 +1,17 @@
+#include "clear_screen.h"
+#include "config.h"
 #include "graph_traversals.h"
 #include "safe_input.h"
-#include "config.h"
-#include "clear_screen.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-static void print_graph_state(Graph* graph, int active_node, int* disc, int* low, bool* on_stack, stack* st, const char* alg_name)
+static void print_graph_state(Graph* graph, int active_node, int* disc, int* low, bool* on_stack,
+                              stack* st, const char* alg_name)
 {
     clear_screen();
     printf("\n=== Strongly Connected Components Visualizer (%s) ===\n\n", alg_name);
-    
+
     // Print graph adjacency list with active node highlighted
     printf("Graph Adjacency List:\n");
     for (int i = 0; i < graph->V; i++)
@@ -55,16 +56,20 @@ static void print_graph_state(Graph* graph, int active_node, int* disc, int* low
         {
             char disc_str[16] = "-";
             char low_str[16] = "-";
-            if (disc[i] != -1) snprintf(disc_str, sizeof(disc_str), "%d", disc[i]);
-            if (low[i] != -1) snprintf(low_str, sizeof(low_str), "%d", low[i]);
-            
+            if (disc[i] != -1)
+                snprintf(disc_str, sizeof(disc_str), "%d", disc[i]);
+            if (low[i] != -1)
+                snprintf(low_str, sizeof(low_str), "%d", low[i]);
+
             if (i == active_node)
             {
-                printf("\033[1;31m %2d  |    %5s  |    %5s |   %5s\033[0m\n", i, disc_str, low_str, on_stack[i] ? "Yes" : "No");
+                printf("\033[1;31m %2d  |    %5s  |    %5s |   %5s\033[0m\n", i, disc_str, low_str,
+                       on_stack[i] ? "Yes" : "No");
             }
             else
             {
-                printf(" %2d  |    %5s  |    %5s |   %5s\n", i, disc_str, low_str, on_stack[i] ? "Yes" : "No");
+                printf(" %2d  |    %5s  |    %5s |   %5s\n", i, disc_str, low_str,
+                       on_stack[i] ? "Yes" : "No");
             }
         }
         printf("\n");
@@ -77,13 +82,13 @@ static void print_graph_state(Graph* graph, int active_node, int* disc, int* low
         printStackAsInts(st);
         printf("\n");
     }
-    
+
     fflush(stdout);
     dynamic_sleep();
 }
 
-static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_stack,
-                           stack* st, int* time, int*** sccs, int** sizes, int* count)
+static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_stack, stack* st,
+                           int* time, int*** sccs, int** sizes, int* count)
 {
     disc[u] = low[u] = ++(*time);
     push(st, u);
@@ -120,9 +125,9 @@ static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_st
         int* comp = NULL;
         int comp_size = 0;
         int w = -1;
-        
+
         printf("\033[1;32mFound Strongly Connected Component (Root node %d):\033[0m ", u);
-        
+
         while (w != u)
         {
             w = pop(st);
@@ -440,7 +445,8 @@ void scc_demo(void)
         while (1)
         {
             int edges_capacity_status = safe_input_int(
-                &edges, "\nenter number of directed edges (between 1 and 100), enter '-1' to exit :", 1,
+                &edges,
+                "\nenter number of directed edges (between 1 and 100), enter '-1' to exit :", 1,
                 100);
 
             if (edges_capacity_status == INPUT_EXIT_SIGNAL)

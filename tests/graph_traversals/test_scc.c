@@ -1,9 +1,9 @@
+#include "../../src/graph_traversals/scc.c"
+#include "graph_traversals.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "graph_traversals.h"
-#include "../../src/graph_traversals/scc.c"
 
 static bool in_same_scc(int** sccs, int* sizes, int count, int u, int v)
 {
@@ -13,10 +13,13 @@ static bool in_same_scc(int** sccs, int* sizes, int count, int u, int v)
         bool has_v = false;
         for (int j = 0; j < sizes[i]; j++)
         {
-            if (sccs[i][j] == u) has_u = true;
-            if (sccs[i][j] == v) has_v = true;
+            if (sccs[i][j] == u)
+                has_u = true;
+            if (sccs[i][j] == v)
+                has_v = true;
         }
-        if (has_u && has_v) return true;
+        if (has_u && has_v)
+            return true;
     }
     return false;
 }

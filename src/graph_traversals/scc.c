@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void tarjan_dfs(Graph* graph, int u, int* disc, int* low, bool* on_stack,
-                       stack* st, int* time, int*** sccs, int** sizes, int* count)
+static void tarjan_dfs(Graph* graph, int u, int* disc, int* low, bool* on_stack, stack* st,
+                       int* time, int*** sccs, int** sizes, int* count)
 {
     disc[u] = low[u] = ++(*time);
     push(st, u);
