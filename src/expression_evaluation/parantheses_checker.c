@@ -130,7 +130,7 @@ int get_validated_input_parantheses(char* buff, size_t size, const char* prompt)
     {
         clearerr(stdin);
         printf("\ninput ended unexpectedly");
-        return 0;
+        return INPUT_EXIT_SIGNAL;
     }
     buff[strcspn(buff, "\n")] = '\0';
 

@@ -2,25 +2,59 @@
 #include <stdio.h>
 #include <string.h>
 
-int safe_input_string(char* buffer, const char* prompt)
+int safe_input_string(char* buffer, size_t size, const char* prompt)
 {
     while (1)
     {
-        printf("%s", prompt);
-        fflush(stdout);
-
-        if (scanf("%99s", buffer) != 1)
+        if (prompt)
         {
+            printf("%s", prompt);
+            fflush(stdout);
+        }
+
+        if (!fgets(buffer, size, stdin))
+        {
+            printf("\ninput ended unexpectedly\n");
+            return INPUT_EXIT_SIGNAL;
+        }
+
+        // Clean newline or flush excess characters
+        size_t len = strlen(buffer);
+        if (len > 0 && buffer[len - 1] == '\n')
+        {
+            buffer[len - 1] = '\0';
+            len--;
+        }
+        else if (len == size - 1)
+        {
+            // Input was truncated because it exceeded buffer size
             int c;
             while ((c = getchar()) != '\n' && c != EOF)
                 ;
-            printf("Invalid input. Please try again.\n");
+        }
+
+        // Check empty
+        if (len == 0)
+        {
+            printf("Invalid input. Empty string. Please try again.\n");
             continue;
         }
 
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF)
-            ; // Clear the rest of the line
+        // Check if there is any space character in the string
+        int has_space = 0;
+        for (size_t i = 0; i < len; i++)
+        {
+            if (buffer[i] == ' ' || buffer[i] == '\t' || buffer[i] == '\r')
+            {
+                has_space = 1;
+                break;
+            }
+        }
+        if (has_space)
+        {
+            printf("Invalid input. No spaces allowed. Please try again.\n");
+            continue;
+        }
 
         if (strcmp(buffer, "X") == 0)
         {

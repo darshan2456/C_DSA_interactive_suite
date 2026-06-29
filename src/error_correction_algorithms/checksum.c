@@ -30,7 +30,7 @@ int safe_input_binary_string(char* buff, size_t size, const char* prompt)
     { // EOF or read error
         clearerr(stdin);
         printf("\ninput ended unexpectedly");
-        return 0;
+        return INPUT_EXIT_SIGNAL;
     }
     buff[strcspn(buff, "\n")] = '\0';
 

@@ -34,23 +34,16 @@ void lrc_receiver_demo(void)
 
     for (int i = 0; i < rows; i++)
     {
-        printf("  Word %d: ", i + 1);
-
-        fgets(data[i], sizeof(data[i]), stdin);
+        char prompt_buf[32];
+        snprintf(prompt_buf, sizeof(prompt_buf), "  Word %d: ", i + 1);
+        int status_w = safe_input_string(data[i], sizeof(data[i]), prompt_buf);
+        if (status_w == INPUT_EXIT_SIGNAL)
+        {
+            printf("Exiting LRC receiver demo...\n");
+            return;
+        }
 
         int len = (int)strlen(data[i]);
-
-        if (len > 0 && data[i][len - 1] == '\n')
-        {
-            data[i][len - 1] = '\0';
-            len--;
-        }
-        else
-        {
-            int c;
-            while ((c = getchar()) != '\n' && c != EOF)
-                ;
-        }
 
         if (len == 0)
         {
@@ -80,23 +73,14 @@ void lrc_receiver_demo(void)
 
     char received_lrc[LRC_MAX_COLS + 1];
 
-    printf("Enter received LRC: ");
-
-    fgets(received_lrc, sizeof(received_lrc), stdin);
+    int status_lrc = safe_input_string(received_lrc, sizeof(received_lrc), "Enter received LRC: ");
+    if (status_lrc == INPUT_EXIT_SIGNAL)
+    {
+        printf("Exiting LRC receiver demo...\n");
+        return;
+    }
 
     int lrc_len = (int)strlen(received_lrc);
-
-    if (lrc_len > 0 && received_lrc[lrc_len - 1] == '\n')
-    {
-        received_lrc[lrc_len - 1] = '\0';
-        lrc_len--;
-    }
-    else
-    {
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF)
-            ;
-    }
 
     if (lrc_len != cols)
     {

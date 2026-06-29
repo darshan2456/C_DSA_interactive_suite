@@ -15,10 +15,10 @@ int validate_infix_expr(char* buff, size_t size, const char* prompt)
         fflush(stdout);
     }
     if (!fgets(buff, size, stdin))
-    { // return code 0 represents EOF
+    { // return code INPUT_EXIT_SIGNAL represents EOF
         clearerr(stdin);
         printf("\ninput ended unexpectedly");
-        return 0;
+        return INPUT_EXIT_SIGNAL;
     }
     buff[strcspn(buff, "\n")] = '\0';
     if (buff[0] == 'X' && buff[1] == '\0')
