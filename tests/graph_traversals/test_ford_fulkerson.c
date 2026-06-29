@@ -1,9 +1,9 @@
+#include "../../src/graph_traversals/ford_fulkerson.c"
+#include "graph_traversals.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "graph_traversals.h"
-#include "../../src/graph_traversals/ford_fulkerson.c"
 
 void test_ff_simple()
 {

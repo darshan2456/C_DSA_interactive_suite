@@ -1,7 +1,7 @@
 #include "graph_traversals.h"
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 
 static bool dfs_augmenting_path(int V, int** residual, int u, int sink, bool* visited, int* parent)
 {
@@ -38,7 +38,8 @@ int ford_fulkerson(weightedGraph* graph, int source, int sink)
         residual[i] = calloc(V, sizeof(int));
         if (residual[i] == NULL)
         {
-            for (int j = 0; j < i; j++) free(residual[j]);
+            for (int j = 0; j < i; j++)
+                free(residual[j]);
             free(residual);
             return 0;
         }
@@ -60,7 +61,8 @@ int ford_fulkerson(weightedGraph* graph, int source, int sink)
     {
         free(parent);
         free(visited);
-        for (int i = 0; i < V; i++) free(residual[i]);
+        for (int i = 0; i < V; i++)
+            free(residual[i]);
         free(residual);
         return 0;
     }
@@ -70,7 +72,8 @@ int ford_fulkerson(weightedGraph* graph, int source, int sink)
     while (1)
     {
         memset(visited, 0, sizeof(bool) * V);
-        for (int i = 0; i < V; i++) parent[i] = -1;
+        for (int i = 0; i < V; i++)
+            parent[i] = -1;
 
         if (!dfs_augmenting_path(V, residual, source, sink, visited, parent))
         {
