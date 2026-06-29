@@ -115,7 +115,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_priority_queue test_scll test_dcll test_simple_queue \
             test_deque test_astar test_avl test_segment_tree \
             test_greedy_bfs test_sorting_n2 test_advanced_sorting \
-            test_history_logger test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit \
+            test_history_logger test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit test_safe_input \
             test_prim test_kruskal test_floyd_warshall test_mcm test_fibonacci test_knapsack test_lcs \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
@@ -360,6 +360,13 @@ test_history_logger: $(TEST_DIR)/test_history_logger$(EXE)
 	$(TEST_DIR)/test_history_logger$(EXE)
 
 $(TEST_DIR)/test_history_logger$(EXE): $(OBJ_DIR)/src/utils/history_logger.o tests/utils/test_history_logger.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_safe_input: $(TEST_DIR)/test_safe_input$(EXE)
+	$(TEST_DIR)/test_safe_input$(EXE)
+
+$(TEST_DIR)/test_safe_input$(EXE): $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/history_logger.o tests/utils/test_safe_input.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

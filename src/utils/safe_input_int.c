@@ -1,4 +1,4 @@
-#include "data_structures.h"
+#include "safe_input.h"
 #include <stdio.h>
 
 // this function return 1 on successful insertion, 0 on failure (invalid input or EOF or number out
@@ -19,6 +19,13 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
 
     if (scanf("%d", &value) != 1)
     {
+        // Check if EOF was encountered during scanf
+        if (feof(stdin))
+        {
+            clearerr(stdin);
+            printf("input ended unexpectedly\n");
+            return INPUT_EXIT_SIGNAL;
+        }
         printf("That's not a number. Please try again: \n");
         goto clear_buffer;
     }
@@ -30,7 +37,7 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
     if (value == -1)
     {
         *input = -1;
-        return -111; // special exit code indicating user entered '-1' ie a signal to exit.
+        return INPUT_EXIT_SIGNAL; // special exit code indicating user entered '-1' ie a signal to exit.
     }
     if (value < min_val || value > max_val)
     {
@@ -51,7 +58,7 @@ clear_buffer:
         clearerr(stdin);
         fflush(stdin);
         printf("input ended unexpectedly\n");
-        return 0;
+        return INPUT_EXIT_SIGNAL;
     }
     return 0; // failure to take input, due to invalid input (characters, special characters or out
               // of range)

@@ -46,7 +46,7 @@ void naive_string_matching_demo(void)
         printf("\nNaive String Matching Demo\n");
 
         int status_T =
-            safe_input_string(text, "Enter text (no spaces, max 99 chars), or 'X' to exit: ");
+            safe_input_string(text, sizeof(text), "Enter text (no spaces, max 99 chars), or 'X' to exit: ");
         if (status_T == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting demo...\n");
@@ -54,7 +54,7 @@ void naive_string_matching_demo(void)
         }
 
         int status_P =
-            safe_input_string(pattern, "Enter pattern (no spaces, max 99 chars), or 'X' to exit: ");
+            safe_input_string(pattern, sizeof(pattern), "Enter pattern (no spaces, max 99 chars), or 'X' to exit: ");
         if (status_P == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting demo...\n");

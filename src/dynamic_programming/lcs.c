@@ -87,7 +87,7 @@ void lcs_demo(void)
         printf("\nLCS Demo\n");
 
         int status_X =
-            safe_input_string(X, "Enter first string (no spaces, max 99 chars), or 'X' to exit: ");
+            safe_input_string(X, sizeof(X), "Enter first string (no spaces, max 99 chars), or 'X' to exit: ");
         if (status_X == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting LCS demo...\n");
@@ -95,7 +95,7 @@ void lcs_demo(void)
         }
 
         int status_Y =
-            safe_input_string(Y, "Enter second string (no spaces, max 99 chars), or 'X' to exit: ");
+            safe_input_string(Y, sizeof(Y), "Enter second string (no spaces, max 99 chars), or 'X' to exit: ");
         if (status_Y == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting LCS demo...\n");

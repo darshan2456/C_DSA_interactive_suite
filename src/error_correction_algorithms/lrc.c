@@ -38,23 +38,16 @@ void lrc_demo(void)
     printf("Enter binary data words (same length, e.g. 10110011):\n");
     for (int i = 0; i < rows; i++)
     {
-        // Fix 2: Use fgets() instead of scanf() for strings
-        printf("  Word %d: ", i + 1);
-        fgets(data[i], sizeof(data[i]), stdin);
+        char prompt_buf[32];
+        snprintf(prompt_buf, sizeof(prompt_buf), "  Word %d: ", i + 1);
+        int status_w = safe_input_string(data[i], sizeof(data[i]), prompt_buf);
+        if (status_w == INPUT_EXIT_SIGNAL)
+        {
+            printf("Exiting LRC demo...\n");
+            return;
+        }
 
-        // Remove trailing newline; if absent, input exceeded buffer — flush stdin
         int len = strlen(data[i]);
-        if (len > 0 && data[i][len - 1] == '\n')
-        {
-            data[i][len - 1] = '\0';
-            len--;
-        }
-        else
-        {
-            int c;
-            while ((c = getchar()) != '\n' && c != EOF)
-                ;
-        }
 
         /* validate: only '0' and '1' allowed */
         if (len == 0)
