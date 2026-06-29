@@ -1,7 +1,7 @@
 #include "graph_traversals.h"
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 
 static bool hopcroft_karp_bfs(Graph* graph, int* pair_u, int* pair_v, int* dist, int V, int* color)
 {
@@ -54,7 +54,8 @@ static bool hopcroft_karp_bfs(Graph* graph, int* pair_u, int* pair_v, int* dist,
     return has_path;
 }
 
-static bool hopcroft_karp_dfs(Graph* graph, int u, int* pair_u, int* pair_v, int* dist, int V, int* color)
+static bool hopcroft_karp_dfs(Graph* graph, int u, int* pair_u, int* pair_v, int* dist, int V,
+                              int* color)
 {
     if (u != V)
     {

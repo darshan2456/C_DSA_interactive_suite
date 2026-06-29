@@ -1,12 +1,13 @@
 #include "graph_traversals.h"
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
-#include <limits.h>
 
 bool bipartite_color(Graph* graph, int* color)
 {
     int V = graph->V;
-    for (int i = 0; i < V; i++) color[i] = -1;
+    for (int i = 0; i < V; i++)
+        color[i] = -1;
 
     int* queue = malloc(sizeof(int) * V);
     if (queue == NULL)
@@ -49,7 +50,8 @@ bool bipartite_color(Graph* graph, int* color)
 
 static bool bfs_dinic_matching(int V, int** residual, int source, int sink, int* level)
 {
-    for (int i = 0; i < V; i++) level[i] = -1;
+    for (int i = 0; i < V; i++)
+        level[i] = -1;
     level[source] = 0;
 
     int* queue = malloc(sizeof(int) * V);
@@ -76,7 +78,8 @@ static bool bfs_dinic_matching(int V, int** residual, int source, int sink, int*
     return reachable;
 }
 
-static int dfs_dinic_matching(int V, int** residual, int u, int sink, int flow, int* level, int* start)
+static int dfs_dinic_matching(int V, int** residual, int u, int sink, int flow, int* level,
+                              int* start)
 {
     if (u == sink)
         return flow;
@@ -132,7 +135,8 @@ int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count)
         residual[i] = calloc(total_vertices, sizeof(int));
         if (residual[i] == NULL)
         {
-            for (int j = 0; j < i; j++) free(residual[j]);
+            for (int j = 0; j < i; j++)
+                free(residual[j]);
             free(residual);
             free(color);
             return 0;
@@ -167,7 +171,8 @@ int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count)
     {
         free(level);
         free(start);
-        for (int i = 0; i < total_vertices; i++) free(residual[i]);
+        for (int i = 0; i < total_vertices; i++)
+            free(residual[i]);
         free(residual);
         free(color);
         return 0;
@@ -180,7 +185,8 @@ int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count)
         memset(start, 0, sizeof(int) * total_vertices);
         while (1)
         {
-            int flow = dfs_dinic_matching(total_vertices, residual, source, sink, INT_MAX, level, start);
+            int flow =
+                dfs_dinic_matching(total_vertices, residual, source, sink, INT_MAX, level, start);
             if (flow == 0)
                 break;
             max_flow += flow;
@@ -211,7 +217,8 @@ int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count)
                         free(pairs);
                         free(level);
                         free(start);
-                        for (int i = 0; i < total_vertices; i++) free(residual[i]);
+                        for (int i = 0; i < total_vertices; i++)
+                            free(residual[i]);
                         free(residual);
                         free(color);
                         return 0;
@@ -228,7 +235,8 @@ int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count)
     (void)max_flow;
     free(level);
     free(start);
-    for (int i = 0; i < total_vertices; i++) free(residual[i]);
+    for (int i = 0; i < total_vertices; i++)
+        free(residual[i]);
     free(residual);
     free(color);
 

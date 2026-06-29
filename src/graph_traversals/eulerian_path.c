@@ -1,7 +1,7 @@
 #include "graph_traversals.h"
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 
 int find_eulerian_path(Graph* graph, int** path, int* path_len)
 {

@@ -18,7 +18,8 @@
 static weightedGraph* generate_flow_network(int V, double edge_density)
 {
     weightedGraph* graph = create_weightedGraph(V);
-    if (graph == NULL) return NULL;
+    if (graph == NULL)
+        return NULL;
 
     for (int i = 0; i < V - 1; i++)
     {
@@ -69,7 +70,8 @@ void run_flow_benchmark(int v)
         printf("%-30s %-20s %-12s %-10s\n", "Algorithm", "Execution Time", "Peak Memory", "Status");
         printf("------------------------------------------------------------------------\n");
 
-        const char* algos[] = {"Ford-Fulkerson (DFS)", "Edmonds-Karp (BFS)", "Dinic's (Level Graph)"};
+        const char* algos[] = {"Ford-Fulkerson (DFS)", "Edmonds-Karp (BFS)",
+                               "Dinic's (Level Graph)"};
 
         for (int i = 0; i < 3; i++)
         {
@@ -83,7 +85,8 @@ void run_flow_benchmark(int v)
 
             if (skip)
             {
-                printf("%-30s %-20s %-12s %-10s\n", name, "Skipped (Dense/Large)", "N/A", "SKIPPED");
+                printf("%-30s %-20s %-12s %-10s\n", name, "Skipped (Dense/Large)", "N/A",
+                       "SKIPPED");
                 continue;
             }
 

@@ -115,7 +115,8 @@ void bipartite_matching_demo(void)
 
     printf("\nMaximum Bipartite Matching Demo\n");
     int input_status = safe_input_int(&vertices, "Enter number of vertices (2-20): ", 2, 20);
-    if (input_status == INPUT_EXIT_SIGNAL) return;
+    if (input_status == INPUT_EXIT_SIGNAL)
+        return;
 
     graph = create_graph(vertices);
     int edge_status = safe_input_int(&edges, "Enter number of edges (1-100): ", 1, 100);
@@ -157,7 +158,7 @@ void bipartite_matching_demo(void)
         printf("Matching Pairs (Dinic's): ");
         for (int i = 0; i < match_count_dinic; i++)
         {
-            printf("(%d - %d) ", match_pairs_dinic[2*i], match_pairs_dinic[2*i+1]);
+            printf("(%d - %d) ", match_pairs_dinic[2 * i], match_pairs_dinic[2 * i + 1]);
         }
         printf("\n");
         free(match_pairs_dinic);
@@ -169,7 +170,7 @@ void bipartite_matching_demo(void)
         printf("Matching Pairs (Hopcroft-Karp): ");
         for (int i = 0; i < match_count_hk; i++)
         {
-            printf("(%d - %d) ", match_pairs_hk[2*i], match_pairs_hk[2*i+1]);
+            printf("(%d - %d) ", match_pairs_hk[2 * i], match_pairs_hk[2 * i + 1]);
         }
         printf("\n");
         free(match_pairs_hk);
@@ -187,7 +188,8 @@ void eulerian_path_demo(void)
 
     printf("\nEulerian Path & Circuit Demo (Directed Graph)\n");
     int input_status = safe_input_int(&vertices, "Enter number of vertices (2-20): ", 2, 20);
-    if (input_status == INPUT_EXIT_SIGNAL) return;
+    if (input_status == INPUT_EXIT_SIGNAL)
+        return;
 
     graph = create_graph(vertices);
     int edge_status = safe_input_int(&edges, "Enter number of edges (1-100): ", 1, 100);
@@ -224,7 +226,8 @@ void eulerian_path_demo(void)
         for (int i = 0; i < path_len; i++)
         {
             printf("%d", path[i]);
-            if (i < path_len - 1) printf(" -> ");
+            if (i < path_len - 1)
+                printf(" -> ");
         }
         printf("\n");
         free(path);
