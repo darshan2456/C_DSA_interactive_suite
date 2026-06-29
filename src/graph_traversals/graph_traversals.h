@@ -114,4 +114,10 @@ void prim_demo(void);
 weightedGraph* load_weightedGraph_from_csv(const char* path);
 weightedGraph* load_weightedGraph_with_heuristic_from_csv(const char* path, int** out_h);
 Graph* load_graph_from_csv(const char* path);
+
+// ------------------For Strongly Connected Components (SCC)-----------------
+int** find_scc_tarjan(Graph* graph, int* scc_count, int** scc_sizes);
+int** find_scc_kosaraju(Graph* graph, int* scc_count, int** scc_sizes);
+void free_scc_result(int** sccs, int* scc_sizes, int scc_count);
+
 #endif
