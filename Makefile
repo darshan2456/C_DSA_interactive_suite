@@ -120,7 +120,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_sorting.c),)
 TEST_BINS += test_benchmark_sorting
@@ -619,6 +619,12 @@ $(TEST_DIR)/test_scc$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/scc.o,$
 test_ford_fulkerson: $(TEST_DIR)/test_ford_fulkerson$(EXE)
 	$(TEST_DIR)/test_ford_fulkerson$(EXE)
 $(TEST_DIR)/test_ford_fulkerson$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/ford_fulkerson.o,$(OBJS)) tests/graph_traversals/test_ford_fulkerson.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_edmonds_karp: $(TEST_DIR)/test_edmonds_karp$(EXE)
+	$(TEST_DIR)/test_edmonds_karp$(EXE)
+$(TEST_DIR)/test_edmonds_karp$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/edmonds_karp.o,$(OBJS)) tests/graph_traversals/test_edmonds_karp.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

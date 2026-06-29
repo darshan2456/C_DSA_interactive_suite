@@ -123,6 +123,7 @@ void free_scc_result(int** sccs, int* scc_sizes, int scc_count);
 void scc_demo(void);
 // ------------------For Maximum Flow-----------------------------------------
 int ford_fulkerson(weightedGraph* graph, int source, int sink);
+int edmonds_karp(weightedGraph* graph, int source, int sink);
 void max_flow_demo(void);
 
 #endif
