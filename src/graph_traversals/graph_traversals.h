@@ -121,5 +121,7 @@ int** find_scc_tarjan(Graph* graph, int* scc_count, int** scc_sizes);
 int** find_scc_kosaraju(Graph* graph, int* scc_count, int** scc_sizes);
 void free_scc_result(int** sccs, int* scc_sizes, int scc_count);
 void scc_demo(void);
+// ------------------For Maximum Flow-----------------------------------------
+int ford_fulkerson(weightedGraph* graph, int source, int sink);
 
 #endif
