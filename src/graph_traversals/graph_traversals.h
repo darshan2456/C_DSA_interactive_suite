@@ -126,7 +126,9 @@ int ford_fulkerson(weightedGraph* graph, int source, int sink);
 int edmonds_karp(weightedGraph* graph, int source, int sink);
 int dinic(weightedGraph* graph, int source, int sink);
 void max_flow_demo(void);
+bool bipartite_color(Graph* graph, int* color);
 // ------------------For Bipartite Matching-----------------------------------
 int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count);
+int hopcroft_karp(Graph* graph, int** match_pairs, int* match_count);
 
 #endif
