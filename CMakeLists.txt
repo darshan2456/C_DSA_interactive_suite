@@ -107,3 +107,6 @@ add_custom_target(valgrind
     COMMENT "Running Valgrind memory checks on all tests..."
 )
 
+# Add to existing testing directives
+add_executable(test_runner tests/test_error_correction.c)
+add_test(NAME ErrorCorrectionTests COMMAND test_runner)
