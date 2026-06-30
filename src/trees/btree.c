@@ -57,11 +57,11 @@ int btree_search(btreeNode* root, int key)
     return btree_search(root->children[i], key);
 }
 
-static void btree_split_child(btreeNode* parent, int i, btreeNode* child, int t)
+static int btree_split_child(btreeNode* parent, int i, btreeNode* child, int t)
 {
     btreeNode* new_node = btree_create_node(child->is_leaf);
     if (new_node == NULL)
-        return;
+        return 0;
 
     new_node->num_keys = t - 1;
 
@@ -84,9 +84,10 @@ static void btree_split_child(btreeNode* parent, int i, btreeNode* child, int t)
 
     parent->keys[i] = child->keys[t - 1];
     parent->num_keys = parent->num_keys + 1;
+    return 1;
 }
 
-static void btree_insert_nonfull(btreeNode* node, int key, int t)
+static int btree_insert_nonfull(btreeNode* node, int key, int t)
 {
     int i = node->num_keys - 1;
 
@@ -98,6 +99,7 @@ static void btree_insert_nonfull(btreeNode* node, int key, int t)
         shift_keys_right(node, pos);
         node->keys[pos] = key;
         node->num_keys = node->num_keys + 1;
+        return 1;
     }
     else
     {
@@ -107,11 +109,12 @@ static void btree_insert_nonfull(btreeNode* node, int key, int t)
 
         if (node->children[i]->num_keys == 2 * t - 1)
         {
-            btree_split_child(node, i, node->children[i], t);
+            if (!btree_split_child(node, i, node->children[i], t))
+                return 0;
             if (node->keys[i] < key)
                 i++;
         }
-        btree_insert_nonfull(node->children[i], key, t);
+        return btree_insert_nonfull(node->children[i], key, t);
     }
 }
 
@@ -136,11 +139,16 @@ int btree_insert(btreeNode** root_ref, int key, int t)
         if (new_root == NULL)
             return -1;
         new_root->children[0] = *root_ref;
-        btree_split_child(new_root, 0, *root_ref, t);
+        if (!btree_split_child(new_root, 0, *root_ref, t))
+        {
+            free(new_root);
+            return -1;
+        }
         *root_ref = new_root;
     }
 
-    btree_insert_nonfull(*root_ref, key, t);
+    if (!btree_insert_nonfull(*root_ref, key, t))
+        return -1;
     return 1;
 }
 
