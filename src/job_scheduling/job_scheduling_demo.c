@@ -124,6 +124,11 @@ void js_add_segment(GanttSegment* segments, int* count, int id, int time)
         return;
     }
 
+    if (*count >= JS_MAX_SEGMENTS)
+    {
+        return;
+    }
+
     segments[*count].id = id;
     segments[*count].start = time;
     segments[*count].end = time + 1;
