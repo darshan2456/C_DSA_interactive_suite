@@ -611,3 +611,10 @@ $(TEST_DIR)/test_topological_sort$(EXE): $(filter-out $(OBJ_DIR)/src/graph_trave
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 .PHONY: run fmt clean valgrind
+
+# Add to existing test directives
+test: tests/test_error_correction.c
+	gcc -Wall -Wextra tests/test_error_correction.c -o test_runner
+	./test_runner
+	rm test_runner
+
