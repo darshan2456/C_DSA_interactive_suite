@@ -239,7 +239,8 @@ void petersons_algorithm_demo(void)
         // Safety verification check: verify mutual exclusion is never violated
         if (pc[0] == 4 && pc[1] == 4)
         {
-            printf("\n\033[1;31m⚠️ MUTUAL EXCLUSION VIOLATED! (This should be impossible)\033[0m\n");
+            printf("\n\033[1;31m⚠️ MUTUAL EXCLUSION VIOLATED! (This should be "
+                   "impossible)\033[0m\n");
         }
 
         printf("\nOptions:\n");
