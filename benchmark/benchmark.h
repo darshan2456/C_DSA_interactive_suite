@@ -85,4 +85,8 @@ void run_trees_benchmark(int n);
  * Runs benchmarks for Backtracking algorithms with input size N.
  */
 void run_backtracking_benchmark(int n);
+/**
+ * Runs benchmarks for Maximum Flow algorithms with input size V (vertices).
+ */
+void run_flow_benchmark(int v);
 #endif // BENCHMARK_H

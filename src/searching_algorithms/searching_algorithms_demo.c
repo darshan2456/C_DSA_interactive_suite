@@ -8,6 +8,8 @@ void searching_algorithms_demo(void)
     int searching_algo_status, searching_algo_choice;
     while (1)
     {
+        display_header("Searching Algorithms");
+
         searching_algo_status = safe_input_int(&searching_algo_choice,
                                                "\nenter 1 for linear search demo"
                                                "\nenter 2 for binary search"

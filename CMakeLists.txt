@@ -12,6 +12,7 @@ set(SRC_DIRS
     src/advanced_sorting_algorithms
     src/searching_algorithms
     src/graph_traversals
+    src/advanced_graph_algorithms
     src/hashing
     src/utils
     src/trees

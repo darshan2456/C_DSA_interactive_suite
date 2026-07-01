@@ -120,7 +120,7 @@ void rat_in_maze_demo(void)
     {
         int choice;
         int status = safe_input_int(
-            &choice, "\nEnter 1 to solve the predefined 6x6 Rat in a Maze, or -1 to exit: ", -1, 1);
+            &choice, "\nEnter 1 to solve the predefined 6x6 Rat in a Maze, or -1 to exit: ", 1, 1);
 
         if (status == INPUT_EXIT_SIGNAL)
         {

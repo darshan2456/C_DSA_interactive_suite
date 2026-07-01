@@ -10,6 +10,8 @@ void advanced_sorting_demo(void)
     while (1)
     {
 
+        display_header("Advanced Sorting Algorithms");
+
         printf("\nAdvanced sorting algorithms demo\n");
 
         sorting_algo_status =

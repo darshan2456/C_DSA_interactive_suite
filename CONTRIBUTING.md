@@ -10,9 +10,8 @@ Thank you for taking the time to contribute! This project is open to learners, s
 - [How to Contribute](#how-to-contribute)
 - [Commit and Branch Naming Convention](#commit-and-branch-naming-convention)
 - [Coding Standards](#coding-standards)
-- [Adding a New Module](#adding-a-new-module)
-- [Testing](#testing)
 - [Pull Request Process](#pull-request-process)
+- [Testing](#testing)
 - [Reporting Issues](#reporting-issues)
 
 ---
@@ -24,6 +23,8 @@ Thank you for taking the time to contribute! This project is open to learners, s
 
 This project is Linux native. Which means it is made, maintained on Linux and works the best on Linux, however, you can definitely develop and run/use this application on windows through WSL(Windows Subsystem for Linux). WSL will work in VScode too so you can rest assured, just be familiar with WSL before contributing to this project. You can also use a VM, but WSL is sufficient as per the project requirements.
 
+Also note that you must run `make fmt` before submitting your PR otherwise CI will definitely fail
+
 I have created a special discord server to resolve your issues and doubts regarding the project and contribution. There we can discuss everything about the project as well as your technical/conceptual doubts. 
 Here is the link - https://discord.gg/RxepKBWBX
 
@@ -34,21 +35,20 @@ I am not against usage of AI, you can use AI, but you do the thinking part, let 
 ### Prerequisites
 
 - GCC (or compatible C compiler)
-- GNU Make ≥ 3.81
+- GNU Make ≥ 4.4.1
 - Valgrind (for checking memory leaks)
 - Git
 
-### Build
+### Build and Run
 
 ```bash
-make
-./dsa
+make run
 ```
 
-### Clean
+### Testing
 
 ```bash
-make clean
+make test
 ```
 
 ---
@@ -86,6 +86,7 @@ fix/<short-description>          # for bug fixes
 docs/<short-description>         # for documentation changes
 test/<short-description>         # for adding/improving tests
 ```
+**Branch naming conventions**
 
 same as commit conventions, whatever you are doing, followed by slash followed by brief one line description 
 
@@ -97,41 +98,29 @@ Example: `feature/avl-tree`, `fix/bst-delete-edge-case`
 
 This project is written in **C11**. All contributions must follow the existing style:
 
-- Format your code using `.clang-format` before submitting — run `make fmt`
-- One `.h` / `.c` pair per logical module — no exceptions
 - No function definitions inside header files
 - Prefix all public functions with the module name (e.g., `bst_insert`, `sll_delete`)
 - Use `static` for all file-local helper functions which are not supposed to used elsewhere but where they are created
 - Use `const` where pointer safety is appropriate ie functions which do not modify data but only read data, like sll_printlist(), sll_search() functions
-- All user input must go through `safe_input_int()` — no raw `scanf`
+- All user input must go through input validation functions in `src/utils` — no raw `scanf`,`fgets`
+- Format your code using `.clang-format` before submitting — run `make fmt`. Note that formatting checks are enforced at the CI level. Not running `make fmt` will cause the CI to fail
+- When adding a new module, respect the existing code conventions and ask straight away if you dont understand anything
 - Compile cleanly under `-Wall -Wextra -Werror -std=c11` so even warning are treated as errors. It helps to avoid accumulation of dead code.
 
 ---
 
-## Adding a New Module
 
-<!-- Describe your preferred directory structure, how to hook into the main menu, and any naming conventions specific to this project -->
+## Pull Request Process
 
-Example structure for a new module:
+1. Fork the repository and create your branch from `main`
+2. Make your changes following the **coding standards** above
+3. Ensure the CI pass and Valgrind reports with no errors
+6. Link the relevant issue using `Closes #<issue-number>`
 
-```
-src/
-└── your_module/
-    ├── your_module.h
-    ├── your_module.c
-    └── your_module_demo.c
-```
-
-Steps:
-1. Create the module directory under `src/`
-2. Implement the core logic in `your_module.c`
-3. Expose the public API via `your_module.h`
-4. Write the interactive demo in `your_module_demo.c` (refer existing demos and respect and keep the style)
-5. Hook it into the main menu
-6. Update the `Makefile` to include the new module
-7. Add corresponding tests under `tests/`
+PRs without tests(in case of new ds/algo), failing CI, or unformatted code will not be merged.
 
 ---
+
 
 ## Testing
 
@@ -148,17 +137,6 @@ make valgrind
 ```
 
 The CI pipeline runs all tests and Valgrind checks automatically on every push and pull request. A PR will not be merged if CI fails.
-
----
-
-## Pull Request Process
-
-1. Fork the repository and create your branch from `main`
-2. Make your changes following the **coding standards** above
-3. Ensure all tests pass and Valgrind reports with no errors
-6. Link the relevant issue using `Closes #<issue-number>`
-
-PRs without tests(in case of new ds/algo), failing CI, or unformatted code will not be merged.
 
 ---
 

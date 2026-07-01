@@ -26,25 +26,17 @@ void fcfs_demo(void)
 
     start_t = clock();
 
-    // selection-style ordering by arrival time, keeping input order on ties
-    for (int i = 0; i < n - 1; i++)
+    // Stable insertion sort to keep input order on ties
+    for (int i = 1; i < n; i++)
     {
-        int earliest = i;
-
-        for (int j = i + 1; j < n; j++)
+        Process key = procs[i];
+        int j = i - 1;
+        while (j >= 0 && procs[j].arrival > key.arrival)
         {
-            if (procs[j].arrival < procs[earliest].arrival)
-            {
-                earliest = j;
-            }
+            procs[j + 1] = procs[j];
+            j = j - 1;
         }
-
-        if (earliest != i)
-        {
-            Process tmp = procs[i];
-            procs[i] = procs[earliest];
-            procs[earliest] = tmp;
-        }
+        procs[j + 1] = key;
     }
 
     GanttSegment segments[JS_MAX_SEGMENTS];

@@ -12,6 +12,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/advanced_sorting_algorithms \
 	-Isrc/searching_algorithms \
 	-Isrc/graph_traversals \
+	-Isrc/advanced_graph_algorithms \
 	-Isrc/hashing \
 	-Isrc/utils \
 	-Isrc/trees \
@@ -33,6 +34,7 @@ SRC_DIRS = \
 	src/advanced_sorting_algorithms \
 	src/searching_algorithms \
 	src/graph_traversals \
+	src/advanced_graph_algorithms \
 	src/hashing \
 	src/utils \
 	src/trees \
@@ -120,7 +122,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_sorting.c),)
 TEST_BINS += test_benchmark_sorting
@@ -132,6 +134,10 @@ endif
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_graphs.c),)
 TEST_BINS += test_benchmark_graphs
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_flow.c),)
+TEST_BINS += test_benchmark_flow
 endif
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_mst.c),)
@@ -317,7 +323,7 @@ $(TEST_DIR)/test_deque$(EXE): $(OBJ_DIR)/src/data_structures/deque.o $(OBJ_DIR)/
 test_segment_tree: $(TEST_DIR)/test_segment_tree$(EXE)
 	$(TEST_DIR)/test_segment_tree$(EXE)
 
-$(TEST_DIR)/test_segment_tree$(EXE): $(OBJ_DIR)/src/data_structures/segment_tree.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/data_structures/test_segment_tree.c
+$(TEST_DIR)/test_segment_tree$(EXE): $(OBJ_DIR)/src/trees/segment_tree.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/trees/test_segment_tree.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -388,6 +394,13 @@ test_benchmark_graphs: $(TEST_DIR)/test_benchmark_graphs$(EXE)
 	$(TEST_DIR)/test_benchmark_graphs$(EXE)
 
 $(TEST_DIR)/test_benchmark_graphs$(EXE): $(OBJS) tests/benchmark/test_benchmark_graphs.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_benchmark_flow: $(TEST_DIR)/test_benchmark_flow$(EXE)
+	$(TEST_DIR)/test_benchmark_flow$(EXE)
+
+$(TEST_DIR)/test_benchmark_flow$(EXE): $(OBJS) tests/benchmark/test_benchmark_flow.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -607,6 +620,48 @@ $(TEST_DIR)/test_dfs$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/dfs.o,$
 test_topological_sort: $(TEST_DIR)/test_topological_sort$(EXE)
 	$(TEST_DIR)/test_topological_sort$(EXE)
 $(TEST_DIR)/test_topological_sort$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/topological_sort.o,$(OBJS)) tests/graph_traversals/test_topological_sort.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_scc: $(TEST_DIR)/test_scc$(EXE)
+	$(TEST_DIR)/test_scc$(EXE)
+$(TEST_DIR)/test_scc$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/scc.o,$(OBJS)) tests/advanced_graph_algorithms/test_scc.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_ford_fulkerson: $(TEST_DIR)/test_ford_fulkerson$(EXE)
+	$(TEST_DIR)/test_ford_fulkerson$(EXE)
+$(TEST_DIR)/test_ford_fulkerson$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/ford_fulkerson.o,$(OBJS)) tests/advanced_graph_algorithms/test_ford_fulkerson.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_edmonds_karp: $(TEST_DIR)/test_edmonds_karp$(EXE)
+	$(TEST_DIR)/test_edmonds_karp$(EXE)
+$(TEST_DIR)/test_edmonds_karp$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/edmonds_karp.o,$(OBJS)) tests/advanced_graph_algorithms/test_edmonds_karp.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_dinic: $(TEST_DIR)/test_dinic$(EXE)
+	$(TEST_DIR)/test_dinic$(EXE)
+$(TEST_DIR)/test_dinic$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/dinic.o,$(OBJS)) tests/advanced_graph_algorithms/test_dinic.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_bipartite_matching: $(TEST_DIR)/test_bipartite_matching$(EXE)
+	$(TEST_DIR)/test_bipartite_matching$(EXE)
+$(TEST_DIR)/test_bipartite_matching$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/bipartite_matching.o,$(OBJS)) tests/advanced_graph_algorithms/test_bipartite_matching.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_hopcroft_karp: $(TEST_DIR)/test_hopcroft_karp$(EXE)
+	$(TEST_DIR)/test_hopcroft_karp$(EXE)
+$(TEST_DIR)/test_hopcroft_karp$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/hopcroft_karp.o,$(OBJS)) tests/advanced_graph_algorithms/test_hopcroft_karp.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_eulerian_path: $(TEST_DIR)/test_eulerian_path$(EXE)
+	$(TEST_DIR)/test_eulerian_path$(EXE)
+$(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/eulerian_path.o,$(OBJS)) tests/advanced_graph_algorithms/test_eulerian_path.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

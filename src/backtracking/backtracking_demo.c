@@ -8,6 +8,8 @@ void backtracking_demo(void)
     int bt_status, bt_choice;
     while (1)
     {
+        display_header("Backtracking Algorithms");
+
         bt_status = safe_input_int(&bt_choice,
                                    "\n--- Backtracking Algorithms ---"
                                    "\nenter 1 for N-Queens problem"

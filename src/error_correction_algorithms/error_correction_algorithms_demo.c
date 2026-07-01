@@ -9,6 +9,8 @@ void error_correction_algorithms_demo(void)
 {
     while (1)
     {
+        display_header("Error Correction Algorithms");
+
         int ECA_choice;
 
         /* Change the prompt and the range accordingly when new functions get added */

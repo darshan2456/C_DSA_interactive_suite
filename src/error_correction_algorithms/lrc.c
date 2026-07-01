@@ -40,7 +40,11 @@ void lrc_demo(void)
     {
         // Fix 2: Use fgets() instead of scanf() for strings
         printf("  Word %d: ", i + 1);
-        fgets(data[i], sizeof(data[i]), stdin);
+        if (fgets(data[i], sizeof(data[i]), stdin) == NULL)
+        {
+            printf("Error reading input.\n");
+            return;
+        }
 
         // Remove trailing newline; if absent, input exceeded buffer — flush stdin
         int len = strlen(data[i]);

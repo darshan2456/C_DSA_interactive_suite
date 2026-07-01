@@ -8,6 +8,8 @@ void sorting_algorithms_n2_demo(void)
     int sorting_algo_status, sorting_algo_choice;
     while (1)
     {
+        display_header("Sorting Algorithms (n^2)");
+
         sorting_algo_status = safe_input_int(&sorting_algo_choice,
                                              "\nenter 1 for bubble sort"
                                              "\nenter 2 for insertion sort"

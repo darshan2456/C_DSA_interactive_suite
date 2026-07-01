@@ -141,7 +141,7 @@ int init_simple_queue(int N, Queue* queue_ptr)
 
 void destroy_simple_queue(Queue* queue_ptr)
 {
-    if (queue_ptr->arr == NULL)
+    if (queue_ptr == NULL || queue_ptr->arr == NULL)
         return;
 
     if (queue_ptr->front != -1)

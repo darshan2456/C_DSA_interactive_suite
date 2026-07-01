@@ -173,7 +173,10 @@ void kmp_visualization(char* text, char* pattern)
 
         if (j == m)
         {
-            matches[match_count++] = i - j;
+            if (match_count < 100)
+            {
+                matches[match_count++] = i - j;
+            }
             printf("Pattern found at index %d\n", i - j);
             printf("LPS Jump      : j = lps[%d] = %d\n", j - 1, lps[j - 1]);
             found++;

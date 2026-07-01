@@ -1,4 +1,4 @@
-#include "data_structures.h"
+#include "trees.h"
 #include <assert.h>
 #include <stdio.h>
 

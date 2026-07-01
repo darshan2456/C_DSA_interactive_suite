@@ -342,7 +342,7 @@ void graph_coloring_demo(void)
         {
             printf("%d. %s (%d vertices)\n", i + 1, topologies[i].name, topologies[i].num_vertices);
         }
-        int status = safe_input_int(&graph_choice, "Select topology (1-6), or -1 to exit: ", -1,
+        int status = safe_input_int(&graph_choice, "Select topology (1-6), or -1 to exit: ", 1,
                                     num_topologies);
 
         if (status == INPUT_EXIT_SIGNAL)
@@ -361,7 +361,7 @@ void graph_coloring_demo(void)
 
         int M;
         status = safe_input_int(
-            &M, "\nEnter the number of colors M (between 1 and 5), or -1 to exit: ", -1, 5);
+            &M, "\nEnter the number of colors M (between 1 and 5), or -1 to exit: ", 1, 5);
         if (status == INPUT_EXIT_SIGNAL)
         {
 #ifdef _WIN32

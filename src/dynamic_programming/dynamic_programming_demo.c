@@ -8,6 +8,8 @@ void dynamic_programming_demo(void)
     int dp_status, dp_choice;
     while (1)
     {
+        display_header("Dynamic Programming Algorithms");
+
         dp_status = safe_input_int(&dp_choice,
                                    "\nenter 1 for 0/1 Knapsack demo"
                                    "\nenter 2 for Longest Common Subsequence (LCS) demo"

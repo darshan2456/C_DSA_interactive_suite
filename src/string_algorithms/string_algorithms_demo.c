@@ -8,6 +8,8 @@ void string_algorithms_demo(void)
     int status, choice;
     while (1)
     {
+        display_header("String Algorithms");
+
         status = safe_input_int(&choice,
                                 "\nenter 1 for Naive String Matching demo"
                                 "\nenter 2 for Knuth-Morris-Pratt (KMP) demo"

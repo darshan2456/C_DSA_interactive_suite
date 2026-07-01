@@ -36,7 +36,11 @@ void lrc_receiver_demo(void)
     {
         printf("  Word %d: ", i + 1);
 
-        fgets(data[i], sizeof(data[i]), stdin);
+        if (fgets(data[i], sizeof(data[i]), stdin) == NULL)
+        {
+            printf("Error reading input.\n");
+            return;
+        }
 
         int len = (int)strlen(data[i]);
 
@@ -82,7 +86,11 @@ void lrc_receiver_demo(void)
 
     printf("Enter received LRC: ");
 
-    fgets(received_lrc, sizeof(received_lrc), stdin);
+    if (fgets(received_lrc, sizeof(received_lrc), stdin) == NULL)
+    {
+        printf("Error reading input.\n");
+        return;
+    }
 
     int lrc_len = (int)strlen(received_lrc);
 

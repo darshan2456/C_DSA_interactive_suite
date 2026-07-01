@@ -146,7 +146,7 @@ void sudoku_demo(void)
         int choice;
         // safe_input_int prevents crashes from ANY invalid value (letters, symbols, out of range)
         int status = safe_input_int(
-            &choice, "\nEnter 1 to solve the predefined 6x6 Sudoku puzzle, or -1 to exit: ", -1, 1);
+            &choice, "\nEnter 1 to solve the predefined 6x6 Sudoku puzzle, or -1 to exit: ", 1, 1);
 
         if (status == INPUT_EXIT_SIGNAL)
         {

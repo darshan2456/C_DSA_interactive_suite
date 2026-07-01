@@ -1,4 +1,5 @@
 #include "benchmark.h"
+#include "display_header.h"
 #include "safe_input.h"
 #include <stdio.h>
 
@@ -6,6 +7,8 @@ void benchmark_menu_demo(void)
 {
     while (1)
     {
+        display_header("Algorithm Benchmarking & Profiling");
+
         int choice;
         int status = safe_input_int(&choice,
                                     "\n--- Algorithm Benchmarking & Profiling Menu ---\n"
@@ -19,8 +22,9 @@ void benchmark_menu_demo(void)
                                     "click 8 for Hash Map Collision Resolution benchmark\n"
                                     "click 9 for Trees Lookup Performance benchmark\n"
                                     "click 10 for Backtracking Algorithms benchmark\n"
+                                    "click 11 for Network Flow Algorithms benchmark\n"
                                     "enter choice : ",
-                                    1, 10);
+                                    1, 11);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -75,6 +79,9 @@ void benchmark_menu_demo(void)
                 break;
             case 10:
                 run_backtracking_benchmark(n);
+                break;
+            case 11:
+                run_flow_benchmark(n);
                 break;
         }
     }

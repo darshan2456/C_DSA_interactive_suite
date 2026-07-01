@@ -9,6 +9,8 @@ void expression_evaluation_demo(void)
     int expr_eval_status;
     while (1)
     {
+        display_header("Expression Evaluation");
+
         expr_eval_status = safe_input_int(&expr_eval_choice,
                                           "\nenter 1 for infix to postfix conversion"
                                           "\nenter 2 for postfix evaluation"

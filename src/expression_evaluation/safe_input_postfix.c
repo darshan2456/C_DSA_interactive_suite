@@ -42,7 +42,7 @@ int validate_postfix_expr(char* buff, size_t size, const char* prompt)
     while (buff[i] != '\0')
     { // main loop which validates the string character by character
         unsigned char c = buff[i];
-        if (isalnum(c))
+        if (isdigit(c))
             depth++;
         else if (c == '+' || c == '-' || c == '*' || c == '/')
         {

@@ -36,6 +36,8 @@ int isEmpty(const stack* s)
 
 void destroyStack(stack* s)
 {
+    if (s == NULL)
+        return;
     while (!isEmpty(s))
     {
         pop(s);

@@ -124,6 +124,11 @@ void js_add_segment(GanttSegment* segments, int* count, int id, int time)
         return;
     }
 
+    if (*count >= JS_MAX_SEGMENTS)
+    {
+        return;
+    }
+
     segments[*count].id = id;
     segments[*count].start = time;
     segments[*count].end = time + 1;
@@ -172,6 +177,8 @@ void job_scheduling_demo(void)
 {
     while (1)
     {
+        display_header("Job Scheduling");
+
         int sched_choice;
         int sched_status =
             safe_input_int(&sched_choice,

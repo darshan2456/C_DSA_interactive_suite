@@ -9,6 +9,8 @@ void trees_demo(void)
 
     while (1)
     {
+        display_header("Trees");
+
         tree_status = safe_input_int(&tree_choice,
                                      "\nenter 1 for Binary Search Tree demo"
                                      "\nenter 2 for AVL Tree demo"
@@ -16,8 +18,9 @@ void trees_demo(void)
                                      "\nenter 4 for Trie demo"
                                      "\nenter 5 for B-Tree demo"
                                      "\nenter 6 for B+ Tree demo"
+                                     "\nenter 7 for Segment Tree demo"
                                      "\nenter choice : ",
-                                     1, 6);
+                                     1, 7);
 
         if (tree_status == INPUT_EXIT_SIGNAL)
         {
@@ -58,6 +61,11 @@ void trees_demo(void)
             case 6:
                 display_header("B+ Tree");
                 bplus_tree_demo();
+                break;
+
+            case 7:
+                display_header("Segment Tree");
+                segment_tree_demo();
                 break;
         }
     }

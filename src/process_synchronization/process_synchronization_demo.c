@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "process_synchronization.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -6,6 +7,8 @@ void process_synchronization_demo(void)
 {
     while (1)
     {
+        display_header("Process Synchronization");
+
         int choice;
         int status = safe_input_int(&choice,
                                     "\n\n--- Process Synchronization Demos ---\n"

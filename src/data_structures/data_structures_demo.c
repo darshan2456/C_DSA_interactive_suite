@@ -7,14 +7,15 @@ void data_structures_demo(void)
 {
     while (1)
     {
+        display_header("Data Structures");
+
         int data_structures_choice;
         int data_structures_status =
             safe_input_int(&data_structures_choice,
                            "\nenter 1 for standard linear data structures"
                            "\nenter 2 for circular variants of linear data structures"
-                           "\nenter 3 for segment tree demo"
                            "\nenter choice : ",
-                           1, 3);
+                           1, 2);
 
         if (data_structures_status == INPUT_EXIT_SIGNAL)
         {
@@ -122,11 +123,6 @@ void data_structures_demo(void)
                     }
                 }
 
-                break;
-
-            case 3:
-                display_header("Segment Tree");
-                segment_tree_demo();
                 break;
         }
 

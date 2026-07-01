@@ -7,6 +7,8 @@ void hashing_algorithms_demo(void)
 {
     while (1)
     {
+        display_header("Hashing Algorithms");
+
         int hash_algo_choice;
         int hash_algo_status = safe_input_int(&hash_algo_choice,
                                               "\n\nenter 1 for linear probing, 2 for separate "

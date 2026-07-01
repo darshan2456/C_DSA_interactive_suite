@@ -116,6 +116,17 @@ static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, i
         if (current->num_keys == tree->order)
         {
             BPlusNode* right = bplus_node_create(tree->order, true);
+            if (right == NULL)
+            {
+                current->num_keys--;
+                for (int i = idx; i < current->num_keys; i++)
+                {
+                    current->keys[i] = current->keys[i + 1];
+                    current->values[i] = current->values[i + 1];
+                }
+                *promo_node = NULL;
+                return NULL;
+            }
             int left_size = (tree->order + 1) / 2;
             int right_size = tree->order - left_size;
 
@@ -169,6 +180,20 @@ static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, i
             if (current->num_keys == tree->order)
             {
                 BPlusNode* right = bplus_node_create(tree->order, false);
+                if (right == NULL)
+                {
+                    current->num_keys--;
+                    for (int i = ins_idx; i < current->num_keys; i++)
+                    {
+                        current->keys[i] = current->keys[i + 1];
+                    }
+                    for (int i = ins_idx + 1; i <= current->num_keys; i++)
+                    {
+                        current->children[i] = current->children[i + 1];
+                    }
+                    *promo_node = NULL;
+                    return NULL;
+                }
                 int left_size = tree->order / 2;
                 int right_size = tree->order - left_size - 1;
                 int pushed_up_key = current->keys[left_size];
@@ -202,6 +227,8 @@ bool bplus_tree_insert(BPlusTree* tree, int key, int value)
     if (!tree->root)
     {
         tree->root = bplus_node_create(tree->order, true);
+        if (tree->root == NULL)
+            return false;
         tree->root->keys[0] = key;
         tree->root->values[0] = value;
         tree->root->num_keys = 1;
@@ -215,6 +242,8 @@ bool bplus_tree_insert(BPlusTree* tree, int key, int value)
     if (promo_node)
     {
         BPlusNode* new_root = bplus_node_create(tree->order, false);
+        if (new_root == NULL)
+            return false;
         new_root->keys[0] = promo_key;
         new_root->children[0] = tree->root;
         new_root->children[1] = promo_node;
