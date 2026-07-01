@@ -22,6 +22,10 @@ static int get_max(int arr[], int n)
 static void counting_sort(int arr[], int n, int exp)
 {
     int* output = malloc(sizeof(int) * n);
+    if (output == NULL)
+    {
+        return;
+    }
     int count[10] = {0};
 
     for (int i = 0; i < n; i++)
