@@ -188,3 +188,21 @@ int dary_heap_find_index(DAryHeap* heap, int key)
     }
     return -1;
 }
+
+/* Search for a node with the given value and return its index, or -1 if not found */
+int dary_heap_find_by_value(DAryHeap* heap, int value)
+{
+    if (heap == NULL)
+    {
+        return -1;
+    }
+
+    for (int i = 0; i < heap->size; i++)
+    {
+        if (heap->arr[i].value == value)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
