@@ -1,3 +1,4 @@
+#include "advanced_graph_algorithms/advanced_graph_algorithms.h"
 #include "advanced_sorting_algorithms/advanced_sorting.h"
 #include "backtracking/backtracking.h"
 #include "benchmark.h"
@@ -58,9 +59,16 @@ void run_legacy_menu()
             "click 14 for process synchronization algorithms demo\n"
             "click 15 for setting animation speed (by default 2s)\n"
             "click 16 for algorithm benchmarking and profiling demo\n"
+
             "click 17 for visualization demos (Graphs & Trees)\n"  // <-- ADDED
             "enter choice : ",
             1, 17 // <-- CHANGED from 16 to 17
+
+            "click 17 for advanced graph algorithms (scc / max flow / bipartite matching / "
+            "eulerian path) demo\n"
+            "enter choice : ",
+            1, 17 // limits
+
         );
 
         if (status == -111)
@@ -125,8 +133,13 @@ void run_legacy_menu()
                 display_header("Algorithm Benchmarking & Profiling");
                 benchmark_menu_demo();
                 break;
+
             case 17:  // <-- ADDED
                 show_visualization_menu();
+
+            case 18:
+                advanced_graph_algorithms_demo();
+
                 break;
         }
     }

@@ -5,6 +5,7 @@
 // #include <locale.h>
 
 #include "../utils/config.h"
+#include "advanced_graph_algorithms.h"
 #include "advanced_sorting.h"
 #include "backtracking.h"
 #include "data_structures.h"
@@ -72,6 +73,10 @@ static void run_searching_benchmark_wrapper(void)
 static void run_graphs_benchmark_wrapper(void)
 {
     run_benchmark_with_prompt(run_graphs_benchmark, "Graphs");
+}
+static void run_flow_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_flow_benchmark, "Maximum Flow");
 }
 static void run_mst_benchmark_wrapper(void)
 {
@@ -190,6 +195,12 @@ static Entry ENTRIES[] = {
     {"Prim MST", prim_demo, 0, 0, 1},
     {"Floyd-Warshall", floyd_warshall_demo, 0, 0, 1},
 
+    {"advanced_graph_algorithms", NULL, 1, 1, 0},
+    {"SCC (Tarjan & Kosaraju)", scc_demo, 0, 0, 1},
+    {"Maximum Flow", max_flow_demo, 0, 0, 1},
+    {"Bipartite Matching", bipartite_matching_demo, 0, 0, 1},
+    {"Eulerian Path", eulerian_path_demo, 0, 0, 1},
+
     {"hashing", NULL, 1, 1, 0},
     {"Linear Probing", linear_probing_demo, 0, 0, 1},
     {"Separate Chaining", separate_chaining_demo, 0, 0, 1},
@@ -237,6 +248,7 @@ static Entry ENTRIES[] = {
     {"Sorting Benchmarks", run_sorting_benchmark_wrapper, 0, 0, 1},
     {"Searching Benchmarks", run_searching_benchmark_wrapper, 0, 0, 1},
     {"Graphs Shortest Path", run_graphs_benchmark_wrapper, 0, 0, 1},
+    {"Network Flow Benchmark", run_flow_benchmark_wrapper, 0, 0, 1},
     {"MST Benchmarks", run_mst_benchmark_wrapper, 0, 0, 1},
     {"Job Scheduling", run_scheduling_benchmark_wrapper, 0, 0, 1},
     {"String Matching", run_strings_benchmark_wrapper, 0, 0, 1},

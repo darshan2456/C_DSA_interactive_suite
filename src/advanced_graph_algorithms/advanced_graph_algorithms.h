@@ -27,5 +27,6 @@ int find_eulerian_path(Graph* graph, int** path, int* path_len);
 
 void bipartite_matching_demo(void);
 void eulerian_path_demo(void);
+void advanced_graph_algorithms_demo(void);
 
 #endif
