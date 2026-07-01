@@ -13,6 +13,7 @@ set(SRC_DIRS
     src/searching_algorithms
     src/graph_traversals
     src/advanced_graph_algorithms
+    src/advanced_heaps
     src/hashing
     src/utils
     src/trees

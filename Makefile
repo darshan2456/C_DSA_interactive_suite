@@ -13,6 +13,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/searching_algorithms \
 	-Isrc/graph_traversals \
 	-Isrc/advanced_graph_algorithms \
+	-Isrc/advanced_heaps \
 	-Isrc/hashing \
 	-Isrc/utils \
 	-Isrc/trees \
@@ -35,6 +36,7 @@ SRC_DIRS = \
 	src/searching_algorithms \
 	src/graph_traversals \
 	src/advanced_graph_algorithms \
+	src/advanced_heaps \
 	src/hashing \
 	src/utils \
 	src/trees \
@@ -122,7 +124,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path test_binomial_heap
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_sorting.c),)
 TEST_BINS += test_benchmark_sorting
@@ -662,6 +664,12 @@ $(TEST_DIR)/test_hopcroft_karp$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph
 test_eulerian_path: $(TEST_DIR)/test_eulerian_path$(EXE)
 	$(TEST_DIR)/test_eulerian_path$(EXE)
 $(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/eulerian_path.o,$(OBJS)) tests/advanced_graph_algorithms/test_eulerian_path.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_binomial_heap: $(TEST_DIR)/test_binomial_heap$(EXE)
+	$(TEST_DIR)/test_binomial_heap$(EXE)
+$(TEST_DIR)/test_binomial_heap$(EXE): $(OBJS) tests/advanced_heaps/test_binomial_heap.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
