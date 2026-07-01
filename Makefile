@@ -22,8 +22,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/string_algorithms \
 	-Isrc/backtracking \
 	-Isrc/process_synchronization \
-	-Ibenchmark
-	# -Isrc/tui
+	-Ibenchmark \
+	-Ivisualization/include          # <-- ADDED VISUALIZATION INCLUDE
 
 # LDFLAGS = -lncurses
 
@@ -44,7 +44,8 @@ SRC_DIRS = \
 	src/string_algorithms \
 	src/backtracking \
 	src/process_synchronization \
-	benchmark
+	benchmark \
+	visualization/src              # <-- ADDED VISUALIZATION SOURCE
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
@@ -93,10 +94,14 @@ fmt:
 clean:
 ifeq ($(OS),Windows_NT)
 	-$(RM) $(TARGET)$(EXE)
+	-$(RM) vis_graph_demo$(EXE)
+	-$(RM) vis_tree_demo$(EXE)
 	-$(RM_DIR) $(OBJ_DIR)
 	-$(RM_DIR) $(TEST_DIR)
 else
 	$(RM) $(TARGET)$(EXE)
+	$(RM) vis_graph_demo$(EXE)
+	$(RM) vis_tree_demo$(EXE)
 	$(RM_DIR) $(OBJ_DIR)
 	$(RM_DIR) $(TEST_DIR)
 endif
@@ -107,6 +112,36 @@ valgrind:
 		valgrind $(VGFLAGS) $(TEST_DIR)/$$t$(EXE) || exit 1; \
 	done
 
+
+# =========================
+# Visualization Targets
+# =========================
+
+VIS_DIR = visualization
+VIS_SRC = $(wildcard $(VIS_DIR)/src/*.c)
+VIS_OBJ = $(patsubst %.c,$(OBJ_DIR)/%.o,$(VIS_SRC))
+
+# Build visualization objects
+$(VIS_OBJ): $(VIS_SRC)
+	@$(call MKDIR_P,$(dir $@))
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Visualization demos
+vis-graph: $(VIS_OBJ)
+	$(CC) $(CFLAGS) -o vis_graph_demo$(EXE) $(VIS_DIR)/examples/graph_demo.c $(VIS_OBJ) $(LDFLAGS)
+
+vis-tree: $(VIS_OBJ)
+	$(CC) $(CFLAGS) -o vis_tree_demo$(EXE) $(VIS_DIR)/examples/tree_demo.c $(VIS_OBJ) $(LDFLAGS)
+
+# Visualization tests
+test-visualization: $(VIS_OBJ)
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) -o $(TEST_DIR)/test_graph_visualizer$(EXE) \
+		tests/visualization/test_graph_visualizer.c $(VIS_OBJ) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(TEST_DIR)/test_tree_visualizer$(EXE) \
+		tests/visualization/test_tree_visualizer.c $(VIS_OBJ) $(LDFLAGS)
+	$(TEST_DIR)/test_graph_visualizer$(EXE)
+	$(TEST_DIR)/test_tree_visualizer$(EXE)
 
 # =========================
 # Test Section
@@ -665,4 +700,4 @@ $(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-.PHONY: run fmt clean valgrind
+.PHONY: run fmt clean valgrind vis-graph vis-tree test-visualization
