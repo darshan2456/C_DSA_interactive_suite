@@ -666,3 +666,7 @@ $(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 .PHONY: run fmt clean valgrind
+
+# Add to existing test directives
+
+
