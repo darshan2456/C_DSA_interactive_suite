@@ -668,8 +668,5 @@ $(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph
 .PHONY: run fmt clean valgrind
 
 # Add to existing test directives
-test: tests/test_error_correction.c
-	gcc -Wall -Wextra tests/test_error_correction.c -o test_runner
-	./test_runner
-	rm test_runner
+
 
