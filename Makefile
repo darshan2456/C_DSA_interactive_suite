@@ -170,6 +170,10 @@ ifneq ($(wildcard tests/benchmark/test_benchmark_backtracking.c),)
 TEST_BINS += test_benchmark_backtracking
 endif
 
+ifneq ($(wildcard tests/benchmark/test_benchmark_heaps.c),)
+TEST_BINS += test_benchmark_heaps
+endif
+
 test: $(TEST_BINS)
 
 test_mcm: $(TEST_DIR)/test_mcm$(EXE)
@@ -452,6 +456,13 @@ test_benchmark_backtracking: $(TEST_DIR)/test_benchmark_backtracking$(EXE)
 	$(TEST_DIR)/test_benchmark_backtracking$(EXE)
 
 $(TEST_DIR)/test_benchmark_backtracking$(EXE): $(OBJS) tests/benchmark/test_benchmark_backtracking.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_benchmark_heaps: $(TEST_DIR)/test_benchmark_heaps$(EXE)
+	$(TEST_DIR)/test_benchmark_heaps$(EXE)
+
+$(TEST_DIR)/test_benchmark_heaps$(EXE): $(OBJS) tests/benchmark/test_benchmark_heaps.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
