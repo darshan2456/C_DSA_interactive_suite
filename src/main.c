@@ -1,4 +1,5 @@
 #include "advanced_graph_algorithms/advanced_graph_algorithms.h"
+#include "advanced_heaps/advanced_heaps.h"
 #include "advanced_sorting_algorithms/advanced_sorting.h"
 #include "backtracking/backtracking.h"
 #include "benchmark.h"
@@ -55,8 +56,9 @@ void run_legacy_menu()
             "click 16 for algorithm benchmarking and profiling demo\n"
             "click 17 for advanced graph algorithms (scc / max flow / bipartite matching / "
             "eulerian path) demo\n"
+            "click 18 for advanced heaps & priority queues suite demo\n"
             "enter choice : ",
-            1, 17 // limits
+            1, 18 // limits
         );
 
         if (status == -111)
@@ -123,6 +125,9 @@ void run_legacy_menu()
                 break;
             case 17:
                 advanced_graph_algorithms_demo();
+                break;
+            case 18:
+                advanced_heaps_demo();
                 break;
         }
     }

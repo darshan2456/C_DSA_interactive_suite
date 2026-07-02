@@ -1,3 +1,4 @@
+#include "advanced_heaps.h"
 #include "graph_traversals.h"
 #include "history_logger.h"
 #include "safe_input.h"
@@ -134,47 +135,150 @@ void dijkstra(weightedGraph* graph, int start)
 
     dist[start] = 0;
 
-    PQ_graph pq = {0};
-    init_pq_graph(&pq, 10);
+    int heap_choice = 1;
+    printf("\nSelect Priority Queue (Heap) Type for Dijkstra:\n"
+           "1. Binary Heap (Standard)\n"
+           "2. Fibonacci Heap (Amortized O(1) decrease-key)\n"
+           "3. d-Ary Heap (4-Ary configuration)\n");
+    if (safe_input_int(&heap_choice, "Enter choice (1-3): ", 1, 3) != 1)
+    {
+        heap_choice = 1;
+    }
 
     clock_t start_t, end_t;
     double total_t = 0.0;
 
     start_t = clock();
 
-    if (!insert_pq_graph(&pq, start, 0))
+    if (heap_choice == 1)
     {
-        printf("Malloc failed\n");
-        goto cleanup;
-    }
+        PQ_graph pq = {0};
+        init_pq_graph(&pq, 10);
 
-    PQ_graph_node currentNode;
-
-    while (extractTop_pq_graph(&pq, &currentNode))
-    {
-        int u = currentNode.vertex;
-
-        if (currentNode.distance > dist[u])
-            continue;
-
-        Edge* current = graph->array[u];
-
-        while (current != NULL)
+        if (!insert_pq_graph(&pq, start, 0))
         {
-            int v = current->destination;
-            int currentWeight = current->weight;
-            if (dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
-            {
-                dist[v] = dist[u] + currentWeight;
-                if (!insert_pq_graph(&pq, v, dist[v]))
-                {
-                    printf("Malloc Failed\n");
-                    goto cleanup;
-                }
-            }
-
-            current = current->next;
+            printf("Malloc failed\n");
+            PQ_Destroy(&pq);
+            return;
         }
+
+        PQ_graph_node currentNode;
+
+        while (extractTop_pq_graph(&pq, &currentNode))
+        {
+            int u = currentNode.vertex;
+
+            if (currentNode.distance > dist[u])
+                continue;
+
+            Edge* current = graph->array[u];
+
+            while (current != NULL)
+            {
+                int v = current->destination;
+                int currentWeight = current->weight;
+                if (dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
+                {
+                    dist[v] = dist[u] + currentWeight;
+                    if (!insert_pq_graph(&pq, v, dist[v]))
+                    {
+                        printf("Malloc Failed\n");
+                        PQ_Destroy(&pq);
+                        return;
+                    }
+                }
+
+                current = current->next;
+            }
+        }
+        PQ_Destroy(&pq);
+    }
+    else if (heap_choice == 2)
+    {
+        FibonacciNode* fib_heap = NULL;
+        FibonacciNode** node_ptrs = (FibonacciNode**)calloc(size, sizeof(FibonacciNode*));
+        if (node_ptrs == NULL)
+        {
+            printf("Malloc failed\n");
+            return;
+        }
+
+        fib_heap = fib_heap_insert(fib_heap, 0, start);
+        node_ptrs[start] = fib_heap;
+
+        while (fib_heap != NULL)
+        {
+            int u, min_dist;
+            fib_heap = fib_heap_extract_min(fib_heap, &min_dist, &u);
+            node_ptrs[u] = NULL;
+
+            if (min_dist > dist[u])
+                continue;
+
+            Edge* current = graph->array[u];
+            while (current != NULL)
+            {
+                int v = current->destination;
+                int currentWeight = current->weight;
+                if (dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
+                {
+                    dist[v] = dist[u] + currentWeight;
+                    if (node_ptrs[v] == NULL)
+                    {
+                        node_ptrs[v] = fib_heap_insert(fib_heap, dist[v], v);
+                        fib_heap = node_ptrs[v];
+                    }
+                    else
+                    {
+                        fib_heap = fib_heap_decrease_key(fib_heap, node_ptrs[v], dist[v]);
+                    }
+                }
+                current = current->next;
+            }
+        }
+        free(node_ptrs);
+    }
+    else if (heap_choice == 3)
+    {
+        DAryHeap* dary_heap = create_dary_heap(size * 10, 4);
+        if (dary_heap == NULL)
+        {
+            printf("Malloc failed\n");
+            return;
+        }
+
+        dary_heap_insert(dary_heap, 0, start);
+
+        while (dary_heap->size > 0)
+        {
+            int u, min_dist;
+            dary_heap_extract_min(dary_heap, &min_dist, &u);
+
+            if (min_dist > dist[u])
+                continue;
+
+            Edge* current = graph->array[u];
+            while (current != NULL)
+            {
+                int v = current->destination;
+                int currentWeight = current->weight;
+                if (dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
+                {
+                    dist[v] = dist[u] + currentWeight;
+                    int idx = dary_heap_find_by_value(dary_heap, v);
+                    if (idx == -1)
+                    {
+                        dary_heap_insert(dary_heap, dist[v], v);
+                    }
+                    else
+                    {
+                        dary_heap_decrease_key(dary_heap, idx, dist[v]);
+                    }
+                }
+                current = current->next;
+            }
+        }
+        destroy_dary_heap(dary_heap);
     }
 
     end_t = clock();
@@ -193,9 +297,6 @@ void dijkstra(weightedGraph* graph, int start)
 
     printf("\ntotal CPU time taken for Dijkstra's algorithm:- %f seconds\n", total_t);
     add_to_history("Dijkstra", size, total_t);
-
-cleanup:
-    PQ_Destroy(&pq);
 }
 
 weightedGraph* create_weightedGraph(int V)
