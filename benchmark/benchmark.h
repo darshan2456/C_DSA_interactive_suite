@@ -89,4 +89,10 @@ void run_backtracking_benchmark(int n);
  * Runs benchmarks for Maximum Flow algorithms with input size V (vertices).
  */
 void run_flow_benchmark(int v);
+
+/**
+ * Runs benchmarks for Advanced Heaps with input size N.
+ */
+void run_heaps_benchmark(int n);
+
 #endif // BENCHMARK_H

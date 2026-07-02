@@ -6,6 +6,7 @@
 
 #include "../utils/config.h"
 #include "advanced_graph_algorithms.h"
+#include "advanced_heaps.h"
 #include "advanced_sorting.h"
 #include "backtracking.h"
 #include "data_structures.h"
@@ -200,6 +201,15 @@ static Entry ENTRIES[] = {
     {"Maximum Flow", max_flow_demo, 0, 0, 1},
     {"Bipartite Matching", bipartite_matching_demo, 0, 0, 1},
     {"Eulerian Path", eulerian_path_demo, 0, 0, 1},
+
+    {"advanced_heaps", NULL, 1, 1, 0},
+    {"Binomial Heap", run_binomial_demo, 0, 0, 1},
+    {"Fibonacci Heap", run_fibonacci_demo, 0, 0, 1},
+    {"Leftist Heap", run_leftist_demo, 0, 0, 1},
+    {"Skew Heap", run_skew_demo, 0, 0, 1},
+    {"Min-Max Heap", run_min_max_demo, 0, 0, 1},
+    {"d-Ary Heap", run_dary_demo, 0, 0, 1},
+    {"Treap", run_treap_demo, 0, 0, 1},
 
     {"hashing", NULL, 1, 1, 0},
     {"Linear Probing", linear_probing_demo, 0, 0, 1},
