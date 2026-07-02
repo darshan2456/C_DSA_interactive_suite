@@ -152,6 +152,7 @@ bool dary_heap_extract_min(DAryHeap* heap, int* min_key, int* min_val);
 bool dary_heap_decrease_key(DAryHeap* heap, int index, int new_key);
 bool dary_heap_get_min(DAryHeap* heap, int* min_key, int* min_val);
 int dary_heap_find_index(DAryHeap* heap, int key);
+int dary_heap_find_by_value(DAryHeap* heap, int value);
 /*
  * =========================================================================
  *                                  Treap

@@ -124,7 +124,11 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path test_binomial_heap test_fibonacci_heap test_leftist_skew_heap test_min_max_heap test_dary_heap test_treap
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path
+
+# Automatically find all advanced heap test sources and append their targets
+ADV_HEAP_TESTS = $(patsubst tests/advanced_heaps/%.c,%,$(wildcard tests/advanced_heaps/*.c))
+TEST_BINS += $(ADV_HEAP_TESTS)
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_sorting.c),)
 TEST_BINS += test_benchmark_sorting
@@ -168,6 +172,10 @@ endif
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_backtracking.c),)
 TEST_BINS += test_benchmark_backtracking
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_heaps.c),)
+TEST_BINS += test_benchmark_heaps
 endif
 
 test: $(TEST_BINS)
@@ -332,7 +340,7 @@ $(TEST_DIR)/test_segment_tree$(EXE): $(OBJ_DIR)/src/trees/segment_tree.o $(OBJ_D
 test_astar: $(TEST_DIR)/test_astar$(EXE)
 	$(TEST_DIR)/test_astar$(EXE)
 
-$(TEST_DIR)/test_astar$(EXE): $(OBJ_DIR)/src/graph_traversals/astar.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/graph_traversals/graph_io.o tests/graph_traversals/test_astar.c
+$(TEST_DIR)/test_astar$(EXE): $(OBJ_DIR)/src/graph_traversals/astar.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/utils/display_header.o $(OBJ_DIR)/src/utils/clear_screen.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/graph_traversals/graph_io.o $(OBJ_DIR)/src/advanced_heaps/dary_heap.o $(OBJ_DIR)/src/advanced_heaps/fibonacci_heap.o tests/graph_traversals/test_astar.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -360,7 +368,7 @@ $(TEST_DIR)/test_btree$(EXE): $(OBJ_DIR)/src/trees/btree.o $(OBJ_DIR)/src/utils/
 test_greedy_bfs: $(TEST_DIR)/test_greedy_bfs$(EXE)
 	$(TEST_DIR)/test_greedy_bfs$(EXE)
 
-$(TEST_DIR)/test_greedy_bfs$(EXE): $(OBJ_DIR)/src/graph_traversals/greedy_best_first_search.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/graph_traversals/graph_io.o tests/graph_traversals/test_greedy_best_first_search.c
+$(TEST_DIR)/test_greedy_bfs$(EXE): $(OBJ_DIR)/src/graph_traversals/greedy_best_first_search.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/utils/display_header.o $(OBJ_DIR)/src/utils/clear_screen.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/graph_traversals/graph_io.o $(OBJ_DIR)/src/advanced_heaps/dary_heap.o $(OBJ_DIR)/src/advanced_heaps/fibonacci_heap.o tests/graph_traversals/test_greedy_best_first_search.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -452,6 +460,13 @@ test_benchmark_backtracking: $(TEST_DIR)/test_benchmark_backtracking$(EXE)
 	$(TEST_DIR)/test_benchmark_backtracking$(EXE)
 
 $(TEST_DIR)/test_benchmark_backtracking$(EXE): $(OBJS) tests/benchmark/test_benchmark_backtracking.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_benchmark_heaps: $(TEST_DIR)/test_benchmark_heaps$(EXE)
+	$(TEST_DIR)/test_benchmark_heaps$(EXE)
+
+$(TEST_DIR)/test_benchmark_heaps$(EXE): $(OBJS) tests/benchmark/test_benchmark_heaps.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -667,39 +682,12 @@ $(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-test_binomial_heap: $(TEST_DIR)/test_binomial_heap$(EXE)
-	$(TEST_DIR)/test_binomial_heap$(EXE)
-$(TEST_DIR)/test_binomial_heap$(EXE): $(OBJS) tests/advanced_heaps/test_binomial_heap.c
-	@$(call MKDIR_P,$(TEST_DIR))
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+# Pattern rule to run any advanced heap test
+test_%: $(TEST_DIR)/test_%$(EXE)
+	$<
 
-test_fibonacci_heap: $(TEST_DIR)/test_fibonacci_heap$(EXE)
-	$(TEST_DIR)/test_fibonacci_heap$(EXE)
-$(TEST_DIR)/test_fibonacci_heap$(EXE): $(OBJS) tests/advanced_heaps/test_fibonacci_heap.c
-	@$(call MKDIR_P,$(TEST_DIR))
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-
-test_leftist_skew_heap: $(TEST_DIR)/test_leftist_skew_heap$(EXE)
-	$(TEST_DIR)/test_leftist_skew_heap$(EXE)
-$(TEST_DIR)/test_leftist_skew_heap$(EXE): $(OBJS) tests/advanced_heaps/test_leftist_skew_heap.c
-	@$(call MKDIR_P,$(TEST_DIR))
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-
-test_min_max_heap: $(TEST_DIR)/test_min_max_heap$(EXE)
-	$(TEST_DIR)/test_min_max_heap$(EXE)
-$(TEST_DIR)/test_min_max_heap$(EXE): $(OBJS) tests/advanced_heaps/test_min_max_heap.c
-	@$(call MKDIR_P,$(TEST_DIR))
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-
-test_dary_heap: $(TEST_DIR)/test_dary_heap$(EXE)
-	$(TEST_DIR)/test_dary_heap$(EXE)
-$(TEST_DIR)/test_dary_heap$(EXE): $(OBJS) tests/advanced_heaps/test_dary_heap.c
-	@$(call MKDIR_P,$(TEST_DIR))
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-
-test_treap: $(TEST_DIR)/test_treap$(EXE)
-	$(TEST_DIR)/test_treap$(EXE)
-$(TEST_DIR)/test_treap$(EXE): $(OBJS) tests/advanced_heaps/test_treap.c
+# Pattern rule to compile any advanced heap test
+$(TEST_DIR)/test_%$(EXE): $(OBJS) tests/advanced_heaps/test_%.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
