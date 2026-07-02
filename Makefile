@@ -701,4 +701,6 @@ $(TEST_DIR)/test_%$(EXE): $(OBJS) tests/advanced_heaps/test_%.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
+.PRECIOUS: $(TEST_DIR)/test_%$(EXE)
+
 .PHONY: run fmt clean valgrind
