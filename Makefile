@@ -337,10 +337,20 @@ $(TEST_DIR)/test_segment_tree$(EXE): $(OBJ_DIR)/src/trees/segment_tree.o $(OBJ_D
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
+ASTAR_DEPS = $(OBJ_DIR)/src/graph_traversals/astar.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/graph_traversals/graph_io.o
+
+ifneq ($(wildcard src/advanced_heaps/dary_heap.c),)
+ASTAR_DEPS += $(OBJ_DIR)/src/advanced_heaps/dary_heap.o $(OBJ_DIR)/src/utils/display_header.o $(OBJ_DIR)/src/utils/clear_screen.o $(OBJ_DIR)/src/utils/cross_platform_timer.o
+endif
+
+ifneq ($(wildcard src/advanced_heaps/fibonacci_heap.c),)
+ASTAR_DEPS += $(OBJ_DIR)/src/advanced_heaps/fibonacci_heap.o
+endif
+
 test_astar: $(TEST_DIR)/test_astar$(EXE)
 	$(TEST_DIR)/test_astar$(EXE)
 
-$(TEST_DIR)/test_astar$(EXE): $(OBJ_DIR)/src/graph_traversals/astar.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/utils/display_header.o $(OBJ_DIR)/src/utils/clear_screen.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/graph_traversals/graph_io.o $(OBJ_DIR)/src/advanced_heaps/dary_heap.o $(OBJ_DIR)/src/advanced_heaps/fibonacci_heap.o tests/graph_traversals/test_astar.c
+$(TEST_DIR)/test_astar$(EXE): $(ASTAR_DEPS) tests/graph_traversals/test_astar.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -368,7 +378,7 @@ $(TEST_DIR)/test_btree$(EXE): $(OBJ_DIR)/src/trees/btree.o $(OBJ_DIR)/src/utils/
 test_greedy_bfs: $(TEST_DIR)/test_greedy_bfs$(EXE)
 	$(TEST_DIR)/test_greedy_bfs$(EXE)
 
-$(TEST_DIR)/test_greedy_bfs$(EXE): $(OBJ_DIR)/src/graph_traversals/greedy_best_first_search.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/utils/display_header.o $(OBJ_DIR)/src/utils/clear_screen.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/graph_traversals/graph_io.o $(OBJ_DIR)/src/advanced_heaps/dary_heap.o $(OBJ_DIR)/src/advanced_heaps/fibonacci_heap.o tests/graph_traversals/test_greedy_best_first_search.c
+$(TEST_DIR)/test_greedy_bfs$(EXE): $(OBJ_DIR)/src/graph_traversals/greedy_best_first_search.o $(ASTAR_DEPS) tests/graph_traversals/test_greedy_best_first_search.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
