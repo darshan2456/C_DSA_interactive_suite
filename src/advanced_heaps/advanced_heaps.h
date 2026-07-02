@@ -28,8 +28,70 @@ BinomialNode* binomial_heap_insert(BinomialNode* head, int key, int value);
 BinomialNode* binomial_heap_merge(BinomialNode* head1, BinomialNode* head2);
 BinomialNode* binomial_heap_extract_min(BinomialNode* head, int* min_key, int* min_val);
 BinomialNode* binomial_heap_decrease_key(BinomialNode* head, BinomialNode* target, int new_key);
-
 /* Search / Utility Helpers */
 BinomialNode* binomial_heap_find_node(BinomialNode* head, int key);
 
+/*
+ * =========================================================================
+ *                              Fibonacci Heap
+ * =========================================================================
+ */
+
+typedef struct FibonacciNode
+{
+    int key;
+    int value;
+    int degree;
+    bool mark;
+    struct FibonacciNode* parent;
+    struct FibonacciNode* child;
+    struct FibonacciNode* left;
+    struct FibonacciNode* right;
+} FibonacciNode;
+
+FibonacciNode* create_fibonacci_node(int key, int value);
+void destroy_fibonacci_heap(FibonacciNode* min_node);
+FibonacciNode* fib_heap_insert(FibonacciNode* min_node, int key, int value);
+FibonacciNode* fib_heap_union(FibonacciNode* min1, FibonacciNode* min2);
+FibonacciNode* fib_heap_extract_min(FibonacciNode* min_node, int* min_key, int* min_val);
+FibonacciNode* fib_heap_decrease_key(FibonacciNode* min_node, FibonacciNode* target, int new_key);
+FibonacciNode* fib_heap_delete(FibonacciNode* min_node, FibonacciNode* target);
+FibonacciNode* fib_heap_find_node(FibonacciNode* min_node, int key);
+
+/*
+ * =========================================================================
+ *                           Leftist & Skew Heaps
+ * =========================================================================
+ */
+
+typedef struct LeftistNode
+{
+    int key;
+    int value;
+    int npl;
+    struct LeftistNode* left;
+    struct LeftistNode* right;
+} LeftistNode;
+
+typedef struct SkewNode
+{
+    int key;
+    int value;
+    struct SkewNode* left;
+    struct SkewNode* right;
+} SkewNode;
+
+/* Leftist Heap Operations */
+LeftistNode* create_leftist_node(int key, int value);
+void destroy_leftist_heap(LeftistNode* root);
+LeftistNode* leftist_heap_merge(LeftistNode* h1, LeftistNode* h2);
+LeftistNode* leftist_heap_insert(LeftistNode* root, int key, int value);
+LeftistNode* leftist_heap_extract_min(LeftistNode* root, int* min_key, int* min_val);
+
+/* Skew Heap Operations */
+SkewNode* create_skew_node(int key, int value);
+void destroy_skew_heap(SkewNode* root);
+SkewNode* skew_heap_merge(SkewNode* h1, SkewNode* h2);
+SkewNode* skew_heap_insert(SkewNode* root, int key, int value);
+SkewNode* skew_heap_extract_min(SkewNode* root, int* min_key, int* min_val);
 #endif /* ADVANCED_HEAPS_H */
