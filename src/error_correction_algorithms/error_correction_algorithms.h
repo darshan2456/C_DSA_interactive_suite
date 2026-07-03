@@ -44,7 +44,9 @@ void checksum_print_binary(int value, int bits);
 int safe_input_binary_string(char* buff, size_t size, const char* prompt);
 int checksum_add(int sum, int word, int k);
 int checksum_block_sum(const char* data, int len, int k);
+int checksum_bits_to_int(const char* bits, int k);
 
+/* CRC */
 void crc_xor_operation(char* dividend, const char* divisor, int pos);
 
 #endif /* ERROR_CORRECTION_ALGORITHMS_H */
