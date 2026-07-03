@@ -120,7 +120,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_deque test_astar test_avl test_segment_tree \
             test_greedy_bfs test_sorting_n2 test_advanced_sorting \
             test_history_logger test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit \
-            test_checksum \
+            test_checksum test_crc \
             test_prim test_kruskal test_floyd_warshall test_mcm test_fibonacci test_knapsack test_lcs \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
@@ -562,6 +562,19 @@ $(TEST_DIR)/test_checksum$(EXE): \
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
+
+test_crc: $(TEST_DIR)/test_crc$(EXE)
+	$(TEST_DIR)/test_crc$(EXE)
+
+$(TEST_DIR)/test_crc$(EXE): \
+	$(OBJ_DIR)/src/error_correction_algorithms/checksum.o \
+	$(OBJ_DIR)/src/error_correction_algorithms/crc.o \
+	$(OBJ_DIR)/src/error_correction_algorithms/crc_receiver.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o \
+	$(OBJ_DIR)/src/utils/history_logger.o \
+	tests/error_correction_algorithms/test_crc.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_expression_evaluation: $(TEST_DIR)/test_expression_evaluation$(EXE)
 	$(TEST_DIR)/test_expression_evaluation$(EXE)

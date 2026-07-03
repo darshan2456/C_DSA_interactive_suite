@@ -48,5 +48,7 @@ int checksum_bits_to_int(const char* bits, int k);
 
 /* CRC */
 void crc_xor_operation(char* dividend, const char* divisor, int pos);
+void crc_generate(const char* data, const char* generator, char* remainder_out, char* codeword_out);
+int crc_verify(const char* codeword, const char* generator, char* remainder_out);
 
 #endif /* ERROR_CORRECTION_ALGORITHMS_H */

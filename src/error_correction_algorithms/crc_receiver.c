@@ -58,42 +58,12 @@ void crc_receiver_demo(void)
             continue;
         }
 
-        char dividend[(CHECKSUM_MAX_BITS * 2) + 1];
-        strcpy(dividend, received_codeword);
-
-        printf("\nReceived Codeword : %s", received_codeword);
-        printf("\nGenerator         : %s\n", generator);
-
-        printf("\nPerforming modulo-2 division...\n");
-
-        int dividend_len = (int)strlen(dividend);
-
-        for (int i = 0; i <= dividend_len - generator_len; i++)
-        {
-            if (dividend[i] == '1')
-            {
-                crc_xor_operation(dividend, generator, i);
-            }
-        }
-
         char remainder[CHECKSUM_MAX_BITS + 1];
-
-        strcpy(remainder, &dividend[dividend_len - (generator_len - 1)]);
+        int is_valid = crc_verify(received_codeword, generator, remainder);
 
         printf("\nComputed Remainder : %s\n", remainder);
 
-        int error_detected = 0;
-
-        for (int i = 0; remainder[i] != '\0'; i++)
-        {
-            if (remainder[i] == '1')
-            {
-                error_detected = 1;
-                break;
-            }
-        }
-
-        if (error_detected)
+        if (!is_valid)
         {
             printf("\n[ERROR] Transmission error detected.\n");
         }
