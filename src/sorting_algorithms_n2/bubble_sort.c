@@ -24,7 +24,7 @@ void bubble_sort_optimized_demo(void)
 
         if (bubble_sort_status == INPUT_EXIT_SIGNAL)
         { // exit condition, user enters '-1'
-            printf("\nExiting bubble sort demo....\n");
+            printf("\nExiting bubble sort demo.\n");
             return;
         }
 
@@ -38,7 +38,7 @@ void bubble_sort_optimized_demo(void)
 
             if (element_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting bubble sort demo\n");
+                printf("\nExiting bubble sort demo.\n");
                 return;
             }
 

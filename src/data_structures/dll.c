@@ -21,7 +21,7 @@ start_dll:
 
     if (dll_length_status == INPUT_EXIT_SIGNAL)
     {
-        printf("\nExiting dll demo\n");
+        printf("\nExiting dll demo.\n");
         delete_dll(head);
         return;
     }
@@ -46,7 +46,7 @@ start_dll:
 
         if (dll_position_status == INPUT_EXIT_SIGNAL)
         {
-            printf("\nExiting dll demo\n");
+            printf("\nExiting dll demo.\n");
             delete_dll(head);
             return;
         }
@@ -68,7 +68,7 @@ start_dll:
 
             if (dll_end_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting dll demo\n");
+                printf("\nExiting dll demo.\n");
                 delete_dll(head);
                 return;
             }
@@ -92,7 +92,7 @@ start_dll:
 
             if (dll_start_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting dll demo\n");
+                printf("\nExiting dll demo.\n");
                 delete_dll(head);
                 return;
             }
@@ -118,7 +118,7 @@ start_dll:
 
             if (dll_pos_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting dll demo\n");
+                printf("\nExiting dll demo.\n");
                 delete_dll(head);
                 return;
             }
@@ -137,7 +137,7 @@ start_dll:
 
             if (dll_pos_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting dll demo\n");
+                printf("\nExiting dll demo.\n");
                 delete_dll(head);
                 return;
             }
@@ -222,7 +222,7 @@ start_dll:
 
         if (dll_delete_status == INPUT_EXIT_SIGNAL)
         {
-            printf("\nExiting dll demo\n");
+            printf("\nExiting dll demo.\n");
             delete_dll(head);
             return;
         }
@@ -241,7 +241,7 @@ start_dll:
 
             if (dll_delete_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting dll demo\n");
+                printf("\nExiting dll demo.\n");
                 delete_dll(head);
                 return;
             }
@@ -280,7 +280,7 @@ start_dll:
 
             if (dll_pos_delete_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting dll demo\n");
+                printf("\nExiting dll demo.\n");
                 delete_dll(head);
                 return;
             }

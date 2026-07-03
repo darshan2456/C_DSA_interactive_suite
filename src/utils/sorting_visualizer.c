@@ -13,7 +13,7 @@
 void visualize_sort(const int arr[], int n, int active_idx1, int active_idx2, int pivot_idx,
                     const char* status_message)
 {
-    if (n <= 0 || !is_terminal_interactive())
+    if (arr == NULL || n <= 0 || !is_terminal_interactive())
     {
         return;
     }
@@ -79,13 +79,14 @@ void visualize_sort(const int arr[], int n, int active_idx1, int active_idx2, in
         printf("[%2d]: %4d | ", i, arr[i]);
 
         int width = 0;
-        if (max_val == min_val)
+        long long denominator = (long long)max_val - min_val;
+        if (denominator <= 0)
         {
             width = 10;
         }
         else
         {
-            width = 1 + (arr[i] - min_val) * 39 / (max_val - min_val);
+            width = 1 + (int)(((long long)arr[i] - min_val) * 39 / denominator);
         }
 
         for (int w = 0; w < width; w++)

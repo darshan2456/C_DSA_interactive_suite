@@ -24,7 +24,7 @@ void insertion_sort_demo(void)
 
         if (insertion_sort_status == INPUT_EXIT_SIGNAL)
         { // exit condition, user enters '-1'
-            printf("\nExiting insertion sort demo....\n");
+            printf("\nExiting insertion sort demo.\n");
             return;
         }
 
@@ -39,7 +39,7 @@ void insertion_sort_demo(void)
 
             if (element_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting insertion sort demo.....\n");
+                printf("\nExiting insertion sort demo.\n");
                 return;
             }
 

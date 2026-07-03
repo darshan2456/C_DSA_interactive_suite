@@ -9,7 +9,7 @@
 
 static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_len)
 {
-    if (n <= 1)
+    if (arr == NULL || n <= 1)
     {
         return;
     }
@@ -48,7 +48,22 @@ static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_l
     {
         // Calculate bucket index relative to range
         long long diff = (long long)arr[i] - min_val;
-        int bucket_idx = (int)((diff * (N - 1)) / ((long long)max_val - min_val));
+        long long range = (long long)max_val - min_val;
+        int bucket_idx = 0;
+        if (range > 0)
+        {
+            bucket_idx = (int)((diff * (N - 1)) / range);
+        }
+
+        // Safety guard for bucket index bounds
+        if (bucket_idx < 0)
+        {
+            bucket_idx = 0;
+        }
+        else if (bucket_idx >= N)
+        {
+            bucket_idx = N - 1;
+        }
 
         // Insert element into the bucket list using SLL utility
         int insert_status = sll_insertAtBeginning(&buckets[bucket_idx], arr[i]);
@@ -91,7 +106,7 @@ static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_l
         else if (bucket_size > 1)
         {
             // Collect elements to a temporary array
-            int* temp_arr = malloc(sizeof(int) * bucket_size);
+            int* temp_arr = calloc(bucket_size, sizeof(int));
             if (temp_arr == NULL)
             {
                 // Cleanup remaining buckets on memory failure

@@ -21,7 +21,7 @@ start_sll:
 
     if (sll_length_status == INPUT_EXIT_SIGNAL)
     {
-        printf("\nExiting sll demo\n");
+        printf("\nExiting sll demo.\n");
         delete_sll(head);
         return;
     }
@@ -46,7 +46,7 @@ start_sll:
 
         if (sll_position_status == INPUT_EXIT_SIGNAL)
         {
-            printf("\nExiting sll demo\n");
+            printf("\nExiting sll demo.\n");
             delete_sll(head);
             return;
         }
@@ -68,7 +68,7 @@ start_sll:
 
             if (sll_end_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting sll demo\n");
+                printf("\nExiting sll demo.\n");
                 delete_sll(head);
                 return;
             }
@@ -100,7 +100,7 @@ start_sll:
 
             if (sll_start_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting sll demo\n");
+                printf("\nExiting sll demo.\n");
                 delete_sll(head);
                 return;
             }
@@ -133,7 +133,7 @@ start_sll:
 
             if (sll_pos_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting sll demo\n");
+                printf("\nExiting sll demo.\n");
                 delete_sll(head);
                 return;
             }
@@ -150,7 +150,7 @@ start_sll:
 
             if (sll_pos_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting sll demo\n");
+                printf("\nExiting sll demo.\n");
                 delete_sll(head);
                 return;
             }
@@ -236,7 +236,7 @@ start_sll:
 
         if (sll_delete_status == INPUT_EXIT_SIGNAL)
         {
-            printf("\nExiting sll demo\n");
+            printf("\nExiting sll demo.\n");
             delete_sll(head);
             return;
         }
@@ -255,7 +255,7 @@ start_sll:
 
             if (sll_delete_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting sll demo\n");
+                printf("\nExiting sll demo.\n");
                 delete_sll(head);
                 return;
             }
@@ -294,7 +294,7 @@ start_sll:
 
             if (sll_pos_delete_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting sll demo\n");
+                printf("\nExiting sll demo.\n");
                 delete_sll(head);
                 return;
             }

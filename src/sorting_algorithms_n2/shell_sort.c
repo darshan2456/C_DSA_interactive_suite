@@ -25,7 +25,7 @@ void shell_sort_demo(void)
 
         if (shell_sort_status == INPUT_EXIT_SIGNAL)
         {
-            printf("\nExiting shell sort demo....\n");
+            printf("\nExiting shell sort demo.\n");
             return;
         }
 
@@ -40,7 +40,7 @@ void shell_sort_demo(void)
 
             if (element_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting shell sort demo.....\n");
+                printf("\nExiting shell sort demo.\n");
                 return;
             }
 

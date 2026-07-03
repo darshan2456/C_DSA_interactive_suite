@@ -25,6 +25,11 @@ int interpolation_search(int arr[], int target, int length_of_array)
 
     while (low <= high && target >= arr[low] && target <= arr[high])
     {
+        if (low == high)
+        {
+            return (arr[low] == target) ? low : -1;
+        }
+
         if (arr[low] == arr[high])
         {
             if (arr[low] == target)
