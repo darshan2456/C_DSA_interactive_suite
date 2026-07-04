@@ -127,7 +127,6 @@ static Entry ENTRIES[] = {
     {"Animation speed (s)", NULL, 1, 1, 0},
     {"Set Animation Speed", settings_menu_demo, 0, 0, 1},
 
-    {"data_structures", NULL, 1, 1, 0},
     {"Linear Data Structures", NULL, 1, 0, 0},
     {"Singly Linked List", sll_demo, 0, 0, 1},
     {"Doubly Linked List", dll_demo, 0, 0, 1},
