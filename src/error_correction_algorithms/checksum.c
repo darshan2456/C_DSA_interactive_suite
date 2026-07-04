@@ -111,6 +111,17 @@ int checksum_block_sum(const char* data, int len, int k)
     return sum;
 }
 
+// converts a k-bit binary string into its integer value
+int checksum_bits_to_int(const char* bits, int k)
+{
+    int value = 0;
+    for (int i = 0; i < k; i++)
+    {
+        value = (value << 1) | (bits[i] - '0');
+    }
+    return value;
+}
+
 // checksum (sender side): the data is split into k-bit blocks and summed using
 // one's-complement (end-around carry) addition; the checksum is the one's complement
 // of that running sum. this is the value the sender appends to the data before

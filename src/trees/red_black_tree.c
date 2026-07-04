@@ -3,8 +3,9 @@
 #include <stdlib.h>
 
 // Core Initialization
-rbTree* create_rb_tree(void) {
-    rbTree *tree = (rbTree*)malloc(sizeof(rbTree));
+rbTree* create_rb_tree(void)
+{
+    rbTree* tree = (rbTree*)malloc(sizeof(rbTree));
     tree->TNULL = (rbNode*)malloc(sizeof(rbNode));
     tree->TNULL->color = BLACK;
     tree->TNULL->left = NULL;
@@ -14,43 +15,60 @@ rbTree* create_rb_tree(void) {
 }
 
 // Rotations
-static void rb_left_rotate(rbTree *tree, rbNode *x) {
-    rbNode *y = x->right;
+static void rb_left_rotate(rbTree* tree, rbNode* x)
+{
+    rbNode* y = x->right;
     x->right = y->left;
-    if (y->left != tree->TNULL) y->left->parent = x;
+    if (y->left != tree->TNULL)
+        y->left->parent = x;
     y->parent = x->parent;
-    if (x->parent == NULL) tree->root = y;
-    else if (x == x->parent->left) x->parent->left = y;
-    else x->parent->right = y;
+    if (x->parent == NULL)
+        tree->root = y;
+    else if (x == x->parent->left)
+        x->parent->left = y;
+    else
+        x->parent->right = y;
     y->left = x;
     x->parent = y;
 }
 
-static void rb_right_rotate(rbTree *tree, rbNode *x) {
-    rbNode *y = x->left;
+static void rb_right_rotate(rbTree* tree, rbNode* x)
+{
+    rbNode* y = x->left;
     x->left = y->right;
-    if (y->right != tree->TNULL) y->right->parent = x;
+    if (y->right != tree->TNULL)
+        y->right->parent = x;
     y->parent = x->parent;
-    if (x->parent == NULL) tree->root = y;
-    else if (x == x->parent->right) x->parent->right = y;
-    else x->parent->left = y;
+    if (x->parent == NULL)
+        tree->root = y;
+    else if (x == x->parent->right)
+        x->parent->right = y;
+    else
+        x->parent->left = y;
     y->right = x;
     x->parent = y;
 }
 
 // Insert Fixup
-static void rb_insert_fixup(rbTree *tree, rbNode *k) {
-    rbNode *u;
-    while (k->parent != NULL && k->parent->color == RED) {
-        if (k->parent == k->parent->parent->right) {
+static void rb_insert_fixup(rbTree* tree, rbNode* k)
+{
+    rbNode* u;
+    while (k->parent != NULL && k->parent->color == RED)
+    {
+        if (k->parent == k->parent->parent->right)
+        {
             u = k->parent->parent->left; // uncle
-            if (u->color == RED) {
+            if (u->color == RED)
+            {
                 u->color = BLACK;
                 k->parent->color = BLACK;
                 k->parent->parent->color = RED;
                 k = k->parent->parent;
-            } else {
-                if (k == k->parent->left) {
+            }
+            else
+            {
+                if (k == k->parent->left)
+                {
                     k = k->parent;
                     rb_right_rotate(tree, k);
                 }
@@ -58,15 +76,21 @@ static void rb_insert_fixup(rbTree *tree, rbNode *k) {
                 k->parent->parent->color = RED;
                 rb_left_rotate(tree, k->parent->parent);
             }
-        } else {
+        }
+        else
+        {
             u = k->parent->parent->right; // uncle
-            if (u->color == RED) {
+            if (u->color == RED)
+            {
                 u->color = BLACK;
                 k->parent->color = BLACK;
                 k->parent->parent->color = RED;
                 k = k->parent->parent;
-            } else {
-                if (k == k->parent->right) {
+            }
+            else
+            {
+                if (k == k->parent->right)
+                {
                     k = k->parent;
                     rb_left_rotate(tree, k);
                 }
@@ -75,48 +99,62 @@ static void rb_insert_fixup(rbTree *tree, rbNode *k) {
                 rb_right_rotate(tree, k->parent->parent);
             }
         }
-        if (k == tree->root) break;
+        if (k == tree->root)
+            break;
     }
     tree->root->color = BLACK;
 }
 
-void rb_insert(rbTree *tree, int key) {
-    rbNode *node = (rbNode*)malloc(sizeof(rbNode));
+void rb_insert(rbTree* tree, int key)
+{
+    rbNode* node = (rbNode*)malloc(sizeof(rbNode));
     node->data = key;
     node->parent = NULL;
     node->left = tree->TNULL;
     node->right = tree->TNULL;
     node->color = RED;
 
-    rbNode *y = NULL;
-    rbNode *x = tree->root;
+    rbNode* y = NULL;
+    rbNode* x = tree->root;
 
-    while (x != tree->TNULL) {
+    while (x != tree->TNULL)
+    {
         y = x;
-        if (node->data < x->data) x = x->left;
-        else x = x->right;
+        if (node->data < x->data)
+            x = x->left;
+        else
+            x = x->right;
     }
 
     node->parent = y;
-    if (y == NULL) tree->root = node;
-    else if (node->data < y->data) y->left = node;
-    else y->right = node;
+    if (y == NULL)
+        tree->root = node;
+    else if (node->data < y->data)
+        y->left = node;
+    else
+        y->right = node;
 
-    if (node->parent == NULL) {
+    if (node->parent == NULL)
+    {
         node->color = BLACK;
         return;
     }
-    if (node->parent->parent == NULL) return;
+    if (node->parent->parent == NULL)
+        return;
 
     rb_insert_fixup(tree, node);
 }
 
 // Validator (Proves all properties)
-static int check_black_height(rbTree *tree, rbNode *node, bool *is_valid) {
-    if (node == tree->TNULL) return 1;
+static int check_black_height(rbTree* tree, rbNode* node, bool* is_valid)
+{
+    if (node == tree->TNULL)
+        return 1;
 
-    if (node->color == RED) {
-        if (node->left->color == RED || node->right->color == RED) {
+    if (node->color == RED)
+    {
+        if (node->left->color == RED || node->right->color == RED)
+        {
             *is_valid = false; // Double Red Violation
         }
     }
@@ -124,29 +162,36 @@ static int check_black_height(rbTree *tree, rbNode *node, bool *is_valid) {
     int left_bh = check_black_height(tree, node->left, is_valid);
     int right_bh = check_black_height(tree, node->right, is_valid);
 
-    if (left_bh != right_bh) *is_valid = false; // Black Height Violation
+    if (left_bh != right_bh)
+        *is_valid = false; // Black Height Violation
 
     return left_bh + (node->color == BLACK ? 1 : 0);
 }
 
-bool is_rb_tree_valid(rbTree *tree) {
-    if (tree->root->color != BLACK) return false;
+bool is_rb_tree_valid(rbTree* tree)
+{
+    if (tree->root->color != BLACK)
+        return false;
     bool is_valid = true;
     check_black_height(tree, tree->root, &is_valid);
     return is_valid;
 }
 
 // Memory Cleanup
-static void free_rb_nodes(rbTree *tree, rbNode *node) {
-    if (node != tree->TNULL) {
+static void free_rb_nodes(rbTree* tree, rbNode* node)
+{
+    if (node != tree->TNULL)
+    {
         free_rb_nodes(tree, node->left);
         free_rb_nodes(tree, node->right);
         free(node);
     }
 }
 
-void destroy_rb_tree(rbTree *tree) {
-    if (tree) {
+void destroy_rb_tree(rbTree* tree)
+{
+    if (tree)
+    {
         free_rb_nodes(tree, tree->root);
         free(tree->TNULL);
         free(tree);
@@ -154,21 +199,24 @@ void destroy_rb_tree(rbTree *tree) {
 }
 
 // Demo function
-void red_black_tree_demo(void) {
+void red_black_tree_demo(void)
+{
     printf("\n--- Red-Black Tree (Self-Balancing BST) Demo ---\n");
-    rbTree *tree = create_rb_tree();
-    
+    rbTree* tree = create_rb_tree();
+
     printf("Action: Inserting 10, 20, 30, 15, 25...\n");
     rb_insert(tree, 10);
     rb_insert(tree, 20);
     rb_insert(tree, 30);
     rb_insert(tree, 15);
     rb_insert(tree, 25);
-    
+
     bool valid = is_rb_tree_valid(tree);
-    printf("Invariant Check: Are all 5 RB-Tree properties holding? %s\n", valid ? "YES (Valid)" : "NO (Invalid)");
-    printf("Root of the tree is: %d (Color: %s)\n", tree->root->data, tree->root->color == BLACK ? "BLACK" : "RED");
-    
+    printf("Invariant Check: Are all 5 RB-Tree properties holding? %s\n",
+           valid ? "YES (Valid)" : "NO (Invalid)");
+    printf("Root of the tree is: %d (Color: %s)\n", tree->root->data,
+           tree->root->color == BLACK ? "BLACK" : "RED");
+
     destroy_rb_tree(tree);
     printf("------------------------------------------------\n\n");
 }
