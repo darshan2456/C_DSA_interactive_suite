@@ -107,6 +107,10 @@ static void run_backtracking_benchmark_wrapper(void)
 {
     run_benchmark_with_prompt(run_backtracking_benchmark, "Backtracking");
 }
+static void run_heaps_benchmark_wrapper(void)
+{
+    run_benchmark_with_prompt(run_heaps_benchmark, "Advanced Heaps");
+}
 
 typedef struct
 {
@@ -162,6 +166,7 @@ static Entry ENTRIES[] = {
     {"B-Tree", btree_demo, 0, 0, 1},
     {"B+ Tree", bplus_tree_demo, 0, 0, 1},
     {"Segment Tree", segment_tree_demo, 0, 0, 1},
+    {"Red-Black Tree", red_black_tree_demo, 0, 0, 1},
 
     {"sorting_algorithms_n2", NULL, 1, 1, 0},
     {"Bubble Sort", bubble_sort_optimized_demo, 0, 0, 1}, /* add fn when known */
@@ -253,6 +258,7 @@ static Entry ENTRIES[] = {
     {"Naive String Matching", naive_string_matching_demo, 0, 0, 1},
     {"KMP Search", kmp_demo, 0, 0, 1},
     {"Rabin-Karp Search", rabin_karp_demo, 0, 0, 1},
+    {"Suffix Array & Kasai's LCP", suffix_array_demo, 0, 0, 1},
 
     {"algorithm_benchmarks", NULL, 1, 1, 0},
     {"Sorting Benchmarks", run_sorting_benchmark_wrapper, 0, 0, 1},
@@ -266,6 +272,7 @@ static Entry ENTRIES[] = {
     {"Hash Map Resolution", run_hashing_benchmark_wrapper, 0, 0, 1},
     {"Trees Lookups", run_trees_benchmark_wrapper, 0, 0, 1},
     {"Backtracking", run_backtracking_benchmark_wrapper, 0, 0, 1},
+    {"Advanced Heaps Benchmark", run_heaps_benchmark_wrapper, 0, 0, 1},
 };
 
 static const int ENTRY_COUNT = sizeof(ENTRIES) / sizeof(ENTRIES[0]);
