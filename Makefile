@@ -109,6 +109,20 @@ valgrind:
 		valgrind $(VGFLAGS) $(TEST_DIR)/$$t$(EXE) || exit 1; \
 	done
 
+SANITIZE_CFLAGS = -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g
+
+asan: CFLAGS += $(SANITIZE_CFLAGS)
+asan: LDFLAGS += -fsanitize=address,undefined
+asan: clean test
+	@echo "AddressSanitizer + UBSan build passed."
+
+ubsan: CFLAGS += -fsanitize=undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g
+ubsan: LDFLAGS += -fsanitize=undefined
+ubsan: clean test
+	@echo "UndefinedBehaviorSanitizer build passed."
+
+sanitize: asan
+
 
 # =========================
 # Test Section
@@ -769,4 +783,4 @@ $(TEST_DIR)/test_%$(EXE): $(OBJS) tests/advanced_heaps/test_%.c
 
 .PRECIOUS: $(TEST_DIR)/test_%$(EXE)
 
-.PHONY: run fmt clean valgrind
+.PHONY: run fmt clean valgrind asan ubsan sanitize
