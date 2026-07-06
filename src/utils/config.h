@@ -16,4 +16,7 @@ void print_current_speed(void);
 // Returns 1 if speed is instant, 0 otherwise
 int is_instant(void);
 
+// Returns 1 if running in interactive terminal, 0 otherwise
+int is_terminal_interactive(void);
+
 #endif

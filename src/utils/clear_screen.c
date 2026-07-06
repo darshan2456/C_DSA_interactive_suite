@@ -1,5 +1,5 @@
 #include "clear_screen.h"
-#include "cross_platform_timer.h"
+#include "config.h"
 #include <stdlib.h>
 
 void clear_screen(void)

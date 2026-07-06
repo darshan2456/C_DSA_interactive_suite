@@ -87,3 +87,12 @@ int is_instant(void)
     }
     return (current_delay_seconds == 0) ? 1 : 0;
 }
+
+int is_terminal_interactive(void)
+{
+#ifdef _WIN32
+    return _isatty(1);
+#else
+    return isatty(1);
+#endif
+}

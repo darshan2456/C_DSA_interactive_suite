@@ -16,12 +16,3 @@ void sleep_seconds(float seconds)
     usleep(seconds * 1000000);
 #endif
 }
-
-int is_terminal_interactive(void)
-{
-#ifdef _WIN32
-    return _isatty(1);
-#else
-    return isatty(1);
-#endif
-}
