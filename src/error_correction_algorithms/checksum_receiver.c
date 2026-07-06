@@ -1,9 +1,7 @@
 #include "error_correction_algorithms.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
 
 // checksum (receiver side): re-runs the one's-complement block sum over the received
 // data, then folds in the received checksum block. if the one's complement of the
@@ -71,11 +69,7 @@ void checksum_receiver_demo(void)
 
         // sum the data blocks (same as the sender), then fold in the received checksum
         int sum = checksum_block_sum(data, len, k);
-        clock_t start_t = clock();
         int checkword = checksum_bits_to_int(check, k);
-        clock_t end_t = clock();
-        double total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-        add_to_history("Checksum Receiver", k, total_t);
         sum = checksum_add(sum, checkword, k);
 
         printf("checksum: ");

@@ -1,5 +1,4 @@
 #include "graph_traversals.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <stdio.h>
 
@@ -261,7 +260,6 @@ void dfs(Graph* graph, int start)
 
     printf("end\n");
     printf("\ntotal CPU time taken for DFS traversal:- %f seconds\n", total_t);
-    add_to_history("DFS", size, total_t);
     destroyStack(nodes);
     return;
 }

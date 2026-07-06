@@ -1,5 +1,4 @@
 #include "dynamic_programming.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
@@ -185,7 +184,6 @@ void mcm_demo(void)
 
         printf("\nMinimum Scalar Multiplications required: %d", min_multiplications);
         printf("\nTotal CPU time taken:- %f seconds", total_t);
-        add_to_history("Matrix Chain Multiplication", num_matrices, total_t);
 
         free(p);
     }

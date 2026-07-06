@@ -1,4 +1,3 @@
-#include "history_logger.h"
 #include "safe_input.h"
 #include "searching_algorithms.h"
 #include "sorting_algorithms_n2.h"
@@ -128,7 +127,5 @@ void interpolation_search_demo(void)
         printf("\ntotal CPU time taken for interpolation search:- %f seconds", total_t);
         printf("\n(most probably execution time would be lesser than clock resolution, resulting "
                "in 0.00)");
-
-        add_to_history("Interpolation Search", length_of_array, total_t);
     }
 }

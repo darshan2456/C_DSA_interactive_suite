@@ -111,6 +111,20 @@ valgrind:
 		valgrind $(VGFLAGS) $(TEST_DIR)/$$t$(EXE) || exit 1; \
 	done
 
+SANITIZE_CFLAGS = -fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g
+
+asan: CFLAGS += $(SANITIZE_CFLAGS)
+asan: LDFLAGS += -fsanitize=address,undefined
+asan: clean test
+	@echo "AddressSanitizer + UBSan build passed."
+
+ubsan: CFLAGS += -fsanitize=undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g
+ubsan: LDFLAGS += -fsanitize=undefined
+ubsan: clean test
+	@echo "UndefinedBehaviorSanitizer build passed."
+
+sanitize: asan
+
 
 # =========================
 # Test Section
@@ -121,7 +135,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_priority_queue test_scll test_dcll test_simple_queue \
             test_deque test_astar test_avl test_segment_tree \
             test_greedy_bfs test_sorting_n2 test_advanced_sorting \
-            test_history_logger test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit \
+            test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit \
             test_checksum test_vrc test_crc test_lrc test_hamming \
             test_prim test_kruskal test_floyd_warshall test_mcm test_fibonacci test_knapsack test_lcs \
             test_string_algorithms test_expression_evaluation \
@@ -186,28 +200,28 @@ test: $(TEST_BINS)
 test_mcm: $(TEST_DIR)/test_mcm$(EXE)
 	$(TEST_DIR)/test_mcm$(EXE)
 
-$(TEST_DIR)/test_mcm$(EXE): $(OBJ_DIR)/src/dynamic_programming/mcm.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o tests/dynamic_programming/test_mcm.c
+$(TEST_DIR)/test_mcm$(EXE): $(OBJ_DIR)/src/dynamic_programming/mcm.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/dynamic_programming/test_mcm.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_fibonacci: $(TEST_DIR)/test_fibonacci$(EXE)
 	$(TEST_DIR)/test_fibonacci$(EXE)
 
-$(TEST_DIR)/test_fibonacci$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o $(OBJ_DIR)/src/utils/history_logger.o tests/dynamic_programming/test_fibonacci.c
+$(TEST_DIR)/test_fibonacci$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o tests/dynamic_programming/test_fibonacci.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_knapsack: $(TEST_DIR)/test_knapsack$(EXE)
 	$(TEST_DIR)/test_knapsack$(EXE)
 
-$(TEST_DIR)/test_knapsack$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o $(OBJ_DIR)/src/utils/history_logger.o tests/dynamic_programming/test_knapsack.c
+$(TEST_DIR)/test_knapsack$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o tests/dynamic_programming/test_knapsack.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_lcs: $(TEST_DIR)/test_lcs$(EXE)
 	$(TEST_DIR)/test_lcs$(EXE)
 
-$(TEST_DIR)/test_lcs$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o $(OBJ_DIR)/src/utils/history_logger.o tests/dynamic_programming/test_lcs.c
+$(TEST_DIR)/test_lcs$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o tests/dynamic_programming/test_lcs.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -258,14 +272,14 @@ $(TEST_DIR)/test_bst$(EXE): $(OBJ_DIR)/src/trees/bst.o $(OBJ_DIR)/src/utils/safe
 test_search: $(TEST_DIR)/test_search$(EXE)
 	$(TEST_DIR)/test_search$(EXE)
 
-$(TEST_DIR)/test_search$(EXE): $(OBJ_DIR)/src/searching_algorithms/linear_search.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/searching_algorithms/binary_search.o $(OBJ_DIR)/src/searching_algorithms/interpolation_search.o $(OBJ_DIR)/src/searching_algorithms/jump_search.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/searching_algorithms/test_search.c
+$(TEST_DIR)/test_search$(EXE): $(OBJ_DIR)/src/searching_algorithms/linear_search.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/searching_algorithms/binary_search.o $(OBJ_DIR)/src/searching_algorithms/interpolation_search.o $(OBJ_DIR)/src/searching_algorithms/jump_search.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/searching_algorithms/test_search.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_hash_func: $(TEST_DIR)/test_hash_func$(EXE)
 	$(TEST_DIR)/test_hash_func$(EXE)
 
-$(TEST_DIR)/test_hash_func$(EXE): $(OBJ_DIR)/src/hashing/linear_probing.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/searching_algorithms/linear_search.o tests/hashing/test_hash_function.c
+$(TEST_DIR)/test_hash_func$(EXE): $(OBJ_DIR)/src/hashing/linear_probing.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/searching_algorithms/linear_search.o tests/hashing/test_hash_function.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -340,7 +354,7 @@ $(TEST_DIR)/test_segment_tree$(EXE): $(OBJ_DIR)/src/trees/segment_tree.o $(OBJ_D
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-ASTAR_DEPS = $(OBJ_DIR)/src/graph_traversals/astar.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/graph_traversals/graph_io.o
+ASTAR_DEPS = $(OBJ_DIR)/src/graph_traversals/astar.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/graph_traversals/graph_io.o
 
 ifneq ($(wildcard src/advanced_heaps/dary_heap.c),)
 ASTAR_DEPS += $(OBJ_DIR)/src/advanced_heaps/dary_heap.o $(OBJ_DIR)/src/utils/display_header.o $(OBJ_DIR)/src/utils/clear_screen.o $(OBJ_DIR)/src/utils/cross_platform_timer.o
@@ -385,12 +399,6 @@ $(TEST_DIR)/test_greedy_bfs$(EXE): $(OBJ_DIR)/src/graph_traversals/greedy_best_f
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-test_history_logger: $(TEST_DIR)/test_history_logger$(EXE)
-	$(TEST_DIR)/test_history_logger$(EXE)
-
-$(TEST_DIR)/test_history_logger$(EXE): $(OBJ_DIR)/src/utils/history_logger.o tests/utils/test_history_logger.c
-	@$(call MKDIR_P,$(TEST_DIR))
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_benchmark: $(TEST_DIR)/test_benchmark$(EXE)
 	$(TEST_DIR)/test_benchmark$(EXE)
@@ -486,21 +494,21 @@ $(TEST_DIR)/test_benchmark_heaps$(EXE): $(OBJS) tests/benchmark/test_benchmark_h
 test_shell_sort: $(TEST_DIR)/test_shell_sort$(EXE)
 	$(TEST_DIR)/test_shell_sort$(EXE)
 
-$(TEST_DIR)/test_shell_sort$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/shell_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/sorting_algorithms_n2/test_shell_sort.c
+$(TEST_DIR)/test_shell_sort$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/shell_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/sorting_algorithms_n2/test_shell_sort.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_sorting_n2: $(TEST_DIR)/test_sorting_n2$(EXE)
 	$(TEST_DIR)/test_sorting_n2$(EXE)
 
-$(TEST_DIR)/test_sorting_n2$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/bubble_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/insertion_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/sorting_algorithms_n2/test_sorting_n2.c
+$(TEST_DIR)/test_sorting_n2$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/bubble_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/insertion_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/sorting_algorithms_n2/test_sorting_n2.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_advanced_sorting: $(TEST_DIR)/test_advanced_sorting$(EXE)
 	$(TEST_DIR)/test_advanced_sorting$(EXE)
 
-$(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/advanced_sorting_algorithms/quick_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/merge_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/heap_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/radix_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/bucket_sort.o $(OBJ_DIR)/src/data_structures/priority_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/advanced_sorting_algorithms/test_advanced_sorting.c
+$(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/advanced_sorting_algorithms/quick_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/merge_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/heap_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/radix_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/bucket_sort.o $(OBJ_DIR)/src/data_structures/priority_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/advanced_sorting_algorithms/test_advanced_sorting.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -529,7 +537,6 @@ $(TEST_DIR)/test_string_algorithms$(EXE): \
     $(OBJ_DIR)/src/string_algorithms/kmp.o \
     $(OBJ_DIR)/src/string_algorithms/rabin_karp.o \
     $(OBJ_DIR)/src/utils/safe_input_string.o \
-    $(OBJ_DIR)/src/utils/history_logger.o \
     $(OBJ_DIR)/src/utils/clear_screen.o \
 	$(OBJ_DIR)/src/utils/safe_input_int.o \
     $(OBJ_DIR)/src/utils/cross_platform_timer.o \
@@ -548,7 +555,7 @@ $(TEST_DIR)/test_bplus_tree$(EXE): $(OBJ_DIR)/src/trees/bplus_tree.o $(OBJ_DIR)/
 test_parity_bit: $(TEST_DIR)/test_parity_bit$(EXE)
 	$(TEST_DIR)/test_parity_bit$(EXE)
 
-$(TEST_DIR)/test_parity_bit$(EXE): $(OBJ_DIR)/src/error_correction_algorithms/parity_bit.o $(OBJ_DIR)/src/error_correction_algorithms/checksum.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o tests/error_correction_algorithms/test_parity_bit.c
+$(TEST_DIR)/test_parity_bit$(EXE): $(OBJ_DIR)/src/error_correction_algorithms/parity_bit.o $(OBJ_DIR)/src/error_correction_algorithms/checksum.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/error_correction_algorithms/test_parity_bit.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -559,7 +566,6 @@ $(TEST_DIR)/test_checksum$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/checksum.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/checksum_receiver.o \
 	$(OBJ_DIR)/src/utils/safe_input_int.o \
-	$(OBJ_DIR)/src/utils/history_logger.o \
 	tests/error_correction_algorithms/test_checksum.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -572,7 +578,6 @@ $(TEST_DIR)/test_vrc$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/vrc.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/vrc_receiver.o \
 	$(OBJ_DIR)/src/utils/safe_input_int.o \
-	$(OBJ_DIR)/src/utils/history_logger.o \
 	tests/error_correction_algorithms/test_vrc.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -585,7 +590,6 @@ $(TEST_DIR)/test_crc$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/crc.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/crc_receiver.o \
 	$(OBJ_DIR)/src/utils/safe_input_int.o \
-	$(OBJ_DIR)/src/utils/history_logger.o \
 	tests/error_correction_algorithms/test_crc.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -598,7 +602,6 @@ $(TEST_DIR)/test_lrc$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/lrc.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/lrc_receiver.o \
 	$(OBJ_DIR)/src/utils/safe_input_int.o \
-	$(OBJ_DIR)/src/utils/history_logger.o \
 	tests/error_correction_algorithms/test_lrc.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -611,7 +614,6 @@ $(TEST_DIR)/test_hamming$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/hamming.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/hamming_receiver.o \
 	$(OBJ_DIR)/src/utils/safe_input_int.o \
-	$(OBJ_DIR)/src/utils/history_logger.o \
 	tests/error_correction_algorithms/test_hamming.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -771,4 +773,4 @@ $(TEST_DIR)/test_%$(EXE): $(OBJS) tests/advanced_heaps/test_%.c
 
 .PRECIOUS: $(TEST_DIR)/test_%$(EXE)
 
-.PHONY: run fmt clean valgrind
+.PHONY: run fmt clean valgrind asan ubsan sanitize

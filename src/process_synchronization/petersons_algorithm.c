@@ -1,7 +1,6 @@
 #include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
-#include "history_logger.h"
 #include "process_synchronization.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -212,8 +211,6 @@ void petersons_algorithm_demo(void)
     }
     add_log("Peterson's Algorithm Simulation Initialized.");
 
-    clock_t start_time = clock();
-
     while (1)
     {
         clear_screen();
@@ -323,7 +320,4 @@ void petersons_algorithm_demo(void)
             sleep_seconds(0.8f);
         }
     }
-
-    double exec_time = (double)(clock() - start_time) / CLOCKS_PER_SEC;
-    add_to_history("Peterson's Algorithm", 2, exec_time);
 }

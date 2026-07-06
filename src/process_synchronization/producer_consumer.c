@@ -1,7 +1,6 @@
 #include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
-#include "history_logger.h"
 #include "process_synchronization.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -59,8 +58,6 @@ void producer_consumer_demo(void)
     int item_counter = 1;
     int prod_blocked = 0;
     int cons_blocked = 0;
-
-    clock_t start_time = clock();
 
     while (1)
     {
@@ -273,7 +270,4 @@ void producer_consumer_demo(void)
             sleep_seconds(0.8f);
         }
     }
-
-    double exec_time = (double)(clock() - start_time) / CLOCKS_PER_SEC;
-    add_to_history("Producer-Consumer Problem", BUFFER_SIZE, exec_time);
 }

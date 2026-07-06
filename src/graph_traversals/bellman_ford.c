@@ -1,5 +1,4 @@
 #include "graph_traversals.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
@@ -57,7 +56,6 @@ void bellman_ford(weightedGraph* graph, int start)
                 total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
                 printf("Negative edge cycle detected. Graph is not suitable for bellman ford.\n");
                 printf("\ntotal CPU time taken for Bellman-Ford:- %f seconds\n", total_t);
-                add_to_history("Bellman-Ford", size, total_t);
                 return;
             }
 
@@ -81,7 +79,6 @@ void bellman_ford(weightedGraph* graph, int start)
     }
 
     printf("\ntotal CPU time taken for Bellman-Ford:- %f seconds\n", total_t);
-    add_to_history("Bellman-Ford", size, total_t);
 }
 
 void bellman_ford_demo(void)

@@ -1,5 +1,4 @@
 #include "graph_traversals.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
@@ -125,7 +124,6 @@ void greedy_best_first_search(weightedGraph* graph, int start, int dest, int h[]
     total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
 
     printf("\ntotal CPU time taken for greedy best-first search:- %f seconds\n", total_t);
-    add_to_history("Greedy Best-First Search", size, total_t);
 
     printf("Traversal Order: ");
     for (int i = 0; i < traversal_len; i++)

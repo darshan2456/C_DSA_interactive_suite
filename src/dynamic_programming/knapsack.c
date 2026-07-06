@@ -1,5 +1,4 @@
 #include "dynamic_programming.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -125,7 +124,5 @@ void knapsack_demo(void)
 
         printf("\nMaximum value that can be put in a knapsack of capacity %d is: %d\n", W, max_val);
         printf("Total CPU time taken: %f seconds\n", total_t);
-
-        add_to_history("0/1 Knapsack", n, total_t);
     }
 }

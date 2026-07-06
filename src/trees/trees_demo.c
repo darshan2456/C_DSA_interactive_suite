@@ -20,10 +20,10 @@ void trees_demo(void)
                                      "\nenter 6 for B+ Tree demo"
                                      "\nenter 7 for Segment Tree demo"
                                      "\nenter 8 for Fenwick Tree (BIT) demo"
-                                     "\nenter 8 for Splay Tree demo"
-                                     "\nenter 8 for Red-Black Tree demo"
+                                     "\nenter 9 for Splay Tree demo"
+                                     "\nenter 10 for Red-Black Tree demo"
                                      "\nenter choice : ",
-                                     1, 8);
+                                     1, 10);
 
         if (tree_status == INPUT_EXIT_SIGNAL)
         {
@@ -60,7 +60,6 @@ void trees_demo(void)
                 display_header("B+ Tree");
                 bplus_tree_demo();
                 break;
-
             case 7:
                 display_header("Segment Tree");
                 segment_tree_demo();
@@ -68,8 +67,12 @@ void trees_demo(void)
             case 8:
                 display_header("Fenwick Tree (BIT)");
                 fenwick_tree_demo();
+                break;
+            case 9:
                 display_header("Splay Tree");
                 splay_tree_demo();
+                break;
+            case 10:
                 display_header("Red-Black Tree");
                 red_black_tree_demo();
                 break;

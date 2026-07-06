@@ -1,5 +1,4 @@
 #include "graph_traversals.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -199,8 +198,6 @@ int kruskal_mst(weightedGraph* graph)
 
     printf("\nTotal Weight of MST: %d\n", mst_weight);
     printf("Total CPU time taken: %f seconds\n", total_t);
-
-    add_to_history("Kruskal's MST", V, total_t);
 
     free_dsu(dsu);
     free(edges);

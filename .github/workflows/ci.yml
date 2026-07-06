@@ -28,3 +28,16 @@ jobs:
 
       - name: Memory check with valgrind
         run: make valgrind
+
+  sanitizers:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: sudo apt update && sudo apt install -y build-essential libncurses-dev
+
+      - name: Build and test with AddressSanitizer + UBSan
+        run: make asan
