@@ -75,7 +75,7 @@ void fenwick_tree_demo(void)
 
     printf("Action: Adding 10 to range [1, 3]\n");
     fenwick_range_update(ft, 1, 3, 10);
-    
+
     printf("Action: Adding 5 to range [2, 4]\n");
     fenwick_range_update(ft, 2, 4, 5);
 
