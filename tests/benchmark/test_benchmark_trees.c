@@ -33,8 +33,8 @@ void test_trees_benchmark_run(void)
     }
     fclose(file);
 
-    // There should be exactly 6 data rows
-    assert(row_count == 6);
+    // There should be exactly 8 data rows
+    assert(row_count == 8);
 
     // Clean up
     remove("benchmarks/trees.csv");

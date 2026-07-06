@@ -8,9 +8,20 @@
 
 #include "mock_printf.h"
 
-// Redirect printf to our mock
+static int mock_safe_input_int(int* val, const char* prompt, int min, int max)
+{
+    (void)prompt;
+    (void)min;
+    (void)max;
+    *val = 1; // Default to standard Binary Heap
+    return 1;
+}
+
+// Redirect printf to our mock and mock safe_input_int
 #define printf mock_printf
+#define safe_input_int mock_safe_input_int
 #include "../../src/graph_traversals/dijkstra.c"
+#undef safe_input_int
 #undef printf
 
 void test_dijkstra_simple_path()
