@@ -37,6 +37,7 @@ set(SRC_DIRS
     src/serialization
     src/debugger
     src/telemetry
+    src/help
     benchmark
 )
 

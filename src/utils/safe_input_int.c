@@ -1,5 +1,31 @@
 #include "data_structures.h"
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+extern void show_help(void);
+
+// Check if input is a help command
+static int is_help_input(const char* buffer)
+{
+    if (!buffer) return 0;
+    char lower[32];
+    int i = 0;
+    while (buffer[i] && i < 31 && !isspace(buffer[i]))
+    {
+        lower[i] = (char)tolower((unsigned char)buffer[i]);
+        i++;
+    }
+    lower[i] = '\0';
+    return strcmp(lower, "help") == 0;
+}
+
+// Check if input is exit signal
+static int is_exit_input(const char* buffer)
+{
+    if (!buffer) return 0;
+    return strcmp(buffer, "-1") == 0 || strcmp(buffer, "X") == 0;
+}
 
 // this function return 1 on successful insertion, 0 on failure (invalid input or EOF or number out
 // of range)
@@ -9,28 +35,47 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
 {
 
     int c;
+    char buffer[64];
+
     if (prompt)
     {
         printf("%s", prompt);
         fflush(stdout);
     }
-    int value;       // will be used to store integer part of input
-    char extra_char; // will be used to store/detect characters in the input buffer after number
 
-    if (scanf("%d", &value) != 1)
+    if (scanf("%63s", buffer) != 1)
+    {
+        goto clear_buffer;
+    }
+
+    // Check for help command
+    if (is_help_input(buffer))
+    {
+        while ((c = getchar()) != '\n' && c != EOF);
+        show_help();
+        return 0; // Retry the input
+    }
+
+    // Check for exit signal
+    if (is_exit_input(buffer))
+    {
+        *input = -1;
+        while ((c = getchar()) != '\n' && c != EOF);
+        return -111;
+    }
+
+    int value;
+
+    if (sscanf(buffer, "%d", &value) != 1)
     {
         printf("That's not a number. Please try again: \n");
         goto clear_buffer;
     }
-    if (scanf("%c", &extra_char) == 1 && extra_char != '\n')
-    {
-        printf("Only a number please (no extra characters). Try again: \n");
-        goto clear_buffer;
-    }
+
     if (value == -1)
     {
         *input = -1;
-        return -111; // special exit code indicating user entered '-1' ie a signal to exit.
+        return -111;
     }
     if (value < min_val || value > max_val)
     {
@@ -40,19 +85,18 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
     }
 
     *input = value;
-    return 1; // represents successful insertion of value into the given variable
+    while ((c = getchar()) != '\n' && c != EOF);
+    return 1;
 
 clear_buffer:
     while ((c = getchar()) != '\n' && c != EOF)
-        ; // clears buffer for next attempt
+        ;
     if (c == EOF)
-    { // if EOF is encountered
-
+    {
         clearerr(stdin);
         fflush(stdin);
         printf("input ended unexpectedly\n");
         return 0;
     }
-    return 0; // failure to take input, due to invalid input (characters, special characters or out
-              // of range)
+    return 0;
 }

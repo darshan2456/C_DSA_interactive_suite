@@ -30,6 +30,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
         src/serialization \
         src/debugger \
         src/telemetry \
+        src/help \
 	-Ibenchmark
 	# -Itui
 
@@ -60,6 +61,7 @@ SRC_DIRS = \
         src/serialization \
         src/debugger \
         src/telemetry \
+        src/help \
 	benchmark
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
