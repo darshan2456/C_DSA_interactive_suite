@@ -1,5 +1,6 @@
 #define IN_MEMORY_TRACKER_C
 #include "memory_tracker.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,6 +16,11 @@ typedef struct AllocatedBlock
 
 static AllocatedBlock* head = NULL;
 
+static size_t current_allocated_bytes = 0;
+static size_t peak_allocated_bytes = 0;
+static size_t total_allocated_blocks = 0;
+static size_t total_deallocated_blocks = 0;
+
 static void add_block(void* addr, size_t size, const char* file, int line)
 {
     if (addr == NULL)
@@ -28,6 +34,13 @@ static void add_block(void* addr, size_t size, const char* file, int line)
     block->line = line;
     block->next = head;
     head = block;
+
+    current_allocated_bytes += size;
+    total_allocated_blocks++;
+    if (current_allocated_bytes > peak_allocated_bytes)
+    {
+        peak_allocated_bytes = current_allocated_bytes;
+    }
 }
 
 static void remove_block(void* addr)
@@ -40,6 +53,9 @@ static void remove_block(void* addr)
     {
         if (curr->address == addr)
         {
+            current_allocated_bytes -= curr->size;
+            total_deallocated_blocks++;
+
             if (prev == NULL)
             {
                 head = curr->next;
@@ -69,6 +85,12 @@ static void update_block(void* old_addr, void* new_addr, size_t new_size, const 
     {
         if (curr->address == old_addr)
         {
+            current_allocated_bytes = current_allocated_bytes - curr->size + new_size;
+            if (current_allocated_bytes > peak_allocated_bytes)
+            {
+                peak_allocated_bytes = current_allocated_bytes;
+            }
+
             curr->address = new_addr;
             curr->size = new_size;
             curr->filename = file;
@@ -118,4 +140,101 @@ void custom_free(void* ptr, const char* file, int line)
         return;
     remove_block(ptr);
     free(ptr);
+}
+
+size_t get_current_allocated_bytes(void)
+{
+    return current_allocated_bytes;
+}
+
+size_t get_peak_allocated_bytes(void)
+{
+    return peak_allocated_bytes;
+}
+
+size_t get_total_allocated_blocks(void)
+{
+    return total_allocated_blocks;
+}
+
+size_t get_total_deallocated_blocks(void)
+{
+    return total_deallocated_blocks;
+}
+
+double get_memory_fragmentation_ratio(void)
+{
+    if (head == NULL || head->next == NULL)
+    {
+        return 0.0;
+    }
+
+    uintptr_t min_addr = (uintptr_t)head->address;
+    uintptr_t max_end_addr = (uintptr_t)head->address + head->size;
+    size_t total_size = 0;
+
+    AllocatedBlock* curr = head;
+    while (curr != NULL)
+    {
+        uintptr_t addr = (uintptr_t)curr->address;
+        if (addr < min_addr)
+        {
+            min_addr = addr;
+        }
+        if (addr + curr->size > max_end_addr)
+        {
+            max_end_addr = addr + curr->size;
+        }
+        total_size += curr->size;
+        curr = curr->next;
+    }
+
+    uintptr_t span = max_end_addr - min_addr;
+    if (span == 0)
+    {
+        return 0.0;
+    }
+
+    double ratio = 1.0 - ((double)total_size / (double)span);
+    return (ratio < 0.0) ? 0.0 : ratio;
+}
+
+double get_block_size_dispersion(void)
+{
+    if (head == NULL)
+    {
+        return 0.0;
+    }
+
+    size_t total_size = 0;
+    int count = 0;
+    AllocatedBlock* curr = head;
+    while (curr != NULL)
+    {
+        total_size += curr->size;
+        count++;
+        curr = curr->next;
+    }
+    double mean = (double)total_size / count;
+
+    double variance_sum = 0.0;
+    curr = head;
+    while (curr != NULL)
+    {
+        double diff = (double)curr->size - mean;
+        variance_sum += diff * diff;
+        curr = curr->next;
+    }
+
+    double variance = variance_sum / count;
+    if (variance <= 0.0)
+    {
+        return 0.0;
+    }
+    double z = variance;
+    for (int i = 0; i < 10; i++)
+    {
+        z = 0.5 * (z + variance / z);
+    }
+    return z;
 }

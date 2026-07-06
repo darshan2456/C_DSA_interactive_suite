@@ -8,6 +8,13 @@ void* custom_calloc(size_t num, size_t size, const char* file, int line);
 void* custom_realloc(void* ptr, size_t size, const char* file, int line);
 void custom_free(void* ptr, const char* file, int line);
 
+size_t get_current_allocated_bytes(void);
+size_t get_peak_allocated_bytes(void);
+size_t get_total_allocated_blocks(void);
+size_t get_total_deallocated_blocks(void);
+double get_memory_fragmentation_ratio(void);
+double get_block_size_dispersion(void);
+
 // Intercept standard library calls if profiling is active
 #ifndef IN_MEMORY_TRACKER_C
 #define malloc(size) custom_malloc(size, __FILE__, __LINE__)
