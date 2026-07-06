@@ -5,12 +5,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifndef _WIN32
+#include <execinfo.h>
+#endif
+
+#define MAX_BACKTRACE_FRAMES 10
+
 typedef struct AllocatedBlock
 {
     void* address;
     size_t size;
     const char* filename;
     int line;
+    void* backtrace_buffer[MAX_BACKTRACE_FRAMES];
+    int backtrace_size;
     struct AllocatedBlock* next;
 } AllocatedBlock;
 
@@ -33,6 +41,13 @@ static void add_block(void* addr, size_t size, const char* file, int line)
     block->size = size;
     block->filename = file;
     block->line = line;
+
+#ifndef _WIN32
+    block->backtrace_size = backtrace(block->backtrace_buffer, MAX_BACKTRACE_FRAMES);
+#else
+    block->backtrace_size = 0;
+#endif
+
     block->next = head;
     head = block;
 
@@ -274,6 +289,22 @@ void print_memory_leak_report(void)
     while (curr != NULL)
     {
         printf("%-20p %-10zu %s:%d\n", curr->address, curr->size, curr->filename, curr->line);
+#ifndef _WIN32
+        if (curr->backtrace_size > 0)
+        {
+            char** symbols = backtrace_symbols(curr->backtrace_buffer, curr->backtrace_size);
+            if (symbols != NULL)
+            {
+                printf("  Call Stack:\n");
+                for (int j = 0; j < curr->backtrace_size; j++)
+                {
+                    printf("    %s\n", symbols[j]);
+                }
+                free(symbols);
+            }
+        }
+#endif
+
         total_leaked += curr->size;
         leak_count++;
         curr = curr->next;
