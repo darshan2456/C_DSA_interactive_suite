@@ -3,20 +3,6 @@
 #include "trees.h"
 #include <stdio.h>
 
-typedef enum
-{
-    CHOICE_BST = 1,
-    CHOICE_AVL,
-    CHOICE_TBT,
-    CHOICE_TRIE,
-    CHOICE_BTREE,
-    CHOICE_BPLUS,
-    CHOICE_SEGMENT,
-    CHOICE_FENWICK,
-    CHOICE_SPLAY,
-    CHOICE_RBT
-} TreeChoice;
-
 void trees_demo(void)
 {
     int tree_status, tree_choice;
@@ -50,52 +36,52 @@ void trees_demo(void)
 
         switch (tree_choice)
         {
-            case CHOICE_BST:
+            case 1:
                 display_header("Binary Search Tree");
                 binary_search_tree_demo();
                 break;
 
-            case CHOICE_AVL:
+            case 2:
                 display_header("AVL Tree");
                 avl_demo();
                 break;
 
-            case CHOICE_TBT:
+            case 3:
                 display_header("Threaded Binary Tree");
                 TBT_demo();
                 break;
 
-            case CHOICE_TRIE:
+            case 4:
                 display_header("Trie");
                 trie_demo();
                 break;
 
-            case CHOICE_BTREE:
+            case 5:
                 display_header("B-Tree");
                 btree_demo();
                 break;
 
-            case CHOICE_BPLUS:
+            case 6:
                 display_header("B+ Tree");
                 bplus_tree_demo();
                 break;
 
-            case CHOICE_SEGMENT:
+            case 7:
                 display_header("Segment Tree");
                 segment_tree_demo();
                 break;
 
-            case CHOICE_FENWICK:
+            case 8:
                 display_header("Fenwick Tree (BIT)");
                 fenwick_tree_demo();
                 break;
 
-            case CHOICE_SPLAY:
+            case 9:
                 display_header("Splay Tree");
                 splay_tree_demo();
                 break;
 
-            case CHOICE_RBT:
+            case 10:
                 display_header("Red-Black Tree");
                 red_black_tree_demo();
                 break;
