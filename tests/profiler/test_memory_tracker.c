@@ -1,9 +1,9 @@
-#include "memory_tracker.h"
-#include "memory_visualizer.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "memory_tracker.h"
+#include "memory_visualizer.h"
 
 void test_basic_allocation(void)
 {
