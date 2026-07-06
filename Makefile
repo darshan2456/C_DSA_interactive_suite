@@ -28,6 +28,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/memory_inspector \
         src/fuzzer \
         src/serialization \
+        src/debugger \
 	-Ibenchmark
 	# -Itui
 
@@ -56,6 +57,7 @@ SRC_DIRS = \
         src/memory_inspector \
         src/fuzzer \
         src/serialization \
+        src/debugger \
 	benchmark
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))

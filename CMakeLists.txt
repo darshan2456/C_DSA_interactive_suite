@@ -35,6 +35,7 @@ set(SRC_DIRS
     src/memory_inspector
     src/fuzzer
     src/serialization
+    src/debugger
     benchmark
 )
 

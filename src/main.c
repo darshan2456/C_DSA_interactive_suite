@@ -5,6 +5,7 @@
 #include "benchmark.h"
 #include "bigo_engine/bigo_engine.h"
 #include "data_structures/data_structures.h"
+#include "debugger/debugger.h"
 #include "fuzzer/fuzzer.h"
 #include "memory_inspector/memory_inspector.h"
 #include "dynamic_programming/dynamic_programming.h"
@@ -67,8 +68,9 @@ void run_legacy_menu()
             "click 20 for Memory Inspector / Hexdump Visualizer demo\n"
             "click 21 for Fuzz Testing Engine demo\n"
             "click 22 for Serialization Engine demo\n"
+            "click 23 for Algorithm Step-Debugger demo\n"
             "enter choice : ",
-            1, 22 // limits
+            1, 23 // limits
         );
 
         if (status == -111)
@@ -150,6 +152,9 @@ void run_legacy_menu()
                 break;
             case 22:
                 serialization_demo();
+                break;
+            case 23:
+                debugger_demo();
                 break;
         }
     }
