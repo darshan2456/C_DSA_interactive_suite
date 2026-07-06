@@ -23,7 +23,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/string_algorithms \
 	-Isrc/backtracking \
 	-Isrc/process_synchronization \
-	-Isrc/profiler \
+	-I. \
+        -Imemory_profiler \
 	-Isrc/bigo_engine \
 	-Isrc/memory_inspector \
         src/fuzzer \
@@ -54,7 +55,7 @@ SRC_DIRS = \
 	src/string_algorithms \
 	src/backtracking \
 	src/process_synchronization \
-	src/profiler \
+	memory_profiler \
         src/bigo_engine \
         src/memory_inspector \
         src/fuzzer \

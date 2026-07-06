@@ -26,7 +26,7 @@
 #ifndef _WIN32
 #include "../tui/tui.h"
 #endif
-#include "profiler/memory_tracker.h"
+#include "memory_profiler/memory_tracker.h"
 #include "telemetry/telemetry.h"
 #include <stdio.h>
 #include <string.h>
