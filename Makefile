@@ -27,6 +27,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/bigo_engine \
 	-Isrc/memory_inspector \
         src/fuzzer \
+        src/serialization \
 	-Ibenchmark
 	# -Itui
 
@@ -54,6 +55,7 @@ SRC_DIRS = \
         src/bigo_engine \
         src/memory_inspector \
         src/fuzzer \
+        src/serialization \
 	benchmark
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))

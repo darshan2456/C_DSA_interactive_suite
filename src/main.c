@@ -14,6 +14,7 @@
 #include "hashing/hash.h"
 #include "job_scheduling/job_scheduling.h"
 #include "process_synchronization/process_synchronization.h"
+#include "serialization/serialization.h"
 #include "searching_algorithms/searching_algorithms.h"
 #include "sorting_algorithms_n2/sorting_algorithms_n2.h"
 #include "string_algorithms/string_algorithms.h"
@@ -65,8 +66,9 @@ void run_legacy_menu()
             "click 19 for Big-O Verification Engine demo\n"
             "click 20 for Memory Inspector / Hexdump Visualizer demo\n"
             "click 21 for Fuzz Testing Engine demo\n"
+            "click 22 for Serialization Engine demo\n"
             "enter choice : ",
-            1, 21 // limits
+            1, 22 // limits
         );
 
         if (status == -111)
@@ -145,6 +147,9 @@ void run_legacy_menu()
                 break;
             case 21:
                 fuzzer_demo();
+                break;
+            case 22:
+                serialization_demo();
                 break;
         }
     }

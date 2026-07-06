@@ -34,6 +34,7 @@ set(SRC_DIRS
     src/bigo_engine
     src/memory_inspector
     src/fuzzer
+    src/serialization
     benchmark
 )
 
