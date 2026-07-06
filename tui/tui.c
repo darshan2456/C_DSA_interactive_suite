@@ -4,11 +4,11 @@
 #include <string.h>
 // #include <locale.h>
 
-#include "../utils/config.h"
 #include "advanced_graph_algorithms.h"
 #include "advanced_heaps.h"
 #include "advanced_sorting.h"
 #include "backtracking.h"
+#include "config.h"
 #include "data_structures.h"
 #include "display_header.h"
 #include "dynamic_programming.h"

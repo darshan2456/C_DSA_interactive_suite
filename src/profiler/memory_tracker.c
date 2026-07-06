@@ -258,7 +258,6 @@ double get_block_size_dispersion(void)
     }
     return z;
 }
-
 void init_memory_tracker(void)
 {
     profiling_enabled = 1;

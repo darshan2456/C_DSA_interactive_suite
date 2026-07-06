@@ -25,7 +25,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/process_synchronization \
 	-Isrc/profiler \
 	-Ibenchmark
-	# -Isrc/tui
+	# -Itui
 
 # LDFLAGS = -lncurses
 
@@ -67,9 +67,9 @@ else
 	EXE =
 	MKDIR_P = mkdir -p "$(1)"
 
-	SRC_DIRS += src/tui 
+	SRC_DIRS += tui 
 	LDFLAGS += -lncurses
-	CFLAGS += -Isrc/tui
+	CFLAGS += -Itui
 
 endif
 

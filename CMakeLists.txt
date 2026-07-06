@@ -52,8 +52,8 @@ list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.c")
 # Platform specific configurations
 if(NOT WIN32)
     # Include TUI
-    include_directories(src/tui)
-    file(GLOB TUI_SRCS "src/tui/*.c")
+    include_directories(tui)
+    file(GLOB TUI_SRCS "tui/*.c")
     list(APPEND SOURCES ${TUI_SRCS})
     
     # Find and link ncurses

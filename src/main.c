@@ -19,7 +19,7 @@
 #include "utils/display_header.h"
 #include "utils/safe_input.h"
 #ifndef _WIN32
-#include "tui/tui.h"
+#include "../tui/tui.h"
 #endif
 #include "profiler/memory_tracker.h"
 #include <stdio.h>
