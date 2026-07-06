@@ -24,6 +24,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/backtracking \
 	-Isrc/process_synchronization \
 	-Isrc/profiler \
+	-Isrc/bigo_engine \
+	-Isrc/memory_inspector \
 	-Ibenchmark
 	# -Itui
 
@@ -48,6 +50,8 @@ SRC_DIRS = \
 	src/backtracking \
 	src/process_synchronization \
 	src/profiler \
+        src/bigo_engine \
+        src/memory_inspector \
 	benchmark
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))

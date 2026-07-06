@@ -3,7 +3,9 @@
 #include "advanced_sorting_algorithms/advanced_sorting.h"
 #include "backtracking/backtracking.h"
 #include "benchmark.h"
+#include "bigo_engine/bigo_engine.h"
 #include "data_structures/data_structures.h"
+#include "memory_inspector/memory_inspector.h"
 #include "dynamic_programming/dynamic_programming.h"
 #include "error_correction_algorithms/error_correction_algorithms.h"
 #include "expression_evaluation/expression.h"
@@ -59,8 +61,10 @@ void run_legacy_menu()
             "click 17 for advanced graph algorithms (scc / max flow / bipartite matching / "
             "eulerian path) demo\n"
             "click 18 for advanced heaps & priority queues suite demo\n"
+            "click 19 for Big-O Verification Engine demo\n"
+            "click 20 for Memory Inspector / Hexdump Visualizer demo\n"
             "enter choice : ",
-            1, 18 // limits
+            1, 20 // limits
         );
 
         if (status == -111)
@@ -130,6 +134,12 @@ void run_legacy_menu()
                 break;
             case 18:
                 advanced_heaps_demo();
+                break;
+            case 19:
+                bigo_engine_demo();
+                break;
+            case 20:
+                memory_inspector_demo();
                 break;
         }
     }

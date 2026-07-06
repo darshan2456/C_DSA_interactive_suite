@@ -31,6 +31,8 @@ set(SRC_DIRS
     src/string_algorithms
     src/backtracking
     src/process_synchronization
+    src/bigo_engine
+    src/memory_inspector
     benchmark
 )
 
