@@ -289,7 +289,6 @@ void print_memory_leak_report(void)
     while (curr != NULL)
     {
         printf("%-20p %-10zu %s:%d\n", curr->address, curr->size, curr->filename, curr->line);
-
 #ifndef _WIN32
         if (curr->backtrace_size > 0)
         {
