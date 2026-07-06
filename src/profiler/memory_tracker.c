@@ -15,6 +15,7 @@ typedef struct AllocatedBlock
 } AllocatedBlock;
 
 static AllocatedBlock* head = NULL;
+static int profiling_enabled = 0;
 
 static size_t current_allocated_bytes = 0;
 static size_t peak_allocated_bytes = 0;
@@ -105,7 +106,7 @@ static void update_block(uintptr_t old_addr_key, void* new_addr, size_t new_size
 void* custom_malloc(size_t size, const char* file, int line)
 {
     void* ptr = malloc(size);
-    if (ptr != NULL)
+    if (profiling_enabled && ptr != NULL)
     {
         add_block(ptr, size, file, line);
     }
@@ -115,7 +116,7 @@ void* custom_malloc(size_t size, const char* file, int line)
 void* custom_calloc(size_t num, size_t size, const char* file, int line)
 {
     void* ptr = calloc(num, size);
-    if (ptr != NULL)
+    if (profiling_enabled && ptr != NULL)
     {
         add_block(ptr, num * size, file, line);
     }
@@ -126,7 +127,7 @@ void* custom_realloc(void* ptr, size_t size, const char* file, int line)
 {
     uintptr_t old_addr_key = (uintptr_t)ptr;
     void* new_ptr = realloc(ptr, size);
-    if (new_ptr != NULL)
+    if (profiling_enabled && new_ptr != NULL)
     {
         update_block(old_addr_key, new_ptr, size, file, line);
     }
@@ -139,7 +140,10 @@ void custom_free(void* ptr, const char* file, int line)
     (void)line;
     if (ptr == NULL)
         return;
-    remove_block(ptr);
+    if (profiling_enabled)
+    {
+        remove_block(ptr);
+    }
     free(ptr);
 }
 
@@ -238,4 +242,44 @@ double get_block_size_dispersion(void)
         z = 0.5 * (z + variance / z);
     }
     return z;
+}
+
+void init_memory_tracker(void)
+{
+    profiling_enabled = 1;
+    atexit(print_memory_leak_report);
+}
+
+void print_memory_leak_report(void)
+{
+    if (!profiling_enabled)
+        return;
+
+    if (head == NULL)
+    {
+        printf("\n==================================================\n");
+        printf("          MEMORY PROFILER: NO LEAKS DETECTED       \n");
+        printf("==================================================\n");
+        return;
+    }
+
+    printf("\n==================================================\n");
+    printf("         MEMORY PROFILER: LEAK REPORT              \n");
+    printf("==================================================\n");
+    printf("%-20s %-10s %-15s\n", "Address", "Size (bytes)", "Location");
+    printf("--------------------------------------------------\n");
+
+    size_t total_leaked = 0;
+    int leak_count = 0;
+    AllocatedBlock* curr = head;
+    while (curr != NULL)
+    {
+        printf("%-20p %-10zu %s:%d\n", curr->address, curr->size, curr->filename, curr->line);
+        total_leaked += curr->size;
+        leak_count++;
+        curr = curr->next;
+    }
+    printf("--------------------------------------------------\n");
+    printf("Total leaked memory: %zu bytes across %d blocks\n", total_leaked, leak_count);
+    printf("==================================================\n");
 }

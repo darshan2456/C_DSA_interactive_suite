@@ -15,6 +15,9 @@ size_t get_total_deallocated_blocks(void);
 double get_memory_fragmentation_ratio(void);
 double get_block_size_dispersion(void);
 
+void init_memory_tracker(void);
+void print_memory_leak_report(void);
+
 // Intercept standard library calls if profiling is active
 #ifndef IN_MEMORY_TRACKER_C
 #define malloc(size) custom_malloc(size, __FILE__, __LINE__)

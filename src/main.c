@@ -21,7 +21,9 @@
 #ifndef _WIN32
 #include "tui/tui.h"
 #endif
+#include "profiler/memory_tracker.h"
 #include <stdio.h>
+#include <string.h>
 
 void data_structures_demo(void);
 
@@ -171,8 +173,16 @@ void tui_menu()
 }
 #endif
 
-int main()
+int main(int argc, char* argv[])
 {
+    for (int i = 1; i < argc; i++)
+    {
+        if (strcmp(argv[i], "--profile") == 0)
+        {
+            init_memory_tracker();
+            break;
+        }
+    }
 
 #ifdef _WIN32
     run_legacy_menu();
