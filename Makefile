@@ -24,6 +24,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/backtracking \
 	-Isrc/process_synchronization \
 	-Isrc/profiler \
+	-Isrc/debugger \
 	-Ibenchmark
 	# -Itui
 
@@ -48,6 +49,7 @@ SRC_DIRS = \
 	src/backtracking \
 	src/process_synchronization \
 	src/profiler \
+	src/debugger \
 	benchmark
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
@@ -193,6 +195,10 @@ endif
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_heaps.c),)
 TEST_BINS += test_benchmark_heaps
+endif
+
+ifneq ($(wildcard tests/debugger/test_step_debugger.c),)
+TEST_BINS += test_step_debugger
 endif
 
 ifneq ($(wildcard tests/profiler/test_memory_tracker.c),)
@@ -763,6 +769,13 @@ $(TEST_DIR)/test_hopcroft_karp$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph
 test_eulerian_path: $(TEST_DIR)/test_eulerian_path$(EXE)
 	$(TEST_DIR)/test_eulerian_path$(EXE)
 $(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/eulerian_path.o,$(OBJS)) tests/advanced_graph_algorithms/test_eulerian_path.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_step_debugger: $(TEST_DIR)/test_step_debugger$(EXE)
+	$(TEST_DIR)/test_step_debugger$(EXE)
+
+$(TEST_DIR)/test_step_debugger$(EXE): $(OBJS) tests/debugger/test_step_debugger.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

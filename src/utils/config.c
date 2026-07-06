@@ -7,6 +7,13 @@
 static int current_delay_seconds = 2;
 static const char* speed_name = "Normal (2.0s)";
 
+#if defined(__GNUC__) || defined(__clang__)
+__attribute__((weak)) void algorithm_step_hook(const char* event_msg)
+{
+    (void)event_msg;
+}
+#endif
+
 void set_animation_speed(int choice)
 {
     switch (choice)
