@@ -1,5 +1,4 @@
 #include "graph_traversals.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
@@ -146,7 +145,6 @@ void astar(weightedGraph* graph, int start, int dest, int h[])
     total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
 
     printf("\ntotal CPU time taken for A* search:- %f seconds\n", total_t);
-    add_to_history("A* Search", size, total_t);
 
     if (cost == INT_MAX || cost < 0)
     {

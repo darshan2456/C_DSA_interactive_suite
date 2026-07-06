@@ -1,7 +1,6 @@
 #include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include "string_algorithms.h"
 #include <stdio.h>
@@ -197,7 +196,5 @@ void rabin_karp_demo(void)
         double total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
 
         printf("Total CPU time taken: %f seconds\n", total_t);
-
-        add_to_history("Rabin-Karp Algorithm", strlen(text), total_t);
     }
 }

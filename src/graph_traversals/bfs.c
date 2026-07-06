@@ -1,6 +1,5 @@
 #include "data_structures.h"
 #include "graph_traversals.h"
-#include "history_logger.h"
 #include "returnMallocVal.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -74,8 +73,6 @@ void bfs(Graph* graph, int start)
 
     printf("end\n");
     printf("\ntotal CPU time taken for BFS traversal:- %f seconds\n", total_t);
-
-    add_to_history("BFS", size, total_t);
 
     destroy_circ_queue(&nodes);
 }

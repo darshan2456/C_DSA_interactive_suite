@@ -1,4 +1,3 @@
-#include "history_logger.h"
 #include "safe_input.h"
 #include "string_algorithms.h"
 #include <stdio.h>
@@ -67,7 +66,5 @@ void naive_string_matching_demo(void)
         double total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
 
         printf("Total CPU time taken: %f seconds\n", total_t);
-
-        add_to_history("Naive String Matching", strlen(text), total_t);
     }
 }

@@ -11,8 +11,10 @@
 #define dup _dup
 #define dup2 _dup2
 #define fileno _fileno
+#define DEV_NULL "NUL"
 #else
 #include <unistd.h>
+#define DEV_NULL "/dev/null"
 #endif
 
 static int compare_ints(const void* a, const void* b)
@@ -71,11 +73,7 @@ void run_trees_benchmark(int n)
             // Redirect stdout
             fflush(stdout);
             int stdout_dup = dup(1);
-#ifdef _WIN32
-            FILE* fnull = fopen("NUL", "w");
-#else
-            FILE* fnull = fopen("/dev/null", "w");
-#endif
+            FILE* fnull = fopen(DEV_NULL, "w");
             if (fnull != NULL && stdout_dup >= 0)
             {
                 dup2(fileno(fnull), 1);
@@ -202,26 +200,20 @@ void run_trees_benchmark(int n)
             else if (i == 6) // Segment Tree Simulation
             {
                 SegmentTree* st = create_segment_tree(keys, n);
-                if (st != NULL)
+                for (int k = 0; k < n; k++)
                 {
-                    for (int k = 0; k < n; k++)
-                    {
-                        update_point(st, 1, 0, n - 1, k, keys[k] / 2);
-                    }
-                    destroy_segment_tree(st);
+                    update_point(st, 1, 0, n - 1, k, keys[k] / 2);
                 }
+                destroy_segment_tree(st);
             }
             else if (i == 7) // Fenwick Tree Simulation
             {
                 FenwickTree* ft = create_fenwick_tree(n);
-                if (ft != NULL)
+                for (int k = 0; k < n; k++)
                 {
-                    for (int k = 0; k < n; k++)
-                    {
-                        fenwick_range_update(ft, 1, k + 1, keys[k]);
-                    }
-                    destroy_fenwick_tree(ft);
+                    fenwick_range_update(ft, 1, k + 1, keys[k]);
                 }
+                destroy_fenwick_tree(ft);
             }
 
             // Restore stdout

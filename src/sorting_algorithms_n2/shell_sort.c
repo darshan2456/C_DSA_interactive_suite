@@ -1,5 +1,4 @@
 #include "data_structures.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
 #include <stdio.h>
@@ -98,5 +97,4 @@ void shell_sort(int arr[], int length_of_array)
     printf("\nfinal array sorted by shell sort - ");
     print_array(arr, length_of_array);
     printf("\nTotal CPU time taken:- %f seconds", total_t);
-    add_to_history("Shell Sort", length_of_array, total_t);
 }

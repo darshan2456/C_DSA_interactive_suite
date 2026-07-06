@@ -1,5 +1,4 @@
 #include "graph_traversals.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
@@ -120,8 +119,6 @@ int prim_mst(weightedGraph* graph, int start_node)
 
     printf("\nTotal Weight of MST: %d\n", mst_weight);
     printf("Total CPU time taken: %f seconds\n", total_t);
-
-    add_to_history("Prim's MST", V, total_t);
 
 cleanup:
     PQ_Destroy(&pq);

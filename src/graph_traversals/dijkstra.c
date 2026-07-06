@@ -1,6 +1,5 @@
 #include "advanced_heaps.h"
 #include "graph_traversals.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
@@ -296,7 +295,6 @@ void dijkstra(weightedGraph* graph, int start)
     }
 
     printf("\ntotal CPU time taken for Dijkstra's algorithm:- %f seconds\n", total_t);
-    add_to_history("Dijkstra", size, total_t);
 }
 
 weightedGraph* create_weightedGraph(int V)

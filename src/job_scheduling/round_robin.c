@@ -1,4 +1,3 @@
-#include "history_logger.h"
 #include "job_scheduling.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -155,5 +154,4 @@ void round_robin_demo(void)
     js_print_result(procs, n);
     js_print_gantt(segments, segment_count);
     printf("\ntotal CPU time taken for round robin scheduling:- %f seconds\n", total_t);
-    add_to_history("Round Robin Scheduling", n, total_t);
 }

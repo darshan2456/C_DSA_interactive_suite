@@ -41,7 +41,6 @@ void round_robin_demo(void);
 #define js_read_processes mock_js_read_processes
 #define js_print_result mock_js_print_result
 #define js_print_gantt mock_js_print_gantt
-#define add_to_history mock_add_to_history
 #endif
 
 // Prompts for the process count and then each process's arrival and burst time

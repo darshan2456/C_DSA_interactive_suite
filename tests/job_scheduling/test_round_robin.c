@@ -40,14 +40,6 @@ void mock_js_print_gantt(const GanttSegment* segments, int count)
     (void)count;
 }
 
-// Stub for add_to_history to avoid linking dependency
-void mock_add_to_history(const char* algorithm, int size, double execution_time)
-{
-    (void)algorithm;
-    (void)size;
-    (void)execution_time;
-}
-
 // Mock safe_input_int specifically to return our quantum value
 #define safe_input_int mock_safe_input_int
 int mock_safe_input_int(int* value, const char* prompt, int min, int max)

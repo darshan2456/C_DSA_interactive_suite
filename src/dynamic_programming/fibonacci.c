@@ -1,5 +1,4 @@
 #include "dynamic_programming.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -85,8 +84,5 @@ void fibonacci_demo(void)
                time_tab);
 
         free(memo);
-
-        add_to_history("Fibonacci Recursive", n, time_memo);
-        add_to_history("Fibonacci Iterative", n, time_tab);
     }
 }

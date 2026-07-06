@@ -1,5 +1,4 @@
 #include "dynamic_programming.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -127,7 +126,5 @@ void lcs_demo(void)
 
         printf("Length of LCS is: %d\n", lcs_len);
         printf("Total CPU time taken: %f seconds\n", total_t);
-
-        add_to_history("Longest Common Subsequence", max(m, n), total_t);
     }
 }

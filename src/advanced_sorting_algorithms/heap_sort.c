@@ -1,6 +1,5 @@
 #include "advanced_sorting.h"
 #include "data_structures.h" // priority_queue API (pq_init, insert, extractTop, destroy_pq)
-#include "history_logger.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
 #include <stdio.h>
@@ -98,6 +97,5 @@ void heap_sort_demo(void)
                 printf(",");
         }
         printf("\nTotal CPU time taken:- %f seconds", total_t);
-        add_to_history("Heap Sort", length_of_array, total_t);
     }
 }

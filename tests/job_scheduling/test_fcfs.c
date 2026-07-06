@@ -39,14 +39,6 @@ void mock_js_print_gantt(const GanttSegment* segments, int count)
     (void)count;
 }
 
-// Stub for add_to_history to avoid linking dependency
-void mock_add_to_history(const char* algorithm, int size, double execution_time)
-{
-    (void)algorithm;
-    (void)size;
-    (void)execution_time;
-}
-
 // Include the source file directly so the compiler compiles fcfs_demo
 // as part of this translation unit, bypassing duplicate symbol linking.
 #include "../../src/job_scheduling/fcfs.c"

@@ -1,5 +1,4 @@
 #include "advanced_sorting.h"
-#include "history_logger.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
 #include <stdio.h>
@@ -143,6 +142,5 @@ void merge_sort_demo(void)
                 printf(",");
         }
         printf("\nTotal CPU time taken:- %f seconds", total_t);
-        add_to_history("Merge Sort", length_of_array, total_t);
     }
 }
