@@ -23,6 +23,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/string_algorithms \
 	-Isrc/backtracking \
 	-Isrc/process_synchronization \
+	-Isrc/profiler \
 	-Ibenchmark
 	# -Isrc/tui
 
@@ -46,6 +47,7 @@ SRC_DIRS = \
 	src/string_algorithms \
 	src/backtracking \
 	src/process_synchronization \
+	src/profiler \
 	benchmark
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))

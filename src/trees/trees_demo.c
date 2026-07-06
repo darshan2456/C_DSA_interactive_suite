@@ -61,7 +61,6 @@ void trees_demo(void)
                 bplus_tree_demo();
                 break;
 
-           case 7:
             case 7:
                 display_header("Segment Tree");
                 segment_tree_demo();

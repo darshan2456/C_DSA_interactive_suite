@@ -199,37 +199,30 @@ void run_trees_benchmark(int n)
                     bplus_tree_destroy(tree);
                 }
             }
-        }
-        else if (i == 6) // Segment Tree Simulation
-        {
-            SegmentTree* st = create_segment_tree(keys, n);
-            for (int k = 0; k < n; k++)
+            else if (i == 6) // Segment Tree Simulation
             {
-                update_point(st, 1, 0, n - 1, k, keys[k] / 2);
+                SegmentTree* st = create_segment_tree(keys, n);
+                if (st != NULL)
+                {
+                    for (int k = 0; k < n; k++)
+                    {
+                        update_point(st, 1, 0, n - 1, k, keys[k] / 2);
+                    }
+                    destroy_segment_tree(st);
+                }
             }
-            destroy_segment_tree(st);
-        }
-        else if (i == 7) // Fenwick Tree Simulation
-        {
-            FenwickTree* ft = create_fenwick_tree(n);
-            for (int k = 0; k < n; k++)
+            else if (i == 7) // Fenwick Tree Simulation
             {
-                fenwick_range_update(ft, 1, k + 1, keys[k]);
+                FenwickTree* ft = create_fenwick_tree(n);
+                if (ft != NULL)
+                {
+                    for (int k = 0; k < n; k++)
+                    {
+                        fenwick_range_update(ft, 1, k + 1, keys[k]);
+                    }
+                    destroy_fenwick_tree(ft);
+                }
             }
-            destroy_fenwick_tree(ft);
-        }
-
-        // Restore stdout
-        fflush(stdout);
-        if (stdout_dup >= 0)
-        {
-            dup2(stdout_dup, 1);
-            close(stdout_dup);
-        }
-        if (fnull != NULL)
-        {
-            fclose(fnull);
-        }
 
             // Restore stdout
             fflush(stdout);

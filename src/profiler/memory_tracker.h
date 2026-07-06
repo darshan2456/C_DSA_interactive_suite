@@ -1,0 +1,19 @@
+#ifndef MEMORY_TRACKER_H
+#define MEMORY_TRACKER_H
+
+#include <stddef.h>
+
+void* custom_malloc(size_t size, const char* file, int line);
+void* custom_calloc(size_t num, size_t size, const char* file, int line);
+void* custom_realloc(void* ptr, size_t size, const char* file, int line);
+void custom_free(void* ptr, const char* file, int line);
+
+// Intercept standard library calls if profiling is active
+#ifndef IN_MEMORY_TRACKER_C
+#define malloc(size) custom_malloc(size, __FILE__, __LINE__)
+#define calloc(num, size) custom_calloc(num, size, __FILE__, __LINE__)
+#define realloc(ptr, size) custom_realloc(ptr, size, __FILE__, __LINE__)
+#define free(ptr) custom_free(ptr, __FILE__, __LINE__)
+#endif
+
+#endif // MEMORY_TRACKER_H
