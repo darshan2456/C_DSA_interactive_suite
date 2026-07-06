@@ -124,10 +124,11 @@ void* custom_calloc(size_t num, size_t size, const char* file, int line)
 
 void* custom_realloc(void* ptr, size_t size, const char* file, int line)
 {
+    void* old_addr = ptr;
     void* new_ptr = realloc(ptr, size);
     if (new_ptr != NULL)
     {
-        update_block(ptr, new_ptr, size, file, line);
+        update_block(old_addr, new_ptr, size, file, line);
     }
     return new_ptr;
 }
