@@ -5,6 +5,7 @@
 #include "benchmark.h"
 #include "bigo_engine/bigo_engine.h"
 #include "data_structures/data_structures.h"
+#include "fuzzer/fuzzer.h"
 #include "memory_inspector/memory_inspector.h"
 #include "dynamic_programming/dynamic_programming.h"
 #include "error_correction_algorithms/error_correction_algorithms.h"
@@ -63,8 +64,9 @@ void run_legacy_menu()
             "click 18 for advanced heaps & priority queues suite demo\n"
             "click 19 for Big-O Verification Engine demo\n"
             "click 20 for Memory Inspector / Hexdump Visualizer demo\n"
+            "click 21 for Fuzz Testing Engine demo\n"
             "enter choice : ",
-            1, 20 // limits
+            1, 21 // limits
         );
 
         if (status == -111)
@@ -140,6 +142,9 @@ void run_legacy_menu()
                 break;
             case 20:
                 memory_inspector_demo();
+                break;
+            case 21:
+                fuzzer_demo();
                 break;
         }
     }

@@ -33,6 +33,7 @@ set(SRC_DIRS
     src/process_synchronization
     src/bigo_engine
     src/memory_inspector
+    src/fuzzer
     benchmark
 )
 
