@@ -27,6 +27,7 @@
 #include "../tui/tui.h"
 #endif
 #include "profiler/memory_tracker.h"
+#include "telemetry/telemetry.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -69,8 +70,9 @@ void run_legacy_menu()
             "click 21 for Fuzz Testing Engine demo\n"
             "click 22 for Serialization Engine demo\n"
             "click 23 for Algorithm Step-Debugger demo\n"
+            "click 24 for Telemetry Exporter demo\n"
             "enter choice : ",
-            1, 23 // limits
+            1, 24 // limits
         );
 
         if (status == -111)
@@ -155,6 +157,9 @@ void run_legacy_menu()
                 break;
             case 23:
                 debugger_demo();
+                break;
+            case 24:
+                telemetry_demo();
                 break;
         }
     }

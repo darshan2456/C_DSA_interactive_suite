@@ -36,6 +36,7 @@ set(SRC_DIRS
     src/fuzzer
     src/serialization
     src/debugger
+    src/telemetry
     benchmark
 )
 
