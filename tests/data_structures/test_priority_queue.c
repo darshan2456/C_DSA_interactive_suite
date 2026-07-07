@@ -1,4 +1,4 @@
-#include "data_structures.h"
+#include "priority_queue.h"
 #include <assert.h>
 #include <stdio.h>
 
