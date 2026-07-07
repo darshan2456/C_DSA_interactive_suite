@@ -1,5 +1,6 @@
 #include "advanced_sorting.h"
-#include "data_structures.h" // priority_queue API (pq_init, insert, extractTop, destroy_pq)
+#include "array.h"
+#include "priority_queue.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
 #include <stdio.h>

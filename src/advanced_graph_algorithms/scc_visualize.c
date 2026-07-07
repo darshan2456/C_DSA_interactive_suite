@@ -2,6 +2,7 @@
 #include "clear_screen.h"
 #include "config.h"
 #include "safe_input.h"
+#include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

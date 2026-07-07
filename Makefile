@@ -107,6 +107,8 @@ else
 	$(RM_DIR) $(TEST_DIR)
 endif
 
+test-mem: valgrind
+
 valgrind:
 	for t in $(TEST_BINS); do \
 		echo "Running valgrind on $$t..."; \
@@ -797,4 +799,4 @@ $(TEST_DIR)/test_%$(EXE): $(OBJS) tests/advanced_heaps/test_%.c
 
 .PRECIOUS: $(TEST_DIR)/test_%$(EXE)
 
-.PHONY: run fmt clean valgrind asan ubsan sanitize
+.PHONY: run fmt clean valgrind asan ubsan sanitize test-mem

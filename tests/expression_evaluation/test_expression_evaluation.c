@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "../../src/expression_evaluation/expression.h"
-#include "data_structures.h"
+#include "stack.h"
 
 void test_isOperator()
 

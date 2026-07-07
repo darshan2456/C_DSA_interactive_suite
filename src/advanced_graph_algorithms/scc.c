@@ -1,4 +1,5 @@
 #include "advanced_graph_algorithms.h"
+#include "stack.h"
 #include <stdlib.h>
 #include <string.h>
 

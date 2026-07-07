@@ -1,4 +1,4 @@
-#include "data_structures.h"
+#include "array.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
 #include <stdio.h>

@@ -44,7 +44,7 @@ WORKDIR /app
 COPY . .
 
 # Compile fresh inside the container
-RUN make clean && make
+RUN make clean && make && make test
 
 CMD ["./dsa"]
 

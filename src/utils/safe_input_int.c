@@ -1,4 +1,4 @@
-#include "data_structures.h"
+
 #include <stdio.h>
 
 // this function return 1 on successful insertion, 0 on failure (invalid input or EOF or number out

@@ -1,6 +1,6 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
-#include "data_structures.h"
+#include "stack.h"
 
 void infix_to_postfix_demo(void);
 void postfix_evaluation_demo(void);

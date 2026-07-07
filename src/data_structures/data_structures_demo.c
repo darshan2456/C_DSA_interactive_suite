@@ -1,6 +1,13 @@
-#include "data_structures.h"
+#include "array.h"
+#include "dcll.h"
 #include "display_header.h"
+#include "dll.h"
+#include "priority_queue.h"
+#include "queue.h"
 #include "safe_input.h"
+#include "scll.h"
+#include "sll.h"
+#include "stack.h"
 #include <stdio.h>
 
 void data_structures_demo(void)

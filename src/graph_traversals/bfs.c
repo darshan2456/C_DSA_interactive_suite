@@ -1,5 +1,5 @@
-#include "data_structures.h"
 #include "graph_traversals.h"
+#include "queue.h"
 #include "returnMallocVal.h"
 #include "safe_input.h"
 #include "step_debugger.h"
