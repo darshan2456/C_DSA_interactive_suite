@@ -1,4 +1,5 @@
 #include "advanced_graph_algorithms.h"
+#include "stack.h"
 #include "clear_screen.h"
 #include "config.h"
 #include "safe_input.h"

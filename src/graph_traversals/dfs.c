@@ -1,4 +1,5 @@
 #include "graph_traversals.h"
+#include "stack.h"
 #include "safe_input.h"
 #include "step_debugger.h"
 #include <stdio.h>
