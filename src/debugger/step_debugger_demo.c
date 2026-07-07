@@ -1,8 +1,8 @@
-#include "step_debugger.h"
 #include "display_header.h"
+#include "graph_traversals.h"
 #include "safe_input.h"
 #include "sorting_algorithms_n2.h"
-#include "graph_traversals.h"
+#include "step_debugger.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -52,7 +52,8 @@ void debugger_demo(void)
                 printf("Initial array: [5, 2, 8, 1, 9]\n");
                 bubble_sort_optimized(arr, length);
                 printf("\nSorted array: ");
-                for (int i = 0; i < length; i++) printf("%d ", arr[i]);
+                for (int i = 0; i < length; i++)
+                    printf("%d ", arr[i]);
                 printf("\n");
                 break;
             }
@@ -64,7 +65,8 @@ void debugger_demo(void)
                 printf("Initial array: [5, 2, 8, 1, 9]\n");
                 selection_sort(arr, length);
                 printf("\nSorted array: ");
-                for (int i = 0; i < length; i++) printf("%d ", arr[i]);
+                for (int i = 0; i < length; i++)
+                    printf("%d ", arr[i]);
                 printf("\n");
                 break;
             }
@@ -76,7 +78,8 @@ void debugger_demo(void)
                 printf("Initial array: [5, 2, 8, 1, 9]\n");
                 insertion_sort(arr, length);
                 printf("\nSorted array: ");
-                for (int i = 0; i < length; i++) printf("%d ", arr[i]);
+                for (int i = 0; i < length; i++)
+                    printf("%d ", arr[i]);
                 printf("\n");
                 break;
             }
@@ -133,7 +136,8 @@ void debugger_demo(void)
         printf("\nPress Enter to continue...");
         // Consume any leftover input
         int c;
-        while ((c = getchar()) != '\n' && c != EOF);
+        while ((c = getchar()) != '\n' && c != EOF)
+            ;
         getchar();
     }
 }
