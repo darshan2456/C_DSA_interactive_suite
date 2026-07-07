@@ -1,6 +1,6 @@
 #include "advanced_sorting.h"
-#include "priority_queue.h"
 #include "array.h"
+#include "priority_queue.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
 #include <stdio.h>

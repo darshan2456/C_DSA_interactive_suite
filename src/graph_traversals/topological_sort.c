@@ -1,8 +1,8 @@
-#include "queue.h"
-#include "stack.h"
 #include "graph_traversals.h"
+#include "queue.h"
 #include "returnMallocVal.h"
 #include "safe_input.h"
+#include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

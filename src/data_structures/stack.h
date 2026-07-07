@@ -1,8 +1,8 @@
 #ifndef STACK_H
 #define STACK_H
 
-#include <stdbool.h>
 #include "sll.h"
+#include <stdbool.h>
 
 // For Stack
 typedef struct stack
