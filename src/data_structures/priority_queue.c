@@ -1,4 +1,5 @@
 #include "priority_queue.h"
+#include "array.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
