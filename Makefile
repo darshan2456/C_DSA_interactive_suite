@@ -17,6 +17,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/hashing \
 	-Isrc/utils \
 	-Isrc/bigo \
+	-Isrc/fuzzer \
 	-Isrc/help \
 	-Isrc/trees \
 	-Isrc/error_correction_algorithms \
@@ -43,6 +44,7 @@ SRC_DIRS = \
 	src/hashing \
 	src/utils \
 	src/bigo \
+	src/fuzzer \
 	src/help \
 	src/trees \
 	src/error_correction_algorithms \

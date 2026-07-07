@@ -25,6 +25,7 @@ set(SRC_DIRS
     src/hashing
     src/utils
     src/bigo
+    src/fuzzer
     src/trees
     src/error_correction_algorithms
     src/job_scheduling
