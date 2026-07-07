@@ -1,4 +1,5 @@
-#include "utils/config.h"
+#include <stdio.h>
+
 #include "advanced_sorting_algorithms/advanced_sorting.h"
 #include "backtracking/backtracking.h"
 #include "data_structures/array.h"
@@ -16,15 +17,16 @@
 #include "hashing/hash.h"
 #include "job_scheduling/job_scheduling.h"
 #include "process_synchronization/process_synchronization.h"
-#include "utils/safe_input.h"
 #include "searching_algorithms/searching_algorithms.h"
 #include "sorting_algorithms_n2/sorting_algorithms_n2.h"
 #include "string_algorithms/string_algorithms.h"
 #include "trees/trees.h"
+#include "utils/config.h"
+#include "utils/safe_input.h"
+
 #ifndef _WIN32
 #include "tui/tui.h"
 #endif
-#include <stdio.h>
 
 void data_structures_demo(void);
 
