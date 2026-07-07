@@ -1,4 +1,5 @@
 #include "safe_input.h"
+#include "../help/help.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -25,6 +26,14 @@ int safe_input_string(char* buffer, const char* prompt)
         if (strcmp(buffer, "X") == 0)
         {
             return INPUT_EXIT_SIGNAL;
+        }
+
+        if (strcmp(buffer, "help") == 0)
+        {
+            display_help();
+            printf("%s", prompt);
+            fflush(stdout);
+            continue;
         }
 
         return 1;
