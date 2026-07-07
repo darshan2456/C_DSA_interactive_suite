@@ -26,6 +26,7 @@
 #include "tui.h"
 
 #include "benchmark.h"
+#include "step_debugger.h"
 
 /* ── types ──────────────────────────────────────────────────────────────────── */
 typedef void (*demo_fn)(void);
@@ -272,6 +273,9 @@ static Entry ENTRIES[] = {
     {"Trees Lookups", run_trees_benchmark_wrapper, 0, 0, 1},
     {"Backtracking", run_backtracking_benchmark_wrapper, 0, 0, 1},
     {"Advanced Heaps Benchmark", run_heaps_benchmark_wrapper, 0, 0, 1},
+
+    {"algorithm_step_debugger", NULL, 1, 1, 0},
+    {"Interactive Debugger Demo", debugger_demo, 0, 0, 1},
 };
 
 static const int ENTRY_COUNT = sizeof(ENTRIES) / sizeof(ENTRIES[0]);

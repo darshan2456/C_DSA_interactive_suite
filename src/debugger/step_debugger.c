@@ -24,11 +24,16 @@ static int get_keypress_unix(int block)
     }
 
     struct termios oldt, newt;
+    memset(&oldt, 0, sizeof(oldt));
+    memset(&newt, 0, sizeof(newt));
     int ch = -1;
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    int is_tty = (tcgetattr(STDIN_FILENO, &oldt) == 0);
+    if (is_tty)
+    {
+        newt = oldt;
+        newt.c_lflag &= ~(ICANON | ECHO);
+        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    }
 
     if (block)
     {
@@ -46,7 +51,10 @@ static int get_keypress_unix(int block)
         }
     }
 
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    if (is_tty)
+    {
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    }
     return ch;
 }
 #else

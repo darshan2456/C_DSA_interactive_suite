@@ -22,6 +22,7 @@
 #include "../tui/tui.h"
 #endif
 #include "profiler/memory_tracker.h"
+#include "step_debugger.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -59,8 +60,9 @@ void run_legacy_menu()
             "click 17 for advanced graph algorithms (scc / max flow / bipartite matching / "
             "eulerian path) demo\n"
             "click 18 for advanced heaps & priority queues suite demo\n"
+            "click 19 for interactive algorithm step-debugger demo\n"
             "enter choice : ",
-            1, 18 // limits
+            1, 19 // limits
         );
 
         if (status == -111)
@@ -130,6 +132,9 @@ void run_legacy_menu()
                 break;
             case 18:
                 advanced_heaps_demo();
+                break;
+            case 19:
+                debugger_demo();
                 break;
         }
     }
