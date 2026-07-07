@@ -24,6 +24,7 @@ set(SRC_DIRS
     src/advanced_heaps
     src/hashing
     src/utils
+    src/bigo
     src/trees
     src/error_correction_algorithms
     src/job_scheduling

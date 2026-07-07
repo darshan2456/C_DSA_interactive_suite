@@ -16,6 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/advanced_heaps \
 	-Isrc/hashing \
 	-Isrc/utils \
+	-Isrc/bigo \
 	-Isrc/help \
 	-Isrc/trees \
 	-Isrc/error_correction_algorithms \
@@ -41,6 +42,7 @@ SRC_DIRS = \
 	src/advanced_heaps \
 	src/hashing \
 	src/utils \
+	src/bigo \
 	src/help \
 	src/trees \
 	src/error_correction_algorithms \
