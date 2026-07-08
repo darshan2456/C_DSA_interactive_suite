@@ -38,7 +38,7 @@ int hash_function(int value, int length_of_array)
 {
     if (length_of_array <= 0)
     {
-        return -1; 
+        return -1;
     }
     int next_prime_no = next_prime(length_of_array);
     return ((value + 1) * next_prime_no) % length_of_array;
