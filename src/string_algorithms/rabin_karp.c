@@ -20,8 +20,17 @@ void rabin_karp_search(char* text, char* pattern, int q)
     int found = 0;
     int collisions = 0;
 
-    if (m == 0 || n == 0 || m > n)
+    if (m == 0 || n == 0)
+    {
+        printf("Error: Text or pattern cannot be empty.\n");
         return;
+    }
+
+    if (m > n)
+    {
+        printf("Error: Pattern length cannot be greater than text length.\n");
+        return;
+    }
 
     for (i = 0; i < m - 1; i++)
         h = (h * d) % q;
@@ -65,6 +74,12 @@ void rabin_karp_search(char* text, char* pattern, int q)
 
 void rabin_karp_visualization(char* text, char* pattern, int q)
 {
+    if (!text || !pattern)
+    {
+        printf("Error: Text or pattern cannot be NULL.\n");
+        return;
+    }
+
     int m = strlen(pattern);
     int n = strlen(text);
     int i, j;
@@ -75,8 +90,18 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
     int collisions = 0;
     int step = 1;
 
-    if (m == 0 || n == 0 || m > n)
+    if (m == 0 || n == 0)
+    {
+        printf("Error: Text or pattern cannot be empty.\n");
         return;
+    }
+
+    if (m > n)
+    {
+        printf("Error: Pattern length cannot be greater than text length.\n");
+        return;
+    }
+
     for (i = 0; i < m - 1; i++)
         h = (h * d) % q;
     for (i = 0; i < m; i++)

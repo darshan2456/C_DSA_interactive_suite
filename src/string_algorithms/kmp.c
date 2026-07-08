@@ -11,13 +11,25 @@
 void kmp_search(char* text, char* pattern)
 {
     if (!text || !pattern)
+    {
+        printf("Error: Text or pattern cannot be NULL.\n");
         return;
+    }
 
     int n = strlen(text);
     int m = strlen(pattern);
 
-    if (m == 0 || n == 0 || m > n)
+    if (m == 0 || n == 0)
+    {
+        printf("Error: Text or pattern cannot be empty.\n");
         return;
+    }
+
+    if (m > n)
+    {
+        printf("Error: Pattern length cannot be greater than text length.\n");
+        return;
+    }
 
     int* lps = (int*)malloc(m * sizeof(int));
     if (!lps)
@@ -127,6 +139,12 @@ static void compute_lps_array_visual(char* pattern, int m, int* lps)
 
 void kmp_visualization(char* text, char* pattern)
 {
+    if (!text || !pattern)
+    {
+        printf("Error: Text or pattern cannot be NULL.\n");
+        return;
+    }
+
     int n = strlen(text);
     int m = strlen(pattern);
     int found = 0;
@@ -135,7 +153,10 @@ void kmp_visualization(char* text, char* pattern)
     int match_count = 0;
 
     if (m == 0 || n == 0)
+    {
+        printf("Error: Text or pattern cannot be empty.\n");
         return;
+    }
 
     int* lps = (int*)malloc(m * sizeof(int));
     compute_lps_array_visual(pattern, m, lps);
