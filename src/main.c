@@ -1,7 +1,10 @@
 #include <stdio.h>
 
+#include "advanced_graph_algorithms/advanced_graph_algorithms.h"
+#include "advanced_heaps/advanced_heaps.h"
 #include "advanced_sorting_algorithms/advanced_sorting.h"
 #include "backtracking/backtracking.h"
+#include "benchmark/benchmark.h"
 #include "data_structures/array.h"
 #include "data_structures/dcll.h"
 #include "data_structures/dll.h"
@@ -10,6 +13,7 @@
 #include "data_structures/scll.h"
 #include "data_structures/sll.h"
 #include "data_structures/stack.h"
+#include "debugger/step_debugger.h"
 #include "dynamic_programming/dynamic_programming.h"
 #include "error_correction_algorithms/error_correction_algorithms.h"
 #include "expression_evaluation/expression.h"
@@ -22,6 +26,7 @@
 #include "string_algorithms/string_algorithms.h"
 #include "trees/trees.h"
 #include "utils/config.h"
+#include "utils/display_header.h"
 #include "utils/safe_input.h"
 
 #ifndef _WIN32
@@ -58,8 +63,12 @@ void run_legacy_menu()
             "click 13 for string algorithms demo\n"
             "click 14 for process synchronization algorithms demo\n"
             "click 15 for setting animation speed (by default 2s)\n"
+            "click 16 for algorithm benchmarking and profiling demo\n"
+            "click 17 for advanced graph algorithms demo\n"
+            "click 18 for advanced heaps demo\n"
+            "click 19 for debugger demo\n"
             "enter choice : ",
-            1, 15 // limits
+            1, 19 // limits
         );
 
         if (status == -111)
