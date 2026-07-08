@@ -1,9 +1,20 @@
+#include <stdio.h>
+#include <string.h>
+
 #include "advanced_graph_algorithms/advanced_graph_algorithms.h"
 #include "advanced_heaps/advanced_heaps.h"
 #include "advanced_sorting_algorithms/advanced_sorting.h"
 #include "backtracking/backtracking.h"
-#include "benchmark.h"
-#include "data_structures/data_structures.h"
+#include "benchmark/benchmark.h"
+#include "data_structures/array.h"
+#include "data_structures/dcll.h"
+#include "data_structures/dll.h"
+#include "data_structures/priority_queue.h"
+#include "data_structures/queue.h"
+#include "data_structures/scll.h"
+#include "data_structures/sll.h"
+#include "data_structures/stack.h"
+#include "debugger/step_debugger.h"
 #include "dynamic_programming/dynamic_programming.h"
 #include "error_correction_algorithms/error_correction_algorithms.h"
 #include "expression_evaluation/expression.h"
@@ -11,6 +22,7 @@
 #include "hashing/hash.h"
 #include "job_scheduling/job_scheduling.h"
 #include "process_synchronization/process_synchronization.h"
+#include "profiler/memory_tracker.h"
 #include "searching_algorithms/searching_algorithms.h"
 #include "sorting_algorithms_n2/sorting_algorithms_n2.h"
 #include "string_algorithms/string_algorithms.h"
@@ -18,13 +30,10 @@
 #include "utils/config.h"
 #include "utils/display_header.h"
 #include "utils/safe_input.h"
+
 #ifndef _WIN32
-#include "../tui/tui.h"
+#include "tui/tui.h"
 #endif
-#include "memory_tracker.h"
-#include "step_debugger.h"
-#include <stdio.h>
-#include <string.h>
 
 void data_structures_demo(void);
 
