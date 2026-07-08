@@ -25,11 +25,12 @@ void cache_simulator_demo(void)
         }
 
         int algo_choice;
-        int algo_status =
-            safe_input_int(&algo_choice,
-                           "\nSelect Cache Algorithm:\n1. FIFO\n2. LRU\n3. "
-                           "MRU\n4. LFU (with aging)\nEnter choice (1 to 4), or '-1' to exit: ",
-                           1, 4);
+        int algo_status = safe_input_int(&algo_choice,
+                                         "\nSelect Cache Algorithm:\n1. FIFO\n2. LRU\n3. "
+                                         "MRU\n4. LFU (with aging)\n5. OPT (Belady's "
+                                         "Optimal)\n6. Clock (Second Chance)\n7. Enhanced "
+                                         "Clock\nEnter choice (1 to 7), or '-1' to exit: ",
+                                         1, 7);
         if (algo_status == INPUT_EXIT_SIGNAL)
         {
             return;
@@ -50,15 +51,38 @@ void cache_simulator_demo(void)
             return;
         }
 
-        printf("\nSimulating %s Cache Replacement:\n",
-               algo_choice == 1 ? "FIFO"
-                                : (algo_choice == 2 ? "LRU" : (algo_choice == 3 ? "MRU" : "LFU")));
+        // Parse reference string into an array first
+        int ref_arr[256];
+        int ref_len = 0;
+        char ref_str_copy[256];
+        strncpy(ref_str_copy, ref_str, sizeof(ref_str_copy) - 1);
+        ref_str_copy[sizeof(ref_str_copy) - 1] = '\0';
+
+        char* token = strtok(ref_str_copy, ", ");
+        while (token != NULL && ref_len < 256)
+        {
+            ref_arr[ref_len++] = atoi(token);
+            token = strtok(NULL, ", ");
+        }
+
+        printf(
+            "\nSimulating %s Cache Replacement:\n",
+            algo_choice == 1
+                ? "FIFO"
+                : (algo_choice == 2
+                       ? "LRU"
+                       : (algo_choice == 3
+                              ? "MRU"
+                              : (algo_choice == 4
+                                     ? "LFU"
+                                     : (algo_choice == 5
+                                            ? "OPT"
+                                            : (algo_choice == 6 ? "Clock" : "Enhanced Clock"))))));
         printf("------------------------------------\n");
 
-        char* token = strtok(ref_str, ", ");
-        while (token != NULL)
+        for (int i = 0; i < ref_len; i++)
         {
-            int page_id = atoi(token);
+            int page_id = ref_arr[i];
             bool is_hit = false;
             if (algo_choice == 1)
             {
@@ -72,13 +96,24 @@ void cache_simulator_demo(void)
             {
                 is_hit = cache_access_mru(&cache, page_id, false);
             }
-            else
+            else if (algo_choice == 4)
             {
                 is_hit = cache_access_lfu(&cache, page_id, false);
             }
+            else if (algo_choice == 5)
+            {
+                is_hit = cache_access_opt(&cache, page_id, ref_arr, ref_len, i, false);
+            }
+            else if (algo_choice == 6)
+            {
+                is_hit = cache_access_clock(&cache, page_id, false);
+            }
+            else
+            {
+                is_hit = cache_access_enhanced_clock(&cache, page_id, false);
+            }
             printf("Access page %d -> %s | ", page_id, is_hit ? "🟢 HIT " : "🔴 MISS");
             cache_print_status(&cache);
-            token = strtok(NULL, ", ");
         }
 
         printf("------------------------------------\n");
