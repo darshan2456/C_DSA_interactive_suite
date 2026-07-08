@@ -33,12 +33,12 @@ void rabin_karp_search(char* text, char* pattern, int q)
     }
 
     for (i = 0; i < m - 1; i++)
-        h = (h * d) % q;
+        h = (int)(((long long)h * d) % q);
 
     for (i = 0; i < m; i++)
     {
-        p = (d * p + (unsigned char)pattern[i]) % q;
-        t = (d * t + (unsigned char)text[i]) % q;
+        p = (int)(((long long)d * p + (unsigned char)pattern[i]) % q);
+        t = (int)(((long long)d * t + (unsigned char)text[i]) % q);
     }
 
     for (i = 0; i <= n - m; i++)
@@ -63,7 +63,9 @@ void rabin_karp_search(char* text, char* pattern, int q)
 
         if (i < n - m)
         {
-            t = (d * (t - (unsigned char)text[i] * h) + (unsigned char)text[i + m]) % q;
+            t = (int)(((long long)d * (t - (long long)(unsigned char)text[i] * h) +
+                       (unsigned char)text[i + m]) %
+                      q);
             if (t < 0)
                 t = (t + q);
         }
@@ -103,11 +105,11 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
     }
 
     for (i = 0; i < m - 1; i++)
-        h = (h * d) % q;
+        h = (int)(((long long)h * d) % q);
     for (i = 0; i < m; i++)
     {
-        p = (d * p + (unsigned char)pattern[i]) % q;
-        t = (d * t + (unsigned char)text[i]) % q;
+        p = (int)(((long long)d * p + (unsigned char)pattern[i]) % q);
+        t = (int)(((long long)d * t + (unsigned char)text[i]) % q);
     }
 
     dynamic_sleep();
@@ -163,7 +165,9 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         dynamic_sleep();
         if (i < n - m)
         {
-            t = (d * (t - (unsigned char)text[i] * h) + (unsigned char)text[i + m]) % q;
+            t = (int)(((long long)d * (t - (long long)(unsigned char)text[i] * h) +
+                       (unsigned char)text[i + m]) %
+                      q);
             if (t < 0)
                 t = (t + q);
         }
