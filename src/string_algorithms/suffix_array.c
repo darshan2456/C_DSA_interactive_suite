@@ -23,6 +23,10 @@ int cmp(const void* a, const void* b)
 
 int* build_suffix_array(const char* txt, int n)
 {
+    if (txt == NULL || n <= 0)
+    {
+        return NULL;
+    }
     struct Suffix* suffixes = (struct Suffix*)malloc(n * sizeof(struct Suffix));
     if (suffixes == NULL)
     {
@@ -92,7 +96,7 @@ int* build_suffix_array(const char* txt, int n)
 
 int* build_lcp_array(const char* txt, int* suffix_arr, int n)
 {
-    if (suffix_arr == NULL)
+    if (txt == NULL || suffix_arr == NULL || n <= 0)
     {
         return NULL;
     }
@@ -138,6 +142,14 @@ int* build_lcp_array(const char* txt, int* suffix_arr, int n)
 
 void find_longest_repeated_substring(const char* txt, int n, char* output)
 {
+    if (txt == NULL || n <= 0 || output == NULL)
+    {
+        if (output != NULL)
+        {
+            output[0] = '\0';
+        }
+        return;
+    }
     int* sa = build_suffix_array(txt, n);
     if (sa == NULL)
     {

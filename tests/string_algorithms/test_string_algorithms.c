@@ -20,6 +20,9 @@ int _fileno(FILE*);
 void naive_string_matching(char* text, char* pattern);
 void kmp_search(char* text, char* pattern);
 void rabin_karp_search(char* text, char* pattern, int q);
+void find_longest_repeated_substring(const char* txt, int n, char* output);
+int* build_suffix_array(const char* txt, int n);
+int* build_lcp_array(const char* txt, int* suffix_arr, int n);
 
 /* Run a matcher with stdout redirected to a temp file, then return how many
    "found at index" lines it printed. */
@@ -118,10 +121,35 @@ void test_non_ascii_bytes()
     printf("String matching non-ASCII tests passed\n");
 }
 
+void test_suffix_array()
+{
+    char txt[] = "banana";
+    int n = strlen(txt);
+    char lrs[50];
+    find_longest_repeated_substring(txt, n, lrs);
+    assert(strcmp(lrs, "an") == 0 || strcmp(lrs, "ana") == 0);
+
+    assert(build_suffix_array(NULL, 5) == NULL);
+    assert(build_suffix_array("abc", 0) == NULL);
+    assert(build_suffix_array("abc", -1) == NULL);
+
+    int sa[] = {0, 1, 2};
+    assert(build_lcp_array(NULL, sa, 3) == NULL);
+    assert(build_lcp_array("abc", NULL, 3) == NULL);
+    assert(build_lcp_array("abc", sa, 0) == NULL);
+
+    find_longest_repeated_substring(NULL, 5, lrs);
+    find_longest_repeated_substring("abc", 3, NULL);
+    find_longest_repeated_substring("abc", 0, lrs);
+
+    printf("Suffix Array validation tests passed\n");
+}
+
 int main()
 {
     test_basic_matches();
     test_non_ascii_bytes();
+    test_suffix_array();
     printf("All string algorithms tests passed\n");
     return 0;
 }
