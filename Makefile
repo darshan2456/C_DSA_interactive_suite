@@ -214,28 +214,28 @@ test: $(TEST_BINS)
 test_mcm: $(TEST_DIR)/test_mcm$(EXE)
 	$(TEST_DIR)/test_mcm$(EXE)
 
-$(TEST_DIR)/test_mcm$(EXE): $(OBJ_DIR)/src/dynamic_programming/mcm.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/dynamic_programming/test_mcm.c
+$(TEST_DIR)/test_mcm$(EXE): $(OBJ_DIR)/src/dynamic_programming/mcm.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/dynamic_programming/test_mcm.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_fibonacci: $(TEST_DIR)/test_fibonacci$(EXE)
 	$(TEST_DIR)/test_fibonacci$(EXE)
 
-$(TEST_DIR)/test_fibonacci$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o tests/dynamic_programming/test_fibonacci.c
+$(TEST_DIR)/test_fibonacci$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/utils/safe_input_string.o tests/dynamic_programming/test_fibonacci.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_knapsack: $(TEST_DIR)/test_knapsack$(EXE)
 	$(TEST_DIR)/test_knapsack$(EXE)
 
-$(TEST_DIR)/test_knapsack$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o tests/dynamic_programming/test_knapsack.c
+$(TEST_DIR)/test_knapsack$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/utils/safe_input_string.o tests/dynamic_programming/test_knapsack.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_lcs: $(TEST_DIR)/test_lcs$(EXE)
 	$(TEST_DIR)/test_lcs$(EXE)
 
-$(TEST_DIR)/test_lcs$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o tests/dynamic_programming/test_lcs.c
+$(TEST_DIR)/test_lcs$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/utils/safe_input_string.o tests/dynamic_programming/test_lcs.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -250,7 +250,7 @@ $(TEST_DIR)/test_kruskal$(EXE): $(OBJS) tests/graph_traversals/test_kruskal.c
 test_floyd_warshall: $(TEST_DIR)/test_floyd_warshall$(EXE)
 	$(TEST_DIR)/test_floyd_warshall$(EXE)
 
-$(TEST_DIR)/test_floyd_warshall$(EXE): $(OBJ_DIR)/src/graph_traversals/floyd_warshall.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/graph_traversals/test_floyd_warshall.c
+$(TEST_DIR)/test_floyd_warshall$(EXE): $(OBJ_DIR)/src/graph_traversals/floyd_warshall.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/graph_traversals/test_floyd_warshall.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -265,63 +265,63 @@ $(TEST_DIR)/test_prim$(EXE): $(OBJS) tests/graph_traversals/test_prim.c
 test_tbt: $(TEST_DIR)/test_tbt$(EXE)
 	$(TEST_DIR)/test_tbt$(EXE)
 
-$(TEST_DIR)/test_tbt$(EXE): $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/trees/tbt.o tests/trees/test_tbt.c
+$(TEST_DIR)/test_tbt$(EXE): $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/trees/tbt.o tests/trees/test_tbt.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_circ_queue: $(TEST_DIR)/test_circ_queue$(EXE)
 	$(TEST_DIR)/test_circ_queue$(EXE)
 
-$(TEST_DIR)/test_circ_queue$(EXE): $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/returnMallocVal.o tests/data_structures/test_circ_queue.c
+$(TEST_DIR)/test_circ_queue$(EXE): $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/utils/returnMallocVal.o tests/data_structures/test_circ_queue.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_bst: $(TEST_DIR)/test_bst$(EXE)
 	$(TEST_DIR)/test_bst$(EXE)
 
-$(TEST_DIR)/test_bst$(EXE): $(OBJ_DIR)/src/trees/bst.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/trees/test_bst.c
+$(TEST_DIR)/test_bst$(EXE): $(OBJ_DIR)/src/trees/bst.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/trees/test_bst.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_search: $(TEST_DIR)/test_search$(EXE)
 	$(TEST_DIR)/test_search$(EXE)
 
-$(TEST_DIR)/test_search$(EXE): $(OBJ_DIR)/src/searching_algorithms/linear_search.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/searching_algorithms/binary_search.o $(OBJ_DIR)/src/searching_algorithms/interpolation_search.o $(OBJ_DIR)/src/searching_algorithms/jump_search.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/searching_algorithms/test_search.c
+$(TEST_DIR)/test_search$(EXE): $(OBJ_DIR)/src/searching_algorithms/linear_search.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/searching_algorithms/binary_search.o $(OBJ_DIR)/src/searching_algorithms/interpolation_search.o $(OBJ_DIR)/src/searching_algorithms/jump_search.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/searching_algorithms/test_search.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_hash_func: $(TEST_DIR)/test_hash_func$(EXE)
 	$(TEST_DIR)/test_hash_func$(EXE)
 
-$(TEST_DIR)/test_hash_func$(EXE): $(OBJ_DIR)/src/hashing/linear_probing.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/searching_algorithms/linear_search.o tests/hashing/test_hash_function.c
+$(TEST_DIR)/test_hash_func$(EXE): $(OBJ_DIR)/src/hashing/linear_probing.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/searching_algorithms/linear_search.o tests/hashing/test_hash_function.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_sll: $(TEST_DIR)/test_sll$(EXE)
 	$(TEST_DIR)/test_sll$(EXE)
 
-$(TEST_DIR)/test_sll$(EXE): $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/data_structures/test_sll.c
+$(TEST_DIR)/test_sll$(EXE): $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/data_structures/test_sll.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_dll: $(TEST_DIR)/test_dll$(EXE)
 	$(TEST_DIR)/test_dll$(EXE)
 
-$(TEST_DIR)/test_dll$(EXE): $(OBJ_DIR)/src/data_structures/dll.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/data_structures/test_dll.c
+$(TEST_DIR)/test_dll$(EXE): $(OBJ_DIR)/src/data_structures/dll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/data_structures/test_dll.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_array: $(TEST_DIR)/test_array$(EXE)
 	$(TEST_DIR)/test_array$(EXE)
 
-$(TEST_DIR)/test_array$(EXE): $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/data_structures/test_array.c
+$(TEST_DIR)/test_array$(EXE): $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/data_structures/test_array.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_stack: $(TEST_DIR)/test_stack$(EXE)
 	$(TEST_DIR)/test_stack$(EXE)
 
-$(TEST_DIR)/test_stack$(EXE): $(OBJ_DIR)/src/data_structures/stack.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/data_structures/test_stack.c
+$(TEST_DIR)/test_stack$(EXE): $(OBJ_DIR)/src/data_structures/stack.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/data_structures/test_stack.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -329,46 +329,46 @@ $(TEST_DIR)/test_stack$(EXE): $(OBJ_DIR)/src/data_structures/stack.o $(OBJ_DIR)/
 test_priority_queue: $(TEST_DIR)/test_priority_queue$(EXE)
 	$(TEST_DIR)/test_priority_queue$(EXE)
 
-$(TEST_DIR)/test_priority_queue$(EXE): $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/data_structures/priority_queue.o tests/data_structures/test_priority_queue.c
+$(TEST_DIR)/test_priority_queue$(EXE): $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/data_structures/priority_queue.o tests/data_structures/test_priority_queue.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_scll: $(TEST_DIR)/test_scll$(EXE)
 	$(TEST_DIR)/test_scll$(EXE)
 
-$(TEST_DIR)/test_scll$(EXE): $(OBJ_DIR)/src/data_structures/scll.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/data_structures/test_scll.c
+$(TEST_DIR)/test_scll$(EXE): $(OBJ_DIR)/src/data_structures/scll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/data_structures/test_scll.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_dcll: $(TEST_DIR)/test_dcll$(EXE)
 	$(TEST_DIR)/test_dcll$(EXE)
 
-$(TEST_DIR)/test_dcll$(EXE): $(OBJ_DIR)/src/data_structures/dcll.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/data_structures/test_dcll.c
+$(TEST_DIR)/test_dcll$(EXE): $(OBJ_DIR)/src/data_structures/dcll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/data_structures/test_dcll.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_simple_queue: $(TEST_DIR)/test_simple_queue$(EXE)
 	$(TEST_DIR)/test_simple_queue$(EXE)
 
-$(TEST_DIR)/test_simple_queue$(EXE): $(OBJ_DIR)/src/data_structures/simple_queue.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/returnMallocVal.o tests/data_structures/test_simple_queue.c
+$(TEST_DIR)/test_simple_queue$(EXE): $(OBJ_DIR)/src/data_structures/simple_queue.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/utils/returnMallocVal.o tests/data_structures/test_simple_queue.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_deque: $(TEST_DIR)/test_deque$(EXE)
 	$(TEST_DIR)/test_deque$(EXE)
 
-$(TEST_DIR)/test_deque$(EXE): $(OBJ_DIR)/src/data_structures/deque.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/returnMallocVal.o tests/data_structures/test_deque.c
+$(TEST_DIR)/test_deque$(EXE): $(OBJ_DIR)/src/data_structures/deque.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/utils/returnMallocVal.o tests/data_structures/test_deque.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_segment_tree: $(TEST_DIR)/test_segment_tree$(EXE)
 	$(TEST_DIR)/test_segment_tree$(EXE)
 
-$(TEST_DIR)/test_segment_tree$(EXE): $(OBJ_DIR)/src/trees/segment_tree.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/trees/test_segment_tree.c
+$(TEST_DIR)/test_segment_tree$(EXE): $(OBJ_DIR)/src/trees/segment_tree.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/trees/test_segment_tree.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-ASTAR_DEPS = $(OBJ_DIR)/src/graph_traversals/astar.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/graph_traversals/graph_io.o $(OBJ_DIR)/src/utils/config.o
+ASTAR_DEPS = $(OBJ_DIR)/src/graph_traversals/astar.o $(OBJ_DIR)/src/graph_traversals/dijkstra.o $(OBJ_DIR)/src/graph_traversals/bfs.o $(OBJ_DIR)/src/utils/returnMallocVal.o $(OBJ_DIR)/src/data_structures/circular_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/graph_traversals/graph_io.o $(OBJ_DIR)/src/utils/config.o
 
 ifneq ($(wildcard src/advanced_heaps/dary_heap.c),)
 ASTAR_DEPS += $(OBJ_DIR)/src/advanced_heaps/dary_heap.o $(OBJ_DIR)/src/utils/display_header.o $(OBJ_DIR)/src/utils/clear_screen.o $(OBJ_DIR)/src/utils/cross_platform_timer.o
@@ -388,21 +388,21 @@ $(TEST_DIR)/test_astar$(EXE): $(ASTAR_DEPS) tests/graph_traversals/test_astar.c
 test_avl: $(TEST_DIR)/test_avl$(EXE)
 	$(TEST_DIR)/test_avl$(EXE)
 
-$(TEST_DIR)/test_avl$(EXE): $(OBJ_DIR)/src/trees/avl.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/trees/test_avl.c
+$(TEST_DIR)/test_avl$(EXE): $(OBJ_DIR)/src/trees/avl.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/trees/test_avl.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_trie: $(TEST_DIR)/test_trie$(EXE)
 	$(TEST_DIR)/test_trie$(EXE)
 
-$(TEST_DIR)/test_trie$(EXE): $(OBJ_DIR)/src/trees/trie.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/trees/test_trie.c
+$(TEST_DIR)/test_trie$(EXE): $(OBJ_DIR)/src/trees/trie.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/trees/test_trie.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_btree: $(TEST_DIR)/test_btree$(EXE)
 	$(TEST_DIR)/test_btree$(EXE)
 
-$(TEST_DIR)/test_btree$(EXE): $(OBJ_DIR)/src/trees/btree.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/trees/test_btree.c
+$(TEST_DIR)/test_btree$(EXE): $(OBJ_DIR)/src/trees/btree.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/trees/test_btree.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -508,21 +508,21 @@ $(TEST_DIR)/test_benchmark_heaps$(EXE): $(OBJS) tests/benchmark/test_benchmark_h
 test_shell_sort: $(TEST_DIR)/test_shell_sort$(EXE)
 	$(TEST_DIR)/test_shell_sort$(EXE)
 
-$(TEST_DIR)/test_shell_sort$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/shell_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/sorting_algorithms_n2/test_shell_sort.c
+$(TEST_DIR)/test_shell_sort$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/shell_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/sorting_algorithms_n2/test_shell_sort.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_sorting_n2: $(TEST_DIR)/test_sorting_n2$(EXE)
 	$(TEST_DIR)/test_sorting_n2$(EXE)
 
-$(TEST_DIR)/test_sorting_n2$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/bubble_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/insertion_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/sorting_algorithms_n2/test_sorting_n2.c
+$(TEST_DIR)/test_sorting_n2$(EXE): $(OBJ_DIR)/src/sorting_algorithms_n2/bubble_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/insertion_sort.o $(OBJ_DIR)/src/sorting_algorithms_n2/selection_sort.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/sorting_algorithms_n2/test_sorting_n2.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_advanced_sorting: $(TEST_DIR)/test_advanced_sorting$(EXE)
 	$(TEST_DIR)/test_advanced_sorting$(EXE)
 
-$(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/advanced_sorting_algorithms/quick_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/merge_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/heap_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/radix_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/bucket_sort.o $(OBJ_DIR)/src/data_structures/priority_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/advanced_sorting_algorithms/test_advanced_sorting.c
+$(TEST_DIR)/test_advanced_sorting$(EXE): $(OBJ_DIR)/src/advanced_sorting_algorithms/quick_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/merge_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/heap_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/radix_sort.o $(OBJ_DIR)/src/advanced_sorting_algorithms/bucket_sort.o $(OBJ_DIR)/src/data_structures/priority_queue.o $(OBJ_DIR)/src/data_structures/sll.o $(OBJ_DIR)/src/data_structures/array.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o $(OBJ_DIR)/src/utils/sorting_visualizer.o $(OBJ_DIR)/src/utils/cross_platform_timer.o $(OBJ_DIR)/src/utils/config.o tests/advanced_sorting_algorithms/test_advanced_sorting.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -536,7 +536,7 @@ $(TEST_DIR)/test_backtracking$(EXE): \
 	$(OBJ_DIR)/src/backtracking/rat_in_maze.o \
 	$(OBJ_DIR)/src/backtracking/knights_tour.o \
 	$(OBJ_DIR)/src/utils/config.o \
-	$(OBJ_DIR)/src/utils/safe_input_int.o\
+	$(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o\
 	$(OBJ_DIR)/src/utils/clear_screen.o \
 	$(OBJ_DIR)/src/utils/cross_platform_timer.o \
 	tests/backtracking/test_backtracking.c
@@ -553,8 +553,7 @@ $(TEST_DIR)/test_string_algorithms$(EXE): \
     $(OBJ_DIR)/src/string_algorithms/suffix_array.o \
     $(OBJ_DIR)/src/utils/safe_input_string.o \
     $(OBJ_DIR)/src/utils/clear_screen.o \
-	$(OBJ_DIR)/src/utils/safe_input_int.o \
-	$(OBJ_DIR)/src/help/help.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o \
     $(OBJ_DIR)/src/utils/cross_platform_timer.o \
 	$(OBJ_DIR)/src/utils/config.o \
     tests/string_algorithms/test_string_algorithms.c
@@ -564,14 +563,14 @@ $(TEST_DIR)/test_string_algorithms$(EXE): \
 test_bplus_tree: $(TEST_DIR)/test_bplus_tree$(EXE)
 	$(TEST_DIR)/test_bplus_tree$(EXE)
 
-$(TEST_DIR)/test_bplus_tree$(EXE): $(OBJ_DIR)/src/trees/bplus_tree.o $(OBJ_DIR)/src/trees/mwst_utils.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/trees/test_bplus_tree.c
+$(TEST_DIR)/test_bplus_tree$(EXE): $(OBJ_DIR)/src/trees/bplus_tree.o $(OBJ_DIR)/src/trees/mwst_utils.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/trees/test_bplus_tree.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_parity_bit: $(TEST_DIR)/test_parity_bit$(EXE)
 	$(TEST_DIR)/test_parity_bit$(EXE)
 
-$(TEST_DIR)/test_parity_bit$(EXE): $(OBJ_DIR)/src/error_correction_algorithms/parity_bit.o $(OBJ_DIR)/src/error_correction_algorithms/checksum.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/error_correction_algorithms/test_parity_bit.c
+$(TEST_DIR)/test_parity_bit$(EXE): $(OBJ_DIR)/src/error_correction_algorithms/parity_bit.o $(OBJ_DIR)/src/error_correction_algorithms/checksum.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o tests/error_correction_algorithms/test_parity_bit.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
@@ -581,7 +580,7 @@ test_checksum: $(TEST_DIR)/test_checksum$(EXE)
 $(TEST_DIR)/test_checksum$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/checksum.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/checksum_receiver.o \
-	$(OBJ_DIR)/src/utils/safe_input_int.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o \
 	tests/error_correction_algorithms/test_checksum.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -593,7 +592,7 @@ $(TEST_DIR)/test_vrc$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/checksum.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/vrc.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/vrc_receiver.o \
-	$(OBJ_DIR)/src/utils/safe_input_int.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o \
 	tests/error_correction_algorithms/test_vrc.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -605,7 +604,7 @@ $(TEST_DIR)/test_crc$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/checksum.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/crc.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/crc_receiver.o \
-	$(OBJ_DIR)/src/utils/safe_input_int.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o \
 	tests/error_correction_algorithms/test_crc.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -617,7 +616,7 @@ $(TEST_DIR)/test_lrc$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/checksum.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/lrc.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/lrc_receiver.o \
-	$(OBJ_DIR)/src/utils/safe_input_int.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o \
 	tests/error_correction_algorithms/test_lrc.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -629,7 +628,7 @@ $(TEST_DIR)/test_hamming$(EXE): \
 	$(OBJ_DIR)/src/error_correction_algorithms/checksum.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/hamming.o \
 	$(OBJ_DIR)/src/error_correction_algorithms/hamming_receiver.o \
-	$(OBJ_DIR)/src/utils/safe_input_int.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o \
 	tests/error_correction_algorithms/test_hamming.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
@@ -643,7 +642,7 @@ $(TEST_DIR)/test_expression_evaluation$(EXE): \
 	$(OBJ_DIR)/src/expression_evaluation/infix_to_postfix.o \
 	$(OBJ_DIR)/src/expression_evaluation/safe_input_infix.o \
 	$(OBJ_DIR)/src/data_structures/sll.o \
-	$(OBJ_DIR)/src/utils/safe_input_int.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/help/help.o \
 	$(OBJ_DIR)/src/utils/clear_screen.o \
 	$(OBJ_DIR)/src/utils/cross_platform_timer.o \
 	$(OBJ_DIR)/src/utils/config.o \
