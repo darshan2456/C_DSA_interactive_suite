@@ -3,7 +3,6 @@
 #include "advanced_sorting_algorithms/advanced_sorting.h"
 #include "backtracking/backtracking.h"
 #include "benchmark.h"
-#include "data_structures/data_structures.h"
 #include "dynamic_programming/dynamic_programming.h"
 #include "error_correction_algorithms/error_correction_algorithms.h"
 #include "expression_evaluation/expression.h"
