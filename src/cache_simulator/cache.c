@@ -16,6 +16,7 @@ void cache_init(Cache* cache, int capacity)
     cache->size = 0;
     cache->fifo_index = 0;
     cache->access_counter = 0;
+    cache->last_accessed_slot = -1;
     cache->hits = 0;
     cache->misses = 0;
     for (int i = 0; i < CACHE_MAX_CAPACITY; i++)
@@ -37,6 +38,7 @@ bool cache_access_fifo(Cache* cache, int page_id, bool is_write)
         if (cache->blocks[i].is_valid && cache->blocks[i].page_id == page_id)
         {
             cache->hits++;
+            cache->last_accessed_slot = i;
             if (is_write)
             {
                 cache->blocks[i].is_dirty = true;
@@ -58,6 +60,7 @@ bool cache_access_fifo(Cache* cache, int page_id, bool is_write)
                 cache->blocks[i].page_id = page_id;
                 cache->blocks[i].is_valid = true;
                 cache->blocks[i].is_dirty = is_write;
+                cache->last_accessed_slot = i;
                 cache->size++;
                 return false; // Miss (inserted without eviction)
             }
@@ -71,6 +74,7 @@ bool cache_access_fifo(Cache* cache, int page_id, bool is_write)
     cache->blocks[evict_idx].page_id = page_id;
     cache->blocks[evict_idx].is_valid = true;
     cache->blocks[evict_idx].is_dirty = is_write;
+    cache->last_accessed_slot = evict_idx;
 
     // Update FIFO pointer (circular queue)
     cache->fifo_index = (cache->fifo_index + 1) % cache->capacity;
@@ -89,6 +93,7 @@ bool cache_access_lru(Cache* cache, int page_id, bool is_write)
         {
             cache->hits++;
             cache->blocks[i].last_access_time = cache->access_counter;
+            cache->last_accessed_slot = i;
             if (is_write)
             {
                 cache->blocks[i].is_dirty = true;
@@ -111,6 +116,7 @@ bool cache_access_lru(Cache* cache, int page_id, bool is_write)
                 cache->blocks[i].is_valid = true;
                 cache->blocks[i].is_dirty = is_write;
                 cache->blocks[i].last_access_time = cache->access_counter;
+                cache->last_accessed_slot = i;
                 cache->size++;
                 return false; // Miss (inserted without eviction)
             }
@@ -134,6 +140,7 @@ bool cache_access_lru(Cache* cache, int page_id, bool is_write)
     cache->blocks[evict_idx].is_valid = true;
     cache->blocks[evict_idx].is_dirty = is_write;
     cache->blocks[evict_idx].last_access_time = cache->access_counter;
+    cache->last_accessed_slot = evict_idx;
 
     return false; // Miss (with eviction)
 }
@@ -149,6 +156,7 @@ bool cache_access_mru(Cache* cache, int page_id, bool is_write)
         {
             cache->hits++;
             cache->blocks[i].last_access_time = cache->access_counter;
+            cache->last_accessed_slot = i;
             if (is_write)
             {
                 cache->blocks[i].is_dirty = true;
@@ -171,6 +179,7 @@ bool cache_access_mru(Cache* cache, int page_id, bool is_write)
                 cache->blocks[i].is_valid = true;
                 cache->blocks[i].is_dirty = is_write;
                 cache->blocks[i].last_access_time = cache->access_counter;
+                cache->last_accessed_slot = i;
                 cache->size++;
                 return false; // Miss (inserted without eviction)
             }
@@ -194,6 +203,7 @@ bool cache_access_mru(Cache* cache, int page_id, bool is_write)
     cache->blocks[evict_idx].is_valid = true;
     cache->blocks[evict_idx].is_dirty = is_write;
     cache->blocks[evict_idx].last_access_time = cache->access_counter;
+    cache->last_accessed_slot = evict_idx;
 
     return false; // Miss (with eviction)
 }
@@ -222,6 +232,7 @@ bool cache_access_lfu(Cache* cache, int page_id, bool is_write)
             cache->hits++;
             cache->blocks[i].frequency++;
             cache->blocks[i].last_access_time = cache->access_counter;
+            cache->last_accessed_slot = i;
             if (is_write)
             {
                 cache->blocks[i].is_dirty = true;
@@ -245,6 +256,7 @@ bool cache_access_lfu(Cache* cache, int page_id, bool is_write)
                 cache->blocks[i].is_dirty = is_write;
                 cache->blocks[i].frequency = 1;
                 cache->blocks[i].last_access_time = cache->access_counter;
+                cache->last_accessed_slot = i;
                 cache->size++;
                 return false; // Miss (inserted without eviction)
             }
@@ -282,6 +294,7 @@ bool cache_access_lfu(Cache* cache, int page_id, bool is_write)
     cache->blocks[evict_idx].is_dirty = is_write;
     cache->blocks[evict_idx].frequency = 1;
     cache->blocks[evict_idx].last_access_time = cache->access_counter;
+    cache->last_accessed_slot = evict_idx;
 
     return false; // Miss (with eviction)
 }
@@ -298,6 +311,7 @@ bool cache_access_opt(Cache* cache, int page_id, const int* ref_str, int ref_len
         {
             cache->hits++;
             cache->blocks[i].last_access_time = cache->access_counter;
+            cache->last_accessed_slot = i;
             if (is_write)
             {
                 cache->blocks[i].is_dirty = true;
@@ -320,6 +334,7 @@ bool cache_access_opt(Cache* cache, int page_id, const int* ref_str, int ref_len
                 cache->blocks[i].is_valid = true;
                 cache->blocks[i].is_dirty = is_write;
                 cache->blocks[i].last_access_time = cache->access_counter;
+                cache->last_accessed_slot = i;
                 cache->size++;
                 return false; // Miss (without eviction)
             }
@@ -364,6 +379,7 @@ bool cache_access_opt(Cache* cache, int page_id, const int* ref_str, int ref_len
     cache->blocks[evict_idx].is_valid = true;
     cache->blocks[evict_idx].is_dirty = is_write;
     cache->blocks[evict_idx].last_access_time = cache->access_counter;
+    cache->last_accessed_slot = evict_idx;
 
     return false; // Miss (with eviction)
 }
@@ -379,6 +395,7 @@ bool cache_access_clock(Cache* cache, int page_id, bool is_write)
         {
             cache->hits++;
             cache->blocks[i].reference_bit = 1;
+            cache->last_accessed_slot = i;
             if (is_write)
             {
                 cache->blocks[i].is_dirty = true;
@@ -401,6 +418,7 @@ bool cache_access_clock(Cache* cache, int page_id, bool is_write)
                 cache->blocks[i].is_valid = true;
                 cache->blocks[i].is_dirty = is_write;
                 cache->blocks[i].reference_bit = 1;
+                cache->last_accessed_slot = i;
                 cache->size++;
                 return false; // Miss (without eviction)
             }
@@ -423,6 +441,7 @@ bool cache_access_clock(Cache* cache, int page_id, bool is_write)
             cache->blocks[hand].is_valid = true;
             cache->blocks[hand].is_dirty = is_write;
             cache->blocks[hand].reference_bit = 1;
+            cache->last_accessed_slot = hand;
             cache->fifo_index = (cache->fifo_index + 1) % cache->capacity;
             break;
         }
@@ -442,6 +461,7 @@ bool cache_access_enhanced_clock(Cache* cache, int page_id, bool is_write)
         {
             cache->hits++;
             cache->blocks[i].reference_bit = 1;
+            cache->last_accessed_slot = i;
             if (is_write)
             {
                 cache->blocks[i].is_dirty = true;
@@ -464,6 +484,7 @@ bool cache_access_enhanced_clock(Cache* cache, int page_id, bool is_write)
                 cache->blocks[i].is_valid = true;
                 cache->blocks[i].is_dirty = is_write;
                 cache->blocks[i].reference_bit = 1;
+                cache->last_accessed_slot = i;
                 cache->size++;
                 return false; // Miss (without eviction)
             }
@@ -483,6 +504,7 @@ bool cache_access_enhanced_clock(Cache* cache, int page_id, bool is_write)
             cache->blocks[idx].is_valid = true;
             cache->blocks[idx].is_dirty = is_write;
             cache->blocks[idx].reference_bit = 1;
+            cache->last_accessed_slot = idx;
             cache->fifo_index = (idx + 1) % cache->capacity;
             return false; // Miss (with eviction)
         }
@@ -498,6 +520,7 @@ bool cache_access_enhanced_clock(Cache* cache, int page_id, bool is_write)
             cache->blocks[idx].is_valid = true;
             cache->blocks[idx].is_dirty = is_write;
             cache->blocks[idx].reference_bit = 1;
+            cache->last_accessed_slot = idx;
             cache->fifo_index = (idx + 1) % cache->capacity;
             return false; // Miss (with eviction)
         }
@@ -517,6 +540,7 @@ bool cache_access_enhanced_clock(Cache* cache, int page_id, bool is_write)
             cache->blocks[idx].is_valid = true;
             cache->blocks[idx].is_dirty = is_write;
             cache->blocks[idx].reference_bit = 1;
+            cache->last_accessed_slot = idx;
             cache->fifo_index = (idx + 1) % cache->capacity;
             return false; // Miss (with eviction)
         }
@@ -532,6 +556,7 @@ bool cache_access_enhanced_clock(Cache* cache, int page_id, bool is_write)
             cache->blocks[idx].is_valid = true;
             cache->blocks[idx].is_dirty = is_write;
             cache->blocks[idx].reference_bit = 1;
+            cache->last_accessed_slot = idx;
             cache->fifo_index = (idx + 1) % cache->capacity;
             return false; // Miss (with eviction)
         }
@@ -555,4 +580,144 @@ void cache_print_status(const Cache* cache)
         }
     }
     printf("] (Hits: %d, Misses: %d)\n", cache->hits, cache->misses);
+}
+
+void cache_visualize(const Cache* cache, int highlighted_slot, bool is_hit)
+{
+    // Draw top border labels
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        printf("   [Frame %d]  ", i);
+    }
+    printf("\n");
+
+    // Line 1: Top border of boxes
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        if (i == highlighted_slot)
+        {
+            printf(is_hit ? "\033[1;32m ┌─────────┐ \033[0m" : "\033[1;31m ┌─────────┐ \033[0m");
+        }
+        else
+        {
+            printf(" ┌─────────┐ ");
+        }
+    }
+    printf("\n");
+
+    // Line 2: Page ID
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        char page_str[16];
+        if (cache->blocks[i].is_valid)
+        {
+            sprintf(page_str, "Page: %-3d", cache->blocks[i].page_id);
+        }
+        else
+        {
+            sprintf(page_str, "Page: -  ");
+        }
+
+        if (i == highlighted_slot)
+        {
+            printf(is_hit ? "\033[1;32m │ %s │ \033[0m" : "\033[1;31m │ %s │ \033[0m", page_str);
+        }
+        else
+        {
+            printf(" │ %s │ ", page_str);
+        }
+    }
+    printf("\n");
+
+    // Line 3: Reference bit
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        char ref_str[16];
+        sprintf(ref_str, "Ref:  %-3d", cache->blocks[i].reference_bit);
+
+        if (i == highlighted_slot)
+        {
+            printf(is_hit ? "\033[1;32m │ %s │ \033[0m" : "\033[1;31m │ %s │ \033[0m", ref_str);
+        }
+        else
+        {
+            printf(" │ %s │ ", ref_str);
+        }
+    }
+    printf("\n");
+
+    // Line 4: Frequency
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        char freq_str[16];
+        sprintf(freq_str, "Freq: %-3d", cache->blocks[i].frequency);
+
+        if (i == highlighted_slot)
+        {
+            printf(is_hit ? "\033[1;32m │ %s │ \033[0m" : "\033[1;31m │ %s │ \033[0m", freq_str);
+        }
+        else
+        {
+            printf(" │ %s │ ", freq_str);
+        }
+    }
+    printf("\n");
+
+    // Line 5: Dirty bit
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        char dirty_str[16];
+        sprintf(dirty_str, "Dirty:%-3s", cache->blocks[i].is_dirty ? "Yes" : "No ");
+
+        if (i == highlighted_slot)
+        {
+            printf(is_hit ? "\033[1;32m │ %s │ \033[0m" : "\033[1;31m │ %s │ \033[0m", dirty_str);
+        }
+        else
+        {
+            printf(" │ %s │ ", dirty_str);
+        }
+    }
+    printf("\n");
+
+    // Line 6: Bottom border of boxes
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        if (i == highlighted_slot)
+        {
+            printf(is_hit ? "\033[1;32m └─────────┘ \033[0m" : "\033[1;31m └─────────┘ \033[0m");
+        }
+        else
+        {
+            printf(" └─────────┘ ");
+        }
+    }
+    printf("\n");
+
+    // Line 7: Clock Hand / Pointer
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        if (i == cache->fifo_index)
+        {
+            printf("      ▲      ");
+        }
+        else
+        {
+            printf("             ");
+        }
+    }
+    printf("\n");
+
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        if (i == cache->fifo_index)
+        {
+            printf("  (Clock Hand) ");
+        }
+        else
+        {
+            printf("             ");
+        }
+    }
+    printf("\n\n");
 }

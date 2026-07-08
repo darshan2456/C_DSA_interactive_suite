@@ -112,8 +112,8 @@ void cache_simulator_demo(void)
             {
                 is_hit = cache_access_enhanced_clock(&cache, page_id, false);
             }
-            printf("Access page %d -> %s | ", page_id, is_hit ? "🟢 HIT " : "🔴 MISS");
-            cache_print_status(&cache);
+            printf("Access page %d -> %s\n", page_id, is_hit ? "🟢 HIT " : "🔴 MISS");
+            cache_visualize(&cache, cache.last_accessed_slot, is_hit);
         }
 
         printf("------------------------------------\n");

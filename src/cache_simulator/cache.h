@@ -22,6 +22,7 @@ typedef struct
     int size;
     int fifo_index;
     int access_counter;
+    int last_accessed_slot;
 
     // Statistics
     int hits;
@@ -38,6 +39,7 @@ bool cache_access_opt(Cache* cache, int page_id, const int* ref_str, int ref_len
 bool cache_access_clock(Cache* cache, int page_id, bool is_write);
 bool cache_access_enhanced_clock(Cache* cache, int page_id, bool is_write);
 void cache_print_status(const Cache* cache);
+void cache_visualize(const Cache* cache, int highlighted_slot, bool is_hit);
 void cache_simulator_demo(void);
 
 #endif // CACHE_H
