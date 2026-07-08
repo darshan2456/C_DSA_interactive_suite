@@ -9,6 +9,10 @@
 // modules
 static int next_prime(int n)
 {
+    if (n <= 1)
+    {
+        return 2;
+    }
     int size = sizeof(PRIMES) / sizeof(PRIMES[0]);
     for (int i = n + 1; i < size; i++)
     {
@@ -32,6 +36,10 @@ static int next_prime(int n)
 
 int hash_function(int value, int length_of_array)
 {
+    if (length_of_array <= 0)
+    {
+        return -1; 
+    }
     int next_prime_no = next_prime(length_of_array);
     return ((value + 1) * next_prime_no) % length_of_array;
 }
