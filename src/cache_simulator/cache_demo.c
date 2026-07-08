@@ -25,10 +25,11 @@ void cache_simulator_demo(void)
         }
 
         int algo_choice;
-        int algo_status = safe_input_int(&algo_choice,
-                                         "\nSelect Cache Algorithm:\n1. FIFO\n2. LRU\n3. "
-                                         "MRU\nEnter choice (1 to 3), or '-1' to exit: ",
-                                         1, 3);
+        int algo_status =
+            safe_input_int(&algo_choice,
+                           "\nSelect Cache Algorithm:\n1. FIFO\n2. LRU\n3. "
+                           "MRU\n4. LFU (with aging)\nEnter choice (1 to 4), or '-1' to exit: ",
+                           1, 4);
         if (algo_status == INPUT_EXIT_SIGNAL)
         {
             return;
@@ -50,7 +51,8 @@ void cache_simulator_demo(void)
         }
 
         printf("\nSimulating %s Cache Replacement:\n",
-               algo_choice == 1 ? "FIFO" : (algo_choice == 2 ? "LRU" : "MRU"));
+               algo_choice == 1 ? "FIFO"
+                                : (algo_choice == 2 ? "LRU" : (algo_choice == 3 ? "MRU" : "LFU")));
         printf("------------------------------------\n");
 
         char* token = strtok(ref_str, ", ");
@@ -66,9 +68,13 @@ void cache_simulator_demo(void)
             {
                 is_hit = cache_access_lru(&cache, page_id, false);
             }
-            else
+            else if (algo_choice == 3)
             {
                 is_hit = cache_access_mru(&cache, page_id, false);
+            }
+            else
+            {
+                is_hit = cache_access_lfu(&cache, page_id, false);
             }
             printf("Access page %d -> %s | ", page_id, is_hit ? "🟢 HIT " : "🔴 MISS");
             cache_print_status(&cache);

@@ -121,11 +121,62 @@ void test_mru_basic()
     printf("MRU basic cache tests passed\n");
 }
 
+void test_lfu_basic()
+{
+    Cache cache;
+    cache_init(&cache, 3);
+
+    // Access 1, 2, 3: Misses
+    assert(!cache_access_lfu(&cache, 1, false));
+    assert(!cache_access_lfu(&cache, 2, false));
+    assert(!cache_access_lfu(&cache, 3, false));
+
+    // Access 1: Hit (frequency becomes 2)
+    assert(cache_access_lfu(&cache, 1, false));
+
+    // Access 2: Hit (frequency becomes 2)
+    assert(cache_access_lfu(&cache, 2, false));
+
+    // Access 4: Miss. Frequencies: 1 (freq 2), 2 (freq 2), 3 (freq 1). Evict min freq (3).
+    assert(!cache_access_lfu(&cache, 4, false));
+
+    // 3 should no longer be in the cache
+    bool found_3 = false;
+    for (int i = 0; i < 3; i++)
+    {
+        if (cache.blocks[i].page_id == 3)
+            found_3 = true;
+    }
+    assert(!found_3);
+
+    // Let's test tie-break (LRU)
+    // Access 4: freq becomes 2 (since 4 was inserted with freq 1, then we access it)
+    assert(cache_access_lfu(&cache, 4, false));
+    // Access 1: freq becomes 3
+    assert(cache_access_lfu(&cache, 1, false));
+    // Current cache state page/frequency: 4/2, 1/3, 2/2.
+    // Recency list: 2 (least recent), 4, 1.
+    // Access 5: Miss. Frequencies: 4 (freq 2), 1 (freq 3), 2 (freq 2). Min freq are 4 and 2.
+    // LRU tie break: 2 was accessed least recently, so evict 2.
+    assert(!cache_access_lfu(&cache, 5, false));
+
+    bool found_2 = false;
+    for (int i = 0; i < 3; i++)
+    {
+        if (cache.blocks[i].page_id == 2)
+            found_2 = true;
+    }
+    assert(!found_2);
+
+    printf("LFU basic cache tests passed\n");
+}
+
 int main()
 {
     test_fifo_basic();
     test_lru_basic();
     test_mru_basic();
+    test_lfu_basic();
     printf("All cache simulator tests passed\n");
     return 0;
 }
