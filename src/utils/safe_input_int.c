@@ -11,7 +11,7 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
 {
     int c;
     char buffer[100]; // Buffer to read raw user input as a string first
-    
+
     while (1)
     {
         if (prompt)
@@ -19,31 +19,31 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
             printf("%s", prompt);
             fflush(stdout);
         }
-        
+
         // Read input as a string safely
         if (scanf("%99s", buffer) != 1)
         {
             goto clear_buffer;
         }
-        
+
         // Clear the rest of the line from input buffer
         while ((c = getchar()) != '\n' && c != EOF)
             ;
-            
+
         // 1. Intercept "help" command
         if (strcmp(buffer, "help") == 0)
         {
             launch_help_page(); // Summon the manual
             continue;           // Reprint the exact same prompt seamlessly!
         }
-        
+
         int value;
         char extra_char;
-        
+
         // 2. Parse the integer from our string buffer
         // Checks if it's a number, and ensures no trailing junk characters exist
         int parsed_items = sscanf(buffer, "%d%c", &value, &extra_char);
-        
+
         if (parsed_items < 1)
         {
             printf("That's not a number. Please try again: \n");
@@ -54,13 +54,13 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
             printf("Only a number please (no extra characters). Try again: \n");
             continue;
         }
-        
+
         if (value == -1)
         {
             *input = -1;
             return -111; // special exit code indicating user entered '-1'
         }
-        
+
         if (value < min_val || value > max_val)
         {
             printf("only enter values between %d and %d.\n", min_val, max_val);
@@ -70,7 +70,7 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
                 ;
             continue;
         }
-        
+
         *input = value;
         return 1; // Successful insertion
     }
