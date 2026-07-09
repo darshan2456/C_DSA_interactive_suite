@@ -1,6 +1,8 @@
 # Contributing to C_DSA_interactive_suite
 
-Thank you for taking the time to contribute! This project is open to learners, systems enthusiasts, and low-level programmers who want to build something meaningful in C. You dont need deep technical knowledge, as this project is made with raw C, you will only need algorithmic thinking and logical thinking. Thats it.
+Thank you for taking the time to contribute! This project is open to learners, systems enthusiasts, and low-level programmers who want to build something meaningful in C. You will need deep technical knowledge, as this project is made with raw C, has a CI which runs CMake, a formatting system, a build system and dockerization support. But dont worry, I am always willing to help contributors in any way I can. You can join my discord server for that purpose.
+
+link - https://discord.gg/RxepKBWBX
 
 ---
 
@@ -36,7 +38,9 @@ I am not against usage of AI, you can use AI, but you do the thinking part, let 
 
 - GCC (or compatible C compiler)
 - GNU Make ≥ 4.4.1
+- CMake >= 3.31.6
 - Valgrind (for checking memory leaks)
+- clang-format (for formatting the project)
 - Git
 
 ### Build and Run
@@ -49,6 +53,10 @@ make run
 
 ```bash
 make test
+```
+
+```bash
+make valgrind
 ```
 
 ---
@@ -117,7 +125,7 @@ This project is written in **C11**. All contributions must follow the existing s
 3. Ensure the CI pass and Valgrind reports with no errors
 6. Link the relevant issue using `Closes #<issue-number>`
 
-PRs without tests(in case of new ds/algo), failing CI, or unformatted code will not be merged.
+PRs without tests(in case of new ds/algo), failing CI, or unformatted code will **NOT** be merged.
 
 ---
 

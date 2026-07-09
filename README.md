@@ -12,9 +12,9 @@ The codebase is structured as a reusable **DSA library**, with an interactive, c
 
 ## Table of Contents
 - [Demos](#demos)
-- [Build Instructions](#build-instructions-recommended)
+- [Build Instructions](#build-instructions)
+- [Architectural Breakdown: Docker & The Build System](#architectural-breakdown-docker--the-build-system)
 - [Continuous Integration](#continuous-integration)
-- [Time Complexity](#time-complexity)
 - [License](#license)
 
 ---
@@ -163,9 +163,12 @@ On every push or pull request:
 
 1. A fresh **Ubuntu VM** is allocated
 2. The project is **compiled using GCC**
-3. The complete **unit test suite is executed**
-4. All test binaries are run under **Valgrind** to check for:
+3. The `make fmt` is run on the runner and checked with your code, if they dont match, CI turns red
+4. The complete **unit test suite is executed**
+5. All test binaries are run under **Valgrind** to check for:
+6. The project is sanitized under asan and ubsan and tests are run to check for undefined behaviour (ie semantic errors)
 
+   - unformatted code
    - memory leaks  
    - invalid reads / writes  
    - use-after-free errors  
@@ -173,100 +176,7 @@ On every push or pull request:
 
 If any test fails or Valgrind detects a memory error, the CI job fails automatically.
 
-
-## Time Complexity
-
-### Searching Algorithms
-* Linear Search: **O(n)**
-* Binary Search: **O(logn)**
-* Interpolation Search: **O(log(logn))**
-* Jump Search: **O(√n)**
-
-### Sorting Algorithms
-* Bubble Sort: **O(n²)**
-* Selection Sort: **O(n²)**
-* Insertion Sort: **O(n²)**
-* Shell sort: **O(nlogn)**
-
-### Advanced Sorting Algorithms
-* Quick sort: **O(n²)**
-* Merge sort: **O(nlogn)**
-* Heap sort: **O(nlogn)**
-* Radix sort (LSD): **O(nk)**
-* Bucket sort :**O(n+k)**
-
-### Graph Traversals (Adjacency List)
-* GBFS: **O(b^m)**
-* BFS: **O(V+E)**
-* DFS: **O(V+E)**
-* Dijkstra's Algorithm: **O((V+E)log V)**
-* A* Search: **O((V+E)log V)**
-* Greedy Best-First Search: **O((V+E)log V)**
-* Bellman-Ford: **O(V·E)**
-* Floyd-Warshall: **O(V³)**
-* Topological Sort (Kahn's Algorithm): **O(V+E)**
-
-### Advanced Graph Algorithms
-* Strongly Connected Components (Tarjan & Kosaraju): **O(V + E)**
-* Maximum Flow (Edmonds-Karp): **O(V·E²)**
-* Maximum Flow (Dinic's Algorithm): **O(V²·E)**
-* Bipartite Matching (Hopcroft-Karp): **O(E·√V)**
-* Eulerian Path (Hierholzer's Algorithm): **O(V + E)**
-
-
-### Job scheduling
-* FCFS(First come,First Served): **O(n)**
-* SJF( Shortest Job First): **O(nlogn+n)**
-* Priority Scheduling: **O(nlogn)**
-* SRTF (Shortest Remaining Time First): **O(nlogn)**
-* Preemptive Priority Scheduling: **O(nlogn)**
-
-### String Algorithms
-* Naive String Matching: **O(n-m+1)**
-* Knuth-Morris-Pratt (KMP) Algorithm: **O(n+m)**
-* Rabin-Karp Algorithm: **O(n.m)**
-
-### Dynamic Programming
-* Fibonacci (DP): **O(n)**
-* Longest Common Subsequence (LCS): **O(nm)**
-* 0/1 Knapsack: **O(nW)**
-* Matrix Chain Multiplication: **O(n³)**
-
-### Backtracking Algorithms
-* Rat in a Maze: **O(4^(n²))** 
-* Graph Coloring: **O(m^V)**
-* Sudoko solver: **O(6^m)**
-* Knight's tour:**O(8^(n^2))**
-* N Queen's algorithm: **O(N!)**
-
-### Advanced Heaps & Priority Queues
-* Binomial Heap:
-  * Insert: **O(log n)** (worst case) / **O(1)** (amortized)
-  * Find Min: **O(log n)**
-  * Extract Min / Delete: **O(log n)**
-  * Merge: **O(log n)**
-* Fibonacci Heap:
-  * Insert: **O(1)**
-  * Find Min: **O(1)**
-  * Extract Min / Delete: **O(log n)** (amortized)
-  * Merge: **O(1)**
-* Leftist Heap:
-  * Insert / Merge / Extract Min: **O(log n)**
-* Skew Heap:
-  * Insert / Merge / Extract Min: **O(log n)** (amortized)
-* Min-Max Heap (Double-Ended Priority Queue):
-  * Find Min / Max: **O(1)**
-  * Insert / Extract Min / Extract Max: **O(log n)**
-* d-Ary Heap:
-  * Insert / Decrease Key: **O(log_d n)**
-  * Extract Min: **O(d·log_d n)**
-* Treap (Tree + Heap):
-  * Search / Insert / Delete: **O(log n)** (average/expected)
-
-
-
-
-
+---
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.

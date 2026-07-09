@@ -2,7 +2,7 @@
 
 Be civil and respectful, thats it, no more demands, just dont be sexist or racist and you are good. 
 
-Also dont spam "any updates" in the PR thread, wait for 2-3 days before a follow up.
+Also dont spam "any updates" in the PR thread, wait for 12 hours before a follow up.
 
 If you have any technical or conceptual doubts, dont ask it in a Issue or PR thread. There is a special discord
 server I have created for that purpose. Link is in CONTRIBUTING.md
