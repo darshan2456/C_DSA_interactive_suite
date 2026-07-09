@@ -10,6 +10,7 @@
 #include "array.h"
 #include "backtracking.h"
 #include "config.h"
+#include "cross_platform_timer.h"
 #include "dcll.h"
 #include "display_header.h"
 #include "dll.h"
@@ -534,13 +535,10 @@ static void run_demo(demo_fn fn, const char* name, State* s)
     display_header(name);
     fn();
     printf("\n\033[1;36m═══ End of %s ═══\033[0m\n", name);
-    printf("\nPress Enter to return to menu...");
+    printf("\nExiting %s demo...", name);
     fflush(stdout);
 
-    /* wait for Enter */
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF)
-        ;
+    sleep_seconds(2);
 
     /* reclaim terminal */
     refresh();
