@@ -45,9 +45,63 @@ static void test_rle_basic(void)
     printf("RLE basic tests passed\n");
 }
 
+static void test_huffman_basic(void)
+{
+    const char* input = "hello huffman";
+    HuffmanNode* root = build_huffman_tree(input);
+    assert(root != NULL);
+
+    char codes[256][256];
+    memset(codes, 0, sizeof(codes));
+    char current_code[256];
+    generate_huffman_codes(root, codes, current_code, 0);
+
+    // Verify code generation for present characters
+    assert(strlen(codes[(unsigned char)'h']) > 0);
+    assert(strlen(codes[(unsigned char)'e']) > 0);
+    assert(strlen(codes[(unsigned char)'l']) > 0);
+    assert(strlen(codes[(unsigned char)'o']) > 0);
+    assert(strlen(codes[(unsigned char)' ']) > 0);
+
+    // Encode
+    char encoded[1024];
+    int enc_len = huffman_encode(input, codes, encoded, sizeof(encoded));
+    assert(enc_len > 0);
+
+    // Decode
+    char decoded[256];
+    int dec_len = huffman_decode(encoded, root, decoded, sizeof(decoded));
+    assert(dec_len > 0);
+    assert(strcmp(decoded, input) == 0);
+
+    // Test single unique character input
+    HuffmanNode* single_root = build_huffman_tree("aaaa");
+    assert(single_root != NULL);
+    char single_codes[256][256];
+    memset(single_codes, 0, sizeof(single_codes));
+    generate_huffman_codes(single_root, single_codes, current_code, 0);
+    assert(strlen(single_codes[(unsigned char)'a']) > 0);
+
+    char single_encoded[100];
+    int single_enc_len =
+        huffman_encode("aaaa", single_codes, single_encoded, sizeof(single_encoded));
+    assert(single_enc_len > 0);
+
+    char single_decoded[100];
+    int single_dec_len =
+        huffman_decode(single_encoded, single_root, single_decoded, sizeof(single_decoded));
+    assert(single_dec_len > 0);
+    assert(strcmp(single_decoded, "aaaa") == 0);
+
+    free_huffman_tree(root);
+    free_huffman_tree(single_root);
+    printf("Huffman basic tests passed\n");
+}
+
 int main(void)
 {
     test_rle_basic();
+    test_huffman_basic();
     printf("All compression tests passed\n");
     return 0;
 }
