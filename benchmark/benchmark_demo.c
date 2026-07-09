@@ -25,8 +25,9 @@ void benchmark_menu_demo(void)
                                     "click 11 for Network Flow Algorithms benchmark\n"
                                     "click 12 for Advanced Heaps benchmark\n"
                                     "click 13 for Cache Replacement Simulator benchmark\n"
+                                    "click 14 for Compression & Encoding Algorithms benchmark\n"
                                     "enter choice : ",
-                                    1, 13);
+                                    1, 14);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -90,6 +91,9 @@ void benchmark_menu_demo(void)
                 break;
             case 13:
                 run_cache_benchmark(n);
+                break;
+            case 14:
+                run_compression_benchmark(n);
                 break;
         }
     }
