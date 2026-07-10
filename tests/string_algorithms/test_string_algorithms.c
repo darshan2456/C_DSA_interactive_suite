@@ -8,7 +8,6 @@
 #include <io.h>
 #define dup _dup
 #define dup2 _dup2
-int _fileno(FILE*);
 #ifndef fileno
 #define fileno _fileno
 #endif
