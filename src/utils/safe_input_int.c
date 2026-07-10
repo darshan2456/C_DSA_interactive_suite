@@ -17,7 +17,6 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
             fflush(stdout);
         }
 
-        // Read input as a string safely
         // Read input safely and detect EOF
         if (fgets(buffer, sizeof(buffer), stdin) == NULL)
         {
@@ -74,5 +73,4 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
         *input = value;
         return 1; // Successful insertion
     }
-
 }
