@@ -4,8 +4,8 @@
 #include <stdbool.h>
 
 // RLE Compression Algorithms
-int rle_encode(const char* input, char* output, int out_max);
-int rle_decode(const char* input, char* output, int out_max);
+int rle_encode(const char* input, char* output, int len, int out_max);
+int rle_decode(const char* input, int len, char* output, int out_max);
 
 // Huffman Coding Structures & Algorithms
 typedef struct HuffmanNode
@@ -28,6 +28,14 @@ void print_huffman_dictionary(const HuffmanNode* root, const char codes[256][256
 // LZW Compression Algorithms
 int lzw_encode(const char* input, int* output, int out_max);
 int lzw_decode(const int* input, int in_len, char* output, int out_max);
+
+// Burrows-Wheeler Transform (BWT)
+int bwt_forward(const char* input, char* output, int* primary_index);
+int bwt_inverse(const char* input, int primary_index, char* output);
+
+// Move-To-Front (MTF)
+int mtf_encode(const char* input, char* output, int len);
+int mtf_decode(const char* input, char* output, int len);
 
 // Main Demo Menu
 void compression_demo(void);

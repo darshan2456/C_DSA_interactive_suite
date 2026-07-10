@@ -805,7 +805,7 @@ $(TEST_DIR)/test_cache_simulator$(EXE): $(OBJ_DIR)/src/cache_simulator/cache.o $
 test_compression: $(TEST_DIR)/test_compression$(EXE)
 	$(TEST_DIR)/test_compression$(EXE)
 
-$(TEST_DIR)/test_compression$(EXE): $(OBJ_DIR)/src/compression/rle.o $(OBJ_DIR)/src/compression/huffman.o $(OBJ_DIR)/src/compression/huffman_visualizer.o $(OBJ_DIR)/src/compression/lzw.o tests/compression/test_compression.c
+$(TEST_DIR)/test_compression$(EXE): $(OBJ_DIR)/src/compression/rle.o $(OBJ_DIR)/src/compression/huffman.o $(OBJ_DIR)/src/compression/huffman_visualizer.o $(OBJ_DIR)/src/compression/lzw.o $(OBJ_DIR)/src/compression/bwt.o tests/compression/test_compression.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

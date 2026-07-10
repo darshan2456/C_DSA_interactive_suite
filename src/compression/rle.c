@@ -4,15 +4,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-int rle_encode(const char* input, char* output, int out_max)
+int rle_encode(const char* input, char* output, int len, int out_max)
 {
-    if (input == NULL || output == NULL || out_max <= 0)
+    if (input == NULL || output == NULL || len < 0 || out_max <= 0)
     {
         return -1;
     }
 
-    int in_len = strlen(input);
-    if (in_len == 0)
+    if (len == 0)
     {
         output[0] = '\0';
         return 0;
@@ -21,19 +20,18 @@ int rle_encode(const char* input, char* output, int out_max)
     int out_idx = 0;
     int i = 0;
 
-    while (i < in_len)
+    while (i < len)
     {
         char ch = input[i];
         int count = 1;
 
-        while (i + 1 < in_len && input[i + 1] == ch)
+        while (i + 1 < len && input[i + 1] == ch)
         {
             count++;
             i++;
         }
         i++;
 
-        // Format run: character + count
         char temp[32];
         int written = snprintf(temp, sizeof(temp), "%c%d", ch, count);
         if (written < 0 || written >= (int)sizeof(temp))
@@ -43,10 +41,10 @@ int rle_encode(const char* input, char* output, int out_max)
 
         if (out_idx + written >= out_max)
         {
-            return -1; // Buffer overflow
+            return -1;
         }
 
-        strcpy(&output[out_idx], temp);
+        memcpy(&output[out_idx], temp, written);
         out_idx += written;
     }
 
@@ -54,15 +52,14 @@ int rle_encode(const char* input, char* output, int out_max)
     return out_idx;
 }
 
-int rle_decode(const char* input, char* output, int out_max)
+int rle_decode(const char* input, int len, char* output, int out_max)
 {
-    if (input == NULL || output == NULL || out_max <= 0)
+    if (input == NULL || output == NULL || len < 0 || out_max <= 0)
     {
         return -1;
     }
 
-    int in_len = strlen(input);
-    if (in_len == 0)
+    if (len == 0)
     {
         output[0] = '\0';
         return 0;
@@ -71,30 +68,28 @@ int rle_decode(const char* input, char* output, int out_max)
     int out_idx = 0;
     int i = 0;
 
-    while (i < in_len)
+    while (i < len)
     {
         char ch = input[i];
         i++;
 
-        // Expecting digits for count
-        if (i >= in_len || !isdigit((unsigned char)input[i]))
+        if (i >= len || !isdigit((unsigned char)input[i]))
         {
-            return -1; // Invalid RLE format
+            return -1;
         }
 
         int count = 0;
-        while (i < in_len && isdigit((unsigned char)input[i]))
+        while (i < len && isdigit((unsigned char)input[i]))
         {
             count = count * 10 + (input[i] - '0');
             i++;
         }
 
-        // Repeat the character count times
         for (int j = 0; j < count; j++)
         {
             if (out_idx >= out_max - 1)
             {
-                return -1; // Buffer overflow
+                return -1;
             }
             output[out_idx++] = ch;
         }

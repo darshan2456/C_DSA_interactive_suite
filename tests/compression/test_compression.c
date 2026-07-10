@@ -10,38 +10,38 @@ static void test_rle_basic(void)
     char decompressed[100];
 
     // Test 1: Empty input
-    assert(rle_encode("", compressed, sizeof(compressed)) == 0);
+    assert(rle_encode("", compressed, 0, sizeof(compressed)) == 0);
     assert(strcmp(compressed, "") == 0);
-    assert(rle_decode("", decompressed, sizeof(decompressed)) == 0);
+    assert(rle_decode("", 0, decompressed, sizeof(decompressed)) == 0);
     assert(strcmp(decompressed, "") == 0);
 
     // Test 2: Standard run-length encoding
-    assert(rle_encode("aaaaabbbccccc", compressed, sizeof(compressed)) > 0);
+    assert(rle_encode("aaaaabbbccccc", compressed, 13, sizeof(compressed)) > 0);
     assert(strcmp(compressed, "a5b3c5") == 0);
 
     // Test 3: Decompress standard output
-    assert(rle_decode("a5b3c5", decompressed, sizeof(decompressed)) > 0);
+    assert(rle_decode("a5b3c5", 6, decompressed, sizeof(decompressed)) > 0);
     assert(strcmp(decompressed, "aaaaabbbccccc") == 0);
 
     // Test 4: Single characters (no repetitions)
-    assert(rle_encode("abc", compressed, sizeof(compressed)) > 0);
+    assert(rle_encode("abc", compressed, 3, sizeof(compressed)) > 0);
     assert(strcmp(compressed, "a1b1c1") == 0);
-    assert(rle_decode("a1b1c1", decompressed, sizeof(decompressed)) > 0);
+    assert(rle_decode("a1b1c1", 6, decompressed, sizeof(decompressed)) > 0);
     assert(strcmp(decompressed, "abc") == 0);
 
     // Test 5: Multi-digit counts
-    assert(rle_encode("aaaaaaaaaaaa", compressed, sizeof(compressed)) > 0);
+    assert(rle_encode("aaaaaaaaaaaa", compressed, 12, sizeof(compressed)) > 0);
     assert(strcmp(compressed, "a12") == 0);
-    assert(rle_decode("a12", decompressed, sizeof(decompressed)) > 0);
+    assert(rle_decode("a12", 3, decompressed, sizeof(decompressed)) > 0);
     assert(strcmp(decompressed, "aaaaaaaaaaaa") == 0);
 
     // Test 6: Invalid decode formats
-    assert(rle_decode("a", decompressed, sizeof(decompressed)) == -1);
-    assert(rle_decode("a-3", decompressed, sizeof(decompressed)) == -1);
+    assert(rle_decode("a", 1, decompressed, sizeof(decompressed)) == -1);
+    assert(rle_decode("a-3", 3, decompressed, sizeof(decompressed)) == -1);
 
     // Test 7: Buffer limits
-    assert(rle_encode("aaaaabbbccccc", compressed, 5) == -1);
-    assert(rle_decode("a5b3c5", decompressed, 5) == -1);
+    assert(rle_encode("aaaaabbbccccc", compressed, 13, 5) == -1);
+    assert(rle_decode("a5b3c5", 6, decompressed, 5) == -1);
 
     printf("RLE basic tests passed\n");
 }
@@ -156,12 +156,60 @@ static void test_lzw_basic(void)
     printf("LZW basic and dictionary reset tests passed\n");
 }
 
+static void test_bwt_mtf_basic(void)
+{
+    const char* input = "banana";
+    char bwt_out[100];
+    int primary_index = 0;
+    int bwt_len = bwt_forward(input, bwt_out, &primary_index);
+    assert(bwt_len > 0);
+    assert(strcmp(bwt_out, "nnbaaa") == 0);
+    assert(primary_index == 3);
+
+    char bwt_dec[100];
+    int bwt_dec_len = bwt_inverse(bwt_out, primary_index, bwt_dec);
+    assert(bwt_dec_len > 0);
+    assert(strcmp(bwt_dec, input) == 0);
+
+    // Test MTF coding
+    char mtf_out[100];
+    int mtf_len = mtf_encode("nnbaaa", mtf_out, 6);
+    assert(mtf_len == 6);
+
+    char mtf_dec[100];
+    int mtf_dec_len = mtf_decode(mtf_out, mtf_dec, mtf_len);
+    assert(mtf_dec_len == 6);
+    assert(memcmp(mtf_dec, "nnbaaa", 6) == 0);
+
+    // Full pipeline test: input -> BWT -> MTF -> RLE -> decRLE -> decMTF -> invBWT -> input
+    char rle_out[100];
+    int rle_len = rle_encode(mtf_out, rle_out, mtf_len, sizeof(rle_out));
+    assert(rle_len > 0);
+
+    char rle_dec[100];
+    int rle_dec_len = rle_decode(rle_out, rle_len, rle_dec, sizeof(rle_dec));
+    assert(rle_dec_len == mtf_len);
+
+    char final_mtf_dec[100];
+    int final_mtf_dec_len = mtf_decode(rle_dec, final_mtf_dec, rle_dec_len);
+    assert(final_mtf_dec_len == mtf_len);
+    assert(memcmp(final_mtf_dec, bwt_out, bwt_len) == 0);
+
+    char final_bwt_dec[100];
+    int final_bwt_dec_len = bwt_inverse(final_mtf_dec, primary_index, final_bwt_dec);
+    assert(final_bwt_dec_len == bwt_len);
+    assert(strcmp(final_bwt_dec, input) == 0);
+
+    printf("BWT and MTF basic and full pipeline tests passed\n");
+}
+
 int main(void)
 {
     test_rle_basic();
     test_huffman_basic();
     test_huffman_visualizer();
     test_lzw_basic();
+    test_bwt_mtf_basic();
     printf("All compression tests passed\n");
     return 0;
 }

@@ -27,7 +27,7 @@ static void run_rle_demo(void)
     }
 
     char compressed[512];
-    int comp_len = rle_encode(input, compressed, sizeof(compressed));
+    int comp_len = rle_encode(input, compressed, original_len, sizeof(compressed));
     if (comp_len < 0)
     {
         printf("\nError during RLE compression.\n");
@@ -37,7 +37,7 @@ static void run_rle_demo(void)
     }
 
     char decompressed[256];
-    int decomp_len = rle_decode(compressed, decompressed, sizeof(decompressed));
+    int decomp_len = rle_decode(compressed, comp_len, decompressed, sizeof(decompressed));
 
     // Display results
     printf("\n--- Real-Time RLE Compression Summary ---\n");
@@ -215,6 +215,81 @@ static void run_lzw_demo(void)
     getchar();
 }
 
+static void run_bwt_mtf_demo(void)
+{
+    display_header("Burrows-Wheeler (BWT) & Move-To-Front (MTF)");
+
+    char input[256];
+    int input_status =
+        safe_input_string(input, "Enter a string to transform (e.g., banana), or 'X' to exit: ");
+    if (input_status == INPUT_EXIT_SIGNAL)
+    {
+        return;
+    }
+
+    int original_len = strlen(input);
+    if (original_len == 0)
+    {
+        printf("\nError: Empty string provided.\n");
+        printf("\nPress [ENTER] to continue...");
+        getchar();
+        return;
+    }
+
+    char bwt_out[256];
+    int primary_index = 0;
+    int bwt_len = bwt_forward(input, bwt_out, &primary_index);
+    if (bwt_len < 0)
+    {
+        printf("\nError during BWT transform.\n");
+        printf("\nPress [ENTER] to continue...");
+        getchar();
+        return;
+    }
+
+    char mtf_out[256];
+    int mtf_len = mtf_encode(bwt_out, mtf_out, bwt_len);
+
+    char rle_out[512];
+    int rle_len = rle_encode(mtf_out, rle_out, mtf_len, sizeof(rle_out));
+
+    char rle_dec[256];
+    int rle_dec_len = rle_decode(rle_out, rle_len, rle_dec, sizeof(rle_dec));
+
+    char mtf_dec[256];
+    mtf_decode(rle_dec, mtf_dec, rle_dec_len);
+
+    char bwt_dec[256];
+    int bwt_dec_len = bwt_inverse(mtf_dec, primary_index, bwt_dec);
+
+    // Display results
+    printf("\n--- BWT & MTF Transformation Steps ---\n");
+    printf("Original String    : \"%s\" (%d bytes)\n", input, original_len);
+    printf("BWT Output (Last)  : \"%s\" (Primary Index: %d)\n", bwt_out, primary_index);
+    printf("MTF Code Indexes   : [ ");
+    for (int i = 0; i < mtf_len; i++)
+    {
+        printf("%d ", (unsigned char)mtf_out[i]);
+    }
+    printf("]\n");
+    printf("RLE on MTF Output  : \"%s\" (%d bytes)\n", rle_out, rle_len);
+
+    double ratio = (1.0 - (double)rle_len / original_len) * 100.0;
+    printf("Compression Ratio  : %.2f%%\n", ratio);
+
+    if (bwt_dec_len >= 0 && strcmp(input, bwt_dec) == 0)
+    {
+        printf("Round-trip Check   : 🟢 PASSED (Successfully reconstructed back to original)\n");
+    }
+    else
+    {
+        printf("Round-trip Check   : 🔴 FAILED (Reconstruction mismatch)\n");
+    }
+
+    printf("\nPress [ENTER] to continue...");
+    getchar();
+}
+
 void compression_demo(void)
 {
     while (1)
@@ -227,8 +302,9 @@ void compression_demo(void)
                                     "1. Run-Length Encoding (RLE)\n"
                                     "2. Huffman Coding\n"
                                     "3. Lempel-Ziv-Welch (LZW)\n"
-                                    "Enter choice (1 to 3), or '-1' to exit: ",
-                                    1, 3);
+                                    "4. Burrows-Wheeler & Move-to-Front\n"
+                                    "Enter choice (1 to 4), or '-1' to exit: ",
+                                    1, 4);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -249,6 +325,9 @@ void compression_demo(void)
                 break;
             case 3:
                 run_lzw_demo();
+                break;
+            case 4:
+                run_bwt_mtf_demo();
                 break;
             default:
                 break;
