@@ -205,6 +205,10 @@ ifneq ($(wildcard tests/benchmark/test_benchmark_heaps.c),)
 TEST_BINS += test_benchmark_heaps
 endif
 
+ifneq ($(wildcard tests/benchmark/test_benchmark_compression.c),)
+TEST_BINS += test_benchmark_compression
+endif
+
 ifneq ($(wildcard tests/debugger/test_step_debugger.c),)
 TEST_BINS += test_step_debugger
 endif
@@ -471,6 +475,13 @@ test_benchmark_strings: $(TEST_DIR)/test_benchmark_strings$(EXE)
 	$(TEST_DIR)/test_benchmark_strings$(EXE)
 
 $(TEST_DIR)/test_benchmark_strings$(EXE): $(OBJS) tests/benchmark/test_benchmark_strings.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_benchmark_compression: $(TEST_DIR)/test_benchmark_compression$(EXE)
+	$(TEST_DIR)/test_benchmark_compression$(EXE)
+
+$(TEST_DIR)/test_benchmark_compression$(EXE): $(OBJS) tests/benchmark/test_benchmark_compression.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
