@@ -159,6 +159,11 @@ void kmp_visualization(char* text, char* pattern)
     }
 
     int* lps = (int*)malloc(m * sizeof(int));
+    if (lps == NULL)
+    {
+        printf("Error: Memory allocation failed.\n");
+        return;
+    }
     compute_lps_array_visual(pattern, m, lps);
     dynamic_sleep();
 
