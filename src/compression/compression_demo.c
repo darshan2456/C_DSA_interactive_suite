@@ -75,6 +75,85 @@ static void run_rle_demo(void)
     getchar();
 }
 
+static void run_huffman_demo(void)
+{
+    display_header("Huffman Coding");
+
+    char input[256];
+    int input_status = safe_input_string(
+        input, "Enter a string to compress (e.g., hello huffman), or 'X' to exit: ");
+    if (input_status == INPUT_EXIT_SIGNAL)
+    {
+        return;
+    }
+
+    int original_len = strlen(input);
+    if (original_len == 0)
+    {
+        printf("\nError: Empty string provided.\n");
+        printf("\nPress [ENTER] to continue...");
+        getchar();
+        return;
+    }
+
+    HuffmanNode* root = build_huffman_tree(input);
+    if (root == NULL)
+    {
+        printf("\nError: Failed to build Huffman tree.\n");
+        printf("\nPress [ENTER] to continue...");
+        getchar();
+        return;
+    }
+
+    char codes[256][256];
+    memset(codes, 0, sizeof(codes));
+    char current_code[256];
+    generate_huffman_codes(root, codes, current_code, 0);
+
+    char compressed[1024];
+    int comp_bits = huffman_encode(input, codes, compressed, sizeof(compressed));
+    if (comp_bits < 0)
+    {
+        printf("\nError during Huffman encoding.\n");
+        free_huffman_tree(root);
+        printf("\nPress [ENTER] to continue...");
+        getchar();
+        return;
+    }
+
+    char decompressed[256];
+    int decomp_len = huffman_decode(compressed, root, decompressed, sizeof(decompressed));
+
+    // Display results
+    printf("\n--- Huffman Tree Visualization ---\n");
+    print_huffman_tree_visual(root, "", false);
+
+    print_huffman_dictionary(root, codes);
+
+    printf("\n--- Huffman Compression Summary ---\n");
+    printf("Original String   : \"%s\" (%d bytes / %d bits)\n", input, original_len,
+           original_len * 8);
+    printf("Compressed Stream : \"%s\" (%d bits / %.2f bytes)\n", compressed, comp_bits,
+           (double)comp_bits / 8.0);
+
+    double ratio = (1.0 - ((double)comp_bits / 8.0) / original_len) * 100.0;
+    printf("Compression Ratio : %.2f%%\n", ratio);
+
+    if (decomp_len >= 0 && strcmp(input, decompressed) == 0)
+    {
+        printf("Round-trip Check  : 🟢 PASSED (Successfully decompressed back to original)\n");
+    }
+    else
+    {
+        printf("Round-trip Check  : 🔴 FAILED (Decompression mismatch)\n");
+    }
+
+    free_huffman_tree(root);
+
+    printf("\nPress [ENTER] to continue...");
+    getchar();
+}
+
 void compression_demo(void)
 {
     while (1)
@@ -85,8 +164,9 @@ void compression_demo(void)
         int status = safe_input_int(&choice,
                                     "\nSelect Compression Algorithm:\n"
                                     "1. Run-Length Encoding (RLE)\n"
-                                    "Enter choice (1), or '-1' to exit: ",
-                                    1, 1);
+                                    "2. Huffman Coding\n"
+                                    "Enter choice (1 to 2), or '-1' to exit: ",
+                                    1, 2);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -101,6 +181,9 @@ void compression_demo(void)
         {
             case 1:
                 run_rle_demo();
+                break;
+            case 2:
+                run_huffman_demo();
                 break;
             default:
                 break;

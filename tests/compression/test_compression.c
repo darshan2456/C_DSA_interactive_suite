@@ -98,10 +98,32 @@ static void test_huffman_basic(void)
     printf("Huffman basic tests passed\n");
 }
 
+static void test_huffman_visualizer(void)
+{
+    const char* input = "hello huffman";
+    HuffmanNode* root = build_huffman_tree(input);
+    assert(root != NULL);
+
+    char codes[256][256];
+    memset(codes, 0, sizeof(codes));
+    char current_code[256];
+    generate_huffman_codes(root, codes, current_code, 0);
+
+    print_huffman_tree_visual(root, "", false);
+    print_huffman_dictionary(root, codes);
+
+    print_huffman_tree_visual(NULL, "", false);
+    print_huffman_dictionary(NULL, codes);
+
+    free_huffman_tree(root);
+    printf("Huffman visualizer tests passed\n");
+}
+
 int main(void)
 {
     test_rle_basic();
     test_huffman_basic();
+    test_huffman_visualizer();
     printf("All compression tests passed\n");
     return 0;
 }

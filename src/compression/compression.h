@@ -22,6 +22,8 @@ void generate_huffman_codes(const HuffmanNode* root, char codes[256][256], char*
 int huffman_encode(const char* input, const char codes[256][256], char* output, int out_max);
 int huffman_decode(const char* encoded_input, const HuffmanNode* root, char* output, int out_max);
 void free_huffman_tree(HuffmanNode* root);
+void print_huffman_tree_visual(const HuffmanNode* root, const char* prefix, bool is_left);
+void print_huffman_dictionary(const HuffmanNode* root, const char codes[256][256]);
 
 // Main Demo Menu
 void compression_demo(void);
