@@ -37,6 +37,7 @@ set(SRC_DIRS
     benchmark
     src/cache_simulator
     src/compression
+    demos/data_structures
 )
 
 # Header search paths

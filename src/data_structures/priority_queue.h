@@ -39,6 +39,9 @@ void destroy_pq(priority_queue* pq);
 // Display the contents of a priority queue.
 void display_heap(priority_queue* pq);
 
+// Get string representation of heap type.
+char* return_heap_type(int heapType);
+
 // Run the priority queue demonstration module.
 void priority_queue_demo(void);
 
