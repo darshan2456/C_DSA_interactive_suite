@@ -1,5 +1,5 @@
-#include "sll.h"
 #include "safe_input.h"
+#include "sll.h"
 #include <stdio.h>
 
 void sll_demo(void)

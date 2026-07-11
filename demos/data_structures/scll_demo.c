@@ -1,5 +1,5 @@
-#include "scll.h"
 #include "safe_input.h"
+#include "scll.h"
 #include <stdio.h>
 
 void scll_demo(void)
@@ -206,12 +206,12 @@ start_scll:
 
     scll_delete_selection:
         scll_delete_status = safe_input_int(&scll_delete_choice,
-                                           "\nenter '0' to delete at beginning"
-                                           "\nenter '1' to delete at end"
-                                           "\nenter '2' to delete by value"
-                                           "\nenter '3' to delete at position"
-                                           "\nenter '-1' to exit :- ",
-                                           0, 3);
+                                            "\nenter '0' to delete at beginning"
+                                            "\nenter '1' to delete at end"
+                                            "\nenter '2' to delete by value"
+                                            "\nenter '3' to delete at position"
+                                            "\nenter '-1' to exit :- ",
+                                            0, 3);
 
         if (scll_delete_status == INPUT_EXIT_SIGNAL)
         {

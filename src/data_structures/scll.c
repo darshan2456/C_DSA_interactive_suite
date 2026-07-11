@@ -317,5 +317,3 @@ void scll_destroy(scll* list)
     list->tail = NULL;
     list->length = 0;
 }
-
-
