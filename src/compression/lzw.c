@@ -170,7 +170,7 @@ int lzw_decode(const int* input, int in_len, char* output, int out_max)
     for (int i = 1; i < in_len; i++)
     {
         int new_code = input[i];
-        char string[512];
+        char string[514];
         int string_len = 0;
 
         if (new_code >= 0 && new_code < dict_size)
@@ -182,9 +182,17 @@ int lzw_decode(const int* input, int in_len, char* output, int out_max)
         {
             strcpy(string, dict[old_code].str);
             int len = strlen(string);
-            string[len] = string[0];
-            string[len + 1] = '\0';
-            string_len = len + 1;
+            if (len + 1 < (int)sizeof(string))
+            {
+                string[len] = string[0];
+                string[len + 1] = '\0';
+                string_len = len + 1;
+            }
+            else
+            {
+                free(dict);
+                return -1;
+            }
         }
         else
         {
@@ -202,13 +210,16 @@ int lzw_decode(const int* input, int in_len, char* output, int out_max)
 
         if (dict_size < LZW_MAX_CODES)
         {
-            char new_entry[512];
+            char new_entry[514];
             strcpy(new_entry, dict[old_code].str);
             int len = strlen(new_entry);
-            new_entry[len] = string[0];
-            new_entry[len + 1] = '\0';
-            strcpy(dict[dict_size].str, new_entry);
-            dict_size++;
+            if (len + 1 < 512)
+            {
+                new_entry[len] = string[0];
+                new_entry[len + 1] = '\0';
+                strcpy(dict[dict_size].str, new_entry);
+                dict_size++;
+            }
         }
 
         if (dict_size >= LZW_MAX_CODES)
