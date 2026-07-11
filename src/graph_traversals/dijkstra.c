@@ -26,6 +26,11 @@ void init_pq_graph(PQ_graph* pq, int initial_capacity)
     pq->size = 0;
     pq->capacity = initial_capacity > 0 ? initial_capacity : 10;
     pq->heap = malloc(pq->capacity * sizeof(PQ_graph_node));
+    if (pq->heap == NULL)
+    {
+        pq->capacity = 0;
+        return;
+    }
 }
 
 void PQ_Destroy(PQ_graph* pq)
