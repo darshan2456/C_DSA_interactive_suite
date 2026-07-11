@@ -181,5 +181,3 @@ void display_deque(const Queue* dq)
     }
     printf("\n");
 }
-
-

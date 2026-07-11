@@ -170,5 +170,3 @@ void display_heap(priority_queue* pq)
     print_heap_tree(pq);
     printf("\n");
 }
-
-

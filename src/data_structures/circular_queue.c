@@ -8,7 +8,6 @@
 
 // dequeue returns -1 when circular queue is empty and value when operation is succesful
 
-
 int init_circ_queue(int N, Queue* queue_ptr)
 {
     if (N < 1)

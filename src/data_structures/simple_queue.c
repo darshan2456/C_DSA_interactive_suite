@@ -14,7 +14,6 @@
 // is never reused. This "false overflow" is exactly the limitation the circular queue avoids
 // by wrapping front/rear modulo N; the two implementations sit side-by-side for comparison.
 
-
 int init_simple_queue(int N, Queue* queue_ptr)
 {
     if (N < 1)
