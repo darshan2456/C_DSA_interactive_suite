@@ -142,6 +142,10 @@ static FibonacciNode* fib_heap_consolidate(FibonacciNode* min_node)
 
     /* Allocate roots array to iterate safely */
     FibonacciNode** roots = (FibonacciNode**)malloc(num_roots * sizeof(FibonacciNode*));
+    if (roots == NULL)
+    {
+        return min_node;
+    }
     x = min_node;
     for (int i = 0; i < num_roots; i++)
     {
@@ -227,6 +231,10 @@ FibonacciNode* fib_heap_extract_min(FibonacciNode* min_node, int* min_key, int* 
 
         /* Collect children pointers to update parent references safely */
         FibonacciNode** children_arr = (FibonacciNode**)malloc(count * sizeof(FibonacciNode*));
+        if (children_arr == NULL)
+        {
+            return min_node;
+        }
         curr = child;
         for (int i = 0; i < count; i++)
         {
@@ -280,6 +288,10 @@ static void free_fib_tree(FibonacciNode* node)
         } while (curr != start);
 
         FibonacciNode** children = (FibonacciNode**)malloc(count * sizeof(FibonacciNode*));
+        if (children == NULL)
+        {
+            return;
+        }
         curr = start;
         for (int i = 0; i < count; i++)
         {
@@ -314,6 +326,10 @@ void destroy_fibonacci_heap(FibonacciNode* min_node)
     } while (curr != min_node);
 
     FibonacciNode** roots = (FibonacciNode**)malloc(count * sizeof(FibonacciNode*));
+    if (roots == NULL)
+    {
+        return;
+    }
     curr = min_node;
     for (int i = 0; i < count; i++)
     {
