@@ -9,6 +9,8 @@
 #include "advanced_sorting.h"
 #include "array.h"
 #include "backtracking.h"
+#include "compression.h"
+#include "concurrent_data_structures.h"
 #include "config.h"
 #include "cross_platform_timer.h"
 #include "dcll.h"
@@ -284,6 +286,9 @@ static Entry ENTRIES[] = {
 
     {"algorithm_step_debugger", NULL, 1, 1, 0},
     {"Interactive Debugger Demo", debugger_demo, 0, 0, 1},
+
+    {"concurrent_data_structures", NULL, 1, 1, 0},
+    {"Thread-Safe Ring Buffer", concurrent_data_structures_demo, 0, 0, 1},
 };
 
 static const int ENTRY_COUNT = sizeof(ENTRIES) / sizeof(ENTRIES[0]);

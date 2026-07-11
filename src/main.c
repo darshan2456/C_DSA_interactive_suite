@@ -11,6 +11,7 @@
 #include "compression.h"
 #include "config.h"
 #include "dcll.h"
+#include "concurrent_data_structures.h"
 #include "display_header.h"
 #include "dll.h"
 #include "dynamic_programming.h"
@@ -74,8 +75,9 @@ void run_legacy_menu()
             "click 19 for interactive algorithm step-debugger demo\n"
             "click 20 for cache replacement simulator demo\n"
             "click 21 for interactive string compression & encoding suite demo\n"
+            "click 22 for concurrent data structures demo\n"
             "enter choice : ",
-            1, 21 // limits
+            1, 22 // limits
         );
 
         if (status == -111)
@@ -154,6 +156,9 @@ void run_legacy_menu()
                 break;
             case 21:
                 compression_demo();
+                break;
+            case 22:
+                concurrent_data_structures_demo();
                 break;
         }
     }

@@ -28,7 +28,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/debugger \
 	-Ibenchmark \
 	-Isrc/cache_simulator \
-	-Isrc/compression
+	-Isrc/compression \
+	-Isrc/concurrent_data_structures
 	# -Itui
 
 # LDFLAGS = -lncurses
@@ -56,7 +57,8 @@ SRC_DIRS = \
 	src/debugger \
 	benchmark \
 	src/cache_simulator \
-	src/compression
+	src/compression \
+	src/concurrent_data_structures
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
@@ -76,8 +78,8 @@ else
 	MKDIR_P = mkdir -p "$(1)"
 
 	SRC_DIRS += tui 
-	LDFLAGS += -lncurses
-	CFLAGS += -Itui
+	LDFLAGS += -lncurses -pthread
+	CFLAGS += -Itui -pthread
 
 endif
 
@@ -152,7 +154,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path test_cache_simulator test_compression
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path test_cache_simulator test_compression test_ring_buffer
 
 # Automatically find all advanced heap test sources and append their targets
 ADV_HEAP_TESTS = $(patsubst tests/advanced_heaps/%.c,%,$(wildcard tests/advanced_heaps/*.c))
@@ -818,6 +820,13 @@ test_compression: $(TEST_DIR)/test_compression$(EXE)
 	$(TEST_DIR)/test_compression$(EXE)
 
 $(TEST_DIR)/test_compression$(EXE): $(OBJ_DIR)/src/compression/rle.o $(OBJ_DIR)/src/compression/huffman.o $(OBJ_DIR)/src/compression/huffman_visualizer.o $(OBJ_DIR)/src/compression/lzw.o $(OBJ_DIR)/src/compression/bwt.o tests/compression/test_compression.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_ring_buffer: $(TEST_DIR)/test_ring_buffer$(EXE)
+	$(TEST_DIR)/test_ring_buffer$(EXE)
+
+$(TEST_DIR)/test_ring_buffer$(EXE): $(OBJ_DIR)/src/concurrent_data_structures/ring_buffer.o tests/concurrent_data_structures/test_ring_buffer.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
