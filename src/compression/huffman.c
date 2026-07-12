@@ -80,6 +80,14 @@ HuffmanNode* build_huffman_tree(const char* input)
         if (freq[i] > 0)
         {
             HuffmanNode* node = malloc(sizeof(HuffmanNode));
+            if (node == NULL)
+            {
+                for (int j = 0; j < heap.size; j++)
+                {
+                    free(heap.nodes[j]);
+                }
+                return NULL;
+            }
             node->ch = (char)i;
             node->freq = freq[i];
             node->left = NULL;
@@ -98,6 +106,11 @@ HuffmanNode* build_huffman_tree(const char* input)
     {
         HuffmanNode* leaf = heap_pop(&heap);
         HuffmanNode* parent = malloc(sizeof(HuffmanNode));
+        if (parent == NULL)
+        {
+            free(leaf);
+            return NULL;
+        }
         parent->ch = '\0';
         parent->freq = leaf->freq;
         parent->left = leaf;
@@ -111,6 +124,16 @@ HuffmanNode* build_huffman_tree(const char* input)
         HuffmanNode* right = heap_pop(&heap);
 
         HuffmanNode* parent = malloc(sizeof(HuffmanNode));
+        if (parent == NULL)
+        {
+            free_huffman_tree(left);
+            free_huffman_tree(right);
+            for (int j = 0; j < heap.size; j++)
+            {
+                free_huffman_tree(heap.nodes[j]);
+            }
+            return NULL;
+        }
         parent->ch = '\0';
         parent->freq = left->freq + right->freq;
         parent->left = left;
