@@ -207,6 +207,11 @@ void eulerian_path_demo(void)
         return;
 
     graph = create_graph(vertices);
+    if (graph == NULL)
+    {
+        printf("\nError: Memory allocation failed for graph.\n");
+        return;
+    }
     int edge_status = safe_input_int(&edges, "Enter number of edges (1-100): ", 1, 100);
     if (edge_status == INPUT_EXIT_SIGNAL)
     {
