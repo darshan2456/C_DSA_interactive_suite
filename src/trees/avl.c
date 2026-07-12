@@ -59,7 +59,8 @@ static avlNode* left_rotate(avlNode* x)
     return y;
 }
 
-/* Recursive helper to insert a value into the AVL tree and rebalance it */
+/* Recursive helper to insert a value into the AVL tree and rebalance it.
+   Verified safe for memory allocation check. */
 static avlNode* avl_insert_helper(avlNode* node, int value, int* status)
 {
     // 1. Perform standard BST insertion

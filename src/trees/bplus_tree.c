@@ -87,8 +87,11 @@ static void bplus_update_key(BPlusNode* node, int old_key, int new_key)
 
 /* Recursive insert helper */
 static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, int value,
-                                 int* promo_key, BPlusNode** promo_node)
+                                 int* promo_key, BPlusNode** promo_node, bool* success)
 {
+    if (!*success)
+        return NULL;
+
     if (current->is_leaf)
     {
         for (int i = 0; i < current->num_keys; i++)
@@ -125,6 +128,7 @@ static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, i
                     current->values[i] = current->values[i + 1];
                 }
                 *promo_node = NULL;
+                *success = false;
                 return NULL;
             }
             int left_size = (tree->order + 1) / 2;
@@ -159,8 +163,12 @@ static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, i
             idx++;
         }
 
-        BPlusNode* child_split =
-            insert_recurse(tree, current->children[idx], key, value, promo_key, promo_node);
+        BPlusNode* child_split = insert_recurse(tree, current->children[idx], key, value, promo_key,
+                                                promo_node, success);
+        if (!*success)
+        {
+            return NULL;
+        }
         if (child_split)
         {
             int new_key = *promo_key;
@@ -192,6 +200,7 @@ static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, i
                         current->children[i] = current->children[i + 1];
                     }
                     *promo_node = NULL;
+                    *success = false;
                     return NULL;
                 }
                 int left_size = tree->order / 2;
@@ -237,13 +246,22 @@ bool bplus_tree_insert(BPlusTree* tree, int key, int value)
 
     int promo_key;
     BPlusNode* promo_node = NULL;
-    insert_recurse(tree, tree->root, key, value, &promo_key, &promo_node);
+    bool success = true;
+    insert_recurse(tree, tree->root, key, value, &promo_key, &promo_node, &success);
+
+    if (!success)
+    {
+        return false;
+    }
 
     if (promo_node)
     {
         BPlusNode* new_root = bplus_node_create(tree->order, false);
         if (new_root == NULL)
+        {
+            bplus_node_destroy_recursive(promo_node);
             return false;
+        }
         new_root->keys[0] = promo_key;
         new_root->children[0] = tree->root;
         new_root->children[1] = promo_node;

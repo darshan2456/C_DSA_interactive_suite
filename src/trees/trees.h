@@ -85,7 +85,7 @@ typedef struct TrieNode
 } TrieNode;
 
 TrieNode* trie_create_node(void);
-void trie_insert(TrieNode* root, const char* word);
+bool trie_insert(TrieNode* root, const char* word);
 int trie_search(TrieNode* root, const char* word);
 int trie_starts_with_prefix(TrieNode* root, const char* prefix);
 void trie_delete(TrieNode* root, const char* word);

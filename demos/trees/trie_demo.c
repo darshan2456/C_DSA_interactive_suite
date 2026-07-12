@@ -40,8 +40,10 @@ void trie_demo(void)
             printf("enter word (lowercase letters only): ");
             if (scanf("%255s", word) != 1)
                 continue;
-            trie_insert(root, word);
-            printf("inserted: %s\n", word);
+            if (trie_insert(root, word))
+                printf("inserted: %s\n", word);
+            else
+                printf("\nMemory allocation failed or invalid input during insertion.\n");
         }
         else if (choice == 2)
         {
