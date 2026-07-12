@@ -27,4 +27,9 @@ void help_graphs_trees_menu(void);
  */
 void help_advanced_topics_menu(void);
 
+/**
+ * @brief Sub-menu for Expression Evaluation help.
+ */
+void help_expression_evaluation_menu(void);
+
 #endif // HELP_H
