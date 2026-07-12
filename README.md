@@ -151,6 +151,19 @@ Each component serves a different purpose:
 
 These tools are complementary rather than competing solutions.
 
+### Docker Makefile Helper Commands
+
+Helper targets have been added to the local `Makefile` to simplify building, running, and testing inside Docker:
+
+| Command | Description |
+| --- | --- |
+| `make docker-test` | Builds the `dev` stage and runs the complete unit test suite inside it. |
+| `make docker-run` | Builds the `runtime` stage and launches the interactive application shell. |
+| `make docker-build-dev` | Builds the development stage image (`c-dsa-suite:dev`). |
+| `make docker-build-runtime` | Builds the slim production stage image (`c-dsa-suite:slim`). |
+
+---
+
 ### Multi-Stage Architecture
 
 The project uses a multi-stage `Dockerfile` to separate the build environment from the lightweight runtime image:
