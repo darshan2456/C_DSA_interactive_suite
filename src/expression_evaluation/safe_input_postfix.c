@@ -1,4 +1,5 @@
 #include "safe_input.h"
+#include "help.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -8,69 +9,78 @@
 
 int validate_postfix_expr(char* buff, size_t size, const char* prompt)
 {
-
-    int depth = 0;
-
-    if (prompt)
+    while (1)
     {
-        printf("%s", prompt);
-        fflush(stdout);
-    }
+        int depth = 0;
 
-    if (!fgets(buff, size, stdin))
-    { // return code 0 represents EOF
-        clearerr(stdin);
-        printf("\ninput ended unexpectedly");
-        return 0;
-    }
-
-    trim_newline(buff);
-
-    if (buff[0] == '\0')
-    {
-        printf("\ninvalid: empty expression");
-        return 0;
-    }
-
-    if (buff[0] == 'X' && buff[1] == '\0')
-    { // when user enters 'X'
-        return INPUT_EXIT_SIGNAL;
-    }
-
-    size_t i = 0;
-
-    while (buff[i] != '\0')
-    { // main loop which validates the string character by character
-        unsigned char c = buff[i];
-        if (isdigit(c))
-            depth++;
-        else if (c == '+' || c == '-' || c == '*' || c == '/')
+        if (prompt)
         {
-            depth--;
-            if (depth < 1)
-            {
-                printf("\ninvalid: too many operators");
-                return 0;
-            }
+            printf("%s", prompt);
+            fflush(stdout);
         }
 
-        else
-        {
-            printf("\ninvalid character : %c", c); // character other than alphanumeric and +,-,*,/
+        if (!fgets(buff, size, stdin))
+        { // return code 0 represents EOF
+            clearerr(stdin);
+            printf("\ninput ended unexpectedly");
             return 0;
         }
 
-        i++;
-    }
+        trim_newline(buff);
 
-    if (depth > 1)
-    {
-        printf("\ninvalid: too many operands");
-        return 0;
-    }
-    if (depth == 1)
-    {
+        // Intercept help command
+        if (strcmp(buff, "help") == 0)
+        {
+            launch_help_page();
+            continue;
+        }
+
+        if (buff[0] == '\0')
+        {
+            printf("\ninvalid: empty expression");
+            return 0;
+        }
+
+        if (buff[0] == 'X' && buff[1] == '\0')
+        { // when user enters 'X'
+            return INPUT_EXIT_SIGNAL;
+        }
+
+        size_t i = 0;
+
+        while (buff[i] != '\0')
+        { // main loop which validates the string character by character
+            unsigned char c = buff[i];
+            if (isdigit(c))
+                depth++;
+            else if (c == '+' || c == '-' || c == '*' || c == '/')
+            {
+                depth--;
+                if (depth < 1)
+                {
+                    printf("\ninvalid: too many operators");
+                    return 0;
+                }
+            }
+
+            else
+            {
+                printf("\ninvalid character : %c", c); // character other than alphanumeric and +,-,*,/
+                return 0;
+            }
+
+            i++;
+        }
+
+        if (depth > 1)
+        {
+            printf("\ninvalid: too many operands");
+            return 0;
+        }
+        if (depth == 1)
+        {
+            return 1;
+        }
         return 1;
     }
-    return 1;
 }
