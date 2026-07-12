@@ -13,6 +13,11 @@
 // algorithm's efficiency.
 void bfs(Graph* graph, int start)
 {
+    if (graph == NULL)
+    {
+        printf("\nError: NULL graph passed to BFS");
+        return;
+    }
     int size = graph->V;
 
     int visited[size];

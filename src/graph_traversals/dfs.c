@@ -206,6 +206,11 @@ void dfs_demo(void)
 // algorithm's efficiency.
 void dfs(Graph* graph, int start)
 {
+    if (graph == NULL)
+    {
+        printf("\nError: NULL graph passed to DFS");
+        return;
+    }
     int size = graph->V;
 
     int visited[size];
