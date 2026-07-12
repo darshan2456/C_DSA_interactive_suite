@@ -3,7 +3,6 @@
 #include "sorting_visualizer.h"
 #include <stdio.h>
 #include <time.h>
-#include <unistd.h>
 
 void shell_sort(int arr[], int length_of_array);
 

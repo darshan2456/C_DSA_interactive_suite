@@ -4,7 +4,6 @@
 #include "step_debugger.h"
 #include <stdio.h>
 #include <time.h>
-#include <unistd.h>
 
 void bubble_sort_optimized(int arr[], int length_of_array);
 
