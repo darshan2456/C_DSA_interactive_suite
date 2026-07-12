@@ -13,25 +13,26 @@ TrieNode* trie_create_node(void)
     return node;
 }
 
-void trie_insert(TrieNode* root, const char* word)
+bool trie_insert(TrieNode* root, const char* word)
 {
     if (root == NULL || word == NULL)
-        return;
+        return false;
     TrieNode* curr = root;
     for (int i = 0; word[i] != '\0'; i++)
     {
         int idx = word[i] - 'a';
         if (idx < 0 || idx >= TRIE_ALPHA_SIZE)
-            return;
+            return false;
         if (curr->children[idx] == NULL)
         {
             curr->children[idx] = trie_create_node();
             if (curr->children[idx] == NULL)
-                return;
+                return false;
         }
         curr = curr->children[idx];
     }
     curr->is_end = 1;
+    return true;
 }
 
 int trie_search(TrieNode* root, const char* word)

@@ -236,6 +236,11 @@ void run_dary_demo(void)
         return;
 
     DAryHeap* heap = create_dary_heap(50, d);
+    if (heap == NULL)
+    {
+        printf("\nError: Failed to create d-Ary Heap (allocation failed)\n");
+        return;
+    }
     while (1)
     {
         display_header("d-Ary Heap Interactive Demo");

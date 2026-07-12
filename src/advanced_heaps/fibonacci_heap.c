@@ -275,35 +275,16 @@ static void free_fib_tree(FibonacciNode* node)
         return;
     }
 
-    /* We need to free all nodes in the children circular list */
     if (node->child != NULL)
     {
         FibonacciNode* curr = node->child;
-        FibonacciNode* start = node->child;
-        int count = 0;
-        do
+        curr->left->right = NULL; /* Break circular list */
+        while (curr != NULL)
         {
-            count++;
-            curr = curr->right;
-        } while (curr != start);
-
-        FibonacciNode** children = (FibonacciNode**)malloc(count * sizeof(FibonacciNode*));
-        if (children == NULL)
-        {
-            return;
+            FibonacciNode* next = curr->right;
+            free_fib_tree(curr);
+            curr = next;
         }
-        curr = start;
-        for (int i = 0; i < count; i++)
-        {
-            children[i] = curr;
-            curr = curr->right;
-        }
-
-        for (int i = 0; i < count; i++)
-        {
-            free_fib_tree(children[i]);
-        }
-        free(children);
     }
     free(node);
 }
@@ -316,32 +297,14 @@ void destroy_fibonacci_heap(FibonacciNode* min_node)
         return;
     }
 
-    /* Count roots in root list */
+    min_node->left->right = NULL; /* Break circular list */
     FibonacciNode* curr = min_node;
-    int count = 0;
-    do
+    while (curr != NULL)
     {
-        count++;
-        curr = curr->right;
-    } while (curr != min_node);
-
-    FibonacciNode** roots = (FibonacciNode**)malloc(count * sizeof(FibonacciNode*));
-    if (roots == NULL)
-    {
-        return;
+        FibonacciNode* next = curr->right;
+        free_fib_tree(curr);
+        curr = next;
     }
-    curr = min_node;
-    for (int i = 0; i < count; i++)
-    {
-        roots[i] = curr;
-        curr = curr->right;
-    }
-
-    for (int i = 0; i < count; i++)
-    {
-        free_fib_tree(roots[i]);
-    }
-    free(roots);
 }
 
 /* Cuts node x from parent y and adds x to the root list */

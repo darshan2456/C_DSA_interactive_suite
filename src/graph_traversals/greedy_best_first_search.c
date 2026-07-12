@@ -9,6 +9,10 @@
 int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, int h[], int parent[],
                                    int traversal_order[], int* traversal_len)
 {
+    if (graph == NULL || start < 0 || start >= graph->V || dest < 0 || dest >= graph->V ||
+        h == NULL || parent == NULL || traversal_order == NULL || traversal_len == NULL)
+        return -1;
+
     int size = graph->V;
     int* visited = calloc(size, sizeof(int));
     int found = 0;

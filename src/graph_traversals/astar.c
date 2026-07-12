@@ -8,6 +8,10 @@
 
 int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[])
 {
+    if (graph == NULL || start < 0 || start >= graph->V || dest < 0 || dest >= graph->V ||
+        h == NULL)
+        return -1;
+
     int size = graph->V;
     int* visited = calloc(size, sizeof(int));
     int* dist = malloc(size * sizeof(int));

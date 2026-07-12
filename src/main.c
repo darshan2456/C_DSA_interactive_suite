@@ -66,14 +66,14 @@ void run_legacy_menu()
             "click 12 for dynamic programming algorithms demo\n"
             "click 13 for string algorithms demo\n"
             "click 14 for process synchronization algorithms demo\n"
-            "click 15 for setting animation speed (by default 2s)\n"
-            "click 16 for algorithm benchmarking and profiling demo\n"
-            "click 17 for advanced graph algorithms (scc / max flow / bipartite matching / "
+            "click 15 for advanced graph algorithms (scc / max flow / bipartite matching / "
             "eulerian path) demo\n"
-            "click 18 for advanced heaps & priority queues suite demo\n"
-            "click 19 for interactive algorithm step-debugger demo\n"
-            "click 20 for cache replacement simulator demo\n"
-            "click 21 for interactive string compression & encoding suite demo\n"
+            "click 16 for advanced heaps & priority queues suite demo\n"
+            "click 17 for cache replacement simulator demo\n"
+            "click 18 for interactive string compression & encoding suite demo\n"
+            "click 19 for algorithm benchmarking and profiling demo\n"
+            "click 20 for interactive algorithm step-debugger demo\n"
+            "click 21 for setting animation speed (by default 2s)\n"
             "enter choice : ",
             1, 21 // limits
         );
@@ -133,27 +133,27 @@ void run_legacy_menu()
                 process_synchronization_demo();
                 break;
             case 15:
-                display_header("Settings");
-                settings_menu_demo();
+                advanced_graph_algorithms_demo();
                 break;
             case 16:
+                advanced_heaps_demo();
+                break;
+            case 17:
+                cache_simulator_demo();
+                break;
+            case 18:
+                compression_demo();
+                break;
+            case 19:
                 display_header("Algorithm Benchmarking & Profiling");
                 benchmark_menu_demo();
                 break;
-            case 17:
-                advanced_graph_algorithms_demo();
-                break;
-            case 18:
-                advanced_heaps_demo();
-                break;
-            case 19:
+            case 20:
                 debugger_demo();
                 break;
-            case 20:
-                cache_simulator_demo();
-                break;
             case 21:
-                compression_demo();
+                display_header("Settings");
+                settings_menu_demo();
                 break;
         }
     }

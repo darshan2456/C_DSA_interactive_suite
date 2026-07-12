@@ -9,6 +9,11 @@
 
 void topological_sort_kahn(Graph* graph)
 {
+    if (graph == NULL)
+    {
+        printf("\nError: NULL graph passed to Topological Sort");
+        return;
+    }
     int size = graph->V;
 
     int in_degree[size];

@@ -89,8 +89,11 @@ static void print_graph_state(Graph* graph, int active_node, int* disc, int* low
 }
 
 static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_stack, stack* st,
-                           int* time, int*** sccs, int** sizes, int* count)
+                           int* time, int*** sccs, int** sizes, int* count, bool* success)
 {
+    if (!*success)
+        return;
+
     disc[u] = low[u] = ++(*time);
     push(st, u);
     on_stack[u] = true;
@@ -103,7 +106,9 @@ static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_st
         int v = temp->data;
         if (disc[v] == -1)
         {
-            tarjan_dfs_vis(graph, v, disc, low, on_stack, st, time, sccs, sizes, count);
+            tarjan_dfs_vis(graph, v, disc, low, on_stack, st, time, sccs, sizes, count, success);
+            if (!*success)
+                return;
             if (low[v] < low[u])
             {
                 low[u] = low[v];
@@ -138,6 +143,7 @@ static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_st
             if (new_comp == NULL)
             {
                 free(comp);
+                *success = false;
                 return;
             }
             comp = new_comp;
@@ -153,6 +159,7 @@ static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_st
         if (new_sccs == NULL)
         {
             free(comp);
+            *success = false;
             return;
         }
         *sccs = new_sccs;
@@ -161,6 +168,7 @@ static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_st
         if (new_sizes == NULL)
         {
             free(comp);
+            *success = false;
             return;
         }
         *sizes = new_sizes;
@@ -175,6 +183,13 @@ static void visualize_tarjan(Graph* graph)
     int* disc = malloc(sizeof(int) * V);
     int* low = malloc(sizeof(int) * V);
     bool* on_stack = malloc(sizeof(bool) * V);
+    if (disc == NULL || low == NULL || on_stack == NULL)
+    {
+        free(disc);
+        free(low);
+        free(on_stack);
+        return;
+    }
     for (int i = 0; i < V; i++)
     {
         disc[i] = -1;
@@ -183,16 +198,34 @@ static void visualize_tarjan(Graph* graph)
     }
 
     stack* st = createStack();
+    if (st == NULL)
+    {
+        free(disc);
+        free(low);
+        free(on_stack);
+        return;
+    }
     int time = 0;
     int** sccs = NULL;
     int* sizes = NULL;
     int count = 0;
+    bool success = true;
 
     for (int i = 0; i < V; i++)
     {
         if (disc[i] == -1)
         {
-            tarjan_dfs_vis(graph, i, disc, low, on_stack, st, &time, &sccs, &sizes, &count);
+            tarjan_dfs_vis(graph, i, disc, low, on_stack, st, &time, &sccs, &sizes, &count,
+                           &success);
+            if (!success)
+            {
+                free_scc_result(sccs, sizes, count);
+                destroyStack(st);
+                free(disc);
+                free(low);
+                free(on_stack);
+                return;
+            }
         }
     }
 

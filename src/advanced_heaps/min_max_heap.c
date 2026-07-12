@@ -415,6 +415,11 @@ static void print_min_max_heap_node(MinMaxHeap* heap, int i, int indent)
 void run_min_max_demo(void)
 {
     MinMaxHeap* heap = create_min_max_heap(50);
+    if (heap == NULL)
+    {
+        printf("\nError: Failed to create Min-Max Heap (allocation failed)\n");
+        return;
+    }
     while (1)
     {
         display_header("Min-Max Heap (Double-Ended Queue) Demo");

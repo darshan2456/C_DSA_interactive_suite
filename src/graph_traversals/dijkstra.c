@@ -132,6 +132,11 @@ bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result)
 // and must not be treated as a measure of the algorithm's efficiency.
 void dijkstra(weightedGraph* graph, int start)
 {
+    if (graph == NULL || start < 0 || start >= graph->V)
+    {
+        printf("\nError: invalid graph or starting node passed to Dijkstra");
+        return;
+    }
     int size = graph->V;
     int dist[size];
 

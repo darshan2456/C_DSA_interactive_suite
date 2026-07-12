@@ -6,8 +6,8 @@ void test_insert_and_search()
 {
     TrieNode* root = trie_create_node();
 
-    trie_insert(root, "apple");
-    trie_insert(root, "app");
+    assert(trie_insert(root, "apple"));
+    assert(trie_insert(root, "app"));
 
     assert(trie_search(root, "apple") == 1);
     assert(trie_search(root, "app") == 1);
@@ -22,7 +22,7 @@ void test_prefix()
 {
     TrieNode* root = trie_create_node();
 
-    trie_insert(root, "hello");
+    assert(trie_insert(root, "hello"));
 
     assert(trie_starts_with_prefix(root, "hel") == 1);
     assert(trie_starts_with_prefix(root, "hello") == 1);
@@ -37,7 +37,7 @@ void test_delete()
 {
     TrieNode* root = trie_create_node();
 
-    trie_insert(root, "test");
+    assert(trie_insert(root, "test"));
     assert(trie_search(root, "test") == 1);
 
     trie_delete(root, "test");
@@ -61,7 +61,7 @@ void test_delete_nonexistent()
 void test_null_guard()
 {
     trie_search(NULL, "hello");
-    trie_insert(NULL, "hello");
+    assert(trie_insert(NULL, "hello") == false);
     trie_delete(NULL, "hello");
     trie_starts_with_prefix(NULL, "he");
 
@@ -76,8 +76,8 @@ void test_prefix_survives_delete()
 {
     TrieNode* root = trie_create_node();
 
-    trie_insert(root, "apple");
-    trie_insert(root, "application");
+    assert(trie_insert(root, "apple"));
+    assert(trie_insert(root, "application"));
 
     trie_delete(root, "apple");
 

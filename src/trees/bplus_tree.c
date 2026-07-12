@@ -87,8 +87,11 @@ static void bplus_update_key(BPlusNode* node, int old_key, int new_key)
 
 /* Recursive insert helper */
 static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, int value,
-                                 int* promo_key, BPlusNode** promo_node)
+                                 int* promo_key, BPlusNode** promo_node, bool* success)
 {
+    if (!*success)
+        return NULL;
+
     if (current->is_leaf)
     {
         for (int i = 0; i < current->num_keys; i++)
@@ -125,6 +128,7 @@ static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, i
                     current->values[i] = current->values[i + 1];
                 }
                 *promo_node = NULL;
+                *success = false;
                 return NULL;
             }
             int left_size = (tree->order + 1) / 2;
@@ -159,8 +163,12 @@ static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, i
             idx++;
         }
 
-        BPlusNode* child_split =
-            insert_recurse(tree, current->children[idx], key, value, promo_key, promo_node);
+        BPlusNode* child_split = insert_recurse(tree, current->children[idx], key, value, promo_key,
+                                                promo_node, success);
+        if (!*success)
+        {
+            return NULL;
+        }
         if (child_split)
         {
             int new_key = *promo_key;
@@ -192,6 +200,7 @@ static BPlusNode* insert_recurse(BPlusTree* tree, BPlusNode* current, int key, i
                         current->children[i] = current->children[i + 1];
                     }
                     *promo_node = NULL;
+                    *success = false;
                     return NULL;
                 }
                 int left_size = tree->order / 2;
@@ -237,13 +246,22 @@ bool bplus_tree_insert(BPlusTree* tree, int key, int value)
 
     int promo_key;
     BPlusNode* promo_node = NULL;
-    insert_recurse(tree, tree->root, key, value, &promo_key, &promo_node);
+    bool success = true;
+    insert_recurse(tree, tree->root, key, value, &promo_key, &promo_node, &success);
+
+    if (!success)
+    {
+        return false;
+    }
 
     if (promo_node)
     {
         BPlusNode* new_root = bplus_node_create(tree->order, false);
         if (new_root == NULL)
+        {
+            bplus_node_destroy_recursive(promo_node);
             return false;
+        }
         new_root->keys[0] = promo_key;
         new_root->children[0] = tree->root;
         new_root->children[1] = promo_node;
@@ -582,160 +600,4 @@ void bplus_tree_print(BPlusTree* tree)
         leaf = leaf->next;
     }
     printf("\n");
-}
-
-/* Interactive Demo dispatcher */
-void bplus_tree_demo(void)
-{
-    int order;
-    while (1)
-    {
-        int status = safe_input_int(
-            &order, "\nEnter B+ Tree order (minimum 3, maximum 10), enter '-1' to exit: ", 3, 10);
-        if (status == INPUT_EXIT_SIGNAL)
-            return;
-        if (status == 0)
-            continue;
-        break;
-    }
-
-    BPlusTree* tree = bplus_tree_create(order);
-    if (!tree)
-    {
-        printf("Failed to create B+ Tree\n");
-        return;
-    }
-
-    while (1)
-    {
-        int choice;
-        int status = safe_input_int(&choice,
-                                    "\n--- B+ Tree Demo Menu ---\n"
-                                    "1. Insert key-value pair\n"
-                                    "2. Delete key\n"
-                                    "3. Search key\n"
-                                    "4. Range Query\n"
-                                    "5. Print Tree Structure\n"
-                                    "Enter choice: ",
-                                    1, 5);
-        if (status == INPUT_EXIT_SIGNAL)
-        {
-            printf("Exiting B+ Tree demo...\n");
-            bplus_tree_destroy(tree);
-            return;
-        }
-        if (status == 0)
-            continue;
-
-        switch (choice)
-        {
-            case 1:
-            {
-                int key, val;
-                while (1)
-                {
-                    int s =
-                        safe_input_int(&key, "Enter key to insert (positive integer): ", 1, 10000);
-                    if (s == INPUT_EXIT_SIGNAL)
-                        break;
-                    if (s == 0)
-                        continue;
-                    bool cancelled = false;
-                    while (1)
-                    {
-                        int s2 = safe_input_int(
-                            &val, "Enter corresponding value (positive integer): ", 1, 10000);
-                        if (s2 == INPUT_EXIT_SIGNAL)
-                        {
-                            cancelled = true;
-                            break;
-                        }
-                        if (s2 == 0)
-                            continue;
-                        break;
-                    }
-                    if (cancelled)
-                        break;
-                    if (bplus_tree_insert(tree, key, val))
-                        printf("Successfully inserted [%d: %d]\n", key, val);
-                    else
-                        printf("Insertion failed! Key %d may already exist.\n", key);
-                    break;
-                }
-                break;
-            }
-            case 2:
-            {
-                int key;
-                while (1)
-                {
-                    int s = safe_input_int(&key, "Enter key to delete: ", 1, 10000);
-                    if (s == INPUT_EXIT_SIGNAL)
-                        break;
-                    if (s == 0)
-                        continue;
-                    if (bplus_tree_delete(tree, key))
-                        printf("Successfully deleted key %d\n", key);
-                    else
-                        printf("Key %d not found in tree.\n", key);
-                    break;
-                }
-                break;
-            }
-            case 3:
-            {
-                int key, val;
-                while (1)
-                {
-                    int s = safe_input_int(&key, "Enter key to search: ", 1, 10000);
-                    if (s == INPUT_EXIT_SIGNAL)
-                        break;
-                    if (s == 0)
-                        continue;
-                    if (bplus_tree_search(tree, key, &val))
-                        printf("Found key %d with value: %d\n", key, val);
-                    else
-                        printf("Key %d not found.\n", key);
-                    break;
-                }
-                break;
-            }
-            case 4:
-            {
-                int lower, upper;
-                while (1)
-                {
-                    int s = safe_input_int(&lower, "Enter lower bound key: ", 1, 10000);
-                    if (s == INPUT_EXIT_SIGNAL)
-                        break;
-                    if (s == 0)
-                        continue;
-                    bool cancelled = false;
-                    while (1)
-                    {
-                        int s2 = safe_input_int(&upper, "Enter upper bound key: ", lower, 10000);
-                        if (s2 == INPUT_EXIT_SIGNAL)
-                        {
-                            cancelled = true;
-                            break;
-                        }
-                        if (s2 == 0)
-                            continue;
-                        break;
-                    }
-                    if (cancelled)
-                        break;
-                    printf("Range query results for [%d, %d]:\n", lower, upper);
-                    bplus_tree_range_query(tree, lower, upper);
-                    break;
-                }
-                break;
-            }
-            case 5:
-            {
-                bplus_tree_print(tree);
-                break;
-            }
-        }
-    }
 }

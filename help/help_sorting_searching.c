@@ -42,7 +42,7 @@ void help_sorting_searching_menu(void)
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");
-                getchar();
+                press_enter_to_continue();
                 break;
 
             case 2:
@@ -59,7 +59,7 @@ void help_sorting_searching_menu(void)
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");
-                getchar();
+                press_enter_to_continue();
                 break;
 
             case 3:
@@ -79,7 +79,7 @@ void help_sorting_searching_menu(void)
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");
-                getchar();
+                press_enter_to_continue();
                 break;
         }
     }

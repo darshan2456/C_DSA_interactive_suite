@@ -38,6 +38,7 @@ set(SRC_DIRS
     src/cache_simulator
     src/compression
     demos/data_structures
+    demos/trees
 )
 
 # Header search paths
@@ -54,6 +55,7 @@ endforeach()
 
 # Exclude src/data_structures/main.c from the library source files because it contains main()
 list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.c")
+list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/utils/io_utility.c")
 
 # Platform specific configurations
 if(NOT WIN32)

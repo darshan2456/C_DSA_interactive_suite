@@ -29,7 +29,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Ifeatures/benchmark \
 	-Isrc/cache_simulator \
 	-Isrc/compression \
-	-Idemos/data_structures
+	-Idemos/data_structures \
+	-Idemos/trees
 	# -Itui
 
 # LDFLAGS = -lncurses
@@ -58,7 +59,8 @@ SRC_DIRS = \
 	features/benchmark \
 	src/cache_simulator \
 	src/compression \
-	demos/data_structures
+	demos/data_structures \
+	demos/trees
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
@@ -84,8 +86,9 @@ else
 endif
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+SRCS := $(filter-out src/utils/io_utility.c,$(SRCS))
 OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
-HELP_OBJS = $(OBJ_DIR)/help/help.o $(OBJ_DIR)/help/help_data_structures.o $(OBJ_DIR)/help/help_sorting_searching.o $(OBJ_DIR)/help/help_graphs_trees.o $(OBJ_DIR)/help/help_advanced_topics.o
+HELP_OBJS = $(OBJ_DIR)/help/help.o $(OBJ_DIR)/help/help_data_structures.o $(OBJ_DIR)/help/help_sorting_searching.o $(OBJ_DIR)/help/help_graphs_trees.o $(OBJ_DIR)/help/help_advanced_topics.o $(OBJ_DIR)/help/help_expression_evaluation.o
 
 TARGET = dsa
 
@@ -428,7 +431,7 @@ $(TEST_DIR)/test_greedy_bfs$(EXE): $(OBJ_DIR)/src/graph_traversals/greedy_best_f
 test_benchmark: $(TEST_DIR)/test_benchmark$(EXE)
 	$(TEST_DIR)/test_benchmark$(EXE)
 
-$(TEST_DIR)/test_benchmark$(EXE): $(OBJ_DIR)/benchmark/benchmark.o tests/benchmark/test_benchmark.c
+$(TEST_DIR)/test_benchmark$(EXE): $(OBJ_DIR)/features/benchmark/benchmark.o tests/benchmark/test_benchmark.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

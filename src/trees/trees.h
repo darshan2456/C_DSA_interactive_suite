@@ -30,6 +30,7 @@ typedef struct bstNode
     struct bstNode* right;
 } bstNode;
 void binary_search_tree_demo(void);
+void bst_level_order(struct bstNode* head);
 int bst_insert(bstNode** head_ref, int value);
 void bst_inorder(const bstNode* head);
 void bst_preorder(const bstNode* head);
@@ -84,7 +85,7 @@ typedef struct TrieNode
 } TrieNode;
 
 TrieNode* trie_create_node(void);
-void trie_insert(TrieNode* root, const char* word);
+bool trie_insert(TrieNode* root, const char* word);
 int trie_search(TrieNode* root, const char* word);
 int trie_starts_with_prefix(TrieNode* root, const char* prefix);
 void trie_delete(TrieNode* root, const char* word);
