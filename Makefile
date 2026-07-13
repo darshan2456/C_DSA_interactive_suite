@@ -33,8 +33,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/compression \
 	-Idemos/data_structures \
 	-Idemos/trees \
-	-Idemos/sorting_algorithms_n2
-	# -Itui
+	-Idemos/sorting_algorithms_n2 \
+	-Itui
 
 # LDFLAGS = -lncurses
 
@@ -221,6 +221,10 @@ endif
 
 ifneq ($(wildcard tests/debugger/test_step_debugger.c),)
 TEST_BINS += test_step_debugger
+endif
+
+ifneq ($(wildcard tests/tui/test_tui.c),)
+TEST_BINS += test_tui
 endif
 
 ifneq ($(wildcard tests/memory_profiler/test_memory_tracker.c),)
@@ -806,6 +810,13 @@ test_step_debugger: $(TEST_DIR)/test_step_debugger$(EXE)
 	$(TEST_DIR)/test_step_debugger$(EXE)
 
 $(TEST_DIR)/test_step_debugger$(EXE): $(OBJS) tests/debugger/test_step_debugger.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_tui: $(TEST_DIR)/test_tui$(EXE)
+	$(TEST_DIR)/test_tui$(EXE)
+
+$(TEST_DIR)/test_tui$(EXE): $(filter-out $(OBJ_DIR)/tui/tui.o,$(OBJS)) tests/tui/test_tui.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
