@@ -39,22 +39,175 @@ static void swap_parentheses(char* str)
     }
 }
 
+int infix_to_prefix_convert(const char* infix_expr, char* prefix_expr, size_t max_size)
+{
+    if (infix_expr == NULL || infix_expr[0] == '\0')
+    {
+        return EXPR_ERROR_EMPTY;
+    }
+
+    char reversed_expr[50];
+    char postfix_expr[100];
+    stack* operators = createStack();
+
+    int step = 1;
+    postfix_expr[0] = '\0';
+    prefix_expr[0] = '\0';
+
+    if (strlen(infix_expr) >= sizeof(reversed_expr))
+    {
+        destroyStack(operators);
+        return EXPR_ERROR_MALFORMED;
+    }
+
+    strcpy(reversed_expr, infix_expr);
+    reverse_string(reversed_expr);
+    swap_parentheses(reversed_expr);
+
+    dynamic_sleep();
+
+    int i = 0;
+    int pf_idx = 0;
+
+    while (reversed_expr[i] != '\0')
+    {
+        if (!is_instant())
+        {
+            clear_screen();
+        }
+
+        char ch = reversed_expr[i];
+        const char* action_msg = NULL;
+        char opbuf[100];
+
+        if (isalnum((unsigned char)ch))
+        {
+            if ((size_t)pf_idx + 1 >= sizeof(postfix_expr))
+            {
+                destroyStack(operators);
+                return EXPR_ERROR_MALFORMED;
+            }
+            postfix_expr[pf_idx++] = ch;
+            postfix_expr[pf_idx] = '\0';
+
+            snprintf(opbuf, sizeof(opbuf), "Added operand '%c' to postfix expression", ch);
+            action_msg = opbuf;
+        }
+        else if (ch == '(')
+        {
+            push(operators, ch);
+            action_msg = "Pushed '(' onto stack";
+        }
+        else if (ch == ')')
+        {
+            while (!isEmpty(operators) && peek(operators) != '(')
+            {
+                if ((size_t)pf_idx + 1 >= sizeof(postfix_expr))
+                {
+                    destroyStack(operators);
+                    return EXPR_ERROR_MALFORMED;
+                }
+                postfix_expr[pf_idx++] = pop(operators);
+                postfix_expr[pf_idx] = '\0';
+            }
+
+            if (isEmpty(operators))
+            {
+                destroyStack(operators);
+                return EXPR_ERROR_UNMATCHED_PARENTHESES;
+            }
+            pop(operators);
+            action_msg = "Popped operators until matching '('";
+        }
+        else if (isOperator(ch))
+        {
+            while (!isEmpty(operators) && peek(operators) != '(' &&
+                   precedence(peek(operators)) > precedence(ch))
+            {
+                if ((size_t)pf_idx + 1 >= sizeof(postfix_expr))
+                {
+                    destroyStack(operators);
+                    return EXPR_ERROR_MALFORMED;
+                }
+                postfix_expr[pf_idx++] = pop(operators);
+                postfix_expr[pf_idx] = '\0';
+            }
+
+            push(operators, ch);
+            snprintf(opbuf, sizeof(opbuf), "Processed operator '%c'", ch);
+            action_msg = opbuf;
+        }
+        else
+        {
+            destroyStack(operators);
+            return EXPR_ERROR_INVALID_CHAR;
+        }
+
+        printf("\nStep %d\n", step++);
+        printf("Character : %c\n", ch);
+        printf("Action    : %s\n", action_msg);
+        printf("Postfix   : %s\n", postfix_expr);
+        printf("Stack     : ");
+        printStack(operators);
+        printf("----------------------------------\n");
+
+        i++;
+        dynamic_sleep();
+    }
+
+    while (!isEmpty(operators))
+    {
+        if (!is_instant())
+        {
+            clear_screen();
+        }
+
+        char op = pop(operators);
+        if (op == '(')
+        {
+            destroyStack(operators);
+            return EXPR_ERROR_UNMATCHED_PARENTHESES;
+        }
+
+        if ((size_t)pf_idx + 1 >= sizeof(postfix_expr))
+        {
+            destroyStack(operators);
+            return EXPR_ERROR_MALFORMED;
+        }
+        postfix_expr[pf_idx++] = op;
+        postfix_expr[pf_idx] = '\0';
+
+        printf("\nStep %d\n", step++);
+        printf("Character : End\n");
+        printf("Action    : Popped remaining operator '%c' from stack\n", op);
+        printf("Postfix   : %s\n", postfix_expr);
+        printf("Stack     : ");
+        printStack(operators);
+        printf("----------------------------------\n");
+
+        dynamic_sleep();
+    }
+
+    if (strlen(postfix_expr) >= max_size)
+    {
+        destroyStack(operators);
+        return EXPR_ERROR_MALFORMED;
+    }
+
+    strcpy(prefix_expr, postfix_expr);
+    reverse_string(prefix_expr);
+
+    destroyStack(operators);
+    return EXPR_SUCCESS;
+}
+
 void infix_to_prefix_demo(void)
 {
     char infix_expr[50];
-    char reversed_expr[50];
-    char postfix_expr[100];
     char prefix_expr[100];
 
     while (1)
     {
-        stack* operators = createStack();
-
-        int step = 1;
-
-        postfix_expr[0] = '\0';
-        prefix_expr[0] = '\0';
-
         printf("\nInfix to Prefix Demo\n");
 
         int infix_expr_status =
@@ -64,134 +217,33 @@ void infix_to_prefix_demo(void)
 
         if (infix_expr_status == INPUT_EXIT_SIGNAL)
         {
-            destroyStack(operators);
             printf("\nExiting infix to prefix demo...\n");
             return;
         }
 
         if (infix_expr_status != 1)
         {
-            destroyStack(operators);
             continue;
         }
 
-        strcpy(reversed_expr, infix_expr);
+        int result = infix_to_prefix_convert(infix_expr, prefix_expr, sizeof(prefix_expr));
 
-        reverse_string(reversed_expr);
-        swap_parentheses(reversed_expr);
-
-        dynamic_sleep();
-
-        int i = 0;
-        int pf_idx = 0;
-
-        while (reversed_expr[i] != '\0')
+        if (result == EXPR_SUCCESS)
         {
-            if (!is_instant())
-            {
-                clear_screen();
-            }
-
-            char ch = reversed_expr[i];
-            const char* action_msg = NULL;
-            char opbuf[100];
-
-            if (isalnum((unsigned char)ch))
-            {
-                postfix_expr[pf_idx++] = ch;
-                postfix_expr[pf_idx] = '\0';
-
-                snprintf(opbuf, sizeof(opbuf), "Added operand '%c' to postfix expression", ch);
-
-                action_msg = opbuf;
-            }
-            else if (ch == '(')
-            {
-                push(operators, ch);
-                action_msg = "Pushed '(' onto stack";
-            }
-            else if (ch == ')')
-            {
-                while (!isEmpty(operators) && peek(operators) != '(')
-                {
-                    postfix_expr[pf_idx++] = pop(operators);
-                    postfix_expr[pf_idx] = '\0';
-                }
-
-                if (!isEmpty(operators))
-                {
-                    pop(operators);
-                }
-
-                action_msg = "Popped operators until matching '('";
-            }
-            else if (isOperator(ch))
-            {
-                while (!isEmpty(operators) && peek(operators) != '(' &&
-                       precedence(peek(operators)) > precedence(ch))
-                {
-                    postfix_expr[pf_idx++] = pop(operators);
-                    postfix_expr[pf_idx] = '\0';
-                }
-
-                push(operators, ch);
-
-                snprintf(opbuf, sizeof(opbuf), "Processed operator '%c'", ch);
-
-                action_msg = opbuf;
-            }
-
-            printf("\nStep %d\n", step++);
-            printf("Character : %c\n", ch);
-            printf("Action    : %s\n", action_msg);
-            printf("Postfix   : %s\n", postfix_expr);
-            printf("Stack     : ");
-
-            printStack(operators);
-
-            printf("----------------------------------\n");
-
-            i++;
-
-            dynamic_sleep();
+            printf("\n==================================\n");
+            printf("Conversion Complete\n");
+            printf("Final Prefix      : %s\n", prefix_expr);
+            printf("==================================\n\n");
+        }
+        else if (result == EXPR_ERROR_UNMATCHED_PARENTHESES)
+        {
+            printf("\n[Error] Conversion failed: Unmatched parentheses.\n");
+        }
+        else
+        {
+            printf("\n[Error] Conversion failed: Code %d.\n", result);
         }
 
-        while (!isEmpty(operators))
-        {
-            if (!is_instant())
-            {
-                clear_screen();
-            }
-
-            char op = pop(operators);
-
-            postfix_expr[pf_idx++] = op;
-            postfix_expr[pf_idx] = '\0';
-
-            printf("\nStep %d\n", step++);
-            printf("Character : End\n");
-            printf("Action    : Popped remaining operator '%c' from stack\n", op);
-            printf("Postfix   : %s\n", postfix_expr);
-            printf("Stack     : ");
-
-            printStack(operators);
-
-            printf("----------------------------------\n");
-
-            dynamic_sleep();
-        }
-
-        strcpy(prefix_expr, postfix_expr);
-        reverse_string(prefix_expr);
-
-        printf("\n==================================\n");
-        printf("Conversion Complete\n");
-        printf("Intermediate : %s\n", postfix_expr);
-        printf("Final Prefix      : %s\n", prefix_expr);
-        printf("==================================\n\n");
-
         dynamic_sleep();
-
-        destroyStack(operators);
     }
 }
