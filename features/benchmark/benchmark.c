@@ -7,6 +7,9 @@
 #include <string.h>
 #include <time.h>
 
+int benchmark_iterations = 5;
+BenchmarkFormat benchmark_output_format = FORMAT_CSV;
+
 #ifdef _WIN32
 #include <direct.h>
 #include <psapi.h>
@@ -174,6 +177,96 @@ double benchmark_stddev(const double* values, int count, double mean)
     return simple_sqrt(variance_sum / (count - 1));
 }
 
+int benchmark_export_markdown(const char* category, const char* name, int n, double time_sec,
+                              size_t mem)
+{
+    char filepath[256];
+    errno = 0;
+    int dir_status = make_dir("benchmarks");
+    if (dir_status != 0 && errno != EEXIST)
+    {
+        return -1;
+    }
+
+    snprintf(filepath, sizeof(filepath), "benchmarks/%s.md", category);
+    FILE* check_file = fopen(filepath, "r");
+    int is_new = (check_file == NULL);
+    if (check_file)
+    {
+        fseek(check_file, 0, SEEK_END);
+        if (ftell(check_file) == 0)
+        {
+            is_new = 1;
+        }
+        fclose(check_file);
+    }
+
+    FILE* file = fopen(filepath, "a");
+    if (!file)
+        return -1;
+    if (is_new)
+    {
+        fprintf(file, "# Benchmark Report: %s\n\n", category);
+        fprintf(file, "| Algorithm | Input Size | Time (Seconds) | Peak Memory (KB) |\n");
+        fprintf(file, "| --- | --- | --- | --- |\n");
+    }
+    fprintf(file, "| %s | %d | %.6f | %zu |\n", name, n, time_sec, mem);
+    fclose(file);
+    return 0;
+}
+
+int benchmark_export_json(const char* category, const char* name, int n, double time_sec,
+                          size_t mem)
+{
+    char filepath[256];
+    errno = 0;
+    int dir_status = make_dir("benchmarks");
+    if (dir_status != 0 && errno != EEXIST)
+    {
+        return -1;
+    }
+
+    snprintf(filepath, sizeof(filepath), "benchmarks/%s.json", category);
+    FILE* check_file = fopen(filepath, "r");
+    int is_new = (check_file == NULL);
+    if (check_file)
+    {
+        fseek(check_file, 0, SEEK_END);
+        if (ftell(check_file) == 0)
+        {
+            is_new = 1;
+        }
+        fclose(check_file);
+    }
+
+    FILE* file = fopen(filepath, "a");
+    if (!file)
+        return -1;
+    if (is_new)
+    {
+        fprintf(file, "[\n");
+    }
+    else
+    {
+        // To append cleanly to a JSON array structure, we can seek back past the closing bracket
+        // "]\n" But for simplicity of append, we can also just write objects separated by commas or
+        // write lines. Let's write standard JSON by tracking if we need a comma prefix.
+    }
+
+    // Let's write JSON lines format or simple records. Let's write standard objects.
+    // If it's not new, we can write a comma.
+    if (!is_new)
+    {
+        fprintf(file, ",\n");
+    }
+    fprintf(file,
+            "  {\n    \"algorithm\": \"%s\",\n    \"input_size\": %d,\n    \"time_seconds\": "
+            "%.6f,\n    \"peak_memory_kb\": %zu\n  }",
+            name, n, time_sec, mem);
+    fclose(file);
+    return 0;
+}
+
 void benchmark_report_result(const char* category, const char* name, int n, const double times[],
                              size_t peak_mem)
 {
@@ -199,5 +292,16 @@ void benchmark_report_result(const char* category, const char* name, int n, cons
 
     printf("%-30s %-25s %-15s %-10s\n", name, time_str, mem_str, "PASSED");
 
-    benchmark_export_csv(category, name, n, mean, peak_mem);
+    if (benchmark_output_format == FORMAT_CSV)
+    {
+        benchmark_export_csv(category, name, n, mean, peak_mem);
+    }
+    else if (benchmark_output_format == FORMAT_MARKDOWN)
+    {
+        benchmark_export_markdown(category, name, n, mean, peak_mem);
+    }
+    else if (benchmark_output_format == FORMAT_JSON)
+    {
+        benchmark_export_json(category, name, n, mean, peak_mem);
+    }
 }

@@ -9,9 +9,19 @@ void benchmark_menu_demo(void)
     {
         display_header("Algorithm Benchmarking & Profiling");
 
+        char settings_msg[128];
+        snprintf(settings_msg, sizeof(settings_msg),
+                 "\nCurrent Settings: %d Iterations, %s Format\n", benchmark_iterations,
+                 benchmark_output_format == FORMAT_CSV
+                     ? "CSV"
+                     : (benchmark_output_format == FORMAT_MARKDOWN ? "Markdown" : "JSON"));
+
+        printf("%s", settings_msg);
+
         int choice;
         int status = safe_input_int(&choice,
-                                    "\n--- Algorithm Benchmarking & Profiling Menu ---\n"
+                                    "--- Algorithm Benchmarking & Profiling Menu ---\n"
+                                    "click 0 to Configure Benchmarking Settings\n"
                                     "click 1 for Sorting Algorithms benchmark\n"
                                     "click 2 for Searching Algorithms benchmark\n"
                                     "click 3 for Graph Shortest Path Algorithms benchmark\n"
@@ -27,7 +37,7 @@ void benchmark_menu_demo(void)
                                     "click 13 for Cache Replacement Simulator benchmark\n"
                                     "click 14 for Compression & Encoding Algorithms benchmark\n"
                                     "enter choice : ",
-                                    1, 14);
+                                    0, 14);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -36,6 +46,54 @@ void benchmark_menu_demo(void)
         }
         if (status == 0)
         {
+            continue;
+        }
+
+        if (choice == 0)
+        {
+            int opt;
+            int opt_status = safe_input_int(&opt,
+                                            "\n--- Configure Benchmarking Settings ---\n"
+                                            "1. Change Number of Iterations (currently: %d)\n"
+                                            "2. Change Export Reporting Format (currently: %s)\n"
+                                            "Enter option (1 or 2): ",
+                                            1, 2);
+            if (opt_status != 1)
+                continue;
+
+            if (opt == 1)
+            {
+                int iters;
+                int iters_status =
+                    safe_input_int(&iters, "Enter number of iterations (1 to 50): ", 1, 50);
+                if (iters_status == 1)
+                {
+                    benchmark_iterations = iters;
+                    printf("\nBenchmark iterations updated to %d!\n", benchmark_iterations);
+                }
+            }
+            else if (opt == 2)
+            {
+                int format_val;
+                int format_status = safe_input_int(&format_val,
+                                                   "\nSelect Output Reporting Format:\n"
+                                                   "1. CSV\n"
+                                                   "2. Markdown\n"
+                                                   "3. JSON\n"
+                                                   "Enter choice (1, 2, or 3): ",
+                                                   1, 3);
+                if (format_status == 1)
+                {
+                    if (format_val == 1)
+                        benchmark_output_format = FORMAT_CSV;
+                    else if (format_val == 2)
+                        benchmark_output_format = FORMAT_MARKDOWN;
+                    else if (format_val == 3)
+                        benchmark_output_format = FORMAT_JSON;
+
+                    printf("\nBenchmark output format updated!\n");
+                }
+            }
             continue;
         }
 
