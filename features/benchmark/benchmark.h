@@ -3,8 +3,18 @@
 
 #include <stddef.h>
 
+typedef enum
+{
+    FORMAT_CSV,
+    FORMAT_MARKDOWN,
+    FORMAT_JSON
+} BenchmarkFormat;
+
+extern int benchmark_iterations;
+extern BenchmarkFormat benchmark_output_format;
+
 #define BENCHMARK_SEED 12345
-#define BENCHMARK_DEFAULT_ITERATIONS 5
+#define BENCHMARK_DEFAULT_ITERATIONS benchmark_iterations
 
 #define RUN_BENCHMARK(times_arr, peak_mem_var, ...)                                                \
     do                                                                                             \
@@ -119,5 +129,10 @@ double benchmark_mean(const double* values, int count);
 double benchmark_stddev(const double* values, int count, double mean);
 void benchmark_report_result(const char* category, const char* name, int n, const double times[],
                              size_t peak_mem);
+
+int benchmark_export_markdown(const char* category, const char* name, int n, double time_sec,
+                              size_t mem);
+int benchmark_export_json(const char* category, const char* name, int n, double time_sec,
+                          size_t mem);
 
 #endif // BENCHMARK_H
