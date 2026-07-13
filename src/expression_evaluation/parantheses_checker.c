@@ -1,13 +1,13 @@
 #include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
+#include "expression.h"
 #include "safe_input.h"
 #include "stack.h"
 #include <stdio.h>
-
 #include <string.h>
 
-int check_parantheses(char* s)
+ExpressionResult check_parantheses(char* s)
 {
     int i = 0;
     int step = 1;
@@ -39,7 +39,7 @@ int check_parantheses(char* s)
                 printf("Action  : No matching opening bracket found for '%c'\n", s[i]);
                 printf("Stack   : Empty\n");
                 destroyStack(parantheses);
-                return 0;
+                return EXPR_ERROR_UNMATCHED_PARENTHESES;
             }
             int top = pop(parantheses);
 
@@ -56,7 +56,7 @@ int check_parantheses(char* s)
                         printStack(parantheses);
 
                     destroyStack(parantheses);
-                    return 0;
+                    return EXPR_ERROR_UNMATCHED_PARENTHESES;
                 }
                 printf("Action  : Matched '(' with ')'\n");
             }
@@ -73,7 +73,7 @@ int check_parantheses(char* s)
                         printStack(parantheses);
 
                     destroyStack(parantheses);
-                    return 0;
+                    return EXPR_ERROR_UNMATCHED_PARENTHESES;
                 }
                 printf("Action  : Matched '[' with ']'\n");
             }
@@ -90,7 +90,7 @@ int check_parantheses(char* s)
                         printStack(parantheses);
 
                     destroyStack(parantheses);
-                    return 0;
+                    return EXPR_ERROR_UNMATCHED_PARENTHESES;
                 }
                 printf("Action  : Matched '{' with '}'\n");
             }
@@ -117,7 +117,7 @@ int check_parantheses(char* s)
         printStack(parantheses);
     }
     destroyStack(parantheses);
-    return result;
+    return result ? EXPR_SUCCESS : EXPR_ERROR_UNMATCHED_PARENTHESES;
 }
 int get_validated_input_parantheses(char* buff, size_t size, const char* prompt)
 {
@@ -169,9 +169,9 @@ void parantheses_checker_demo(void)
         if (status != 1)
             continue;
 
-        int result = check_parantheses(parantheses_expression);
+        ExpressionResult result = check_parantheses(parantheses_expression);
         printf("\n===================================\n");
-        if (result)
+        if (result == EXPR_SUCCESS)
             printf("Result  : Valid Expression\n");
         else
             printf("Result  : Invalid Expression\n");
