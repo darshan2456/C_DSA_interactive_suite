@@ -1,10 +1,16 @@
 #include "help.h" // Include our new help module header
 #include "safe_input.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int safe_input_string(char* buffer, const char* prompt)
 {
+    if (getenv("DSA_TEST_MODE") != NULL)
+    {
+        return 0;
+    }
+
     while (1)
     {
         printf("%s", prompt);

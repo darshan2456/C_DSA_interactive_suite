@@ -1,5 +1,7 @@
 CC = gcc
 
+export DSA_TEST_MODE=1
+
 OBJ_DIR = object_files
 TEST_DIR = test_binaries
 

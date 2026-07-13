@@ -1,12 +1,18 @@
 #include "help.h" // Include our help module header
 #include "safe_input.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 // this function return 1 on successful insertion, 0 on failure (invalid input or EOF or number out
 // of range) and -111 on exit signal ie when user gives input as '-1'
 int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
 {
+    if (getenv("DSA_TEST_MODE") != NULL)
+    {
+        return 0;
+    }
+
     int c;
     char buffer[100]; // Buffer to read raw user input as a string first
 

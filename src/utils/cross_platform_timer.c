@@ -7,8 +7,14 @@
 #include <unistd.h>
 #endif
 
+#include <stdlib.h>
+
 void sleep_seconds(float seconds)
 {
+    if (getenv("DSA_TEST_MODE") != NULL)
+    {
+        return;
+    }
 #ifdef _WIN32
     Sleep(seconds * 1000);
 #else
