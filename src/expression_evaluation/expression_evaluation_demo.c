@@ -16,7 +16,7 @@ void expression_evaluation_demo(void)
                                           "\nenter 2 for postfix evaluation"
                                           "\nenter 3 parantheses checker"
                                           "\nenter 4 for infix to prefix conversion"
-                                          "\nenter choice : ",
+                                          "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                           1, 4);
 
         if (expr_eval_status == INPUT_EXIT_SIGNAL)

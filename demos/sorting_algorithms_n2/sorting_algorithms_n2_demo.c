@@ -15,7 +15,7 @@ void sorting_algorithms_n2_demo(void)
                                              "\nenter 2 for insertion sort"
                                              "\nenter 3 for selection sort"
                                              "\nenter 4 for shell sort"
-                                             "\nenter choice : ",
+                                             "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                              1, 4);
 
         if (sorting_algo_status == INPUT_EXIT_SIGNAL)

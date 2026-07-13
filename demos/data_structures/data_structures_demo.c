@@ -21,7 +21,7 @@ void data_structures_demo(void)
             safe_input_int(&data_structures_choice,
                            "\nenter 1 for standard linear data structures"
                            "\nenter 2 for circular variants of linear data structures"
-                           "\nenter choice : ",
+                           "\nenter choice (\'-1\' to exit, or \'help\') : ",
                            1, 2);
 
         if (data_structures_status == INPUT_EXIT_SIGNAL)
@@ -49,7 +49,7 @@ void data_structures_demo(void)
                         "\nenter 3 for arrays demo"
                         "\nenter 4 for priority queue (binary heap implementation with array) demo"
                         "\nenter 5 for simple (linear) queue demo"
-                        "\nenter choice : ",
+                        "\nenter choice (\'-1\' to exit, or \'help\') : ",
                         1, 5);
 
                     if (linear_ds_status == INPUT_EXIT_SIGNAL)
@@ -102,7 +102,7 @@ void data_structures_demo(void)
                                        "\nenter 2 for singly circular linked list demo"
                                        "\nenter 3 for doubly circular  linked list demo"
                                        "\nenter 4 for double-ended queue (deque) demo"
-                                       "\nenter choice : ",
+                                       "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                        1, 4);
                     if (circular_variant_status == 0)
                         continue;

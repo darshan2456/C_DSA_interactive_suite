@@ -482,7 +482,7 @@ void run_fibonacci_demo(void)
                "5. Exit fibonacci heap demo\n");
 
         int choice;
-        if (safe_input_int(&choice, "\nEnter choice: ", 1, 5) != 1)
+        if (safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 5) != 1)
             break;
         if (choice == 5)
             break;

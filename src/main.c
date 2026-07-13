@@ -50,7 +50,7 @@ void run_legacy_menu()
         int status = safe_input_int(
             &choice, // variable in which value is to be inserted
             "\nWelcome to DSA library built by Darshan Mukul Parekh"
-            "\n(at any point enter '-1' to exit that particular demo)\n\n"
+            "\n(at any point enter '-1' to exit that particular demo, or 'help' for manual)\n\n"
             "click 1 for data structures demo\n"
             "click 2 for expression evaluation (infix to postfix and postfix evaluation) demo\n"
             "click 3 for sorting algorithms (the n^2 family) demo\n"
@@ -74,7 +74,7 @@ void run_legacy_menu()
             "click 19 for algorithm benchmarking and profiling demo\n"
             "click 20 for interactive algorithm step-debugger demo\n"
             "click 21 for setting animation speed (by default 2s)\n"
-            "enter choice : ",
+            "\nenter choice (\'-1\' to exit, or \'help\') : ",
             1, 21 // limits
         );
 
@@ -165,13 +165,14 @@ void tui_menu()
     while (1)
     {
         int choice;
-        int status = safe_input_int(&choice,
-                                    "\nWelcome to DSA library built by Darshan Mukul Parekh"
-                                    "\n(at any point enter '-1' to exit that particular demo)\n\n"
-                                    "click 1 for legacy menu\n"
-                                    "click 2 for tui menu\n"
-                                    "enter choice : ",
-                                    1, 2 // limits
+        int status = safe_input_int(
+            &choice,
+            "\nWelcome to DSA library built by Darshan Mukul Parekh"
+            "\n(at any point enter '-1' to exit that particular demo, or 'help' for manual)\n\n"
+            "click 1 for legacy menu\n"
+            "click 2 for tui menu\n"
+            "\nenter choice (\'-1\' to exit, or \'help\') : ",
+            1, 2 // limits
         );
 
         if (status == -111)

@@ -12,23 +12,24 @@ void graph_traversals_demo(void)
         display_header("Graph Traversals");
 
         int graph_traversal_choice;
-        int graph_traversal_status = safe_input_int(&graph_traversal_choice,
-                                                    "\nGraph Algorithms Demo\n"
-                                                    "---------------------\n"
-                                                    "\n"
-                                                    "1. BFS\n"
-                                                    "2. DFS\n"
-                                                    "3. Dijkstra\n"
-                                                    "4. A*\n"
-                                                    "5. Greedy BFS\n"
-                                                    "6. Bellman-Ford\n"
-                                                    "7. Topological Sort\n"
-                                                    "8. Visualize Graph\n"
-                                                    "9. Kruskal MST\n"
-                                                    "10. Prim MST\n"
-                                                    "11. Floyd-Warshall\n"
-                                                    "\nEnter choice (-1 to return): ",
-                                                    1, 11);
+        int graph_traversal_status =
+            safe_input_int(&graph_traversal_choice,
+                           "\nGraph Algorithms Demo\n"
+                           "---------------------\n"
+                           "\n"
+                           "1. BFS\n"
+                           "2. DFS\n"
+                           "3. Dijkstra\n"
+                           "4. A*\n"
+                           "5. Greedy BFS\n"
+                           "6. Bellman-Ford\n"
+                           "7. Topological Sort\n"
+                           "8. Visualize Graph\n"
+                           "9. Kruskal MST\n"
+                           "10. Prim MST\n"
+                           "11. Floyd-Warshall\n"
+                           "\nenter choice (\'-1\' to exit, or \'help\') : ",
+                           1, 11);
 
         if (graph_traversal_status == INPUT_EXIT_SIGNAL)
         {

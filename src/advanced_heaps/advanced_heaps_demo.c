@@ -21,7 +21,7 @@ void advanced_heaps_demo(void)
                                     "5. Min-Max Heap (Double-Ended Priority Queue)\n"
                                     "6. d-Ary Heap\n"
                                     "7. Treap (Tree + Heap)\n"
-                                    "\nEnter choice (-1 to return): ",
+                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                     1, 7);
 
         if (status == INPUT_EXIT_SIGNAL)

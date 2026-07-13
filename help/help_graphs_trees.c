@@ -14,7 +14,8 @@ void help_graphs_trees_menu(void)
         printf("2. Graph Traversals & Spanning Trees\n");
         printf("3. Advanced Graph Algorithms\n");
         int choice;
-        int status = safe_input_int(&choice, "Enter choice (or -1 to go back): ", 1, 3);
+        int status =
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 3);
 
         if (status == INPUT_EXIT_SIGNAL)
         {

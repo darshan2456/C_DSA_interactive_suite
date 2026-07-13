@@ -15,7 +15,7 @@ void process_synchronization_demo(void)
                                     "1. Producer-Consumer Problem (Bounded Buffer)\n"
                                     "2. Dining Philosophers Problem\n"
                                     "3. Peterson's Algorithm (2-Process Mutual Exclusion)\n"
-                                    "Enter choice (-1 to exit): ",
+                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                     1, 3);
 
         if (status == INPUT_EXIT_SIGNAL || choice == -1)

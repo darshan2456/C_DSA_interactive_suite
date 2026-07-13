@@ -37,7 +37,7 @@ void bplus_tree_demo(void)
                                     "3. Search key\n"
                                     "4. Range Query\n"
                                     "5. Print Tree Structure\n"
-                                    "Enter choice: ",
+                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                     1, 5);
         if (status == INPUT_EXIT_SIGNAL)
         {

@@ -814,7 +814,7 @@ void max_flow_demo(void)
                                            "1. Ford-Fulkerson Algorithm (DFS-based)\n"
                                            "2. Edmonds-Karp Algorithm (BFS-based)\n"
                                            "3. Dinic's Algorithm (Level Graph + Blocking Flow)\n"
-                                           "Enter choice (-1 to exit): ",
+                                           "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                            1, 3);
         if (choice_status == INPUT_EXIT_SIGNAL)
         {

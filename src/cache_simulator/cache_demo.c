@@ -29,7 +29,7 @@ void cache_simulator_demo(void)
                                          "\nSelect Cache Algorithm:\n1. FIFO\n2. LRU\n3. "
                                          "MRU\n4. LFU (with aging)\n5. OPT (Belady's "
                                          "Optimal)\n6. Clock (Second Chance)\n7. Enhanced "
-                                         "Clock\nEnter choice (1 to 7), or '-1' to exit: ",
+                                         "Clock\nenter choice (\'-1\' to exit, or \'help\') : ",
                                          1, 7);
         if (algo_status == INPUT_EXIT_SIGNAL)
         {

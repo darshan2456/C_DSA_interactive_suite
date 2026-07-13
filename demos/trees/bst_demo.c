@@ -141,7 +141,7 @@ void binary_search_tree_demo(void)
                                                  "\nChoose deletion strategy:\n"
                                                  "1. Inorder Successor\n"
                                                  "2. Inorder Predecessor\n"
-                                                 "Enter choice: ",
+                                                 "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                                  1, 2);
 
                 if (strategy_status == INPUT_EXIT_SIGNAL)

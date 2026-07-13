@@ -15,7 +15,7 @@ void dynamic_programming_demo(void)
                                    "\nenter 2 for Longest Common Subsequence (LCS) demo"
                                    "\nenter 3 for Fibonacci sequence demo"
                                    "\nenter 4 for Matrix Chain Multiplication (MCM) demo"
-                                   "\nenter choice : ",
+                                   "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                    1, 4);
 
         if (dp_status == INPUT_EXIT_SIGNAL)

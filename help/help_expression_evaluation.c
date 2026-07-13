@@ -13,7 +13,8 @@ void help_expression_evaluation_menu(void)
         printf("1. Postfix Expression Evaluation\n");
         printf("2. Infix Expression Evaluation\n");
         int choice;
-        int status = safe_input_int(&choice, "Enter choice (or -1 to go back): ", 1, 1);
+        int status =
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 1);
 
         if (status == INPUT_EXIT_SIGNAL)
         {

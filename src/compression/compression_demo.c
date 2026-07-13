@@ -303,7 +303,7 @@ void compression_demo(void)
                                     "2. Huffman Coding\n"
                                     "3. Lempel-Ziv-Welch (LZW)\n"
                                     "4. Burrows-Wheeler & Move-to-Front\n"
-                                    "Enter choice (1 to 4), or '-1' to exit: ",
+                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                     1, 4);
 
         if (status == INPUT_EXIT_SIGNAL)

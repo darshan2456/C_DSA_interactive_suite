@@ -252,7 +252,7 @@ void run_leftist_demo(void)
                "3. Exit leftist heap demo\n");
 
         int choice;
-        if (safe_input_int(&choice, "\nEnter choice: ", 1, 3) != 1)
+        if (safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 3) != 1)
             break;
         if (choice == 3)
             break;
@@ -305,7 +305,7 @@ void run_skew_demo(void)
                "3. Exit skew heap demo\n");
 
         int choice;
-        if (safe_input_int(&choice, "\nEnter choice: ", 1, 3) != 1)
+        if (safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 3) != 1)
             break;
         if (choice == 3)
             break;

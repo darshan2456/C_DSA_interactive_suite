@@ -39,7 +39,7 @@ void deque_demo(void)
                                                "\n4. Delete Rear"
                                                "\n5. Get Front"
                                                "\n6. Get Rear"
-                                               "\nenter choice, '-1' to exit this deque:- ",
+                                               "\nenter choice (\'-1\' to exit, or \'help\') : - ",
                                                1, 6);
 
             if (choice_status == INPUT_EXIT_SIGNAL)

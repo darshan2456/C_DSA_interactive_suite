@@ -451,7 +451,8 @@ void greedy_best_first_search_demo(void)
     retry_choice:
         printf("\nOptions:\n1. Re-run Greedy BFS with NEW heuristics\n2. Re-run Greedy BFS with "
                "SAME heuristics (new start/destination)\n0. Exit Greedy BFS demo\n");
-        int choice_status = safe_input_int(&choice, "Enter choice: ", 0, 2);
+        int choice_status =
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 0, 2);
         if (choice_status == INPUT_EXIT_SIGNAL || choice == 0)
         {
             printf("\nExiting Greedy Best-First Search demo.....\n");

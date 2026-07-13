@@ -16,7 +16,7 @@ void searching_algorithms_demo(void)
                                                "\nenter 3 for recursive binary search"
                                                "\nenter 4 for interpolation search"
                                                "\nenter 5 for jump search"
-                                               "\nenter choice : ",
+                                               "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                                1, 5);
 
         if (searching_algo_status == INPUT_EXIT_SIGNAL)

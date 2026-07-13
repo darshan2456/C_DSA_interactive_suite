@@ -458,7 +458,8 @@ void astar_demo(void)
     retry_choice:
         printf("\nOptions:\n1. Re-run A* with NEW heuristics\n2. Re-run A* with SAME heuristics "
                "(new start/destination)\n0. Exit A* demo\n");
-        int choice_status = safe_input_int(&choice, "Enter choice: ", 0, 2);
+        int choice_status =
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 0, 2);
         if (choice_status == INPUT_EXIT_SIGNAL || choice == 0)
         {
             printf("\nExiting A* demo.....\n");

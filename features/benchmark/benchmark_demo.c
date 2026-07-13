@@ -26,7 +26,7 @@ void benchmark_menu_demo(void)
                                     "click 12 for Advanced Heaps benchmark\n"
                                     "click 13 for Cache Replacement Simulator benchmark\n"
                                     "click 14 for Compression & Encoding Algorithms benchmark\n"
-                                    "enter choice : ",
+                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                     1, 14);
 
         if (status == INPUT_EXIT_SIGNAL)

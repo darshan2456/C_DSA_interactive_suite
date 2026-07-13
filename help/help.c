@@ -25,7 +25,8 @@ void launch_help_page(void)
         printf("5. Advanced & Specialized Topics Help\n");
         printf("6. Navigation, Commands & General Info\n");
         int choice;
-        int status = safe_input_int(&choice, "Enter choice (or -1 to exit help): ", 1, 6);
+        int status =
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 6);
 
         if (status == INPUT_EXIT_SIGNAL)
         {

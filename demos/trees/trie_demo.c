@@ -21,7 +21,7 @@ void trie_demo(void)
                                     "\nenter 2 to search word"
                                     "\nenter 3 to check prefix"
                                     "\nenter 4 to delete word"
-                                    "\nenter choice : ",
+                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                     1, 4);
 
         if (status == INPUT_EXIT_SIGNAL)

@@ -22,7 +22,7 @@ void trees_demo(void)
                                      "\nenter 8 for Fenwick Tree (BIT) demo"
                                      "\nenter 9 for Splay Tree demo"
                                      "\nenter 10 for Red-Black Tree demo"
-                                     "\nenter choice : ",
+                                     "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                      1, 10);
 
         if (tree_status == INPUT_EXIT_SIGNAL)

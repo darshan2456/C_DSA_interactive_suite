@@ -440,7 +440,7 @@ void run_min_max_demo(void)
                "6. Exit min-max heap demo\n");
 
         int choice;
-        if (safe_input_int(&choice, "\nEnter choice: ", 1, 6) != 1)
+        if (safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 6) != 1)
             break;
         if (choice == 6)
             break;

@@ -15,7 +15,8 @@ void help_advanced_topics_menu(void)
         printf("3. Process Synchronization & Job Scheduling\n");
         printf("4. Cache Simulator & Step-Debugger\n");
         int choice;
-        int status = safe_input_int(&choice, "Enter choice (or -1 to go back): ", 1, 4);
+        int status =
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 4);
 
         if (status == INPUT_EXIT_SIGNAL)
         {

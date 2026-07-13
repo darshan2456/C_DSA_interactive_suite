@@ -124,7 +124,7 @@ void parity_bit_demo(void)
                                     "\nSelect Parity Mode:\n"
                                     "1. Even Parity\n"
                                     "2. Odd Parity\n"
-                                    "Enter choice: ",
+                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                     1, 2);
 
         if (status == INPUT_EXIT_SIGNAL)

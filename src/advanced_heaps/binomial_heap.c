@@ -320,7 +320,7 @@ void run_binomial_demo(void)
                "4. Exit binomial heap demo\n");
 
         int choice;
-        if (safe_input_int(&choice, "\nEnter choice: ", 1, 4) != 1)
+        if (safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 4) != 1)
             break;
         if (choice == 4)
             break;

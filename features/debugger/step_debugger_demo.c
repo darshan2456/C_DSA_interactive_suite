@@ -25,7 +25,7 @@ void debugger_demo(void)
                                     "4. Debug Breadth-First Search (BFS)\n"
                                     "5. Debug Depth-First Search (DFS)\n"
                                     "6. Debug Dijkstra's Shortest Path\n"
-                                    "\nEnter choice (-1 to exit): ",
+                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                     1, 6);
 
         if (status == INPUT_EXIT_SIGNAL)

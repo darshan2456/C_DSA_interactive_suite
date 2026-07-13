@@ -562,7 +562,7 @@ void scc_demo(void)
                                            "\nChoose SCC Algorithm to Visualize:\n"
                                            "1. Tarjan's Algorithm\n"
                                            "2. Kosaraju's Algorithm\n"
-                                           "Enter choice (-1 to exit): ",
+                                           "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                            1, 2);
         if (choice_status == INPUT_EXIT_SIGNAL)
         {

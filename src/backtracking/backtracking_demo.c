@@ -17,7 +17,7 @@ void backtracking_demo(void)
                                    "\nenter 3 for Rat in a Maze"
                                    "\nenter 4 for Graph Coloring"
                                    "\nenter 5 for Knight's Tour"
-                                   "\nenter choice : ",
+                                   "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                    1, 5);
 
         if (bt_status == INPUT_EXIT_SIGNAL)

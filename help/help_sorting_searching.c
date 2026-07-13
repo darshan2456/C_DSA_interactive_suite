@@ -14,7 +14,8 @@ void help_sorting_searching_menu(void)
         printf("2. Advanced O(N log N) Sorting Algorithms\n");
         printf("3. Searching Algorithms\n");
         int choice;
-        int status = safe_input_int(&choice, "Enter choice (or -1 to go back): ", 1, 3);
+        int status =
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 3);
 
         if (status == INPUT_EXIT_SIGNAL)
         {

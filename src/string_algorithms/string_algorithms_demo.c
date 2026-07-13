@@ -15,7 +15,7 @@ void string_algorithms_demo(void)
                                 "\nenter 2 for Knuth-Morris-Pratt (KMP) demo"
                                 "\nenter 3 for Rabin-Karp demo"
                                 "\nenter 4 for Suffix Array & Kasai's LCP demo"
-                                "\nenter choice : ",
+                                "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                 1, 4);
 
         if (status == INPUT_EXIT_SIGNAL)

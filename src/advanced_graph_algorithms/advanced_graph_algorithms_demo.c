@@ -19,7 +19,7 @@ void advanced_graph_algorithms_demo(void)
                                     "2. Maximum Flow\n"
                                     "3. Bipartite Matching\n"
                                     "4. Eulerian Path\n"
-                                    "\nEnter choice (-1 to return): ",
+                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
                                     1, 4);
 
         if (status == INPUT_EXIT_SIGNAL)
