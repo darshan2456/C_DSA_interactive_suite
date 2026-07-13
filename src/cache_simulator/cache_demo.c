@@ -1,4 +1,5 @@
 #include "cache.h"
+#include "config.h"
 #include "display_header.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -67,6 +68,26 @@ void cache_simulator_demo(void)
 
         const char* algo_names[] = {"",    "FIFO", "LRU",   "MRU",
                                     "LFU", "OPT",  "Clock", "Enhanced Clock"};
+
+        int step_mode = 1; // Default to Animated Playback
+        if (!is_instant())
+        {
+            int mode_choice;
+            int mode_status = safe_input_int(
+                &mode_choice,
+                "\nSelect Simulation Playback Mode:\n1. Animated Playback (Automatic)\n2. "
+                "Step-by-Step (Manual)\nEnter choice (1 or 2), or '-1' to exit: ",
+                1, 2);
+            if (mode_status == INPUT_EXIT_SIGNAL)
+            {
+                return;
+            }
+            if (mode_status == 1)
+            {
+                step_mode = mode_choice;
+            }
+        }
+
         printf("\nSimulating %s Cache Replacement:\n", algo_names[algo_choice]);
         printf("------------------------------------\n");
 
@@ -100,6 +121,19 @@ void cache_simulator_demo(void)
             }
             printf("Access page %d -> %s\n", page_id, is_hit ? "🟢 HIT " : "🔴 MISS");
             cache_visualize(&cache, cache.last_accessed_slot, is_hit);
+
+            if (step_mode == 2)
+            {
+                printf("\nPress [ENTER] to step to next access...");
+                // Simple wait for enter
+                int ch;
+                while ((ch = getchar()) != '\n' && ch != EOF)
+                    ;
+            }
+            else if (!is_instant())
+            {
+                dynamic_sleep();
+            }
         }
 
         printf("------------------------------------\n");
@@ -111,6 +145,9 @@ void cache_simulator_demo(void)
         }
 
         printf("\nPress [ENTER] to continue...");
-        getchar();
+        // Wait for ENTER to continue back to menu
+        int ch;
+        while ((ch = getchar()) != '\n' && ch != EOF)
+            ;
     }
 }
