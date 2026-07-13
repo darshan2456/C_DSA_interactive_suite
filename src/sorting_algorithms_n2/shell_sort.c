@@ -6,53 +6,6 @@
 
 void shell_sort(int arr[], int length_of_array);
 
-/* Console interface for user to input array size and elements to sort */
-void shell_sort_demo(void)
-{
-    int length_of_array;
-    while (1)
-    {
-        printf("\n\nShell sort demo");
-        int shell_sort_status = safe_input_int(&length_of_array,
-                                               "\nenter the number of elements in the array "
-                                               "(between 1 and 100), enter '-1' to exit:- ",
-                                               1, 100);
-
-        if (shell_sort_status == 0)
-            continue;
-
-        if (shell_sort_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting shell sort demo.\n");
-            return;
-        }
-
-        int arr[length_of_array];
-
-        // Gather all elements with safe input bounds
-        for (int i = 0; i < length_of_array; i++)
-        {
-        retry:
-            printf("\nenter the element number %d, (between 1 and 100), enter '-1' to exit:- ", i);
-            int element_status = safe_input_int(&arr[i], NULL, 1, 100);
-
-            if (element_status == INPUT_EXIT_SIGNAL)
-            {
-                printf("\nExiting shell sort demo.\n");
-                return;
-            }
-
-            if (element_status == 0)
-            {
-                goto retry;
-            }
-        }
-
-        printf("\nsee shell sort in action :-\n");
-        shell_sort(arr, length_of_array);
-    }
-}
-
 // note: the time measured by clock() function includes the time for shell sort computation and
 // printing the array state after each iteration. the CPU time must not be treated as a measure of
 // efficiency of the algorithm and is for demonstration only.

@@ -30,7 +30,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/cache_simulator \
 	-Isrc/compression \
 	-Idemos/data_structures \
-	-Idemos/trees
+	-Idemos/trees \
+	-Idemos/sorting_algorithms_n2
 	# -Itui
 
 # LDFLAGS = -lncurses
@@ -60,7 +61,8 @@ SRC_DIRS = \
 	src/cache_simulator \
 	src/compression \
 	demos/data_structures \
-	demos/trees
+	demos/trees \
+	demos/sorting_algorithms_n2
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))

@@ -7,49 +7,6 @@
 
 void selection_sort(int arr[], int length_of_array);
 
-void selection_sort_demo(void)
-{
-    int length_of_array;
-    while (1)
-    {
-        printf("\n\nSelection sort demo");
-        int selection_sort_status = safe_input_int(&length_of_array,
-                                                   "\nenter the number of elements in the array "
-                                                   "(between 1 and 100), enter '-1' to exit:- ",
-                                                   1, 100);
-
-        if (selection_sort_status == 0)
-            continue; // retry on failure
-
-        if (selection_sort_status == INPUT_EXIT_SIGNAL)
-        { // exit condition, user enters '-1'
-            printf("\nExiting selection sort demo....\n");
-            return;
-        }
-        int arr[length_of_array];
-
-        for (int i = 0; i < length_of_array; i++)
-        {
-
-        retry:
-            printf("\nenter element no %d, (between 1 and 100), enter '-1' to exit:- ", i);
-            int element_status = safe_input_int(&arr[i], NULL, 1, 100);
-            if (element_status == INPUT_EXIT_SIGNAL)
-            { // exit condition, user entered '-1'
-                printf("\nExiting selection sort demo.....\n");
-                return;
-            }
-
-            if (element_status == 0)
-            {
-                goto retry;
-            }
-        }
-
-        selection_sort(arr, length_of_array);
-    }
-}
-
 void selection_sort(int arr[], int length_of_array)
 {
     clock_t start_t, end_t;
