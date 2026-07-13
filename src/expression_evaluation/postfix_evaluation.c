@@ -10,7 +10,7 @@
 // main while loop, it indicates malformed postfix expression and program exits with error code '-1'
 // and on succesful evaluation returns '0' maximum expression length is 50 characters
 
-ExpressionResult evaluate_postfix_expr(const char* postfix_expr, int* final_result)
+int evaluate_postfix_expr(const char* postfix_expr, int* final_result)
 {
     if (postfix_expr == NULL || postfix_expr[0] == '\0')
     {
@@ -167,7 +167,7 @@ void postfix_evaluation_demo(void)
         }
 
         int final_result = 0;
-        ExpressionResult result = evaluate_postfix_expr(postfix_expr, &final_result);
+        int result = evaluate_postfix_expr(postfix_expr, &final_result);
 
         if (result == EXPR_SUCCESS)
         {

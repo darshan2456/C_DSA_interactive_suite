@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 
-ExpressionResult check_parantheses(char* s)
+int check_parantheses(char* s)
 {
     int i = 0;
     int step = 1;
@@ -169,7 +169,7 @@ void parantheses_checker_demo(void)
         if (status != 1)
             continue;
 
-        ExpressionResult result = check_parantheses(parantheses_expression);
+        int result = check_parantheses(parantheses_expression);
         printf("\n===================================\n");
         if (result == EXPR_SUCCESS)
             printf("Result  : Valid Expression\n");

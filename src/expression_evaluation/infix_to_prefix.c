@@ -39,7 +39,7 @@ static void swap_parentheses(char* str)
     }
 }
 
-ExpressionResult infix_to_prefix_convert(const char* infix_expr, char* prefix_expr, size_t max_size)
+int infix_to_prefix_convert(const char* infix_expr, char* prefix_expr, size_t max_size)
 {
     if (infix_expr == NULL || infix_expr[0] == '\0')
     {
@@ -226,8 +226,7 @@ void infix_to_prefix_demo(void)
             continue;
         }
 
-        ExpressionResult result =
-            infix_to_prefix_convert(infix_expr, prefix_expr, sizeof(prefix_expr));
+        int result = infix_to_prefix_convert(infix_expr, prefix_expr, sizeof(prefix_expr));
 
         if (result == EXPR_SUCCESS)
         {

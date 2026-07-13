@@ -28,8 +28,7 @@ int isOperator(char ch)
     return 0;
 }
 
-ExpressionResult infix_to_postfix_convert(const char* infix_expr, char* postfix_expr,
-                                          size_t max_size)
+int infix_to_postfix_convert(const char* infix_expr, char* postfix_expr, size_t max_size)
 {
     if (infix_expr == NULL || infix_expr[0] == '\0')
     {
@@ -208,8 +207,7 @@ void infix_to_postfix_demo(void)
             continue;
         }
 
-        ExpressionResult result =
-            infix_to_postfix_convert(infix_expr, postfix_expr, sizeof(postfix_expr));
+        int result = infix_to_postfix_convert(infix_expr, postfix_expr, sizeof(postfix_expr));
 
         if (result == EXPR_SUCCESS)
         {
