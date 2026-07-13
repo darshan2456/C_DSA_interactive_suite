@@ -155,12 +155,24 @@ static void run_separate_chaining(const int* keys, int m, int n)
         int val = keys[i];
         int hash_loc = hash_function(val, n);
         HashNode* node = malloc(sizeof(HashNode));
-        if (node)
+        if (!node)
         {
-            node->key = val;
-            node->next = table[hash_loc];
-            table[hash_loc] = node;
+            for (int j = 0; j < n; j++)
+            {
+                HashNode* curr = table[j];
+                while (curr)
+                {
+                    HashNode* temp = curr;
+                    curr = curr->next;
+                    free(temp);
+                }
+            }
+            free(table);
+            return;
         }
+        node->key = val;
+        node->next = table[hash_loc];
+        table[hash_loc] = node;
     }
 
     // Lookup

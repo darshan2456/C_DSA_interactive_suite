@@ -153,18 +153,21 @@ void run_trees_benchmark(int n)
             else if (i == 3) // Trie
             {
                 TrieNode* root = trie_create_node();
-                char buf[32];
-                for (int k = 0; k < n; k++)
+                if (root)
                 {
-                    sprintf(buf, "%d", keys[k]);
-                    trie_insert(root, buf);
+                    char buf[32];
+                    for (int k = 0; k < n; k++)
+                    {
+                        sprintf(buf, "%d", keys[k]);
+                        trie_insert(root, buf);
+                    }
+                    for (int k = 0; k < n; k++)
+                    {
+                        sprintf(buf, "%d", keys[k]);
+                        trie_search(root, buf);
+                    }
+                    trie_free(root);
                 }
-                for (int k = 0; k < n; k++)
-                {
-                    sprintf(buf, "%d", keys[k]);
-                    trie_search(root, buf);
-                }
-                trie_free(root);
             }
             else if (i == 4) // B-Tree
             {
