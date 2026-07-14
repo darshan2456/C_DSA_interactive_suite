@@ -61,6 +61,9 @@ typedef struct weightedGraph
     Edge** array;
 } weightedGraph;
 
+void bfs(Graph* graph, int start);
+void dfs(Graph* graph, int start);
+
 // New function to support new graph and edge node structures
 weightedGraph* create_weightedGraph(int V);
 void add_edge_directed(weightedGraph* graph, int src, int dest, int wt);

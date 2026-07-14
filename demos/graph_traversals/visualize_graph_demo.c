@@ -4,9 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// Builds a weighted graph (manual entry or CSV import) the same way the weighted
-// search demos do, then prints it as an adjacency list. Kept separate from the
-// unweighted path so each flow stays easy to follow.
 static void visualize_weighted_graph(void)
 {
     int edges;
@@ -189,10 +186,6 @@ static void visualize_weighted_graph(void)
     free_weightedGraph(graph);
 }
 
-// Standalone "visualize graph" demo: first asks whether to visualize an
-// unweighted or weighted graph, then builds it the same two ways the traversal
-// demos do (manual entry or CSV import) and prints it as an adjacency list. It
-// deliberately shows the structure itself, separate from any traversal output.
 void visualize_graph_demo(void)
 {
     int edges;

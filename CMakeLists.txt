@@ -41,6 +41,7 @@ set(SRC_DIRS
     demos/trees
     demos/sorting_algorithms_n2
     demos/backtracking
+    demos/graph_traversals
 )
 
 # Header search paths
