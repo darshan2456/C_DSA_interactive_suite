@@ -34,6 +34,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Idemos/data_structures \
 	-Idemos/trees \
 	-Idemos/sorting_algorithms_n2 \
+	-Idemos/graph_traversals \
 	-Itui
 
 # LDFLAGS = -lncurses
@@ -64,7 +65,8 @@ SRC_DIRS = \
 	src/compression \
 	demos/data_structures \
 	demos/trees \
-	demos/sorting_algorithms_n2
+	demos/sorting_algorithms_n2 \
+	demos/graph_traversals 
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
