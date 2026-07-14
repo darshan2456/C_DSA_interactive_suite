@@ -1,9 +1,9 @@
+#include "graph_traversals.h"
+#include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "graph_traversals.h"
-#include "safe_input.h"
 
 void dfs_demo(void)
 {
