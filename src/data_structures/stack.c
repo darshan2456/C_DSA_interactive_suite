@@ -5,6 +5,8 @@
 
 int push(stack* s, int value)
 {
+    if (s == NULL)
+        return 0;
     if (sll_insertAtBeginning(&(s->top), value) == 1)
     {
         return 1;
@@ -14,7 +16,7 @@ int push(stack* s, int value)
 
 int pop(stack* s)
 {
-    if (s->top == NULL)
+    if (s == NULL || s->top == NULL)
         return -1;
     int top_of_stack = s->top->data;
     sll_deleteAtBeginning(&(s->top));
@@ -32,6 +34,8 @@ stack* createStack(void)
 
 bool isEmpty(const stack* s)
 {
+    if (s == NULL)
+        return true;
     return s->top == NULL;
 }
 
@@ -48,7 +52,7 @@ void destroyStack(stack* s)
 
 int peek(const stack* s)
 {
-    if (s->top == NULL)
+    if (s == NULL || s->top == NULL)
         return -1;
     return s->top->data;
 }
