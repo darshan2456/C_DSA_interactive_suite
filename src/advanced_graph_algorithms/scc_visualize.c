@@ -392,7 +392,7 @@ static void visualize_kosaraju(Graph* graph)
     free_scc_result(sccs, sizes, count);
 }
 
-void scc_demo(void)
+static Graph* get_scc_demo_graph(void)
 {
     int edges;
     int graph_capacity;
@@ -409,7 +409,7 @@ void scc_demo(void)
         if (method_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting SCC visualization demo.....\n");
-            return;
+            return NULL;
         }
 
         if (method_status == 0)
@@ -432,7 +432,7 @@ void scc_demo(void)
             {
                 printf("\ninput ended unexpectedly\n");
                 clearerr(stdin);
-                return;
+                return NULL;
             }
 
             size_t len = strlen(path);
@@ -442,7 +442,7 @@ void scc_demo(void)
             if (strcmp(path, "-1") == 0)
             {
                 printf("\nExiting SCC visualization demo.....\n");
-                return;
+                return NULL;
             }
 
             if (len == 0)
@@ -474,7 +474,7 @@ void scc_demo(void)
             if (graph_capacity_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting SCC visualization demo.....\n");
-                return;
+                return NULL;
             }
 
             if (graph_capacity_status == 0)
@@ -486,7 +486,7 @@ void scc_demo(void)
             if (!graph)
             {
                 printf("\nmalloc allocation failed\n");
-                return;
+                return NULL;
             }
 
             break;
@@ -503,7 +503,7 @@ void scc_demo(void)
             {
                 printf("\nExiting SCC visualization demo\n");
                 free_graph(graph);
-                return;
+                return NULL;
             }
 
             if (edges_capacity_status == 0)
@@ -531,7 +531,7 @@ void scc_demo(void)
             {
                 printf("\nExiting SCC visualization demo\n");
                 free_graph(graph);
-                return;
+                return NULL;
             }
             if (src_status == 0)
             {
@@ -544,7 +544,7 @@ void scc_demo(void)
             {
                 printf("\nExiting SCC visualization demo\n");
                 free_graph(graph);
-                return;
+                return NULL;
             }
             if (dest_status == 0)
             {
@@ -553,6 +553,36 @@ void scc_demo(void)
 
             add_edge_directed_unweighted(graph, src, dest);
         }
+    }
+    return graph;
+}
+
+void tarjan_scc_demo(void)
+{
+    Graph* graph = get_scc_demo_graph();
+    if (graph != NULL)
+    {
+        visualize_tarjan(graph);
+        free_graph(graph);
+    }
+}
+
+void kosaraju_scc_demo(void)
+{
+    Graph* graph = get_scc_demo_graph();
+    if (graph != NULL)
+    {
+        visualize_kosaraju(graph);
+        free_graph(graph);
+    }
+}
+
+void scc_demo(void)
+{
+    Graph* graph = get_scc_demo_graph();
+    if (graph == NULL)
+    {
+        return;
     }
 
     int choice;

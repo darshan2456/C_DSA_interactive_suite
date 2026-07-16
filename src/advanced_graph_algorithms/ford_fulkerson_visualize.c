@@ -599,7 +599,7 @@ static void visualize_dinic(weightedGraph* graph, int source, int sink)
     free(parent);
 }
 
-void max_flow_demo(void)
+static weightedGraph* get_max_flow_demo_graph(int* out_graph_capacity)
 {
     int edges;
     int graph_capacity = 0;
@@ -616,7 +616,7 @@ void max_flow_demo(void)
         if (method_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting Max Flow visualization demo.....\n");
-            return;
+            return NULL;
         }
 
         if (method_status == 0)
@@ -639,7 +639,7 @@ void max_flow_demo(void)
             {
                 printf("\ninput ended unexpectedly\n");
                 clearerr(stdin);
-                return;
+                return NULL;
             }
 
             size_t len = strlen(path);
@@ -649,7 +649,7 @@ void max_flow_demo(void)
             if (strcmp(path, "-1") == 0)
             {
                 printf("\nExiting Max Flow visualization demo.....\n");
-                return;
+                return NULL;
             }
 
             if (len == 0)
@@ -681,7 +681,7 @@ void max_flow_demo(void)
             if (graph_capacity_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting Max Flow visualization demo.....\n");
-                return;
+                return NULL;
             }
 
             if (graph_capacity_status == 0)
@@ -693,7 +693,7 @@ void max_flow_demo(void)
             if (!graph)
             {
                 printf("\nmalloc allocation failed\n");
-                return;
+                return NULL;
             }
 
             break;
@@ -710,7 +710,7 @@ void max_flow_demo(void)
             {
                 printf("\nExiting Max Flow visualization demo\n");
                 free_weightedGraph(graph);
-                return;
+                return NULL;
             }
 
             if (edges_capacity_status == 0)
@@ -741,7 +741,7 @@ void max_flow_demo(void)
             {
                 printf("\nExiting Max Flow visualization demo\n");
                 free_weightedGraph(graph);
-                return;
+                return NULL;
             }
             if (src_status == 0)
             {
@@ -754,7 +754,7 @@ void max_flow_demo(void)
             {
                 printf("\nExiting Max Flow visualization demo\n");
                 free_weightedGraph(graph);
-                return;
+                return NULL;
             }
             if (dest_status == 0)
             {
@@ -766,7 +766,7 @@ void max_flow_demo(void)
             {
                 printf("\nExiting Max Flow visualization demo\n");
                 free_weightedGraph(graph);
-                return;
+                return NULL;
             }
             if (wt_status == 0)
             {
@@ -777,14 +777,19 @@ void max_flow_demo(void)
         }
     }
 
+    *out_graph_capacity = graph_capacity;
+    return graph;
+}
+
+static bool get_source_sink(int graph_capacity, int* out_source, int* out_sink)
+{
     int source, sink;
     while (1)
     {
         int src_status = safe_input_int(&source, "Enter source node: ", 0, graph_capacity - 1);
         if (src_status == INPUT_EXIT_SIGNAL)
         {
-            free_weightedGraph(graph);
-            return;
+            return false;
         }
         if (src_status == 0)
             continue;
@@ -792,8 +797,7 @@ void max_flow_demo(void)
         int sink_status = safe_input_int(&sink, "Enter sink node: ", 0, graph_capacity - 1);
         if (sink_status == INPUT_EXIT_SIGNAL)
         {
-            free_weightedGraph(graph);
-            return;
+            return false;
         }
         if (sink_status == 0)
             continue;
@@ -804,6 +808,69 @@ void max_flow_demo(void)
             continue;
         }
         break;
+    }
+    *out_source = source;
+    *out_sink = sink;
+    return true;
+}
+
+void ford_fulkerson_demo(void)
+{
+    int graph_capacity;
+    weightedGraph* graph = get_max_flow_demo_graph(&graph_capacity);
+    if (graph == NULL)
+        return;
+
+    int source, sink;
+    if (get_source_sink(graph_capacity, &source, &sink))
+    {
+        visualize_ford_fulkerson(graph, source, sink);
+    }
+    free_weightedGraph(graph);
+}
+
+void edmonds_karp_demo(void)
+{
+    int graph_capacity;
+    weightedGraph* graph = get_max_flow_demo_graph(&graph_capacity);
+    if (graph == NULL)
+        return;
+
+    int source, sink;
+    if (get_source_sink(graph_capacity, &source, &sink))
+    {
+        visualize_edmonds_karp(graph, source, sink);
+    }
+    free_weightedGraph(graph);
+}
+
+void dinic_demo(void)
+{
+    int graph_capacity;
+    weightedGraph* graph = get_max_flow_demo_graph(&graph_capacity);
+    if (graph == NULL)
+        return;
+
+    int source, sink;
+    if (get_source_sink(graph_capacity, &source, &sink))
+    {
+        visualize_dinic(graph, source, sink);
+    }
+    free_weightedGraph(graph);
+}
+
+void max_flow_demo(void)
+{
+    int graph_capacity;
+    weightedGraph* graph = get_max_flow_demo_graph(&graph_capacity);
+    if (graph == NULL)
+        return;
+
+    int source, sink;
+    if (!get_source_sink(graph_capacity, &source, &sink))
+    {
+        free_weightedGraph(graph);
+        return;
     }
 
     int choice;
