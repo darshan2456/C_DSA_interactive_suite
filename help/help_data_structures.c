@@ -86,6 +86,36 @@ void help_data_structures_menu(void)
                 printf("QUEUE (FIFO - First In First Out):\n");
                 printf("    Supports Enqueue (insert at rear) and Dequeue (remove from front) "
                        "operations.\n\n");
+                printf("CIRCULAR QUEUE:\n");
+                printf("    A queue where the last position is connected back to the first\n");
+                printf("    position to make a circle, resolving the linear queue \"false "
+                       "overflow\"\n");
+                printf("    issue by wrapping indices modulo N.\n\n");
+                printf("DOUBLE-ENDED QUEUE (DEQUE):\n");
+                printf("    An extension of a queue that supports insertion and deletion at\n");
+                printf("    both the front and rear ends.\n\n");
+
+                printf("RELATIONSHIPS & COMPARISONS:\n");
+                printf("    • Simple Queue vs. Circular Queue:\n");
+                printf("      - Simple Queue suffers from false overflow where unused front space "
+                       "is wasted.\n");
+                printf("      - Circular Queue wrapping prevents false overflow, allowing "
+                       "continuous reuse of empty slots.\n");
+                printf("    • Deque vs. Stack & Queue:\n");
+                printf("      - Deque acts as a double-ended generalization, enabling both LIFO "
+                       "(Stack) and FIFO (Queue)\n");
+                printf("        operations on either side depending on the restricted "
+                       "operations.\n\n");
+
+                printf("WHEN TO USE WHAT & REAL-WORLD USE CASES:\n");
+                printf("    • Use Stacks for depth-first searches, compiler parsing/syntax checks, "
+                       "and recursion backtracking.\n");
+                printf("    • Use Circular Queues for streaming buffers (e.g. audio playback), "
+                       "network packet ring buffers,\n");
+                printf("      and scheduling processes.\n");
+                printf("    • Use Deques for undo/redo browser history trackers, and work-stealing "
+                       "job processor queues.\n\n");
+
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");

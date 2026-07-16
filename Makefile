@@ -36,6 +36,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Idemos/sorting_algorithms_n2 \
 	-Idemos/backtracking \
 	-Idemos/graph_traversals \
+	-Idemos/searching_algorithms \
 	-Itui
 
 # LDFLAGS = -lncurses
@@ -68,7 +69,8 @@ SRC_DIRS = \
 	demos/trees \
 	demos/sorting_algorithms_n2 \
 	demos/backtracking \
-	demos/graph_traversals 
+	demos/graph_traversals \
+	demos/searching_algorithms
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))

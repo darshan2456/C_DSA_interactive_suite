@@ -49,8 +49,9 @@ void data_structures_demo(void)
                         "\nenter 3 for arrays demo"
                         "\nenter 4 for priority queue (binary heap implementation with array) demo"
                         "\nenter 5 for simple (linear) queue demo"
+                        "\nenter 6 for stack demo"
                         "\nenter choice (\'-1\' to exit, or \'help\') : ",
-                        1, 5);
+                        1, 6);
 
                     if (linear_ds_status == INPUT_EXIT_SIGNAL)
                         break;
@@ -86,6 +87,12 @@ void data_structures_demo(void)
                     {
                         display_header("Simple Queue");
                         simple_queue_demo();
+                        continue;
+                    }
+                    if (linear_ds_choice == 6)
+                    {
+                        display_header("Stack");
+                        stack_demo();
                         continue;
                     }
                 }

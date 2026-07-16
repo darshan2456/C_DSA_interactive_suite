@@ -76,7 +76,7 @@ void run_legacy_menu()
             1, 21 // limits
         );
 
-        if (status == -111)
+        if (status == INPUT_EXIT_SIGNAL)
         {
             break;
         }
@@ -172,7 +172,7 @@ void tui_menu()
             1, 2 // limits
         );
 
-        if (status == -111)
+        if (status == INPUT_EXIT_SIGNAL)
         {
             break;
         }

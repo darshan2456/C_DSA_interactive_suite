@@ -34,4 +34,7 @@ void printStack(const stack* s);
 // Print the stack contents using integer values.
 void printStackAsInts(const stack* s);
 
+// Run the stack demonstration module.
+void stack_demo(void);
+
 #endif
