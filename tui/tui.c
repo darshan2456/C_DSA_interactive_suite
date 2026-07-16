@@ -210,9 +210,13 @@ static Entry ENTRIES[] = {
     {"Floyd-Warshall", floyd_warshall_demo, 0, 0, 1},
 
     {"advanced_graph_algorithms", NULL, 1, 1, 0},
-    {"SCC (Tarjan & Kosaraju)", scc_demo, 0, 0, 1},
-    {"Maximum Flow", max_flow_demo, 0, 0, 1},
-    {"Bipartite Matching", bipartite_matching_demo, 0, 0, 1},
+    {"Tarjan's SCC", tarjan_scc_demo, 0, 0, 1},
+    {"Kosaraju's SCC", kosaraju_scc_demo, 0, 0, 1},
+    {"Ford-Fulkerson Max Flow", ford_fulkerson_demo, 0, 0, 1},
+    {"Edmonds-Karp Max Flow", edmonds_karp_demo, 0, 0, 1},
+    {"Dinic's Max Flow", dinic_demo, 0, 0, 1},
+    {"Bipartite Matching (Dinic)", dinic_bipartite_matching_demo, 0, 0, 1},
+    {"Bipartite Matching (Hopcroft-Karp)", hopcroft_karp_demo, 0, 0, 1},
     {"Eulerian Path", eulerian_path_demo, 0, 0, 1},
 
     {"advanced_heaps", NULL, 1, 1, 0},
