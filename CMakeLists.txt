@@ -45,6 +45,7 @@ set(SRC_DIRS
     demos/searching_algorithms
     demos/advanced_graph_algorithms
     demos/string_algorithms
+    features/telemetry
 )
 
 # Header search paths

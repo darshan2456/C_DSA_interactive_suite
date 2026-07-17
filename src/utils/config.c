@@ -2,6 +2,7 @@
 #include "cross_platform_timer.h"
 #include "safe_input.h"
 #include "step_debugger.h"
+#include "telemetry.h"
 #include <stdio.h>
 
 #include <unistd.h>
@@ -151,3 +152,13 @@ int is_instant(void)
 }
 
 void init_windows_console(void) {}
+
+void set_telemetry_trace_enabled(int enabled)
+{
+    set_telemetry_enabled(enabled ? true : false);
+}
+
+int is_telemetry_trace_enabled(void)
+{
+    return is_telemetry_enabled() ? 1 : 0;
+}
