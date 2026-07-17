@@ -64,7 +64,7 @@ void* dequeue(Queue* queue_ptr)
 
 void display_circ_queue(Queue* queue_ptr)
 {
-    if (queue_ptr == NULL)
+    if (queue_ptr == NULL || queue_ptr->arr == NULL)
         return;
 
     int i = queue_ptr->front;
