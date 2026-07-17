@@ -44,6 +44,7 @@ set(SRC_DIRS
     demos/graph_traversals
     demos/searching_algorithms
     demos/advanced_graph_algorithms
+    demos/string_algorithms
 )
 
 # Header search paths
