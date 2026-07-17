@@ -12,7 +12,7 @@
 
 // Allocates a node holding `value`. Returns NULL on malloc failure. The caller is responsible
 // for linking it into the ring (next is left as NULL on purpose).
-static scll_Node* scll_create_node(int value)
+static scll_Node* scll_create_node(void* value)
 {
     scll_Node* node = malloc(sizeof(scll_Node));
     if (node == NULL)
@@ -31,7 +31,7 @@ void scll_init(scll* list)
     list->length = 0;
 }
 
-int scll_insertAtBeginning(scll* list, int value)
+int scll_insertAtBeginning(scll* list, void* value)
 {
     scll_Node* node = scll_create_node(value);
     if (node == NULL)
@@ -58,7 +58,7 @@ int scll_insertAtBeginning(scll* list, int value)
     return 1;
 }
 
-int scll_insertAtEnd(scll* list, int value)
+int scll_insertAtEnd(scll* list, void* value)
 {
     scll_Node* node = scll_create_node(value);
     if (node == NULL)
@@ -84,7 +84,7 @@ int scll_insertAtEnd(scll* list, int value)
     return 1;
 }
 
-int scll_insertAtPosition(scll* list, int value, int position)
+int scll_insertAtPosition(scll* list, void* value, int position)
 {
     // Valid insert positions are 0..length (length == append at the end).
     if (position < 0 || position > list->length)
@@ -122,7 +122,7 @@ int scll_insertAtPosition(scll* list, int value, int position)
     return 1;
 }
 
-int scll_deleteAtBeginning(scll* list)
+int scll_deleteAtBeginning(scll* list, void (*free_data)(void*))
 {
     if (list->head == NULL)
     {
@@ -134,6 +134,10 @@ int scll_deleteAtBeginning(scll* list)
     if (list->head == list->tail)
     {
         // Single node deletes down to the empty list.
+        if (free_data != NULL)
+        {
+            free_data(old_head->data);
+        }
         free(old_head);
         list->head = NULL;
         list->tail = NULL;
@@ -142,6 +146,10 @@ int scll_deleteAtBeginning(scll* list)
     {
         list->head = old_head->next;
         list->tail->next = list->head; // keep the ring closed onto the new head
+        if (free_data != NULL)
+        {
+            free_data(old_head->data);
+        }
         free(old_head);
     }
 
@@ -149,7 +157,7 @@ int scll_deleteAtBeginning(scll* list)
     return 1;
 }
 
-int scll_deleteAtEnd(scll* list)
+int scll_deleteAtEnd(scll* list, void (*free_data)(void*))
 {
     if (list->head == NULL)
     {
@@ -158,6 +166,10 @@ int scll_deleteAtEnd(scll* list)
 
     if (list->head == list->tail)
     {
+        if (free_data != NULL)
+        {
+            free_data(list->tail->data);
+        }
         free(list->tail);
         list->head = NULL;
         list->tail = NULL;
@@ -170,6 +182,10 @@ int scll_deleteAtEnd(scll* list)
         {
             prev = prev->next;
         }
+        if (free_data != NULL)
+        {
+            free_data(list->tail->data);
+        }
         free(list->tail);
         list->tail = prev;
         list->tail->next = list->head; // re-close the ring
@@ -179,30 +195,54 @@ int scll_deleteAtEnd(scll* list)
     return 1;
 }
 
-int scll_deleteByValue(scll* list, int value)
+int scll_deleteByValue(scll* list, const void* value, int (*compare)(const void*, const void*), void (*free_data)(void*))
 {
     if (list->head == NULL)
     {
         return -2;
     }
 
-    // Deleting the head value is delegated so the head/tail bookkeeping stays in one place.
-    if (list->head->data == value)
+    int match = 0;
+    if (compare != NULL)
     {
-        return scll_deleteAtBeginning(list);
+        match = (compare(list->head->data, value) == 0);
+    }
+    else
+    {
+        match = (list->head->data == value);
+    }
+
+    // Deleting the head value is delegated so the head/tail bookkeeping stays in one place.
+    if (match)
+    {
+        return scll_deleteAtBeginning(list, free_data);
     }
 
     // Search for the predecessor of the node holding `value`, bounded by one full lap.
     scll_Node* prev = list->head;
     while (prev->next != list->head)
     {
-        if (prev->next->data == value)
+        int element_match = 0;
+        if (compare != NULL)
+        {
+            element_match = (compare(prev->next->data, value) == 0);
+        }
+        else
+        {
+            element_match = (prev->next->data == value);
+        }
+
+        if (element_match)
         {
             scll_Node* target = prev->next;
             prev->next = target->next;
             if (target == list->tail)
             {
                 list->tail = prev; // removed the tail: prev becomes the new tail
+            }
+            if (free_data != NULL)
+            {
+                free_data(target->data);
             }
             free(target);
             list->length--;
@@ -214,7 +254,7 @@ int scll_deleteByValue(scll* list, int value)
     return -1; // value not present
 }
 
-int scll_deleteAtPosition(scll* list, int position)
+int scll_deleteAtPosition(scll* list, int position, void (*free_data)(void*))
 {
     if (list->head == NULL)
     {
@@ -228,7 +268,7 @@ int scll_deleteAtPosition(scll* list, int position)
 
     if (position == 0)
     {
-        return scll_deleteAtBeginning(list);
+        return scll_deleteAtBeginning(list, free_data);
     }
 
     // Walk to the predecessor of the target node.
@@ -244,13 +284,17 @@ int scll_deleteAtPosition(scll* list, int position)
     {
         list->tail = prev; // deleting the last node updates tail
     }
+    if (free_data != NULL)
+    {
+        free_data(target->data);
+    }
     free(target);
 
     list->length--;
     return 1;
 }
 
-int scll_search(const scll* list, int key)
+int scll_search(const scll* list, const void* key, int (*compare)(const void*, const void*))
 {
     if (list->head == NULL)
     {
@@ -261,7 +305,17 @@ int scll_search(const scll* list, int key)
     const scll_Node* cur = list->head;
     do
     {
-        if (cur->data == key)
+        int match = 0;
+        if (compare != NULL)
+        {
+            match = (compare(cur->data, key) == 0);
+        }
+        else
+        {
+            match = (cur->data == key);
+        }
+
+        if (match)
         {
             return index;
         }
@@ -277,7 +331,7 @@ int scll_getLength(const scll* list)
     return list->length;
 }
 
-void scll_printlist(const scll* list)
+void scll_printlist(const scll* list, void (*print_element)(const void*))
 {
     printf("HEAD->");
     if (list->head == NULL)
@@ -289,14 +343,22 @@ void scll_printlist(const scll* list)
     const scll_Node* cur = list->head;
     do
     {
-        printf("%d->", cur->data);
+        if (print_element != NULL)
+        {
+            print_element(cur->data);
+        }
+        else
+        {
+            printf("%p", cur->data);
+        }
+        printf("->");
         cur = cur->next;
     } while (cur != list->head);
 
     printf("(back to HEAD)");
 }
 
-void scll_destroy(scll* list)
+void scll_destroy(scll* list, void (*free_data)(void*))
 {
     if (list->head == NULL)
     {
@@ -309,6 +371,10 @@ void scll_destroy(scll* list)
     while (cur != NULL)
     {
         scll_Node* upcoming = cur->next;
+        if (free_data != NULL)
+        {
+            free_data(cur->data);
+        }
         free(cur);
         cur = upcoming;
     }

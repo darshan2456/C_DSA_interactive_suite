@@ -51,9 +51,24 @@ void help_data_structures_menu(void)
             case 2:
                 display_header("Help - Doubly Linked List (DLL)");
                 printf("CONCEPT:\n");
-                printf("    A Doubly Linked List node has three parts: data, next pointer,\n");
-                printf("    and a prev pointer referencing the previous node. This allows "
-                       "bi-directional traversal.\n\n");
+                printf("    A Doubly Linked List node has three parts: a next pointer, a prev pointer,\n");
+                printf("    and a data pointer referencing the element itself. This structure allows\n");
+                printf("    for seamless bi-directional traversal (forward and backward).\n\n");
+                printf("HOW WE ACHIEVE GENERIC DESIGN (Storing any type of data):\n");
+                printf("    In standard C, structures usually hold a specific type of data (like 'int').\n");
+                printf("    To make this DLL capable of holding anything (integers, strings, custom structs),\n");
+                printf("    we use:\n\n");
+                printf("    1. Void Pointers (void* data):\n");
+                printf("       A void pointer is a generic pointer. It acts as an envelope that can store\n");
+                printf("       the memory address of any variable type.\n\n");
+                printf("    2. Callback Functions:\n");
+                printf("       Since the list doesn't know what data it is holding, the programmer must\n");
+                printf("       pass small helper functions (callbacks) to describe how to perform operations:\n");
+                printf("       • Printer Callback: Tells the list how to print the items on screen.\n");
+                printf("       • Compare Callback: Tells the list how to check if two items are equal\n");
+                printf("         when searching or deleting nodes.\n");
+                printf("       • Destructor Callback: Tells the list how to free the item's memory\n");
+                printf("         so we don't cause memory leaks.\n\n");
                 printf("OPERATIONS:\n");
                 printf("    • Insertion & Deletion at arbitrary positions\n");
                 printf("    • Reverse Traversal\n\n");
@@ -66,12 +81,13 @@ void help_data_structures_menu(void)
             case 3:
                 display_header("Help - Circular Linked Lists");
                 printf("CONCEPT:\n");
-                printf("    In Circular Linked Lists, the last node links back to the first node "
-                       "instead of pointing to NULL.\n");
-                printf("    • Singly Circular (SCLL): Single link pointing forward, looping last "
-                       "to first.\n");
-                printf("    • Doubly Circular (DCLL): Predecessor and successor links form a full "
-                       "circular loop.\n\n");
+                printf("    In Circular Linked Lists, the last node links back to the first node instead of pointing to NULL.\n");
+                printf("    • Singly Circular (SCLL): Single link pointing forward, looping last to first.\n");
+                printf("    • Doubly Circular (DCLL): Predecessor and successor links form a full circular loop.\n\n");
+                printf("GENERIC DESIGN IN SCLL:\n");
+                printf("    Just like the Doubly Linked List, our Singly Circular List is fully generic.\n");
+                printf("    It stores data as generic 'void*' pointers and utilizes programmer-defined\n");
+                printf("    callbacks for printing elements, comparing keys, and cleaning up memory.\n\n");
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");

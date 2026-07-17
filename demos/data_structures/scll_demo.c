@@ -1,6 +1,20 @@
 #include "safe_input.h"
 #include "scll.h"
 #include <stdio.h>
+#include <stdlib.h>
+
+static void print_int(const void* data)
+{
+    if (data != NULL)
+    {
+        printf("%d", *(const int*)data);
+    }
+}
+
+static int compare_ints(const void* a, const void* b)
+{
+    return *(const int*)a - *(const int*)b;
+}
 
 void scll_demo(void)
 {
@@ -19,7 +33,7 @@ start_scll:
     if (scll_length_status == INPUT_EXIT_SIGNAL)
     {
         printf("\nExiting scll demo\n");
-        scll_destroy(&list);
+        scll_destroy(&list, free);
         return;
     }
 
@@ -44,7 +58,7 @@ start_scll:
         if (scll_position_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting scll demo\n");
-            scll_destroy(&list);
+            scll_destroy(&list, free);
             return;
         }
 
@@ -66,7 +80,7 @@ start_scll:
             if (scll_end_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting scll demo\n");
-                scll_destroy(&list);
+                scll_destroy(&list, free);
                 return;
             }
 
@@ -75,14 +89,22 @@ start_scll:
                 goto scll_enter_end_value;
             }
 
-            int status = scll_insertAtEnd(&list, scll_end_value);
-            if (status == -1)
+            int* val = malloc(sizeof(int));
+            if (val == NULL)
             {
                 printf("\nmalloc allocation failure. try again\n");
                 goto scll_enter_end_value;
             }
+            *val = scll_end_value;
+            int status = scll_insertAtEnd(&list, val);
+            if (status == -1)
+            {
+                free(val);
+                printf("\nmalloc allocation failure. try again\n");
+                goto scll_enter_end_value;
+            }
             printf("\n");
-            scll_printlist(&list);
+            scll_printlist(&list, print_int);
         }
         else if (scll_position_choice == 0)
         {
@@ -98,7 +120,7 @@ start_scll:
             if (scll_start_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting scll demo\n");
-                scll_destroy(&list);
+                scll_destroy(&list, free);
                 return;
             }
 
@@ -106,14 +128,22 @@ start_scll:
             {
                 goto scll_enter_start_value;
             }
-            int status = scll_insertAtBeginning(&list, scll_start_value);
-            if (status == -1)
+            int* val = malloc(sizeof(int));
+            if (val == NULL)
             {
                 printf("\nmalloc allocation failure. try again\n");
                 goto scll_enter_start_value;
             }
+            *val = scll_start_value;
+            int status = scll_insertAtBeginning(&list, val);
+            if (status == -1)
+            {
+                free(val);
+                printf("\nmalloc allocation failure. try again\n");
+                goto scll_enter_start_value;
+            }
             printf("\n");
-            scll_printlist(&list);
+            scll_printlist(&list, print_int);
         }
         else if (scll_position_choice == 2)
         {
@@ -131,7 +161,7 @@ start_scll:
             if (scll_pos_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting scll demo\n");
-                scll_destroy(&list);
+                scll_destroy(&list, free);
                 return;
             }
 
@@ -149,7 +179,7 @@ start_scll:
             if (scll_pos_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting scll demo\n");
-                scll_destroy(&list);
+                scll_destroy(&list, free);
                 return;
             }
 
@@ -158,19 +188,28 @@ start_scll:
                 goto scll_enter_pos_index;
             }
 
-            int status = scll_insertAtPosition(&list, scll_pos_value, scll_pos_index);
+            int* val = malloc(sizeof(int));
+            if (val == NULL)
+            {
+                printf("\nmalloc allocation failure. try again\n");
+                goto scll_enter_pos_value;
+            }
+            *val = scll_pos_value;
+            int status = scll_insertAtPosition(&list, val, scll_pos_index);
             if (status == -1)
             {
+                free(val);
                 printf("\nmalloc allocation failure. try again\n");
                 goto scll_enter_pos_value;
             }
             else if (status == -2)
             {
+                free(val);
                 printf("\ninvalid position. try again\n");
                 goto scll_enter_pos_index;
             }
             printf("\n");
-            scll_printlist(&list);
+            scll_printlist(&list, print_int);
         }
 
         scll_element_count--;
@@ -194,7 +233,7 @@ start_scll:
             continue;
         }
 
-        int index = scll_search(&list, scll_search_value);
+        int index = scll_search(&list, &scll_search_value, compare_ints);
         printf("\nelement found at index :- %d", index);
     }
 
@@ -216,7 +255,7 @@ start_scll:
         if (scll_delete_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting scll demo\n");
-            scll_destroy(&list);
+            scll_destroy(&list, free);
             return;
         }
         if (scll_delete_status == 0)
@@ -226,7 +265,7 @@ start_scll:
 
         if (scll_delete_choice == 0)
         {
-            int status = scll_deleteAtBeginning(&list);
+            int status = scll_deleteAtBeginning(&list, free);
             if (status == -1)
             {
                 printf("\nList is empty\n");
@@ -234,12 +273,12 @@ start_scll:
             else
             {
                 printf("\nscll after deletion - ");
-                scll_printlist(&list);
+                scll_printlist(&list, print_int);
             }
         }
         else if (scll_delete_choice == 1)
         {
-            int status = scll_deleteAtEnd(&list);
+            int status = scll_deleteAtEnd(&list, free);
             if (status == -1)
             {
                 printf("\nList is empty\n");
@@ -247,7 +286,7 @@ start_scll:
             else
             {
                 printf("\nscll after deletion - ");
-                scll_printlist(&list);
+                scll_printlist(&list, print_int);
             }
         }
         else if (scll_delete_choice == 2)
@@ -261,7 +300,7 @@ start_scll:
             if (scll_delete_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting scll demo\n");
-                scll_destroy(&list);
+                scll_destroy(&list, free);
                 return;
             }
             if (scll_delete_status == 0)
@@ -269,7 +308,7 @@ start_scll:
                 continue;
             }
 
-            int status = scll_deleteByValue(&list, scll_delete_value);
+            int status = scll_deleteByValue(&list, &scll_delete_value, compare_ints, free);
             if (status == -2)
             {
                 printf("\nList is empty\n");
@@ -281,7 +320,7 @@ start_scll:
             else
             {
                 printf("\nscll after deletion - ");
-                scll_printlist(&list);
+                scll_printlist(&list, print_int);
             }
         }
         else if (scll_delete_choice == 3)
@@ -306,7 +345,7 @@ start_scll:
             if (scll_pos_delete_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting scll demo\n");
-                scll_destroy(&list);
+                scll_destroy(&list, free);
                 return;
             }
 
@@ -315,7 +354,7 @@ start_scll:
                 goto scll_delete_pos_input;
             }
 
-            int status = scll_deleteAtPosition(&list, scll_pos_delete_index);
+            int status = scll_deleteAtPosition(&list, scll_pos_delete_index, free);
             if (status == -1)
             {
                 printf("\nList is empty\n");
@@ -327,10 +366,10 @@ start_scll:
             else
             {
                 printf("\nscll after deletion - ");
-                scll_printlist(&list);
+                scll_printlist(&list, print_int);
             }
         }
     }
 
-    scll_destroy(&list);
+    scll_destroy(&list, free);
 }
