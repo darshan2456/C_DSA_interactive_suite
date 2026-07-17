@@ -46,6 +46,7 @@ set(SRC_DIRS
     demos/advanced_graph_algorithms
     demos/string_algorithms
     features/telemetry
+    features/serialization
 )
 
 # Header search paths
