@@ -12,7 +12,7 @@
 
 int evaluate_postfix_expr(const char* postfix_expr, int* final_result)
 {
-    if (postfix_expr == NULL || postfix_expr[0] == '\0')
+    if (postfix_expr == NULL || postfix_expr[0] == '\0' || final_result == NULL)
     {
         return EXPR_ERROR_EMPTY;
     }
