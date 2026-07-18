@@ -1,7 +1,9 @@
+#include "export.h"
 #include "queue.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void circular_queue_demo(void)
 {
@@ -42,9 +44,7 @@ void circular_queue_demo(void)
 
             if (circ_queue_status == INPUT_EXIT_SIGNAL)
             {
-                printf("\nExiting circular queue demo\n");
-                destroy_circ_queue(&rollnos);
-                return;
+                break;
             }
 
             if (circ_queue_status == 0)
@@ -61,9 +61,7 @@ void circular_queue_demo(void)
 
                 if (enqueue_val_status == INPUT_EXIT_SIGNAL)
                 {
-                    printf("\nExiting circular queue demo\n");
-                    destroy_circ_queue(&rollnos);
-                    return;
+                    break;
                 }
 
                 if (enqueue_val_status == 0)
@@ -104,5 +102,46 @@ void circular_queue_demo(void)
                 display_circ_queue(&rollnos);
             }
         }
+
+        // Export option
+        int export_choice;
+        int export_status = safe_input_int(&export_choice,
+                                           "\nDo you want to export this Circular Queue to a file? "
+                                           "(1 for Yes, 2 for No, or '-1' to exit): ",
+                                           1, 2);
+        if (export_status != INPUT_EXIT_SIGNAL && export_status != 0 && export_choice == 1)
+        {
+            char path[256];
+            int path_status =
+                safe_input_string(path, "Enter filename to export (e.g. queue.json): ");
+            if (path_status != INPUT_EXIT_SIGNAL && strlen(path) > 0)
+            {
+                int format_val;
+                int format_status = safe_input_int(
+                    &format_val,
+                    "Select format (1 for Text, 2 for CSV, 3 for JSON, or '-1' to exit): ", 1, 3);
+                if (format_status != INPUT_EXIT_SIGNAL && format_status != 0)
+                {
+                    ExportFormat format = EXPORT_FORMAT_TEXT;
+                    if (format_val == 2)
+                        format = EXPORT_FORMAT_CSV;
+                    else if (format_val == 3)
+                        format = EXPORT_FORMAT_JSON;
+
+                    if (queue_export(&rollnos, QUEUE_TYPE_CIRCULAR, path, format, write_data_int))
+                    {
+                        printf("Exported successfully to %s\n", path);
+                    }
+                    else
+                    {
+                        printf("Failed to export to %s\n", path);
+                    }
+                }
+            }
+        }
+
+        printf("\nExiting circular queue demo\n");
+        destroy_circ_queue(&rollnos);
+        return;
     }
 }
