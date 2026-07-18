@@ -26,6 +26,7 @@
 #include "safe_input.h"
 #include "scll.h"
 #include "searching_algorithms.h"
+#include "serialization.h"
 #include "sll.h"
 #include "sorting_algorithms_n2.h"
 #include "stack.h"
@@ -213,6 +214,82 @@ int main(int argc, char* argv[])
             set_telemetry_trace_enabled(1);
             set_telemetry_trace_filepath(argv[i + 1]);
             i++;
+        }
+        else if (strcmp(argv[i], "--load-bst") == 0 && i + 1 < argc)
+        {
+            const char* path = argv[i + 1];
+            bstNode* root = deserialize_bst_from_file(path);
+            if (root)
+            {
+                printf("BST loaded successfully from %s\n", path);
+                printf("Inorder traversal: ");
+                bst_inorder(root);
+                printf("\nPreorder traversal: ");
+                bst_preorder(root);
+                printf("\nPostorder traversal: ");
+                bst_postorder(root);
+                printf("\n");
+                destroy_bst(root);
+            }
+            else
+            {
+                printf("Failed to load BST from %s\n", path);
+            }
+            return 0;
+        }
+        else if (strcmp(argv[i], "--load-avl") == 0 && i + 1 < argc)
+        {
+            const char* path = argv[i + 1];
+            avlNode* root = deserialize_avl_from_file(path);
+            if (root)
+            {
+                printf("AVL tree loaded successfully from %s\n", path);
+                printf("Inorder traversal: ");
+                avl_inorder(root);
+                printf("\nPreorder traversal: ");
+                avl_preorder(root);
+                printf("\nPostorder traversal: ");
+                avl_postorder(root);
+                printf("\n");
+                destroy_avl(root);
+            }
+            else
+            {
+                printf("Failed to load AVL tree from %s\n", path);
+            }
+            return 0;
+        }
+        else if (strcmp(argv[i], "--load-graph") == 0 && i + 1 < argc)
+        {
+            const char* path = argv[i + 1];
+            Graph* g = deserialize_graph_from_file(path);
+            if (g)
+            {
+                printf("Graph loaded successfully from %s\n", path);
+                print_graph(g);
+                free_graph(g);
+            }
+            else
+            {
+                printf("Failed to load Graph from %s\n", path);
+            }
+            return 0;
+        }
+        else if (strcmp(argv[i], "--load-wgraph") == 0 && i + 1 < argc)
+        {
+            const char* path = argv[i + 1];
+            weightedGraph* g = deserialize_weighted_graph_from_file(path);
+            if (g)
+            {
+                printf("Weighted Graph loaded successfully from %s\n", path);
+                print_weightedGraph(g);
+                free_weightedGraph(g);
+            }
+            else
+            {
+                printf("Failed to load Weighted Graph from %s\n", path);
+            }
+            return 0;
         }
     }
 
