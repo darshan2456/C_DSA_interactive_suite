@@ -10,13 +10,13 @@ static void tarjan_dfs(Graph* graph, int u, int* disc, int* low, bool* on_stack,
         return;
 
     disc[u] = low[u] = ++(*time);
-    push(st, u);
+    push(st, (void*)(intptr_t)u);
     on_stack[u] = true;
 
     Node* temp = graph->array[u];
     while (temp != NULL)
     {
-        int v = temp->data;
+        int v = (int)(intptr_t)temp->data;
         if (disc[v] == -1)
         {
             tarjan_dfs(graph, v, disc, low, on_stack, st, time, sccs, sizes, count, success);
@@ -44,7 +44,7 @@ static void tarjan_dfs(Graph* graph, int u, int* disc, int* low, bool* on_stack,
         int w = -1;
         while (w != u)
         {
-            w = pop(st);
+            w = (int)(intptr_t)pop(st);
             on_stack[w] = false;
             comp_size++;
             int* new_comp = realloc(comp, sizeof(int) * comp_size);
@@ -128,7 +128,7 @@ int** find_scc_tarjan(Graph* graph, int* scc_count, int** scc_sizes)
             if (!success)
             {
                 free_scc_result(sccs, sizes, count);
-                destroyStack(st);
+                destroyStack(st, NULL);
                 free(disc);
                 free(low);
                 free(on_stack);
@@ -137,7 +137,7 @@ int** find_scc_tarjan(Graph* graph, int* scc_count, int** scc_sizes)
         }
     }
 
-    destroyStack(st);
+    destroyStack(st, NULL);
     free(disc);
     free(low);
     free(on_stack);
@@ -153,14 +153,14 @@ static void kosaraju_dfs1(Graph* graph, int u, bool* visited, stack* st)
     Node* temp = graph->array[u];
     while (temp != NULL)
     {
-        int v = temp->data;
+        int v = (int)(intptr_t)temp->data;
         if (!visited[v])
         {
             kosaraju_dfs1(graph, v, visited, st);
         }
         temp = temp->next;
     }
-    push(st, u);
+    push(st, (void*)(intptr_t)u);
 }
 
 Graph* transpose_graph(Graph* graph)
@@ -175,7 +175,7 @@ Graph* transpose_graph(Graph* graph)
         Node* temp = graph->array[u];
         while (temp != NULL)
         {
-            int v = temp->data;
+            int v = (int)(intptr_t)temp->data;
             add_edge_directed_unweighted(trans, v, u);
             temp = temp->next;
         }
@@ -199,7 +199,7 @@ static void kosaraju_dfs2(Graph* graph, int u, bool* visited, int** comp, int* c
     Node* temp = graph->array[u];
     while (temp != NULL)
     {
-        int v = temp->data;
+        int v = (int)(intptr_t)temp->data;
         if (!visited[v])
         {
             kosaraju_dfs2(graph, v, visited, comp, comp_size);
@@ -237,7 +237,7 @@ int** find_scc_kosaraju(Graph* graph, int* scc_count, int** scc_sizes)
     Graph* trans = transpose_graph(graph);
     if (trans == NULL)
     {
-        destroyStack(st);
+        destroyStack(st, NULL);
         free(visited);
         return NULL;
     }
@@ -249,7 +249,7 @@ int** find_scc_kosaraju(Graph* graph, int* scc_count, int** scc_sizes)
 
     while (!isEmpty(st))
     {
-        int u = pop(st);
+        int u = (int)(intptr_t)pop(st);
         if (!visited[u])
         {
             int* comp = NULL;
@@ -263,7 +263,7 @@ int** find_scc_kosaraju(Graph* graph, int* scc_count, int** scc_sizes)
                 free(comp);
                 free_scc_result(sccs, sizes, count - 1);
                 free_graph(trans);
-                destroyStack(st);
+                destroyStack(st, NULL);
                 free(visited);
                 return NULL;
             }
@@ -275,7 +275,7 @@ int** find_scc_kosaraju(Graph* graph, int* scc_count, int** scc_sizes)
                 free(comp);
                 free_scc_result(sccs, sizes, count - 1);
                 free_graph(trans);
-                destroyStack(st);
+                destroyStack(st, NULL);
                 free(visited);
                 return NULL;
             }
@@ -286,7 +286,7 @@ int** find_scc_kosaraju(Graph* graph, int* scc_count, int** scc_sizes)
     }
 
     free_graph(trans);
-    destroyStack(st);
+    destroyStack(st, NULL);
     free(visited);
 
     *scc_count = count;

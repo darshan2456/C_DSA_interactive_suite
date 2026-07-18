@@ -7,7 +7,7 @@
 // deleteByValue and reverseList
 
 // insert at end returns -1 on allocation failure and 1 on successful insertion
-int sll_insertAtEnd(Node** head_ref, int value)
+int sll_insertAtEnd(Node** head_ref, void* value)
 {
     Node* newnode = malloc(sizeof(Node));
     if (newnode == NULL)
@@ -30,21 +30,24 @@ int sll_insertAtEnd(Node** head_ref, int value)
 }
 
 // returns -1 if list and 1 on successful deletion
-int sll_deleteAtBeginning(Node** head_ref)
+int sll_deleteAtBeginning(Node** head_ref, void (*free_data)(void*))
 {
     if (*head_ref == NULL)
     {
         return -1;
     }
     Node* temp = *head_ref;
-    temp = temp->next;
-    free(*head_ref);
-    *head_ref = temp;
+    *head_ref = temp->next;
+    if (free_data != NULL)
+    {
+        free_data(temp->data);
+    }
+    free(temp);
     return 1;
 }
 
 // insertAtBeginning function returns -1 on allocation failure and 1 on succesful insertion
-int sll_insertAtBeginning(Node** head_ref, int value)
+int sll_insertAtBeginning(Node** head_ref, void* value)
 {
     Node* newnode = malloc(sizeof(Node));
     if (newnode == NULL)
@@ -56,7 +59,7 @@ int sll_insertAtBeginning(Node** head_ref, int value)
 }
 
 // return -1 if list is empty and 1 on successful deletion
-int sll_deleteAtEnd(Node** head_ref)
+int sll_deleteAtEnd(Node** head_ref, void (*free_data)(void*))
 {
     if (*head_ref == NULL)
     {
@@ -65,6 +68,10 @@ int sll_deleteAtEnd(Node** head_ref)
     Node* temp = *head_ref;
     if (temp->next == NULL)
     {
+        if (free_data != NULL)
+        {
+            free_data(temp->data);
+        }
         free(temp);
         *head_ref = NULL;
         return 1;
@@ -76,28 +83,50 @@ int sll_deleteAtEnd(Node** head_ref)
         prev = curr;
         curr = curr->next;
     }
+    if (free_data != NULL)
+    {
+        free_data(curr->data);
+    }
     free(curr);
     prev->next = NULL;
     return 1;
 }
 
-void sll_printlist(const Node* head)
+void sll_printlist(const Node* head, void (*print_element)(const void*))
 {
     printf("HEAD->");
     while (head != NULL)
     {
-        printf("%d ->", head->data);
+        if (print_element != NULL)
+        {
+            print_element(head->data);
+        }
+        else
+        {
+            printf("%p", head->data);
+        }
+        printf(" ->");
         head = head->next;
     }
     printf("NULL");
 }
 
-int sll_search(const Node* head, int key)
+int sll_search(const Node* head, const void* key, int (*compare)(const void*, const void*))
 {
     int index = 0;
     while (head != NULL)
     {
-        if (head->data == key)
+        int match = 0;
+        if (compare != NULL)
+        {
+            match = (compare(head->data, key) == 0);
+        }
+        else
+        {
+            match = (head->data == key);
+        }
+
+        if (match)
         {
             return index; // if value found returns index number
         }
@@ -108,7 +137,8 @@ int sll_search(const Node* head, int key)
 }
 
 // return -2 if list is empty, -1 if element not found and 1 on successful deletion
-int sll_deleteByValue(Node** head_ref, int value)
+int sll_deleteByValue(Node** head_ref, const void* value, int (*compare)(const void*, const void*),
+                      void (*free_data)(void*))
 {
     if (*head_ref == NULL)
     {
@@ -116,14 +146,44 @@ int sll_deleteByValue(Node** head_ref, int value)
     }
     Node* curr = *head_ref;
     Node* prev = NULL;
-    if (curr->data == value)
+
+    int head_match = 0;
+    if (compare != NULL)
+    {
+        head_match = (compare(curr->data, value) == 0);
+    }
+    else
+    {
+        head_match = (curr->data == value);
+    }
+
+    if (head_match)
     {
         *head_ref = curr->next;
+        if (free_data != NULL)
+        {
+            free_data(curr->data);
+        }
         free(curr);
         return 1;
     }
-    while (curr->data != value)
+    while (1)
     {
+        int match = 0;
+        if (compare != NULL)
+        {
+            match = (compare(curr->data, value) == 0);
+        }
+        else
+        {
+            match = (curr->data == value);
+        }
+
+        if (match)
+        {
+            break;
+        }
+
         prev = curr;
         curr = curr->next;
         if (curr == NULL)
@@ -132,6 +192,10 @@ int sll_deleteByValue(Node** head_ref, int value)
         }
     }
     prev->next = curr->next;
+    if (free_data != NULL)
+    {
+        free_data(curr->data);
+    }
     free(curr);
     return 1;
 }
@@ -162,11 +226,15 @@ int sll_reverseList(Node** head_ref)
     return 1;
 }
 
-void delete_sll(Node* head)
+void delete_sll(Node* head, void (*free_data)(void*))
 {
     while (head != NULL)
     {
         Node* upcoming = head->next;
+        if (free_data != NULL)
+        {
+            free_data(head->data);
+        }
         free(head);
         head = upcoming;
     }
@@ -186,7 +254,7 @@ int sll_getLength(const Node* head)
 
 // Insert at a specific position (0-indexed)
 // Returns 1 on success, -1 on malloc failure, -2 on invalid position
-int sll_insertAtPosition(Node** head_ref, int value, int position)
+int sll_insertAtPosition(Node** head_ref, void* value, int position)
 {
     int length = sll_getLength(*head_ref);
 
@@ -221,7 +289,7 @@ int sll_insertAtPosition(Node** head_ref, int value, int position)
 
 // Delete at a specific position (0-indexed)
 // Returns 1 on success, -1 on empty list, -2 on invalid position
-int sll_deleteAtPosition(Node** head_ref, int position)
+int sll_deleteAtPosition(Node** head_ref, int position, void (*free_data)(void*))
 {
     if (*head_ref == NULL)
     {
@@ -240,6 +308,10 @@ int sll_deleteAtPosition(Node** head_ref, int position)
     if (position == 0)
     {
         *head_ref = temp->next;
+        if (free_data != NULL)
+        {
+            free_data(temp->data);
+        }
         free(temp);
         return 1;
     }
@@ -252,6 +324,10 @@ int sll_deleteAtPosition(Node** head_ref, int position)
     }
 
     prev->next = temp->next;
+    if (free_data != NULL)
+    {
+        free_data(temp->data);
+    }
     free(temp);
     return 1;
 }

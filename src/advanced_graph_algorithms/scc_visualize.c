@@ -33,13 +33,14 @@ static void print_graph_state(Graph* graph, int active_node, int* disc, int* low
         }
         while (temp != NULL)
         {
-            if (temp->data == active_node)
+            int val = (int)(intptr_t)temp->data;
+            if (val == active_node)
             {
-                printf("\033[1;33m%d\033[0m -> ", temp->data); // Yellow for reference
+                printf("\033[1;33m%d\033[0m -> ", val); // Yellow for reference
             }
             else
             {
-                printf("%d -> ", temp->data);
+                printf("%d -> ", val);
             }
             temp = temp->next;
         }
@@ -95,7 +96,7 @@ static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_st
         return;
 
     disc[u] = low[u] = ++(*time);
-    push(st, u);
+    push(st, (void*)(intptr_t)u);
     on_stack[u] = true;
 
     print_graph_state(graph, u, disc, low, on_stack, st, "Tarjan DFS");
@@ -103,7 +104,7 @@ static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_st
     Node* temp = graph->array[u];
     while (temp != NULL)
     {
-        int v = temp->data;
+        int v = (int)(intptr_t)temp->data;
         if (disc[v] == -1)
         {
             tarjan_dfs_vis(graph, v, disc, low, on_stack, st, time, sccs, sizes, count, success);
@@ -136,7 +137,7 @@ static void tarjan_dfs_vis(Graph* graph, int u, int* disc, int* low, bool* on_st
 
         while (w != u)
         {
-            w = pop(st);
+            w = (int)(intptr_t)pop(st);
             on_stack[w] = false;
             comp_size++;
             int* new_comp = realloc(comp, sizeof(int) * comp_size);
@@ -220,7 +221,7 @@ void visualize_tarjan(Graph* graph)
             if (!success)
             {
                 free_scc_result(sccs, sizes, count);
-                destroyStack(st);
+                destroyStack(st, NULL);
                 free(disc);
                 free(low);
                 free(on_stack);
@@ -245,7 +246,7 @@ void visualize_tarjan(Graph* graph)
     fflush(stdout);
     getchar();
 
-    destroyStack(st);
+    destroyStack(st, NULL);
     free(disc);
     free(low);
     free(on_stack);
@@ -266,14 +267,14 @@ static void kosaraju_dfs1_vis(Graph* graph, int u, bool* visited, stack* st, con
     Node* temp = graph->array[u];
     while (temp != NULL)
     {
-        int v = temp->data;
+        int v = (int)(intptr_t)temp->data;
         if (!visited[v])
         {
             kosaraju_dfs1_vis(graph, v, visited, st, phase);
         }
         temp = temp->next;
     }
-    push(st, u);
+    push(st, (void*)(intptr_t)u);
 }
 
 static void kosaraju_dfs2_vis(Graph* graph, int u, bool* visited, int** comp, int* comp_size)
@@ -302,7 +303,7 @@ static void kosaraju_dfs2_vis(Graph* graph, int u, bool* visited, int** comp, in
     Node* temp = graph->array[u];
     while (temp != NULL)
     {
-        int v = temp->data;
+        int v = (int)(intptr_t)temp->data;
         if (!visited[v])
         {
             kosaraju_dfs2_vis(graph, v, visited, comp, comp_size);
@@ -334,7 +335,7 @@ void visualize_kosaraju(Graph* graph)
 
     while (!isEmpty(st))
     {
-        int u = pop(st);
+        int u = (int)(intptr_t)pop(st);
         if (!visited[u])
         {
             int* comp = NULL;
@@ -348,7 +349,7 @@ void visualize_kosaraju(Graph* graph)
                 free(comp);
                 free_scc_result(sccs, sizes, count - 1);
                 free_graph(trans);
-                destroyStack(st);
+                destroyStack(st, NULL);
                 free(visited);
                 return;
             }
@@ -360,7 +361,7 @@ void visualize_kosaraju(Graph* graph)
                 free(comp);
                 free_scc_result(sccs, sizes, count - 1);
                 free_graph(trans);
-                destroyStack(st);
+                destroyStack(st, NULL);
                 free(visited);
                 return;
             }
@@ -387,7 +388,7 @@ void visualize_kosaraju(Graph* graph)
     getchar();
 
     free_graph(trans);
-    destroyStack(st);
+    destroyStack(st, NULL);
     free(visited);
     free_scc_result(sccs, sizes, count);
 }

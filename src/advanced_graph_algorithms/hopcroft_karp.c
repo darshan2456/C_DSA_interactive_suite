@@ -35,7 +35,7 @@ static bool hopcroft_karp_bfs(Graph* graph, int* pair_u, int* pair_v, int* dist,
             Node* temp = graph->array[u];
             while (temp != NULL)
             {
-                int v = temp->data;
+                int v = (int)(intptr_t)temp->data;
                 if (color[v] == 1)
                 {
                     if (dist[pair_v[v]] == INT_MAX)
@@ -62,7 +62,7 @@ static bool hopcroft_karp_dfs(Graph* graph, int u, int* pair_u, int* pair_v, int
         Node* temp = graph->array[u];
         while (temp != NULL)
         {
-            int v = temp->data;
+            int v = (int)(intptr_t)temp->data;
             if (color[v] == 1)
             {
                 if (dist[pair_v[v]] == dist[u] + 1)

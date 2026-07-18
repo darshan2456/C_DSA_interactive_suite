@@ -22,7 +22,7 @@ int check_parantheses(char* s)
         printf("Char    : %c\n", s[i]);
         if (s[i] == '(' || s[i] == '[' || s[i] == '{')
         {
-            push(parantheses, s[i]);
+            push(parantheses, (void*)(intptr_t)s[i]);
             printf("Action  : Pushed '%c' onto stack\n", s[i]);
             if (isEmpty(parantheses))
                 printf("Stack   : Empty\n");
@@ -38,10 +38,10 @@ int check_parantheses(char* s)
             {
                 printf("Action  : No matching opening bracket found for '%c'\n", s[i]);
                 printf("Stack   : Empty\n");
-                destroyStack(parantheses);
+                destroyStack(parantheses, NULL);
                 return EXPR_ERROR_UNMATCHED_PARENTHESES;
             }
-            int top = pop(parantheses);
+            int top = (int)(intptr_t)pop(parantheses);
 
             if (s[i] == ')')
             {
@@ -55,7 +55,7 @@ int check_parantheses(char* s)
                     else
                         printStack(parantheses);
 
-                    destroyStack(parantheses);
+                    destroyStack(parantheses, NULL);
                     return EXPR_ERROR_UNMATCHED_PARENTHESES;
                 }
                 printf("Action  : Matched '(' with ')'\n");
@@ -72,7 +72,7 @@ int check_parantheses(char* s)
                     else
                         printStack(parantheses);
 
-                    destroyStack(parantheses);
+                    destroyStack(parantheses, NULL);
                     return EXPR_ERROR_UNMATCHED_PARENTHESES;
                 }
                 printf("Action  : Matched '[' with ']'\n");
@@ -89,7 +89,7 @@ int check_parantheses(char* s)
                     else
                         printStack(parantheses);
 
-                    destroyStack(parantheses);
+                    destroyStack(parantheses, NULL);
                     return EXPR_ERROR_UNMATCHED_PARENTHESES;
                 }
                 printf("Action  : Matched '{' with '}'\n");
@@ -116,9 +116,10 @@ int check_parantheses(char* s)
         printf("Stack   : ");
         printStack(parantheses);
     }
-    destroyStack(parantheses);
+    destroyStack(parantheses, NULL);
     return result ? EXPR_SUCCESS : EXPR_ERROR_UNMATCHED_PARENTHESES;
 }
+
 int get_validated_input_parantheses(char* buff, size_t size, const char* prompt)
 {
     if (prompt)
@@ -152,6 +153,7 @@ int get_validated_input_parantheses(char* buff, size_t size, const char* prompt)
     }
     return 1;
 }
+
 void parantheses_checker_demo(void)
 {
     char parantheses_expression[50];

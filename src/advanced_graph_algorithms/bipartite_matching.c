@@ -33,7 +33,7 @@ bool bipartite_color(Graph* graph, int* color)
                 Node* temp = graph->array[u];
                 while (temp != NULL)
                 {
-                    int v = temp->data;
+                    int v = (int)(intptr_t)temp->data;
                     if (color[v] == -1)
                     {
                         color[v] = 1 - color[u];
@@ -161,7 +161,7 @@ int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count)
             Node* temp = graph->array[u];
             while (temp != NULL)
             {
-                int v = temp->data;
+                int v = (int)(intptr_t)temp->data;
                 if (color[v] == 1)
                 {
                     residual[u][v] = 1;
@@ -217,7 +217,7 @@ int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count)
             Node* temp = graph->array[u];
             while (temp != NULL)
             {
-                int v = temp->data;
+                int v = (int)(intptr_t)temp->data;
                 if (color[v] == 1 && residual[u][v] == 0)
                 {
                     count++;

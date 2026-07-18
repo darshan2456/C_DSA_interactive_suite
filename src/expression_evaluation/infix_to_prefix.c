@@ -5,7 +5,7 @@
 #include "safe_input.h"
 #include <ctype.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 #include <string.h>
 
 static void reverse_string(char* str)
@@ -56,7 +56,7 @@ int infix_to_prefix_convert(const char* infix_expr, char* prefix_expr, size_t ma
 
     if (strlen(infix_expr) >= sizeof(reversed_expr))
     {
-        destroyStack(operators);
+        destroyStack(operators, NULL);
         return EXPR_ERROR_MALFORMED;
     }
 
@@ -84,7 +84,7 @@ int infix_to_prefix_convert(const char* infix_expr, char* prefix_expr, size_t ma
         {
             if ((size_t)pf_idx + 1 >= sizeof(postfix_expr))
             {
-                destroyStack(operators);
+                destroyStack(operators, NULL);
                 return EXPR_ERROR_MALFORMED;
             }
             postfix_expr[pf_idx++] = ch;
@@ -95,25 +95,25 @@ int infix_to_prefix_convert(const char* infix_expr, char* prefix_expr, size_t ma
         }
         else if (ch == '(')
         {
-            push(operators, ch);
+            push(operators, (void*)(intptr_t)ch);
             action_msg = "Pushed '(' onto stack";
         }
         else if (ch == ')')
         {
-            while (!isEmpty(operators) && peek(operators) != '(')
+            while (!isEmpty(operators) && (char)(intptr_t)peek(operators) != '(')
             {
                 if ((size_t)pf_idx + 1 >= sizeof(postfix_expr))
                 {
-                    destroyStack(operators);
+                    destroyStack(operators, NULL);
                     return EXPR_ERROR_MALFORMED;
                 }
-                postfix_expr[pf_idx++] = pop(operators);
+                postfix_expr[pf_idx++] = (char)(intptr_t)pop(operators);
                 postfix_expr[pf_idx] = '\0';
             }
 
             if (isEmpty(operators))
             {
-                destroyStack(operators);
+                destroyStack(operators, NULL);
                 return EXPR_ERROR_UNMATCHED_PARENTHESES;
             }
             pop(operators);
@@ -121,25 +121,25 @@ int infix_to_prefix_convert(const char* infix_expr, char* prefix_expr, size_t ma
         }
         else if (isOperator(ch))
         {
-            while (!isEmpty(operators) && peek(operators) != '(' &&
-                   precedence(peek(operators)) > precedence(ch))
+            while (!isEmpty(operators) && (char)(intptr_t)peek(operators) != '(' &&
+                   precedence((char)(intptr_t)peek(operators)) > precedence(ch))
             {
                 if ((size_t)pf_idx + 1 >= sizeof(postfix_expr))
                 {
-                    destroyStack(operators);
+                    destroyStack(operators, NULL);
                     return EXPR_ERROR_MALFORMED;
                 }
-                postfix_expr[pf_idx++] = pop(operators);
+                postfix_expr[pf_idx++] = (char)(intptr_t)pop(operators);
                 postfix_expr[pf_idx] = '\0';
             }
 
-            push(operators, ch);
+            push(operators, (void*)(intptr_t)ch);
             snprintf(opbuf, sizeof(opbuf), "Processed operator '%c'", ch);
             action_msg = opbuf;
         }
         else
         {
-            destroyStack(operators);
+            destroyStack(operators, NULL);
             return EXPR_ERROR_INVALID_CHAR;
         }
 
@@ -162,16 +162,16 @@ int infix_to_prefix_convert(const char* infix_expr, char* prefix_expr, size_t ma
             clear_screen();
         }
 
-        char op = pop(operators);
+        char op = (char)(intptr_t)pop(operators);
         if (op == '(')
         {
-            destroyStack(operators);
+            destroyStack(operators, NULL);
             return EXPR_ERROR_UNMATCHED_PARENTHESES;
         }
 
         if ((size_t)pf_idx + 1 >= sizeof(postfix_expr))
         {
-            destroyStack(operators);
+            destroyStack(operators, NULL);
             return EXPR_ERROR_MALFORMED;
         }
         postfix_expr[pf_idx++] = op;
@@ -190,14 +190,14 @@ int infix_to_prefix_convert(const char* infix_expr, char* prefix_expr, size_t ma
 
     if (strlen(postfix_expr) >= max_size)
     {
-        destroyStack(operators);
+        destroyStack(operators, NULL);
         return EXPR_ERROR_MALFORMED;
     }
 
     strcpy(prefix_expr, postfix_expr);
     reverse_string(prefix_expr);
 
-    destroyStack(operators);
+    destroyStack(operators, NULL);
     return EXPR_SUCCESS;
 }
 

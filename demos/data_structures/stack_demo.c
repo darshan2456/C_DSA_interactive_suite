@@ -50,7 +50,7 @@ void stack_demo(void)
             {
                 continue;
             }
-            if (push(s, val) == 1)
+            if (push(s, (void*)(intptr_t)val) == 1)
             {
                 printf("\nSuccessfully pushed %d onto the stack.\n", val);
             }
@@ -68,7 +68,7 @@ void stack_demo(void)
             }
             else
             {
-                int val = pop(s);
+                int val = (int)(intptr_t)pop(s);
                 printf("\nPopped element: %d\n", val);
             }
             printStackAsInts(s);
@@ -81,13 +81,13 @@ void stack_demo(void)
             }
             else
             {
-                int val = peek(s);
+                int val = (int)(intptr_t)peek(s);
                 printf("\nTop element: %d\n", val);
             }
             printStackAsInts(s);
         }
     }
 
-    destroyStack(s);
+    destroyStack(s, NULL);
     printf("\nStack destroyed. Returning to Data Structures menu...\n");
 }

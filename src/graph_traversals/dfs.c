@@ -53,15 +53,11 @@ void dfs(Graph* graph, int start)
     visited[start] = 1;
     snprintf(msg, sizeof(msg), "DFS: Visited start node %d", start);
     algorithm_step_hook(msg);
-    push(nodes, start);
+    push(nodes, (void*)(intptr_t)start);
 
-    while (1)
+    while (!isEmpty(nodes))
     { // main loop which performs dfs
-        int curr = pop(nodes);
-        if (curr == -1)
-        {
-            break;
-        }
+        int curr = (int)(intptr_t)pop(nodes);
         snprintf(msg, sizeof(msg), "DFS: Popped node %d from stack", curr);
         algorithm_step_hook(msg);
         printf("%d->", curr);
@@ -70,13 +66,13 @@ void dfs(Graph* graph, int start)
 
         while (temp)
         {
-            int v = temp->data;
+            int v = (int)(intptr_t)temp->data;
             if (!visited[v])
             {
                 visited[v] = 1;
                 snprintf(msg, sizeof(msg), "DFS: Discovered node %d, pushing to stack", v);
                 algorithm_step_hook(msg);
-                push(nodes, v);
+                push(nodes, (void*)(intptr_t)v);
             }
             temp = temp->next;
         }
@@ -87,7 +83,7 @@ void dfs(Graph* graph, int start)
 
     printf("end\n");
     printf("\ntotal CPU time taken for DFS traversal:- %f seconds\n", total_t);
-    destroyStack(nodes);
+    destroyStack(nodes, NULL);
     telemetry_close();
     return;
 }

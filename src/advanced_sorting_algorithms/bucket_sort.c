@@ -67,13 +67,13 @@ static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_l
         }
 
         // Insert element into the bucket list using SLL utility
-        int insert_status = sll_insertAtBeginning(&buckets[bucket_idx], arr[i]);
+        int insert_status = sll_insertAtBeginning(&buckets[bucket_idx], (void*)(intptr_t)arr[i]);
         if (insert_status == -1)
         {
             // Cleanup allocated memory on error
             for (int j = 0; j < N; j++)
             {
-                delete_sll(buckets[j]);
+                delete_sll(buckets[j], NULL);
             }
             free(buckets);
             return;
@@ -94,14 +94,14 @@ static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_l
 
         if (bucket_size == 1)
         {
-            arr[arr_idx] = buckets[i]->data;
+            arr[arr_idx] = (int)(intptr_t)(buckets[i]->data);
             if (is_top_level)
             {
                 visualize_sort(arr, total_len, arr_idx, -1, -1,
                                "Bucket Sort: Gathering elements back to main array");
             }
             arr_idx++;
-            delete_sll(buckets[i]);
+            delete_sll(buckets[i], NULL);
             buckets[i] = NULL;
         }
         else if (bucket_size > 1)
@@ -113,7 +113,7 @@ static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_l
                 // Cleanup remaining buckets on memory failure
                 for (int j = i; j < N; j++)
                 {
-                    delete_sll(buckets[j]);
+                    delete_sll(buckets[j], NULL);
                 }
                 free(buckets);
                 return;
@@ -123,10 +123,10 @@ static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_l
             int temp_idx = 0;
             while (curr != NULL)
             {
-                temp_arr[temp_idx++] = curr->data;
+                temp_arr[temp_idx++] = (int)(intptr_t)(curr->data);
                 curr = curr->next;
             }
-            delete_sll(buckets[i]);
+            delete_sll(buckets[i], NULL);
             buckets[i] = NULL;
 
             // Recursively sort the elements in the bucket

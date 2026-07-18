@@ -26,7 +26,7 @@ void topological_sort_kahn(Graph* graph)
 
         while (temp)
         {
-            in_degree[temp->data]++;
+            in_degree[(int)(intptr_t)temp->data]++;
             temp = temp->next;
         }
     }
@@ -68,7 +68,7 @@ void topological_sort_kahn(Graph* graph)
 
         while (temp)
         {
-            int v = temp->data;
+            int v = (int)(intptr_t)temp->data;
 
             in_degree[v]--;
 

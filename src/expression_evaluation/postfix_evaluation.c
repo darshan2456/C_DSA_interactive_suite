@@ -5,6 +5,7 @@
 #include "safe_input.h"
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // if postfix expression attempts to divide by zero or the stack doesnt get emptied at the end of
 // main while loop, it indicates malformed postfix expression and program exits with error code '-1'
@@ -33,7 +34,7 @@ int evaluate_postfix_expr(const char* postfix_expr, int* final_result)
         char ch = postfix_expr[i];
         if (isdigit((unsigned char)ch))
         {
-            push(operands, ch - '0');
+            push(operands, (void*)(intptr_t)(ch - '0'));
             snprintf(action_msg, sizeof(action_msg), "Pushed operand '%c' onto stack", ch);
             current_result = ch - '0';
 
@@ -53,19 +54,19 @@ int evaluate_postfix_expr(const char* postfix_expr, int* final_result)
                 printf("\n[Error] Invalid expression: Stack underflow (missing operands for "
                        "operator '%c')\n",
                        ch);
-                destroyStack(operands);
+                destroyStack(operands, NULL);
                 return EXPR_ERROR_STACK_UNDERFLOW;
             }
-            int right_operand = pop(operands);
+            int right_operand = (int)(intptr_t)pop(operands);
             if (isEmpty(operands))
             {
                 printf("\n[Error] Invalid expression: Stack underflow (missing operands for "
                        "operator '%c')\n",
                        ch);
-                destroyStack(operands);
+                destroyStack(operands, NULL);
                 return EXPR_ERROR_STACK_UNDERFLOW;
             }
-            int left_operand = pop(operands);
+            int left_operand = (int)(intptr_t)pop(operands);
             int result = 0;
             if (ch == '+')
             {
@@ -96,7 +97,7 @@ int evaluate_postfix_expr(const char* postfix_expr, int* final_result)
                 if (right_operand == 0)
                 {
                     printf("\n[Error] Division by zero encountered.\n");
-                    destroyStack(operands);
+                    destroyStack(operands, NULL);
                     return EXPR_ERROR_DIVIDE_BY_ZERO;
                 }
                 result = left_operand / right_operand;
@@ -105,7 +106,7 @@ int evaluate_postfix_expr(const char* postfix_expr, int* final_result)
                          "onto stack",
                          left_operand, right_operand, left_operand, right_operand, result);
             }
-            push(operands, result);
+            push(operands, (void*)(intptr_t)result);
             current_result = result;
 
             printf("Step    : %d\n", step);
@@ -119,7 +120,7 @@ int evaluate_postfix_expr(const char* postfix_expr, int* final_result)
         }
         else
         {
-            destroyStack(operands);
+            destroyStack(operands, NULL);
             return EXPR_ERROR_INVALID_CHAR;
         }
 
@@ -129,19 +130,19 @@ int evaluate_postfix_expr(const char* postfix_expr, int* final_result)
 
     if (isEmpty(operands))
     {
-        destroyStack(operands);
+        destroyStack(operands, NULL);
         return EXPR_ERROR_EMPTY;
     }
 
-    *final_result = pop(operands);
+    *final_result = (int)(intptr_t)pop(operands);
 
     if (!isEmpty(operands))
     {
-        destroyStack(operands);
+        destroyStack(operands, NULL);
         return EXPR_ERROR_MALFORMED;
     }
 
-    destroyStack(operands);
+    destroyStack(operands, NULL);
     return EXPR_SUCCESS;
 }
 
