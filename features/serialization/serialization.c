@@ -5,10 +5,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#ifdef _WIN32
-#include <direct.h>
-#endif
-
 static void ensure_parent_dir_exists(const char* filepath)
 {
     char temp[512];
@@ -16,28 +12,17 @@ static void ensure_parent_dir_exists(const char* filepath)
     temp[sizeof(temp) - 1] = '\0';
 
     char* last_slash = strrchr(temp, '/');
-#ifdef _WIN32
-    char* last_backslash = strrchr(temp, '\\');
-    if (last_backslash > last_slash)
-    {
-        last_slash = last_backslash;
-    }
-#endif
 
     if (last_slash != NULL)
     {
         *last_slash = '\0';
         if (strlen(temp) > 0)
         {
-#ifdef _WIN32
-            _mkdir(temp);
-#else
             struct stat st;
             if (stat(temp, &st) == -1)
             {
                 mkdir(temp, 0755);
             }
-#endif
         }
     }
 }
@@ -206,7 +191,7 @@ bool serialize_graph_to_file(const Graph* graph, const char* filepath)
         Node* curr = graph->array[u];
         while (curr != NULL)
         {
-            if (u < curr->data)
+            if (u < (int)(intptr_t)curr->data)
             {
                 E++;
             }
@@ -222,9 +207,9 @@ bool serialize_graph_to_file(const Graph* graph, const char* filepath)
         Node* curr = graph->array[u];
         while (curr != NULL)
         {
-            if (u < curr->data)
+            if (u < (int)(intptr_t)curr->data)
             {
-                fprintf(fp, "%d,%d\n", u, curr->data);
+                fprintf(fp, "%d,%d\n", u, (int)(intptr_t)curr->data);
             }
             curr = curr->next;
         }

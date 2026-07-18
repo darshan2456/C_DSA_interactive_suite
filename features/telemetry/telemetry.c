@@ -4,9 +4,6 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#ifdef _WIN32
-#include <direct.h>
-#endif
 
 static bool telemetry_enabled = false;
 static char telemetry_filepath[512] = "benchmarks/algo_trace.json";
@@ -19,28 +16,17 @@ static void ensure_parent_dir_exists(const char* filepath)
     temp[sizeof(temp) - 1] = '\0';
 
     char* last_slash = strrchr(temp, '/');
-#ifdef _WIN32
-    char* last_backslash = strrchr(temp, '\\');
-    if (last_backslash > last_slash)
-    {
-        last_slash = last_backslash;
-    }
-#endif
 
     if (last_slash != NULL)
     {
         *last_slash = '\0';
         if (strlen(temp) > 0)
         {
-#ifdef _WIN32
-            _mkdir(temp);
-#else
             struct stat st;
             if (stat(temp, &st) == -1)
             {
                 mkdir(temp, 0755);
             }
-#endif
         }
     }
 }

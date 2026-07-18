@@ -74,9 +74,10 @@ static void test_graph_serialization(void)
     bool has_two = false;
     while (curr != NULL)
     {
-        if (curr->data == 0)
+        int val = (int)(intptr_t)curr->data;
+        if (val == 0)
             has_zero = true;
-        if (curr->data == 2)
+        if (val == 2)
             has_two = true;
         curr = curr->next;
     }

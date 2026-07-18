@@ -5,21 +5,13 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#ifdef _WIN32
-#include <direct.h>
-#endif
-
 static void ensure_dir_exists(const char* path)
 {
-#ifdef _WIN32
-    _mkdir(path);
-#else
     struct stat st;
     if (stat(path, &st) == -1)
     {
         mkdir(path, 0755);
     }
-#endif
 }
 
 static void test_telemetry_enable_disable(void)
