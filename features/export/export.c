@@ -121,3 +121,169 @@ int dll_export(const doubly_ll_Node* head, const char* filepath, ExportFormat fo
     fclose(fp);
     return 1;
 }
+
+int stack_export(const stack* s, const char* filepath, ExportFormat format,
+                 void (*write_node_data)(FILE* fp, const void* data))
+{
+    if (s == NULL || filepath == NULL || strlen(filepath) == 0 || write_node_data == NULL)
+    {
+        return 0;
+    }
+
+    ensure_parent_dir_exists(filepath);
+    FILE* fp = fopen(filepath, "w");
+    if (fp == NULL)
+    {
+        return 0;
+    }
+
+    const Node* curr = s->top;
+
+    if (format == EXPORT_FORMAT_TEXT)
+    {
+        while (curr != NULL)
+        {
+            write_node_data(fp, curr->data);
+            fprintf(fp, " -> ");
+            curr = curr->next;
+        }
+        fprintf(fp, "NULL\n");
+    }
+    else if (format == EXPORT_FORMAT_CSV)
+    {
+        fprintf(fp, "index,value\n");
+        int index = 0;
+        while (curr != NULL)
+        {
+            fprintf(fp, "%d,", index);
+            write_node_data(fp, curr->data);
+            fprintf(fp, "\n");
+            index++;
+            curr = curr->next;
+        }
+    }
+    else if (format == EXPORT_FORMAT_JSON)
+    {
+        fprintf(fp, "[\n");
+        while (curr != NULL)
+        {
+            fprintf(fp, "  ");
+            write_node_data(fp, curr->data);
+            if (curr->next != NULL)
+            {
+                fprintf(fp, ",\n");
+            }
+            else
+            {
+                fprintf(fp, "\n");
+            }
+            curr = curr->next;
+        }
+        fprintf(fp, "]\n");
+    }
+
+    fclose(fp);
+    return 1;
+}
+
+int queue_export(const Queue* q, QueueType type, const char* filepath, ExportFormat format,
+                 void (*write_node_data)(FILE* fp, const void* data))
+{
+    if (q == NULL || q->arr == NULL || filepath == NULL || strlen(filepath) == 0 ||
+        write_node_data == NULL)
+    {
+        return 0;
+    }
+
+    // Collect elements in order
+    int count = 0;
+    void** temp_arr = malloc(sizeof(void*) * q->N);
+    if (temp_arr == NULL)
+    {
+        return 0;
+    }
+
+    if (type == QUEUE_TYPE_CIRCULAR)
+    {
+        int i = q->front;
+        while (i != q->rear)
+        {
+            temp_arr[count++] = q->arr[i];
+            i = (i + 1) % q->N;
+        }
+    }
+    else if (type == QUEUE_TYPE_SIMPLE)
+    {
+        if (q->front != -1)
+        {
+            for (int i = q->front; i <= q->rear; i++)
+            {
+                temp_arr[count++] = q->arr[i];
+            }
+        }
+    }
+    else if (type == QUEUE_TYPE_DEQUE)
+    {
+        if (q->front != -1)
+        {
+            int i = q->front;
+            while (1)
+            {
+                temp_arr[count++] = q->arr[i];
+                if (i == q->rear)
+                    break;
+                i = (i + 1) % q->N;
+            }
+        }
+    }
+
+    ensure_parent_dir_exists(filepath);
+    FILE* fp = fopen(filepath, "w");
+    if (fp == NULL)
+    {
+        free(temp_arr);
+        return 0;
+    }
+
+    if (format == EXPORT_FORMAT_TEXT)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            write_node_data(fp, temp_arr[i]);
+            fprintf(fp, " -> ");
+        }
+        fprintf(fp, "NULL\n");
+    }
+    else if (format == EXPORT_FORMAT_CSV)
+    {
+        fprintf(fp, "index,value\n");
+        for (int i = 0; i < count; i++)
+        {
+            fprintf(fp, "%d,", i);
+            write_node_data(fp, temp_arr[i]);
+            fprintf(fp, "\n");
+        }
+    }
+    else if (format == EXPORT_FORMAT_JSON)
+    {
+        fprintf(fp, "[\n");
+        for (int i = 0; i < count; i++)
+        {
+            fprintf(fp, "  ");
+            write_node_data(fp, temp_arr[i]);
+            if (i < count - 1)
+            {
+                fprintf(fp, ",\n");
+            }
+            else
+            {
+                fprintf(fp, "\n");
+            }
+        }
+        fprintf(fp, "]\n");
+    }
+
+    fclose(fp);
+    free(temp_arr);
+    return 1;
+}
