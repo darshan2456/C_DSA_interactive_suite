@@ -44,9 +44,11 @@ WORKDIR /app
 COPY . .
 
 # Compile fresh inside the container
-RUN make clean && make && make test
+RUN cmake -S . -B build && \
+    cmake --build build --parallel && \
+    ctest --test-dir build
 
-CMD ["./dsa"]
+CMD ["./build/dsa"]
 
 # ---------- Stage 2: runtime — binary + ncurses runtime only (slim) ----------
 FROM ${BASE_IMAGE} AS runtime
@@ -62,6 +64,6 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Pull only the compiled binary out of the dev stage
-COPY --from=dev /app/dsa .
+COPY --from=dev /app/build/dsa .
 
 CMD ["./dsa"]
