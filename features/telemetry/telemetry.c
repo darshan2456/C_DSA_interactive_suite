@@ -69,11 +69,24 @@ const char* get_telemetry_filepath(void)
     return telemetry_filepath;
 }
 
-void telemetry_init(void)
+static char current_algorithm_name[128] = "unknown";
+static int current_step_count = 0;
+
+void telemetry_init(const char* algorithm_name)
 {
     if (!telemetry_enabled)
     {
         return;
+    }
+
+    if (algorithm_name != NULL)
+    {
+        strncpy(current_algorithm_name, algorithm_name, sizeof(current_algorithm_name) - 1);
+        current_algorithm_name[sizeof(current_algorithm_name) - 1] = '\0';
+    }
+    else
+    {
+        strcpy(current_algorithm_name, "unknown");
     }
 
     ensure_parent_dir_exists(telemetry_filepath);
@@ -87,6 +100,12 @@ void telemetry_init(void)
     fprintf(fp, "[\n");
     fclose(fp);
     is_first_entry = true;
+    current_step_count = 0;
+}
+
+void telemetry_log_step(const int* arr, int size, const char* event_msg)
+{
+    telemetry_export_state(current_algorithm_name, current_step_count++, arr, size, event_msg);
 }
 
 void telemetry_export_state(const char* algorithm_name, int step, const int* arr, int size,
@@ -153,4 +172,5 @@ void telemetry_close(void)
     fprintf(fp, "\n]\n");
     fclose(fp);
     is_first_entry = true;
+    current_step_count = 0;
 }

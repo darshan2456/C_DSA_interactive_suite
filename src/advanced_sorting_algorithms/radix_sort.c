@@ -1,6 +1,7 @@
 #include "advanced_sorting.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "telemetry.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -67,12 +68,15 @@ void radix_sort(int arr[], int n)
         }
     }
 
+    telemetry_init("radix_sort");
+
     int max = get_max(arr, n);
 
     for (int exp = 1; max / exp > 0; exp *= 10)
     {
         counting_sort(arr, n, exp);
     }
+    telemetry_close();
 }
 
 void radix_sort_demo(void)

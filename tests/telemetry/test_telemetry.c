@@ -46,13 +46,13 @@ static void test_telemetry_logging_flow(void)
     set_telemetry_enabled(true);
     set_telemetry_filepath("test_binaries/test_trace.json");
 
-    telemetry_init();
+    telemetry_init("bubble_sort");
 
     int arr1[] = {5, 3, 8};
-    telemetry_export_state("bubble_sort", 0, arr1, 3, "Initial array");
+    telemetry_log_step(arr1, 3, "Initial array");
 
     int arr2[] = {3, 5, 8};
-    telemetry_export_state("bubble_sort", 1, arr2, 3, "Swapped 5 and 3");
+    telemetry_log_step(arr2, 3, "Swapped 5 and 3");
 
     telemetry_close();
 
@@ -97,9 +97,9 @@ static void test_telemetry_disabled_flow(void)
     set_telemetry_enabled(false);
     set_telemetry_filepath("test_binaries/test_disabled.json");
 
-    telemetry_init();
+    telemetry_init("test");
     int arr[] = {1, 2};
-    telemetry_export_state("test", 1, arr, 2, "Should not log");
+    telemetry_log_step(arr, 2, "Should not log");
     telemetry_close();
 
     FILE* fp = fopen("test_binaries/test_disabled.json", "r");

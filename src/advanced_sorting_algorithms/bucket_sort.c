@@ -3,6 +3,7 @@
 #include "safe_input.h"
 #include "sll.h"
 #include "sorting_visualizer.h"
+#include "telemetry.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -153,7 +154,9 @@ static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_l
 
 void bucket_sort(int arr[], int n)
 {
+    telemetry_init("bucket_sort");
     bucket_sort_internal(arr, n, 1, n);
+    telemetry_close();
 }
 
 void bucket_sort_demo(void)

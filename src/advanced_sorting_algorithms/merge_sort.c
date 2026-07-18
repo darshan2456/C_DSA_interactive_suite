@@ -1,6 +1,7 @@
 #include "advanced_sorting.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "telemetry.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -85,7 +86,9 @@ void merge_sort(int arr[], int n)
     {
         return;
     }
+    telemetry_init("merge_sort");
     merge_recursion(arr, 0, n - 1, n);
+    telemetry_close();
 }
 
 void merge_sort_demo(void)

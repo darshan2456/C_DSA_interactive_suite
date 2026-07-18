@@ -2,6 +2,7 @@
 #include "safe_input.h"
 #include "sorting_visualizer.h"
 #include "step_debugger.h"
+#include "telemetry.h"
 #include <stdio.h>
 #include <time.h>
 
@@ -12,6 +13,7 @@ void insertion_sort(int arr[], int length_of_array);
 // efficiency of the algorithm and is for demonstration only.
 void insertion_sort(int arr[], int length_of_array)
 {
+    telemetry_init("insertion_sort");
 
     clock_t start_t, end_t;
     double total_t;
@@ -51,4 +53,5 @@ void insertion_sort(int arr[], int length_of_array)
     printf("\nfinal array sorted by insertion sort - ");
     print_array(arr, length_of_array);
     printf("\nTotal CPU time taken:- %f seconds", total_t);
+    telemetry_close();
 }

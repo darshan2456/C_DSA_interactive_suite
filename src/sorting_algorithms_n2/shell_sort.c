@@ -1,6 +1,7 @@
 #include "array.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "telemetry.h"
 #include <stdio.h>
 #include <time.h>
 
@@ -12,6 +13,7 @@ void shell_sort(int arr[], int length_of_array);
 /* Performs shell sort using shell's original N/2, N/4... gap sequence */
 void shell_sort(int arr[], int length_of_array)
 {
+    telemetry_init("shell_sort");
     clock_t start_t, end_t;
     double total_t;
 
@@ -49,4 +51,5 @@ void shell_sort(int arr[], int length_of_array)
     printf("\nfinal array sorted by shell sort - ");
     print_array(arr, length_of_array);
     printf("\nTotal CPU time taken:- %f seconds", total_t);
+    telemetry_close();
 }

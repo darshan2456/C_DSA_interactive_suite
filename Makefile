@@ -173,7 +173,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path test_cache_simulator test_compression test_telemetry
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path test_cache_simulator test_compression test_telemetry test_sorting_telemetry
 
 # Automatically find all advanced heap test sources and append their targets
 ADV_HEAP_TESTS = $(patsubst tests/advanced_heaps/%.c,%,$(wildcard tests/advanced_heaps/*.c))
@@ -857,6 +857,13 @@ test_telemetry: $(TEST_DIR)/test_telemetry$(EXE)
 	$(TEST_DIR)/test_telemetry$(EXE)
 
 $(TEST_DIR)/test_telemetry$(EXE): $(OBJS) tests/telemetry/test_telemetry.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_sorting_telemetry: $(TEST_DIR)/test_sorting_telemetry$(EXE)
+	$(TEST_DIR)/test_sorting_telemetry$(EXE)
+
+$(TEST_DIR)/test_sorting_telemetry$(EXE): $(OBJS) tests/telemetry/test_sorting_telemetry.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

@@ -3,6 +3,7 @@
 #include "priority_queue.h"
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "telemetry.h"
 #include <stdio.h>
 #include <time.h>
 
@@ -22,9 +23,14 @@ void heap_sort(int arr[], int n)
     if (n <= 1)
         return;
 
+    telemetry_init("heap_sort");
+
     priority_queue* pq = pq_init(MIN_HEAP);
     if (pq == NULL)
+    {
+        telemetry_close();
         return;
+    }
 
     int inserted = 0;
     for (int i = 0; i < n; i++)
@@ -42,6 +48,7 @@ void heap_sort(int arr[], int n)
     }
 
     destroy_pq(pq);
+    telemetry_close();
 }
 
 void heap_sort_demo(void)

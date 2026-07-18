@@ -2,6 +2,7 @@
 #include "safe_input.h"
 #include "sorting_visualizer.h"
 #include "step_debugger.h"
+#include "telemetry.h"
 #include <stdio.h>
 #include <time.h>
 
@@ -9,6 +10,7 @@ void selection_sort(int arr[], int length_of_array);
 
 void selection_sort(int arr[], int length_of_array)
 {
+    telemetry_init("selection_sort");
     clock_t start_t, end_t;
     double total_t;
 
@@ -56,4 +58,5 @@ void selection_sort(int arr[], int length_of_array)
     printf("\nfinal array sorted by selection sort is:- ");
     print_array(arr, length_of_array);
     printf("\nTotal CPU time taken:- %f seconds", total_t);
+    telemetry_close();
 }

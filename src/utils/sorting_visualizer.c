@@ -1,10 +1,16 @@
 #include "sorting_visualizer.h"
 #include "config.h"
+#include "telemetry.h"
 #include <stdio.h>
 
 void visualize_sort(const int arr[], int n, int active_idx1, int active_idx2, int pivot_idx,
                     const char* status_message)
 {
+    if (is_telemetry_enabled() && arr != NULL && n > 0)
+    {
+        telemetry_log_step(arr, n, status_message);
+    }
+
     if (arr == NULL || n <= 0 || !is_terminal_interactive())
     {
         return;

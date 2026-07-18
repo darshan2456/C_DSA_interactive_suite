@@ -1,5 +1,6 @@
 #include "safe_input.h"
 #include "sorting_visualizer.h"
+#include "telemetry.h"
 #include <stdio.h>
 #include <time.h>
 
@@ -55,8 +56,10 @@ static void quicksort_recursive(int arr[], int low, int high, int total_len)
 
 void quicksort(int arr[], int low, int high)
 {
+    telemetry_init("quick_sort");
     int total_len = (high >= low) ? (high + 1) : 0;
     quicksort_recursive(arr, low, high, total_len);
+    telemetry_close();
 }
 
 void quicksort_demo(void)
