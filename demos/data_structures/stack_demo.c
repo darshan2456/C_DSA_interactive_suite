@@ -1,8 +1,10 @@
 #include "display_header.h"
+#include "export.h"
 #include "safe_input.h"
 #include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void stack_demo(void)
 {
@@ -85,6 +87,42 @@ void stack_demo(void)
                 printf("\nTop element: %d\n", val);
             }
             printStackAsInts(s);
+        }
+    }
+
+    // Export option
+    int export_choice;
+    int export_status = safe_input_int(
+        &export_choice,
+        "\nDo you want to export this Stack to a file? (1 for Yes, 2 for No, or '-1' to exit): ", 1,
+        2);
+    if (export_status != INPUT_EXIT_SIGNAL && export_status != 0 && export_choice == 1)
+    {
+        char path[256];
+        int path_status = safe_input_string(path, "Enter filename to export (e.g. stack.json): ");
+        if (path_status != INPUT_EXIT_SIGNAL && strlen(path) > 0)
+        {
+            int format_val;
+            int format_status = safe_input_int(
+                &format_val,
+                "Select format (1 for Text, 2 for CSV, 3 for JSON, or '-1' to exit): ", 1, 3);
+            if (format_status != INPUT_EXIT_SIGNAL && format_status != 0)
+            {
+                ExportFormat format = EXPORT_FORMAT_TEXT;
+                if (format_val == 2)
+                    format = EXPORT_FORMAT_CSV;
+                else if (format_val == 3)
+                    format = EXPORT_FORMAT_JSON;
+
+                if (stack_export(s, path, format, write_data_int))
+                {
+                    printf("Exported successfully to %s\n", path);
+                }
+                else
+                {
+                    printf("Failed to export to %s\n", path);
+                }
+            }
         }
     }
 
