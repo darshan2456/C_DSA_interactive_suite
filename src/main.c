@@ -15,6 +15,7 @@
 #include "dll.h"
 #include "dynamic_programming.h"
 #include "error_correction_algorithms.h"
+#include "export.h"
 #include "expression.h"
 #include "graph_traversals.h"
 #include "hash.h"
@@ -288,6 +289,92 @@ int main(int argc, char* argv[])
             else
             {
                 printf("Failed to load Weighted Graph from %s\n", path);
+            }
+            return 0;
+        }
+        else if (strcmp(argv[i], "--export-dll") == 0 && i + 1 < argc)
+        {
+            const char* path = argv[i + 1];
+            doubly_ll_Node* head = NULL;
+            int val1 = 10, val2 = 20, val3 = 30;
+            dll_insertAtEnd(&head, &val1);
+            dll_insertAtEnd(&head, &val2);
+            dll_insertAtEnd(&head, &val3);
+
+            ExportFormat format = EXPORT_FORMAT_TEXT;
+            if (strstr(path, ".json") != NULL)
+                format = EXPORT_FORMAT_JSON;
+            else if (strstr(path, ".csv") != NULL)
+                format = EXPORT_FORMAT_CSV;
+
+            if (dll_export(head, path, format, write_data_int))
+            {
+                printf("DLL exported successfully to %s\n", path);
+            }
+            else
+            {
+                printf("Failed to export DLL to %s\n", path);
+            }
+            delete_dll(head, NULL);
+            return 0;
+        }
+        else if (strcmp(argv[i], "--export-stack") == 0 && i + 1 < argc)
+        {
+            const char* path = argv[i + 1];
+            stack* s = createStack();
+            if (s)
+            {
+                int val1 = 30, val2 = 20, val3 = 10;
+                push(s, &val1);
+                push(s, &val2);
+                push(s, &val3);
+
+                ExportFormat format = EXPORT_FORMAT_TEXT;
+                if (strstr(path, ".json") != NULL)
+                    format = EXPORT_FORMAT_JSON;
+                else if (strstr(path, ".csv") != NULL)
+                    format = EXPORT_FORMAT_CSV;
+
+                if (stack_export(s, path, format, write_data_int))
+                {
+                    printf("Stack exported successfully to %s\n", path);
+                }
+                else
+                {
+                    printf("Failed to export Stack to %s\n", path);
+                }
+                destroyStack(s, NULL);
+            }
+            return 0;
+        }
+        else if (strcmp(argv[i], "--export-queue") == 0 && i + 1 < argc)
+        {
+            const char* path = argv[i + 1];
+            Queue q;
+            if (init_circ_queue(5, &q))
+            {
+                int* v1 = malloc(sizeof(int));
+                int* v2 = malloc(sizeof(int));
+                *v1 = 100;
+                *v2 = 200;
+                enqueue(&q, v1);
+                enqueue(&q, v2);
+
+                ExportFormat format = EXPORT_FORMAT_TEXT;
+                if (strstr(path, ".json") != NULL)
+                    format = EXPORT_FORMAT_JSON;
+                else if (strstr(path, ".csv") != NULL)
+                    format = EXPORT_FORMAT_CSV;
+
+                if (queue_export(&q, QUEUE_TYPE_CIRCULAR, path, format, write_data_int))
+                {
+                    printf("Queue exported successfully to %s\n", path);
+                }
+                else
+                {
+                    printf("Failed to export Queue to %s\n", path);
+                }
+                destroy_circ_queue(&q);
             }
             return 0;
         }
