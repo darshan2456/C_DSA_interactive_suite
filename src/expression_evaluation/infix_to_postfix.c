@@ -5,7 +5,7 @@
 #include "safe_input.h"
 #include <ctype.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 #include <string.h>
 
 // rn this program only has support for four operators - +-/* and parantheses. this program doesnt
@@ -56,7 +56,7 @@ int infix_to_postfix_convert(const char* infix_expr, char* postfix_expr, size_t 
         {
             if ((size_t)pf_idx + 1 >= max_size)
             {
-                destroyStack(operators);
+                destroyStack(operators, NULL);
                 return EXPR_ERROR_MALFORMED;
             }
             postfix_expr[pf_idx++] = ch;
@@ -67,19 +67,19 @@ int infix_to_postfix_convert(const char* infix_expr, char* postfix_expr, size_t 
         }
         else if (ch == '(')
         {
-            push(operators, ch);
+            push(operators, (void*)(intptr_t)ch);
             action_msg = "Pushed '(' onto stack";
         }
         else if (ch == ')')
         {
             action_msg = "Popped operators until matching '(' was found";
 
-            while (!isEmpty(operators) && peek(operators) != '(')
+            while (!isEmpty(operators) && (char)(intptr_t)peek(operators) != '(')
             {
-                op = pop(operators);
+                op = (char)(intptr_t)pop(operators);
                 if ((size_t)pf_idx + 1 >= max_size)
                 {
-                    destroyStack(operators);
+                    destroyStack(operators, NULL);
                     return EXPR_ERROR_MALFORMED;
                 }
                 postfix_expr[pf_idx++] = op;
@@ -88,7 +88,7 @@ int infix_to_postfix_convert(const char* infix_expr, char* postfix_expr, size_t 
 
             if (isEmpty(operators))
             {
-                destroyStack(operators);
+                destroyStack(operators, NULL);
                 return EXPR_ERROR_UNMATCHED_PARENTHESES;
             }
             pop(operators); // Remove '('
@@ -97,34 +97,34 @@ int infix_to_postfix_convert(const char* infix_expr, char* postfix_expr, size_t 
         {
             if (isEmpty(operators))
             {
-                push(operators, ch);
+                push(operators, (void*)(intptr_t)ch);
                 snprintf(opbuf, sizeof(opbuf), "Pushed operator '%c' onto stack", ch);
                 action_msg = opbuf;
             }
-            else if (precedence(ch) > precedence(peek(operators)))
+            else if (precedence(ch) > precedence((char)(intptr_t)peek(operators)))
             {
-                push(operators, ch);
+                push(operators, (void*)(intptr_t)ch);
                 snprintf(opbuf, sizeof(opbuf), "Pushed operator '%c' onto stack", ch);
                 action_msg = opbuf;
             }
-            else if (precedence(ch) <= precedence(peek(operators)))
+            else if (precedence(ch) <= precedence((char)(intptr_t)peek(operators)))
             {
                 int prec_lower = precedence(ch);
 
-                while (!isEmpty(operators) && peek(operators) != '(' &&
-                       precedence(peek(operators)) >= prec_lower)
+                while (!isEmpty(operators) && (char)(intptr_t)peek(operators) != '(' &&
+                       precedence((char)(intptr_t)peek(operators)) >= prec_lower)
                 {
-                    op = pop(operators);
+                    op = (char)(intptr_t)pop(operators);
                     if ((size_t)pf_idx + 1 >= max_size)
                     {
-                        destroyStack(operators);
+                        destroyStack(operators, NULL);
                         return EXPR_ERROR_MALFORMED;
                     }
                     postfix_expr[pf_idx++] = op;
                     postfix_expr[pf_idx] = '\0';
                 }
 
-                push(operators, ch);
+                push(operators, (void*)(intptr_t)ch);
                 snprintf(opbuf, sizeof(opbuf),
                          "Popped operators with higher/equal precedence, then pushed '%c'", ch);
                 action_msg = opbuf;
@@ -132,7 +132,7 @@ int infix_to_postfix_convert(const char* infix_expr, char* postfix_expr, size_t 
         }
         else
         {
-            destroyStack(operators);
+            destroyStack(operators, NULL);
             return EXPR_ERROR_INVALID_CHAR;
         }
 
@@ -154,16 +154,16 @@ int infix_to_postfix_convert(const char* infix_expr, char* postfix_expr, size_t 
         {
             clear_screen();
         }
-        char op = pop(operators);
+        char op = (char)(intptr_t)pop(operators);
         if (op == '(')
         {
-            destroyStack(operators);
+            destroyStack(operators, NULL);
             return EXPR_ERROR_UNMATCHED_PARENTHESES;
         }
 
         if ((size_t)pf_idx + 1 >= max_size)
         {
-            destroyStack(operators);
+            destroyStack(operators, NULL);
             return EXPR_ERROR_MALFORMED;
         }
         postfix_expr[pf_idx++] = op;
@@ -178,7 +178,7 @@ int infix_to_postfix_convert(const char* infix_expr, char* postfix_expr, size_t 
         printf("----------------------------------\n");
     }
 
-    destroyStack(operators);
+    destroyStack(operators, NULL);
     return EXPR_SUCCESS;
 }
 

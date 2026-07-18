@@ -48,22 +48,22 @@ void test_stack_operations()
     assert(s != NULL);
     assert(isEmpty(s) == 1);
 
-    assert(push(s, '+') == 1);
+    assert(push(s, (void*)(intptr_t)'+') == 1);
     assert(isEmpty(s) == 0);
 
-    assert(push(s, '*') == 1);
+    assert(push(s, (void*)(intptr_t)'*') == 1);
 
-    assert(peek(s) == '*');
+    assert((char)(intptr_t)peek(s) == '*');
 
-    assert(pop(s) == '*');
-    assert(pop(s) == '+');
+    assert((char)(intptr_t)pop(s) == '*');
+    assert((char)(intptr_t)pop(s) == '+');
 
     assert(isEmpty(s) == 1);
 
-    assert(pop(s) == -1);
-    assert(peek(s) == -1);
+    assert(pop(s) == NULL);
+    assert(peek(s) == NULL);
 
-    destroyStack(s);
+    destroyStack(s, NULL);
     printf("--> test_stack_operations PASSED!\n");
 }
 

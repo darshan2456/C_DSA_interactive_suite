@@ -28,7 +28,7 @@ int find_eulerian_path(Graph* graph, int** path, int* path_len)
         while (temp != NULL)
         {
             out_degree[u]++;
-            in_degree[temp->data]++;
+            in_degree[(int)(intptr_t)temp->data]++;
             total_edges++;
             temp = temp->next;
         }
@@ -146,7 +146,7 @@ int find_eulerian_path(Graph* graph, int** path, int* path_len)
         int u = curr_stack[curr_top - 1];
         if (adj_copy[u] != NULL)
         {
-            int v = adj_copy[u]->data;
+            int v = (int)(intptr_t)adj_copy[u]->data;
             adj_copy[u] = adj_copy[u]->next;
             curr_stack[curr_top++] = v;
         }

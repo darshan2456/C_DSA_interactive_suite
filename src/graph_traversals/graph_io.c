@@ -302,11 +302,11 @@ void print_graph(const Graph* graph)
         }
         while (head->next != NULL)
         {
-            printf("%d, ", head->data);
+            printf("%d, ", (int)(intptr_t)head->data);
             head = head->next;
         }
 
-        printf("%d", head->data);
+        printf("%d", (int)(intptr_t)head->data);
 
         printf("\n");
     }

@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <string.h>
 
+static void print_int(const void* data)
+{
+    printf("%d", (int)(intptr_t)data);
+}
+
 void separate_chaining_demo(void)
 {
     while (1)
@@ -39,7 +44,7 @@ void separate_chaining_demo(void)
                 printf("\nExiting separate chaining demo....");
                 for (int i = 0; i < hash_table_size; i++)
                 {
-                    delete_sll(table[i]);
+                    delete_sll(table[i], NULL);
                 }
                 return;
             }
@@ -55,13 +60,15 @@ void separate_chaining_demo(void)
                 continue;
             }
 
-            sll_insertAtEnd(&table[hash_location],
-                            value); // insert value by passing the address of the pointer to Node
+            sll_insertAtEnd(
+                &table[hash_location],
+                (void*)(intptr_t)
+                    value); // insert value by passing the address of the pointer to Node
 
             for (int i = 0; i < hash_table_size; i++)
             {
                 printf("bucket %d -> ", i);
-                sll_printlist(table[i]);
+                sll_printlist(table[i], print_int);
                 printf("\n");
             }
         }

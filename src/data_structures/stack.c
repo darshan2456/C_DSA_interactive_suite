@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int push(stack* s, int value)
+int push(stack* s, void* value)
 {
     if (s == NULL)
         return 0;
@@ -14,12 +14,12 @@ int push(stack* s, int value)
     return 0;
 }
 
-int pop(stack* s)
+void* pop(stack* s)
 {
     if (s == NULL || s->top == NULL)
-        return -1;
-    int top_of_stack = s->top->data;
-    sll_deleteAtBeginning(&(s->top));
+        return NULL;
+    void* top_of_stack = s->top->data;
+    sll_deleteAtBeginning(&(s->top), NULL); // DO NOT free the payload here, caller gets it
     return top_of_stack;
 }
 
@@ -39,21 +39,18 @@ bool isEmpty(const stack* s)
     return s->top == NULL;
 }
 
-void destroyStack(stack* s)
+void destroyStack(stack* s, void (*free_data)(void*))
 {
     if (s == NULL)
         return;
-    while (!isEmpty(s))
-    {
-        pop(s);
-    }
+    delete_sll(s->top, free_data);
     free(s);
 }
 
-int peek(const stack* s)
+void* peek(const stack* s)
 {
     if (s == NULL || s->top == NULL)
-        return -1;
+        return NULL;
     return s->top->data;
 }
 
@@ -72,7 +69,7 @@ void printStack(const stack* s)
     Node* curr = s->top;
     while (curr != NULL)
     {
-        printf("| %c ", curr->data);
+        printf("| %c ", (char)(intptr_t)(curr->data));
         curr = curr->next;
     }
     printf("|\n");
@@ -93,7 +90,7 @@ void printStackAsInts(const stack* s)
     Node* curr = s->top;
     while (curr != NULL)
     {
-        printf("| %d ", curr->data);
+        printf("| %d ", (int)(intptr_t)(curr->data));
         curr = curr->next;
     }
     printf("|\n");

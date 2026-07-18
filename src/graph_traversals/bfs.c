@@ -72,7 +72,7 @@ void bfs(Graph* graph, int start)
 
         while (temp)
         {
-            int v = temp->data;
+            int v = (int)(intptr_t)temp->data;
 
             if (!visited[v])
             {
@@ -133,8 +133,8 @@ void add_edge_undirected(Graph* graph, int src, int dest)
         return;
     }
 
-    sll_insertAtEnd(&graph->array[src], dest);
-    sll_insertAtEnd(&graph->array[dest], src);
+    sll_insertAtEnd(&graph->array[src], (void*)(intptr_t)dest);
+    sll_insertAtEnd(&graph->array[dest], (void*)(intptr_t)src);
 }
 
 void free_graph(Graph* graph)
@@ -145,14 +145,7 @@ void free_graph(Graph* graph)
     }
     for (int i = 0; i < graph->V; i++)
     {
-        Node* temp = graph->array[i];
-
-        while (temp)
-        {
-            Node* next = temp->next;
-            free(temp);
-            temp = next;
-        }
+        delete_sll(graph->array[i], NULL);
     }
 
     free(graph->array);
@@ -170,5 +163,5 @@ void add_edge_directed_unweighted(Graph* graph, int src, int dest)
         return;
     }
 
-    sll_insertAtEnd(&graph->array[src], dest);
+    sll_insertAtEnd(&graph->array[src], (void*)(intptr_t)dest);
 }
