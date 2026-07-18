@@ -41,6 +41,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Idemos/string_algorithms \
 	-Ifeatures/telemetry \
 	-Ifeatures/serialization \
+	-Ifeatures/export \
 	-Itui
 
 # LDFLAGS = -lncurses
@@ -78,7 +79,8 @@ SRC_DIRS = \
 	demos/advanced_graph_algorithms \
 	demos/string_algorithms \
 	features/telemetry \
-	features/serialization
+	features/serialization \
+	features/export
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
@@ -175,7 +177,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path test_cache_simulator test_compression test_telemetry test_sorting_telemetry test_graph_telemetry test_serialization
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path test_cache_simulator test_compression test_telemetry test_sorting_telemetry test_graph_telemetry test_serialization test_export
 
 # Automatically find all advanced heap test sources and append their targets
 ADV_HEAP_TESTS = $(patsubst tests/advanced_heaps/%.c,%,$(wildcard tests/advanced_heaps/*.c))
@@ -880,6 +882,13 @@ test_serialization: $(TEST_DIR)/test_serialization$(EXE)
 	$(TEST_DIR)/test_serialization$(EXE)
 
 $(TEST_DIR)/test_serialization$(EXE): $(OBJS) tests/serialization/test_serialization.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_export: $(TEST_DIR)/test_export$(EXE)
+	$(TEST_DIR)/test_export$(EXE)
+
+$(TEST_DIR)/test_export$(EXE): $(OBJS) tests/export/test_export.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
