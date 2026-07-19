@@ -1,3 +1,5 @@
+#include "config.h"
+#include "dp_visualizer.h"
 #include "dynamic_programming.h"
 #include "safe_input.h"
 #include <limits.h>
@@ -57,40 +59,47 @@ int matrix_chain_order(int p[], int n)
         }
     }
 
-    // Print m-table
-    printf("\nm-table (DP Lookup Table - Minimum Multiplications):\n");
-    for (int i = 1; i < n; i++)
+    if (!is_terminal_interactive())
     {
-        for (int j = 1; j < n; j++)
+        // Print m-table
+        printf("\nm-table (DP Lookup Table - Minimum Multiplications):\n");
+        for (int i = 1; i < n; i++)
         {
-            if (i > j)
+            for (int j = 1; j < n; j++)
             {
-                printf("%-10s", "-");
+                if (i > j)
+                {
+                    printf("%-10s", "-");
+                }
+                else
+                {
+                    printf("%-10d", m[i * n + j]);
+                }
             }
-            else
-            {
-                printf("%-10d", m[i * n + j]);
-            }
+            printf("\n");
         }
-        printf("\n");
-    }
 
-    // Print s-table
-    printf("\ns-table (Bracket/Parenthesization Split Table):\n");
-    for (int i = 1; i < n; i++)
-    {
-        for (int j = 1; j < n; j++)
+        // Print s-table
+        printf("\ns-table (Bracket/Parenthesization Split Table):\n");
+        for (int i = 1; i < n; i++)
         {
-            if (i >= j)
+            for (int j = 1; j < n; j++)
             {
-                printf("%-5s", "-");
+                if (i >= j)
+                {
+                    printf("%-5s", "-");
+                }
+                else
+                {
+                    printf("%-5d", s[i * n + j]);
+                }
             }
-            else
-            {
-                printf("%-5d", s[i * n + j]);
-            }
+            printf("\n");
         }
-        printf("\n");
+    }
+    else
+    {
+        visualize_mcm_tables(m, s, n, 1, n - 1);
     }
 
     int min_multiplications = m[1 * n + (n - 1)];
