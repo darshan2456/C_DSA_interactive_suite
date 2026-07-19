@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+static int fib_memo_size = 0;
+
 long long fibonacci_recursive(int n, long long memo[])
 {
     if (n <= 1)
@@ -13,6 +15,10 @@ long long fibonacci_recursive(int n, long long memo[])
         return memo[n];
 
     memo[n] = fibonacci_recursive(n - 1, memo) + fibonacci_recursive(n - 2, memo);
+    if (fib_memo_size > 0)
+    {
+        visualize_dp_table_1d("Fibonacci Recursive (Memoized) DP Table", memo, fib_memo_size, n);
+    }
     return memo[n];
 }
 
@@ -33,6 +39,7 @@ long long fibonacci_iterative(int n)
     for (int i = 2; i <= n; i++)
     {
         dp[i] = dp[i - 1] + dp[i - 2];
+        visualize_dp_table_1d("Fibonacci Iterative (Tabulation) DP Table", dp, n + 1, i);
     }
 
     visualize_dp_table_1d("Fibonacci Iterative (Tabulation) DP Table", dp, n + 1, n);
@@ -69,10 +76,12 @@ void fibonacci_demo(void)
             memo[i] = -1;
         }
 
+        fib_memo_size = n + 1;
         clock_t start_m = clock();
         long long res_memo = fibonacci_recursive(n, memo);
         clock_t end_m = clock();
         double time_memo = (double)(end_m - start_m) / CLOCKS_PER_SEC;
+        fib_memo_size = 0;
         visualize_dp_table_1d("Fibonacci Recursive (Memoized) DP Table", memo, n + 1, n);
 
         clock_t start_t = clock();

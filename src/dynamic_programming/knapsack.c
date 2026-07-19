@@ -33,6 +33,10 @@ int knapsack(int W, int wt[], int val[], int n)
             free(K);
             return -1;
         }
+        for (int j = 0; j <= W; j++)
+        {
+            K[i][j] = -1;
+        }
     }
 
     for (i = 0; i <= n; i++)
@@ -45,6 +49,8 @@ int knapsack(int W, int wt[], int val[], int n)
                 K[i][w] = max(val[i - 1] + K[i - 1][w - wt[i - 1]], K[i - 1][w]);
             else
                 K[i][w] = K[i - 1][w];
+
+            visualize_dp_table_2d("0/1 Knapsack DP Table", K, n + 1, W + 1, NULL, NULL, i, w);
         }
     }
 

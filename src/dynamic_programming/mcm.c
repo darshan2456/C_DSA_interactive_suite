@@ -56,6 +56,7 @@ int matrix_chain_order(int p[], int n)
                     s[i * n + j] = k;
                 }
             }
+            visualize_mcm_tables(m, s, n, i, j);
         }
     }
 
