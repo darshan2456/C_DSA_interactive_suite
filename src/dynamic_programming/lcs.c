@@ -32,6 +32,10 @@ int lcs(char* X, char* Y, int m, int n)
             free(L);
             return -1;
         }
+        for (int j = 0; j <= n; j++)
+        {
+            L[i][j] = -1;
+        }
     }
 
     int i, j;
@@ -45,6 +49,9 @@ int lcs(char* X, char* Y, int m, int n)
                 L[i][j] = L[i - 1][j - 1] + 1;
             else
                 L[i][j] = max(L[i - 1][j], L[i][j - 1]);
+
+            visualize_dp_table_2d("Longest Common Subsequence DP Table", L, m + 1, n + 1, X, Y, i,
+                                  j);
         }
     }
 
