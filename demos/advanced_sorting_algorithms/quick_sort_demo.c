@@ -1,5 +1,5 @@
-#include "safe_input.h"
 #include "advanced_sorting.h"
+#include "safe_input.h"
 #include "sorting_visualizer.h"
 #include "telemetry.h"
 #include <stdio.h>
