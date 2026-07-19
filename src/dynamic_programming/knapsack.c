@@ -1,3 +1,5 @@
+#include "config.h"
+#include "dp_visualizer.h"
 #include "dynamic_programming.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -46,16 +48,23 @@ int knapsack(int W, int wt[], int val[], int n)
         }
     }
 
-    printf("\n--- 0/1 Knapsack DP Table ---\n");
-    for (i = 0; i <= n; i++)
+    if (!is_terminal_interactive())
     {
-        for (w = 0; w <= W; w++)
+        printf("\n--- 0/1 Knapsack DP Table ---\n");
+        for (i = 0; i <= n; i++)
         {
-            printf("%4d ", K[i][w]);
+            for (w = 0; w <= W; w++)
+            {
+                printf("%4d ", K[i][w]);
+            }
+            printf("\n");
         }
-        printf("\n");
+        printf("-----------------------------\n");
     }
-    printf("-----------------------------\n");
+    else
+    {
+        visualize_dp_table_2d("0/1 Knapsack DP Table", K, n + 1, W + 1, NULL, NULL, n, W);
+    }
 
     int res = K[n][W];
 
