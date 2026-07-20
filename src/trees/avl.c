@@ -132,6 +132,10 @@ static avlNode* avl_insert_helper(avlNode* node, int value, int* status)
 /* Public API: Inserts a value into the AVL tree */
 int avl_insert(avlNode** root_ref, int value)
 {
+    if (root_ref == NULL)
+    {
+        return 0;
+    }
     int status = 0;
     *root_ref = avl_insert_helper(*root_ref, value, &status);
     return status;
@@ -225,6 +229,10 @@ static avlNode* avl_delete_helper(avlNode* root, int value, int* status)
 /* Public API: Deletes a value from the AVL tree */
 int avl_delete(avlNode** root_ref, int value)
 {
+    if (root_ref == NULL)
+    {
+        return 0;
+    }
     int status = 0;
     *root_ref = avl_delete_helper(*root_ref, value, &status);
     return status;
