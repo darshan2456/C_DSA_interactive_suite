@@ -34,7 +34,7 @@ static BPlusNode* find_leaf(BPlusNode* root, int key)
     if (!root)
         return NULL;
     BPlusNode* curr = root;
-    while (!curr->is_leaf)
+    while (curr && !curr->is_leaf)
     {
         int idx = 0;
         while (idx < curr->num_keys && key >= curr->keys[idx])
