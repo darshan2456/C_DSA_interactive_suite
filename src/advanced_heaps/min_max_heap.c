@@ -59,6 +59,10 @@ static void swap_nodes(MinMaxHeap* heap, int i, int j)
 /* Push up operations to maintain min-max property after insertion */
 static void push_up_min(MinMaxHeap* heap, int i)
 {
+    if (heap == NULL || i < 0 || i >= heap->size)
+    {
+        return;
+    }
     if (i > 2)
     {
         int grandparent = ((i - 1) / 2 - 1) / 2;
@@ -72,6 +76,10 @@ static void push_up_min(MinMaxHeap* heap, int i)
 
 static void push_up_max(MinMaxHeap* heap, int i)
 {
+    if (heap == NULL || i < 0 || i >= heap->size)
+    {
+        return;
+    }
     if (i > 2)
     {
         int grandparent = ((i - 1) / 2 - 1) / 2;
@@ -85,6 +93,10 @@ static void push_up_max(MinMaxHeap* heap, int i)
 
 static void push_up(MinMaxHeap* heap, int i)
 {
+    if (heap == NULL || i < 0 || i >= heap->size)
+    {
+        return;
+    }
     if (i == 0)
     {
         return;
@@ -255,6 +267,10 @@ static int find_max_descendant(MinMaxHeap* heap, int i)
 /* Push down helper functions to restore min-max properties on extraction */
 static void push_down_min(MinMaxHeap* heap, int i)
 {
+    if (heap == NULL || i < 0 || i >= heap->size)
+    {
+        return;
+    }
     int m = find_min_descendant(heap, i);
     if (m == -1)
     {
@@ -287,6 +303,10 @@ static void push_down_min(MinMaxHeap* heap, int i)
 
 static void push_down_max(MinMaxHeap* heap, int i)
 {
+    if (heap == NULL || i < 0 || i >= heap->size)
+    {
+        return;
+    }
     int m = find_max_descendant(heap, i);
     if (m == -1)
     {
@@ -319,6 +339,10 @@ static void push_down_max(MinMaxHeap* heap, int i)
 
 static void push_down(MinMaxHeap* heap, int i)
 {
+    if (heap == NULL || i < 0 || i >= heap->size)
+    {
+        return;
+    }
     if (is_min_level(i))
     {
         push_down_min(heap, i);
