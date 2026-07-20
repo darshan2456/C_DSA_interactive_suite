@@ -157,7 +157,7 @@ static FibonacciNode* fib_heap_consolidate(FibonacciNode* min_node)
     {
         x = roots[i];
         int d = x->degree;
-        while (arr[d] != NULL)
+        while (d < 64 && arr[d] != NULL)
         {
             FibonacciNode* y = arr[d];
             if (x->key > y->key)
@@ -171,7 +171,10 @@ static FibonacciNode* fib_heap_consolidate(FibonacciNode* min_node)
             arr[d] = NULL;
             d++;
         }
-        arr[d] = x;
+        if (d < 64)
+        {
+            arr[d] = x;
+        }
     }
 
     free(roots);
