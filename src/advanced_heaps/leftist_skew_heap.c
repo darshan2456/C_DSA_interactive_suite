@@ -49,6 +49,8 @@ static void swap_leftist_children(LeftistNode* x)
 /* Merges two leftist heaps */
 LeftistNode* leftist_heap_merge(LeftistNode* h1, LeftistNode* h2)
 {
+    if (h1 == h2)
+        return h1;
     if (h1 == NULL)
         return h2;
     if (h2 == NULL)
@@ -151,6 +153,8 @@ void destroy_skew_heap(SkewNode* root)
 /* Merges two Skew Heaps */
 SkewNode* skew_heap_merge(SkewNode* h1, SkewNode* h2)
 {
+    if (h1 == h2)
+        return h1;
     if (h1 == NULL)
         return h2;
     if (h2 == NULL)
