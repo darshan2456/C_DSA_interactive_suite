@@ -66,18 +66,26 @@ TreapNode* treap_insert(TreapNode* root, int key, int value, int priority)
 
     if (key <= root->key)
     {
-        root->left = treap_insert(root->left, key, value, priority);
-        if (root->left->priority < root->priority)
+        TreapNode* temp = treap_insert(root->left, key, value, priority);
+        if (temp != NULL || root->left == NULL)
         {
-            root = rotate_right(root);
+            root->left = temp;
+            if (root->left->priority < root->priority)
+            {
+                root = rotate_right(root);
+            }
         }
     }
     else
     {
-        root->right = treap_insert(root->right, key, value, priority);
-        if (root->right->priority < root->priority)
+        TreapNode* temp = treap_insert(root->right, key, value, priority);
+        if (temp != NULL || root->right == NULL)
         {
-            root = rotate_left(root);
+            root->right = temp;
+            if (root->right->priority < root->priority)
+            {
+                root = rotate_left(root);
+            }
         }
     }
 
