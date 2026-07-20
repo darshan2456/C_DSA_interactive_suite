@@ -82,6 +82,10 @@ bool solve_n_queens_util(int N, char board[MAX_N][MAX_N], int col)
 // --- TEST WRAPPER ---
 bool run_n_queens_test(int n)
 {
+    if (n <= 0 || n > MAX_N)
+    {
+        return false;
+    }
     char board[MAX_N][MAX_N];
     for (int i = 0; i < MAX_N; i++)
         for (int j = 0; j < MAX_N; j++)
