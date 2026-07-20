@@ -82,6 +82,10 @@ int bwt_inverse(const char* input, int primary_index, char* output)
     }
 
     int len = strlen(input);
+    if (primary_index < 0 || primary_index >= len)
+    {
+        return -1;
+    }
     if (len == 0)
     {
         output[0] = '\0';
