@@ -5,57 +5,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-void run_sudoku_fuzz(FuzzerState* fuzzer, int runs)
-{
-    int grid[6][6];
-    for (int r = 0; r < runs; r++)
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                // Most squares are empty (0), some are randomized clues (1-6)
-                if (fuzzer_rand_int(fuzzer, 0, 4) == 0)
-                {
-                    grid[i][j] = fuzzer_rand_int(fuzzer, 1, 6);
-                }
-                else
-                {
-                    grid[i][j] = 0;
-                }
-            }
-        }
-        fuzzer_log_op(fuzzer, "Sudoku run %d", r);
-        run_sudoku_test(grid);
-    }
-}
-
-void run_maze_fuzz(FuzzerState* fuzzer, int runs)
-{
-    int maze[6][6];
-    for (int r = 0; r < runs; r++)
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            for (int j = 0; j < 6; j++)
-            {
-                // Start and end are always paths
-                if ((i == 0 && j == 0) || (i == 5 && j == 5))
-                {
-                    maze[i][j] = 1;
-                }
-                else
-                {
-                    // 1 for path, 0 for wall
-                    maze[i][j] = (fuzzer_rand_int(fuzzer, 0, 3) == 0) ? 0 : 1;
-                }
-            }
-        }
-        fuzzer_log_op(fuzzer, "Maze run %d", r);
-        run_rat_in_maze_test(maze);
-    }
-}
-
 int main(void)
 {
     setenv("DSA_TEST_MODE", "1", 1);
