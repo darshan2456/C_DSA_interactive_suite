@@ -17,6 +17,7 @@ void radix_sort(int arr[], int n);
 void radix_sort_with_telemetry(int arr[], int n, SortingTelemetry* telemetry);
 void radix_sort_demo(void);
 void bucket_sort(int arr[], int n);
+void bucket_sort_with_telemetry(int arr[], int n, SortingTelemetry* telemetry);
 void bucket_sort_demo(void);
 
 #endif
