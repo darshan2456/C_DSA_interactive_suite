@@ -32,7 +32,8 @@ void quadratic_probing_demo(void)
         while (1)
         {
             int value_status = safe_input_int(
-                &value, "\nenter a value between 1 and 1000 (enter '-1' to exit):- ", 1, 1000);
+                &value, "\nenter a value between 1 and 1000 (enter '-1' to search elements):- ", 1,
+                1000);
 
             if (value_status == INPUT_EXIT_SIGNAL)
             {

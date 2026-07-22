@@ -1,6 +1,9 @@
 #ifndef HASH_H
 #define HASH_H
 
+#define MIN_HASH_LIMIT 1
+#define MAX_HASH_LIMIT 1000
+
 void linear_probing_demo(void);
 void hashing_algorithms_demo(void);
 int hash_function(int value, int length_of_array);

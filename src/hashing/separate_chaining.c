@@ -17,8 +17,8 @@ void separate_chaining_demo(void)
         int hash_table_size;
         int hash_table_status = safe_input_int(
             &hash_table_size,
-            "\nenter the size of the hash table (between 1 and 1000), enter '-1' to exit:- ", 1,
-            1000);
+            "\nenter the size of the hash table (between 1 and 1000), enter '-1' to exit:- ",
+            MIN_HASH_LIMIT, MAX_HASH_LIMIT);
 
         if (hash_table_status == INPUT_EXIT_SIGNAL)
         {
@@ -37,7 +37,8 @@ void separate_chaining_demo(void)
         while (1)
         {
             int value_status = safe_input_int(
-                &value, "\nenter the value between 1 and 1000 (enter '-1' to exit):- ", 1, 1000);
+                &value, "\nenter the value between 1 and 1000 (enter '-1' to exit):- ",
+                MIN_HASH_LIMIT, MAX_HASH_LIMIT);
 
             if (value_status == INPUT_EXIT_SIGNAL)
             {

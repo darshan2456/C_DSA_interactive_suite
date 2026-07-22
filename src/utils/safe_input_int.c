@@ -14,7 +14,7 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
     }
 
     int c;
-    char buffer[100]; // Buffer to read raw user input as a string first
+    char buffer[INPUT_BUFFER_SIZE]; // Buffer to read raw user input as a string first
 
     while (1)
     {
