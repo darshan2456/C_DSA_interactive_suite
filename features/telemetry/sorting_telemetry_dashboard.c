@@ -1,5 +1,6 @@
 #include "advanced_sorting.h"
 #include "safe_input.h"
+#include "sorting_algorithms_n2.h"
 #include "sorting_telemetry.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,7 +37,7 @@ void sorting_telemetry_dashboard_demo(void)
     while (1)
     {
         printf("\n========================================================================\n");
-        printf("       ADVANCED SORTING ALGORITHMS TELEMETRY & PROFILING DASHBOARD       \n");
+        printf("       UNIFIED SORTING TELEMETRY & PROFILING COMPARATIVE DASHBOARD       \n");
         printf("========================================================================\n");
         printf("1. Run Benchmark on Random Dataset\n");
         printf("2. Run Benchmark on Sorted Dataset\n");
@@ -82,47 +83,56 @@ void sorting_telemetry_dashboard_demo(void)
                                                    : "Reverse-Sorted";
         printf("\nRunning Telemetry Profiling on %s Dataset (N = %d)...\n", dataset_name, n);
 
-        SortingTelemetry results[5];
+        SortingTelemetry results[9];
 
-        // 1. Quick Sort
+        // Advanced Algorithms
         memcpy(test_arr, master_arr, sizeof(int) * n);
         quicksort_with_telemetry(test_arr, 0, n - 1, &results[0]);
 
-        // 2. Merge Sort
         memcpy(test_arr, master_arr, sizeof(int) * n);
         merge_sort_with_telemetry(test_arr, n, &results[1]);
 
-        // 3. Heap Sort
         memcpy(test_arr, master_arr, sizeof(int) * n);
         heap_sort_with_telemetry(test_arr, n, &results[2]);
 
-        // 4. Radix Sort
         memcpy(test_arr, master_arr, sizeof(int) * n);
         radix_sort_with_telemetry(test_arr, n, &results[3]);
 
-        // 5. Bucket Sort
         memcpy(test_arr, master_arr, sizeof(int) * n);
         bucket_sort_with_telemetry(test_arr, n, &results[4]);
+
+        // N^2 Algorithms
+        memcpy(test_arr, master_arr, sizeof(int) * n);
+        bubble_sort_optimized_with_telemetry(test_arr, n, &results[5]);
+
+        memcpy(test_arr, master_arr, sizeof(int) * n);
+        insertion_sort_with_telemetry(test_arr, n, &results[6]);
+
+        memcpy(test_arr, master_arr, sizeof(int) * n);
+        selection_sort_with_telemetry(test_arr, n, &results[7]);
+
+        memcpy(test_arr, master_arr, sizeof(int) * n);
+        shell_sort_with_telemetry(test_arr, n, &results[8]);
 
         free(master_arr);
         free(test_arr);
 
         // Display Comparative Matrix
-        printf("\n+--------------------+---------------+--------------+------------+------------+--"
-               "-------------+------------+\n");
-        printf("| Algorithm          | Time (us)     | Comparisons  | Swaps      | Copies     | "
-               "Max Rec Depth | Pass Count |\n");
-        printf("+--------------------+---------------+--------------+------------+------------+----"
-               "-----------+------------+\n");
+        printf("\n+--------------------+---------------+--------------+------------+------------+---------------+------------+\n");
+        printf("| Algorithm          | Time (us)     | Comparisons  | Swaps      | Copies     | Max Rec Depth | Pass Count |\n");
+        printf("+--------------------+---------------+--------------+------------+------------+---------------+------------+\n");
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 9; i++)
         {
             printf("| %-18s | %13.2f | %12lld | %10lld | %10lld | %13d | %10d |\n",
-                   results[i].algorithm_name, results[i].elapsed_microseconds,
-                   results[i].comparisons, results[i].swaps, results[i].copies,
-                   results[i].max_recursion_depth, results[i].pass_count);
+                   results[i].algorithm_name,
+                   results[i].elapsed_microseconds,
+                   results[i].comparisons,
+                   results[i].swaps,
+                   results[i].copies,
+                   results[i].max_recursion_depth,
+                   results[i].pass_count);
         }
-        printf("+--------------------+---------------+--------------+------------+------------+----"
-               "-----------+------------+\n");
+        printf("+--------------------+---------------+--------------+------------+------------+---------------+------------+\n");
     }
 }

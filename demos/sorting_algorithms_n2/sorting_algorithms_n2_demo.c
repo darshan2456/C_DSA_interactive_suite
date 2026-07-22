@@ -1,6 +1,7 @@
 #include "display_header.h"
 #include "safe_input.h"
 #include "sorting_algorithms_n2.h"
+#include "sorting_telemetry.h"
 #include <stdio.h>
 
 void sorting_algorithms_n2_demo(void)
@@ -15,8 +16,9 @@ void sorting_algorithms_n2_demo(void)
                                              "\nenter 2 for insertion sort"
                                              "\nenter 3 for selection sort"
                                              "\nenter 4 for shell sort"
+                                             "\nenter 5 for Comparative Performance Dashboard"
                                              "\nenter choice (\'-1\' to exit, or \'help\') : ",
-                                             1, 4);
+                                             1, 5);
 
         if (sorting_algo_status == INPUT_EXIT_SIGNAL)
         {
@@ -44,6 +46,10 @@ void sorting_algorithms_n2_demo(void)
             case 4:
                 display_header("Shell Sort");
                 shell_sort_demo();
+                break;
+            case 5:
+                display_header("Comparative Performance Dashboard");
+                sorting_telemetry_dashboard_demo();
                 break;
         }
     }

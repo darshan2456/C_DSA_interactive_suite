@@ -1,4 +1,5 @@
 #include "advanced_sorting.h"
+#include "sorting_algorithms_n2.h"
 #include "sorting_telemetry.h"
 #include <assert.h>
 #include <stdio.h>
@@ -149,6 +150,28 @@ void test_bucketsort_telemetry(void)
     printf("test_bucketsort_telemetry passed successfully!\n");
 }
 
+void test_n2_sorting_telemetry(void)
+{
+    int arr1[] = {5, 2, 9, 1, 7};
+    int arr2[] = {5, 2, 9, 1, 7};
+    int arr3[] = {5, 2, 9, 1, 7};
+    int arr4[] = {5, 2, 9, 1, 7};
+    int n = 5;
+    SortingTelemetry t1, t2, t3, t4;
+
+    bubble_sort_optimized_with_telemetry(arr1, n, &t1);
+    insertion_sort_with_telemetry(arr2, n, &t2);
+    selection_sort_with_telemetry(arr3, n, &t3);
+    shell_sort_with_telemetry(arr4, n, &t4);
+
+    assert(t1.comparisons > 0);
+    assert(t2.comparisons > 0);
+    assert(t3.comparisons > 0);
+    assert(t4.comparisons > 0);
+
+    printf("test_n2_sorting_telemetry passed successfully!\n");
+}
+
 int main(void)
 {
     test_sorting_telemetry_basic();
@@ -157,5 +180,6 @@ int main(void)
     test_heapsort_telemetry();
     test_radixsort_telemetry();
     test_bucketsort_telemetry();
+    test_n2_sorting_telemetry();
     return 0;
 }
