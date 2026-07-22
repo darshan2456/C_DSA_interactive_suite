@@ -108,11 +108,33 @@ void test_heapsort_telemetry(void)
     printf("test_heapsort_telemetry passed successfully!\n");
 }
 
+void test_radixsort_telemetry(void)
+{
+    int arr[] = {170, 45, 75, 90, 802, 24, 2, 66};
+    int n = 8;
+    SortingTelemetry t;
+
+    radix_sort_with_telemetry(arr, n, &t);
+
+    assert(t.comparisons > 0);
+    assert(t.copies > 0);
+    assert(t.pass_count > 0);
+    assert(t.elapsed_microseconds >= 0.0);
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        assert(arr[i] <= arr[i + 1]);
+    }
+
+    printf("test_radixsort_telemetry passed successfully!\n");
+}
+
 int main(void)
 {
     test_sorting_telemetry_basic();
     test_quicksort_telemetry();
     test_mergesort_telemetry();
     test_heapsort_telemetry();
+    test_radixsort_telemetry();
     return 0;
 }
