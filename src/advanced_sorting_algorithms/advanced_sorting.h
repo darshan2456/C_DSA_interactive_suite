@@ -1,7 +1,10 @@
 #ifndef ADVANCED_SORTING_H
 #define ADVANCED_SORTING_H
 
+#include "sorting_telemetry.h"
+
 void quicksort(int arr[], int low, int high);
+void quicksort_with_telemetry(int arr[], int low, int high, SortingTelemetry* telemetry);
 void quicksort_demo(void);
 void advanced_sorting_demo(void);
 void merge_sort(int arr[], int n);
