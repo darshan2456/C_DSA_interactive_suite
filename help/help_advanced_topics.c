@@ -91,9 +91,16 @@ void help_advanced_topics_menu(void)
                 printf("    • SRTF (Shortest Remaining Time First): Preemptive version of SJF.\n");
                 printf("      Preempts the running process if a new process has a shorter "
                        "remaining burst time.\n");
+                printf(
+                    "      - Real-World Use: Minimizes average waiting time in CPU schedulers.\n");
                 printf("    • Preemptive Priority Scheduling: Preempts the running process if a "
                        "newly\n");
-                printf("      arrived process has a higher priority.\n\n");
+                printf("      arrived process has a higher priority.\n");
+                printf("      - Real-World Use: Used in Real-Time Operating Systems (RTOS) for "
+                       "critical tasks.\n\n");
+                printf("HOW TO RUN IN THIS SUITE:\n");
+                printf("    1. Exit to the main menu and select option 10 (Job Scheduling).\n");
+                printf("    2. Choose 3 for SRTF, or 5 for Preemptive Priority Scheduling.\n\n");
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");
@@ -109,17 +116,29 @@ void help_advanced_topics_menu(void)
                        "for the longest time.\n");
                 printf("    • MRU (Most Recently Used): Replaces the page that was accessed most "
                        "recently.\n");
+                printf("      - Real-World Use: Looping access patterns in databases where oldest "
+                       "data is reused first.\n");
                 printf("    • LFU (Least Frequently Used): Replaces the page with the lowest "
                        "access count (with aging).\n");
                 printf("    • OPT (Belady's Optimal): Replaces the page that will not be used for "
                        "the longest future duration.\n");
+                printf("      - Real-World Use: Theoretical benchmark to measure efficiency of "
+                       "online caching.\n");
                 printf("    • Clock (Second Chance): Approximates LRU using a reference bit. It "
                        "circular-scans pages, giving\n");
                 printf("      them a \"second chance\" if their bit is 1 (setting it to 0), "
                        "replacing the first page with bit 0.\n");
+                printf("      - Real-World Use: Operating system page replacement (low overhead, "
+                       "no locks).\n");
                 printf("    • Enhanced Clock: Extends Clock by considering both reference and "
                        "modified (dirty) bits, preferring\n");
-                printf("      to replace clean pages first to avoid unnecessary write-backs.\n\n");
+                printf("      to replace clean pages first to avoid unnecessary write-backs.\n");
+                printf("      - Real-World Use: Modern virtual memory management to minimize disk "
+                       "write operations.\n\n");
+                printf("HOW TO RUN IN THIS SUITE:\n");
+                printf("    1. Exit to the main menu and select option 17 (Cache Simulator).\n");
+                printf("    2. Specify the cache capacity, then choose from options 1-7 to select "
+                       "the replacement policy.\n\n");
                 printf("STEP-DEBUGGER:\n");
                 printf("    Interactive tool to run algorithms step-by-step to examine variable "
                        "changes and pointer updates.\n\n");
