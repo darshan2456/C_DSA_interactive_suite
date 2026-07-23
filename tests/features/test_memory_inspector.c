@@ -70,9 +70,23 @@ void test_struct_layout_analyzer(void)
 void test_dsa_node_inspectors(void)
 {
     int val = 100;
-    Node sll_node = {.data = &val, .next = NULL};
-    doubly_ll_Node dll_node = {.data = &val, .prev = NULL, .next = NULL};
-    bstNode bst_node = {.data = 42, .left = NULL, .right = NULL};
+
+    Node sll_node;
+    memset(&sll_node, 0, sizeof(sll_node));
+    sll_node.data = &val;
+    sll_node.next = NULL;
+
+    doubly_ll_Node dll_node;
+    memset(&dll_node, 0, sizeof(dll_node));
+    dll_node.data = &val;
+    dll_node.prev = NULL;
+    dll_node.next = NULL;
+
+    bstNode bst_node;
+    memset(&bst_node, 0, sizeof(bst_node));
+    bst_node.data = 42;
+    bst_node.left = NULL;
+    bst_node.right = NULL;
 
     inspect_sll_node_memory(&sll_node);
     inspect_dll_node_memory(&dll_node);
