@@ -154,10 +154,11 @@ static void print_drawn_graph(const GraphTopology* graph, int colors[MAX_V], int
 void print_graph_state(const GraphTopology* graph, int colors[MAX_V], int current_vertex,
                        const char* status_msg, int delay_time)
 {
-    if (!is_instant())
+    if (is_instant())
     {
-        clear_screen();
+        return;
     }
+    clear_screen();
     printf("\n=== GRAPH COLORING BACKTRACKING VISUALIZER ===\n\n");
     printf("Topology: \033[38;5;208;1m%s\033[0m (%d vertices)\n\n", graph->name,
            graph->num_vertices);

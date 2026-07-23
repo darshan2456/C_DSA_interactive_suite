@@ -11,10 +11,11 @@
 
 static void print_board(int N, char board[MAX_N][MAX_N])
 {
-    if (!is_instant())
+    if (is_instant())
     {
-        clear_screen();
+        return;
     }
+    clear_screen();
     printf("\n--- N-Queens Visualization ---\n\n");
     for (int i = 0; i < N; i++)
     {

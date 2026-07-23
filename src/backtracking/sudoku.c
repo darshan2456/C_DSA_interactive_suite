@@ -14,10 +14,11 @@ int original_grid_copy[N][N];
 
 void print_sudoku_board(int grid[N][N], int original_grid[N][N])
 {
-    if (!is_instant())
+    if (is_instant())
     {
-        clear_screen();
+        return;
     }
+    clear_screen();
     printf("\n--- Sudoku Solver Visualization (6x6) ---\n\n");
     for (int row = 0; row < N; row++)
     {
