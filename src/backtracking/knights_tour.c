@@ -31,10 +31,11 @@ static int compare_candidates(const void* a, const void* b)
 
 void print_knights_tour_board(int N, int board[8][8], int knight_x, int knight_y)
 {
-    if (!is_instant())
+    if (is_instant())
     {
-        clear_screen();
+        return;
     }
+    clear_screen();
     printf("\n=== KNIGHT'S TOUR BACKTRACKING VISUALIZER ===\n\n");
     for (int i = 0; i < N; i++)
     {

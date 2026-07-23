@@ -11,10 +11,11 @@
 
 void print_maze_state(int maze[N][N], int solution[N][N])
 {
-    if (!is_instant())
+    if (is_instant())
     {
-        clear_screen();
+        return;
     }
+    clear_screen();
     printf("\n--- Rat in a Maze Visualization (6x6) ---\n\n");
     for (int i = 0; i < N; i++)
     {
