@@ -20,6 +20,7 @@
 #include "graph_traversals.h"
 #include "hash.h"
 #include "job_scheduling.h"
+#include "memory_inspector.h"
 #include "memory_tracker.h"
 #include "priority_queue.h"
 #include "process_synchronization.h"
@@ -75,8 +76,9 @@ void run_legacy_menu()
             "click 20 for interactive algorithm step-debugger demo\n"
             "click 21 for setting animation speed (by default 2s)\n"
             "click 22 for Stochastic Fuzz Testing Engine demo\n"
+            "click 23 for Raw Memory Layout Inspector / Hexdump Visualizer demo\n"
             "\nenter choice (\'-1\' to exit, or \'help\') : ",
-            1, 22 // limits
+            1, 23 // limits
         );
 
         if (status == INPUT_EXIT_SIGNAL)
@@ -159,6 +161,10 @@ void run_legacy_menu()
             case 22:
                 display_header("Stochastic Fuzz Testing Engine");
                 fuzzer_demo();
+                break;
+            case 23:
+                display_header("Raw Memory Layout Inspector");
+                memory_inspector_demo();
                 break;
         }
     }

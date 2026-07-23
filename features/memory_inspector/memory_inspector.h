@@ -82,4 +82,9 @@ void inspect_dll_node_memory(const void* node_ptr);
  */
 void inspect_bst_node_memory(const void* node_ptr);
 
+/**
+ * Interactive memory inspector and raw hexdump visualizer demo suite.
+ */
+void memory_inspector_demo(void);
+
 #endif /* MEMORY_INSPECTOR_H */
