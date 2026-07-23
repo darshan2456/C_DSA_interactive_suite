@@ -16,6 +16,7 @@ typedef struct TestNode
 void test_hexdump_null_handling(void)
 {
     char buf[128];
+    memset(buf, 0, sizeof(buf));
     size_t written = format_hexdump(NULL, 0, buf, sizeof(buf));
     assert(written > 0);
     assert(strstr(buf, "NULL") != NULL);
@@ -26,6 +27,7 @@ void test_hexdump_basic_formatting(void)
 {
     char data[] = "Hello C_DSA!";
     char buf[512];
+    memset(buf, 0, sizeof(buf));
     size_t len = strlen(data);
 
     size_t written = format_hexdump(data, len, buf, sizeof(buf));
@@ -38,15 +40,21 @@ void test_hexdump_basic_formatting(void)
 
 void test_struct_layout_analyzer(void)
 {
-    TestNode node = {'A', 42, NULL};
+    TestNode node;
+    memset(&node, 0, sizeof(node));
+    node.tag = 'A';
+    node.value = 42;
+    node.next = NULL;
 
-    StructLayout layout = {.struct_name = "TestNode",
-                           .total_size = sizeof(TestNode),
-                           .alignment = _Alignof(TestNode),
-                           .field_count = 3,
-                           .fields = {{"tag", offsetof(TestNode, tag), sizeof(node.tag), 0},
-                                      {"value", offsetof(TestNode, value), sizeof(node.value), 0},
-                                      {"next", offsetof(TestNode, next), sizeof(node.next), 0}}};
+    StructLayout layout;
+    memset(&layout, 0, sizeof(layout));
+    layout.struct_name = "TestNode";
+    layout.total_size = sizeof(TestNode);
+    layout.alignment = _Alignof(TestNode);
+    layout.field_count = 3;
+    layout.fields[0] = (StructField){"tag", offsetof(TestNode, tag), sizeof(node.tag), 0};
+    layout.fields[1] = (StructField){"value", offsetof(TestNode, value), sizeof(node.value), 0};
+    layout.fields[2] = (StructField){"next", offsetof(TestNode, next), sizeof(node.next), 0};
 
     finalize_struct_layout(&layout);
 
