@@ -61,4 +61,25 @@ void print_struct_layout_report(const StructLayout* layout, const void* instance
  */
 void finalize_struct_layout(StructLayout* layout);
 
+/**
+ * Inspect memory layout, alignment, and raw bytes of a Singly Linked List Node (Node).
+ *
+ * @param node_ptr Pointer to the SLL node.
+ */
+void inspect_sll_node_memory(const void* node_ptr);
+
+/**
+ * Inspect memory layout, alignment, and raw bytes of a Doubly Linked List Node (doubly_ll_Node).
+ *
+ * @param node_ptr Pointer to the DLL node.
+ */
+void inspect_dll_node_memory(const void* node_ptr);
+
+/**
+ * Inspect memory layout, alignment, and raw bytes of a Binary Search Tree Node (bstNode).
+ *
+ * @param node_ptr Pointer to the BST node.
+ */
+void inspect_bst_node_memory(const void* node_ptr);
+
 #endif /* MEMORY_INSPECTOR_H */

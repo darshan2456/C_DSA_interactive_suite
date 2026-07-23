@@ -1,4 +1,7 @@
 #include "memory_inspector.h"
+#include "dll.h"
+#include "sll.h"
+#include "trees.h"
 #include <ctype.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -232,4 +235,44 @@ void print_struct_layout_report(const StructLayout* layout, const void* instance
     {
         print_hexdump(instance_ptr, layout->total_size);
     }
+}
+
+void inspect_sll_node_memory(const void* node_ptr)
+{
+    StructLayout layout = {.struct_name = "Singly LinkedList Node (Node)",
+                           .total_size = sizeof(Node),
+                           .alignment = _Alignof(Node),
+                           .field_count = 2,
+                           .fields = {{"data (void*)", offsetof(Node, data), sizeof(void*), 0},
+                                      {"next (Node*)", offsetof(Node, next), sizeof(Node*), 0}}};
+    finalize_struct_layout(&layout);
+    print_struct_layout_report(&layout, node_ptr);
+}
+
+void inspect_dll_node_memory(const void* node_ptr)
+{
+    StructLayout layout = {
+        .struct_name = "Doubly LinkedList Node (doubly_ll_Node)",
+        .total_size = sizeof(doubly_ll_Node),
+        .alignment = _Alignof(doubly_ll_Node),
+        .field_count = 3,
+        .fields = {{"data (void*)", offsetof(doubly_ll_Node, data), sizeof(void*), 0},
+                   {"prev (Node*)", offsetof(doubly_ll_Node, prev), sizeof(doubly_ll_Node*), 0},
+                   {"next (Node*)", offsetof(doubly_ll_Node, next), sizeof(doubly_ll_Node*), 0}}};
+    finalize_struct_layout(&layout);
+    print_struct_layout_report(&layout, node_ptr);
+}
+
+void inspect_bst_node_memory(const void* node_ptr)
+{
+    StructLayout layout = {
+        .struct_name = "Binary Search Tree Node (bstNode)",
+        .total_size = sizeof(bstNode),
+        .alignment = _Alignof(bstNode),
+        .field_count = 3,
+        .fields = {{"data (int)", offsetof(bstNode, data), sizeof(int), 0},
+                   {"left (bstNode*)", offsetof(bstNode, left), sizeof(bstNode*), 0},
+                   {"right (bstNode*)", offsetof(bstNode, right), sizeof(bstNode*), 0}}};
+    finalize_struct_layout(&layout);
+    print_struct_layout_report(&layout, node_ptr);
 }
