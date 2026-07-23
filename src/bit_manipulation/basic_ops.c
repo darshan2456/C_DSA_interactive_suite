@@ -1,5 +1,4 @@
 #include "bit_manipulation.h"
-#include <stdio.h>
 
 /**
  * Sets the kth bit of a number n.
@@ -7,7 +6,7 @@
  */
 int set_bit(int n, int k)
 {
-    return (n | (1 << k));
+    return (n | (1U << k));
 }
 
 /**
@@ -16,7 +15,7 @@ int set_bit(int n, int k)
  */
 int clear_bit(int n, int k)
 {
-    return (n & (~(1 << k)));
+    return (n & (~(1U << k)));
 }
 
 /**
@@ -25,7 +24,7 @@ int clear_bit(int n, int k)
  */
 int toggle_bit(int n, int k)
 {
-    return (n ^ (1 << k));
+    return (n ^ (1U << k));
 }
 
 /**
@@ -35,5 +34,5 @@ int toggle_bit(int n, int k)
  */
 int check_bit(int n, int k)
 {
-    return ((n & (1 << k)) != 0) ? 1 : 0;
+    return ((n & (1U << k)) != 0) ? 1 : 0;
 }
