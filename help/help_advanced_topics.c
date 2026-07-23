@@ -38,6 +38,15 @@ void help_advanced_topics_menu(void)
                        "subproblems,\n");
                 printf("    solving each subproblem once, and storing their solutions (Memoization "
                        "/ Tabulation).\n\n");
+                printf("IMPLEMENTED DP DEMOS:\n");
+                printf(
+                    "    • Fibonacci Sequence: Computes F(N) using memoization/tabulation in O(N) "
+                    "time.\n");
+                printf("    • 0/1 Knapsack: Maximizes value without exceeding weight capacity.\n");
+                printf("    • Longest Common Subsequence (LCS): Finds longest shared character "
+                       "subsequence.\n");
+                printf("    • Matrix Chain Multiplication (MCM): Finds optimal matrix "
+                       "multiplication order.\n\n");
                 printf("DP VISUALIZER:\n");
                 printf("    An interactive helper tool integrated into DP demos that traces "
                        "recursion\n");
@@ -49,6 +58,19 @@ void help_advanced_topics_menu(void)
                        "incrementally and\n");
                 printf("    backs out (backtracks) as soon as it determines the current path "
                        "cannot lead to a valid solution.\n\n");
+                printf("IMPLEMENTED BACKTRACKING DEMOS:\n");
+                printf("    • N-Queens Problem: Places N non-attacking queens on an N x N "
+                       "chessboard.\n");
+                printf("    • Sudoku Solver: Solves a standard 9x9 grid constraint-satisfaction "
+                       "puzzle.\n");
+                printf("    • Rat in a Maze: Finds a valid route through obstacles in a grid.\n");
+                printf("    • Graph Coloring: Colors graph vertices such that no adjacent vertices "
+                       "share colors.\n");
+                printf("    • Knight's Tour: Visits every square of a chessboard exactly once with "
+                       "a knight.\n\n");
+                printf("HOW TO RUN IN THIS SUITE:\n");
+                printf("    • Backtracking: Main Menu ➔ Option 11.\n");
+                printf("    • Dynamic Programming: Main Menu ➔ Option 12.\n\n");
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");
@@ -65,13 +87,27 @@ void help_advanced_topics_menu(void)
                 printf("    • Rabin-Karp: Uses rolling hashes to compare pattern and text "
                        "windows.\n");
                 printf("    • Suffix Array: Sorted array of all suffixes, enabling fast substring "
+                       "queries.\n");
+                printf("    • Kasai's LCP Array: Computes the longest common prefixes between "
+                       "consecutive\n");
+                printf("      suffixes in the Suffix Array in O(N) time. Essential for substring "
                        "queries.\n\n");
                 printf("COMPRESSION & ENCODING:\n");
                 printf("    • Huffman Coding: Lossless data compression using variable-length "
                        "prefix codes.\n");
                 printf("    • Run-Length Encoding (RLE): Simple form of compression for repeating "
                        "characters.\n");
-                printf("    • LZW (Lempel-Ziv-Welch) & BWT (Burrows-Wheeler Transform).\n\n");
+                printf("    • LZW (Lempel-Ziv-Welch): Dictionary-based compression algorithm.\n");
+                printf("    • BWT (Burrows-Wheeler Transform): Reversible string permutation that "
+                       "groups\n");
+                printf("      similar characters together to improve compression ratios.\n");
+                printf("    • Move-to-Front (MTF) Transform: Shifts processed symbols to the front "
+                       "of the alphabet,\n");
+                printf("      producing sequences of small numbers for consecutive/repeating "
+                       "characters.\n\n");
+                printf("HOW TO RUN IN THIS SUITE:\n");
+                printf("    • String Algorithms: Main Menu ➔ Option 13.\n");
+                printf("    • String Compression: Main Menu ➔ Option 18.\n\n");
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");

@@ -12,7 +12,7 @@ void help_error_correction_menu(void)
         printf("Select a sub-topic:\n\n");
         printf("1. Parity Bit (Simple Parity Check)\n");
         printf("2. Vertical Redundancy Check (VRC)\n");
-        printf("3. Longitudinal Red redundancy Check (LRC)\n");
+        printf("3. Longitudinal Redundancy Check (LRC)\n");
         printf("4. Checksum\n");
         printf("5. Cyclic Redundancy Check (CRC)\n");
         printf("6. Hamming Code (Error Correction)\n");
