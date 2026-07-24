@@ -90,4 +90,9 @@ bool profile_merge_sort_bigo(int base_n, BigOReport* report);
 bool profile_linear_search_bigo(int base_n, BigOReport* report);
 bool profile_binary_search_bigo(int base_n, BigOReport* report);
 
+// Graph, Tree & DP Algorithm Profilers
+bool profile_bfs_graph_bigo(int base_n, BigOReport* report);
+bool profile_bst_operations_bigo(int base_n, BigOReport* report);
+bool profile_dp_fibonacci_bigo(int base_n, BigOReport* report);
+
 #endif /* BIGO_VERIFIER_H */

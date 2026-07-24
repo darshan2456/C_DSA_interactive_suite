@@ -327,6 +327,97 @@ static void alg_binary_search(int* data, int n)
     }
 }
 
+// Graph, Tree, and DP algorithm implementations
+static void alg_bfs_graph(int* data, int n)
+{
+    (void)data;
+    bool* visited = (bool*)calloc((size_t)n, sizeof(bool));
+    int* queue = (int*)malloc((size_t)n * sizeof(int));
+    if (!visited || !queue)
+    {
+        free(visited);
+        free(queue);
+        return;
+    }
+    int head = 0, tail = 0;
+    visited[0] = true;
+    queue[tail++] = 0;
+
+    while (head < tail)
+    {
+        int u = queue[head++];
+        int next_v = (u + 1) % n;
+        if (!visited[next_v])
+        {
+            visited[next_v] = true;
+            queue[tail++] = next_v;
+        }
+    }
+    free(visited);
+    free(queue);
+}
+
+typedef struct BSTNode
+{
+    int key;
+    struct BSTNode *left, *right;
+} BSTNode;
+
+static BSTNode* insert_bst(BSTNode* node, int key)
+{
+    if (!node)
+    {
+        BSTNode* new_node = (BSTNode*)malloc(sizeof(BSTNode));
+        if (new_node)
+        {
+            new_node->key = key;
+            new_node->left = new_node->right = NULL;
+        }
+        return new_node;
+    }
+    if (key < node->key)
+        node->left = insert_bst(node->left, key);
+    else
+        node->right = insert_bst(node->right, key);
+    return node;
+}
+
+static void free_bst(BSTNode* node)
+{
+    if (!node)
+        return;
+    free_bst(node->left);
+    free_bst(node->right);
+    free(node);
+}
+
+static void alg_bst_ops(int* data, int n)
+{
+    BSTNode* root = NULL;
+    for (int i = 0; i < n; i++)
+    {
+        root = insert_bst(root, data[i]);
+    }
+    free_bst(root);
+}
+
+static void alg_dp_fibonacci(int* data, int n)
+{
+    (void)data;
+    if (n <= 1)
+        return;
+    long long* dp = (long long*)malloc((size_t)(n + 1) * sizeof(long long));
+    if (!dp)
+        return;
+    dp[0] = 0;
+    dp[1] = 1;
+    for (int i = 2; i <= n; i++)
+    {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    free(dp);
+}
+
 bool profile_bubble_sort_bigo(int base_n, BigOReport* report)
 {
     return run_bigo_profile("Bubble Sort", "O(N^2)", alg_bubble_sort, base_n, 4, report);
@@ -360,4 +451,19 @@ bool profile_linear_search_bigo(int base_n, BigOReport* report)
 bool profile_binary_search_bigo(int base_n, BigOReport* report)
 {
     return run_bigo_profile("Binary Search", "O(log N)", alg_binary_search, base_n, 4, report);
+}
+
+bool profile_bfs_graph_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("BFS Graph Traversal", "O(N)", alg_bfs_graph, base_n, 4, report);
+}
+
+bool profile_bst_operations_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("BST Node Insertion", "O(N log N)", alg_bst_ops, base_n, 4, report);
+}
+
+bool profile_dp_fibonacci_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("DP Fibonacci", "O(N)", alg_dp_fibonacci, base_n, 4, report);
 }
