@@ -176,18 +176,18 @@ static Entry ENTRIES[] = {
     {"Segment Tree", segment_tree_demo, 0, 0, 1},
     {"Red-Black Tree", red_black_tree_demo, 0, 0, 1},
 
-    {"sorting_algorithms_n2", NULL, 1, 1, 0},
-    {"Bubble Sort", bubble_sort_optimized_demo, 0, 0, 1}, /* add fn when known */
-    {"Selection Sort", selection_sort_demo, 0, 0, 1},
-    {"Insertion Sort", insertion_sort_demo, 0, 0, 1},
-    {"Shell Sort", shell_sort_demo, 0, 0, 1},
-
-    {"advanced_sorting", NULL, 1, 1, 0},
-    {"Quick Sort", quicksort_demo, 0, 0, 1},
-    {"Merge Sort", merge_sort_demo, 0, 0, 1},
-    {"Heap Sort", heap_sort_demo, 0, 0, 1},
-    {"Radix Sort", radix_sort_demo, 0, 0, 1},
-    {"Bucket Sort", bucket_sort_demo, 0, 0, 1},
+    {"Sorting Algorithms", NULL, 1, 0, 0},
+    {"O(N^2) Family", NULL, 1, 0, 1},
+    {"Bubble Sort", bubble_sort_optimized_demo, 0, 0, 2}, /* add fn when known */
+    {"Selection Sort", selection_sort_demo, 0, 0, 2},
+    {"Insertion Sort", insertion_sort_demo, 0, 0, 2},
+    {"Shell Sort", shell_sort_demo, 0, 0, 2},
+    {"Advanced Family", NULL, 1, 0, 1},
+    {"Quick Sort", quicksort_demo, 0, 0, 2},
+    {"Merge Sort", merge_sort_demo, 0, 0, 2},
+    {"Heap Sort", heap_sort_demo, 0, 0, 2},
+    {"Radix Sort", radix_sort_demo, 0, 0, 2},
+    {"Bucket Sort", bucket_sort_demo, 0, 0, 2},
 
     {"searching_algorithms", NULL, 1, 1, 0},
     {"Linear Search", linear_search_demo_wrapper, 0, 0, 1},
@@ -196,28 +196,28 @@ static Entry ENTRIES[] = {
     {"Interpolation Search", interpolation_search_demo, 0, 0, 1},
     {"Jump Search", jump_search_demo, 0, 0, 1},
 
-    {"graph_traversals", NULL, 1, 1, 0},
-    {"BFS", bfs_demo, 0, 0, 1},
-    {"DFS", dfs_demo, 0, 0, 1},
-    {"Dijkstra", dijkstra_demo, 0, 0, 1},
-    {"A*", astar_demo, 0, 0, 1},
-    {"Greedy BFS", greedy_best_first_search_demo, 0, 0, 1},
-    {"Bellman-Ford", bellman_ford_demo, 0, 0, 1},
-    {"Topological Sort", topological_sort_demo, 0, 0, 1},
-    {"Visualize Graph", visualize_graph_demo, 0, 0, 1},
-    {"Kruskal MST", kruskal_demo, 0, 0, 1},
-    {"Prim MST", prim_demo, 0, 0, 1},
-    {"Floyd-Warshall", floyd_warshall_demo, 0, 0, 1},
-
-    {"advanced_graph_algorithms", NULL, 1, 1, 0},
-    {"Tarjan's SCC", tarjan_scc_demo, 0, 0, 1},
-    {"Kosaraju's SCC", kosaraju_scc_demo, 0, 0, 1},
-    {"Ford-Fulkerson Max Flow", ford_fulkerson_demo, 0, 0, 1},
-    {"Edmonds-Karp Max Flow", edmonds_karp_demo, 0, 0, 1},
-    {"Dinic's Max Flow", dinic_demo, 0, 0, 1},
-    {"Bipartite Matching (Dinic)", dinic_bipartite_matching_demo, 0, 0, 1},
-    {"Bipartite Matching (Hopcroft-Karp)", hopcroft_karp_demo, 0, 0, 1},
-    {"Eulerian Path", eulerian_path_demo, 0, 0, 1},
+    {"Graph Algorithms", NULL, 1, 0, 0},
+    {"Graph Traversals", NULL, 1, 0, 1},
+    {"BFS", bfs_demo, 0, 0, 2},
+    {"DFS", dfs_demo, 0, 0, 2},
+    {"Dijkstra", dijkstra_demo, 0, 0, 2},
+    {"A*", astar_demo, 0, 0, 2},
+    {"Greedy BFS", greedy_best_first_search_demo, 0, 0, 2},
+    {"Bellman-Ford", bellman_ford_demo, 0, 0, 2},
+    {"Topological Sort", topological_sort_demo, 0, 0, 2},
+    {"Visualize Graph", visualize_graph_demo, 0, 0, 2},
+    {"Kruskal MST", kruskal_demo, 0, 0, 2},
+    {"Prim MST", prim_demo, 0, 0, 2},
+    {"Floyd-Warshall", floyd_warshall_demo, 0, 0, 2},
+    {"Advanced Graph Algorithms", NULL, 1, 0, 1},
+    {"Tarjan's SCC", tarjan_scc_demo, 0, 0, 2},
+    {"Kosaraju's SCC", kosaraju_scc_demo, 0, 0, 2},
+    {"Ford-Fulkerson Max Flow", ford_fulkerson_demo, 0, 0, 2},
+    {"Edmonds-Karp Max Flow", edmonds_karp_demo, 0, 0, 2},
+    {"Dinic's Max Flow", dinic_demo, 0, 0, 2},
+    {"Bipartite Matching (Dinic)", dinic_bipartite_matching_demo, 0, 0, 2},
+    {"Bipartite Matching (Hopcroft-Karp)", hopcroft_karp_demo, 0, 0, 2},
+    {"Eulerian Path", eulerian_path_demo, 0, 0, 2},
 
     {"advanced_heaps", NULL, 1, 1, 0},
     {"Binomial Heap", run_binomial_demo, 0, 0, 1},
@@ -309,39 +309,44 @@ typedef struct
 
 /* ── visible list ───────────────────────────────────────────────────────────── */
 /* builds a flat visible list respecting folder expanded state */
-static int build_visible(int* visible, int max)
-{
-    int count = 0;
-    int folder = -1;
-
-    for (int i = 0; i < ENTRY_COUNT && count < max; i++)
-    {
-        if (ENTRIES[i].is_folder)
-        {
-            folder = i;
-            visible[count++] = i;
-        }
-        else
-        {
-            /* only show if parent folder is expanded */
-            if (folder >= 0 && ENTRIES[folder].expanded)
-            {
-                visible[count++] = i;
-            }
-        }
-    }
-    return count;
-}
-
 /* find parent folder of entry at index */
 static int find_parent(int idx)
 {
+    int current_depth = ENTRIES[idx].depth;
     for (int i = idx - 1; i >= 0; i--)
     {
-        if (ENTRIES[i].is_folder)
+        if (ENTRIES[i].is_folder && ENTRIES[i].depth < current_depth)
             return i;
     }
     return -1;
+}
+
+/* recursively check if parent folders are expanded */
+static int is_visible(int idx)
+{
+    int parent = find_parent(idx);
+    while (parent >= 0)
+    {
+        if (!ENTRIES[parent].expanded)
+            return 0;
+        parent = find_parent(parent);
+    }
+    return 1;
+}
+
+/* ── visible list ───────────────────────────────────────────────────────────── */
+/* builds a flat visible list respecting folder expanded state */
+static int build_visible(int* visible, int max)
+{
+    int count = 0;
+    for (int i = 0; i < ENTRY_COUNT && count < max; i++)
+    {
+        if (is_visible(i))
+        {
+            visible[count++] = i;
+        }
+    }
+    return count;
 }
 
 /* ── colors ─────────────────────────────────────────────────────────────────── */
@@ -415,13 +420,14 @@ static void draw_nav(WINDOW* nav, int* visible, int vis_count, int cursor, int a
         wmove(nav, row, col);
         wclrtoeol(nav);
 
+        int indent = e->depth * 2;
         if (e->is_folder)
         {
-            mvwprintw(nav, row, col, "%s %s", e->expanded ? "v" : ">", e->name);
+            mvwprintw(nav, row, col + indent, "%s %s", e->expanded ? "v" : ">", e->name);
         }
         else
         {
-            mvwprintw(nav, row, col + 2, "  %s", e->name);
+            mvwprintw(nav, row, col + indent, "  %s", e->name);
         }
 
         if (i + scroll == cursor)
