@@ -95,4 +95,9 @@ bool profile_bfs_graph_bigo(int base_n, BigOReport* report);
 bool profile_bst_operations_bigo(int base_n, BigOReport* report);
 bool profile_dp_fibonacci_bigo(int base_n, BigOReport* report);
 
+/**
+ * Interactive Big-O Complexity Verifier CLI/TUI Dashboard demo suite.
+ */
+void bigo_verifier_demo(void);
+
 #endif /* BIGO_VERIFIER_H */

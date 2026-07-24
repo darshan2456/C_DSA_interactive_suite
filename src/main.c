@@ -7,6 +7,7 @@
 #include "array.h"
 #include "backtracking.h"
 #include "benchmark.h"
+#include "bigo_verifier.h"
 #include "cache.h"
 #include "compression.h"
 #include "config.h"
@@ -77,8 +78,9 @@ void run_legacy_menu()
             "click 21 for setting animation speed (by default 2s)\n"
             "click 22 for Stochastic Fuzz Testing Engine demo\n"
             "click 23 for Raw Memory Layout Inspector / Hexdump Visualizer demo\n"
+            "click 24 for Empirical Asymptotic Complexity Verifier (Big-O Engine) demo\n"
             "\nenter choice (\'-1\' to exit, or \'help\') : ",
-            1, 23 // limits
+            1, 24 // limits
         );
 
         if (status == INPUT_EXIT_SIGNAL)
@@ -165,6 +167,10 @@ void run_legacy_menu()
             case 23:
                 display_header("Raw Memory Layout Inspector");
                 memory_inspector_demo();
+                break;
+            case 24:
+                display_header("Empirical Big-O Verifier");
+                bigo_verifier_demo();
                 break;
         }
     }
