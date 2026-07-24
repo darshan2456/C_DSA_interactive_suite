@@ -81,4 +81,13 @@ bool run_bigo_profile(const char* alg_name, const char* theoretical_str, AlgFunc
  */
 void print_bigo_report(const BigOReport* report);
 
+// Sorting & Searching Algorithm Profilers
+bool profile_bubble_sort_bigo(int base_n, BigOReport* report);
+bool profile_insertion_sort_bigo(int base_n, BigOReport* report);
+bool profile_selection_sort_bigo(int base_n, BigOReport* report);
+bool profile_quick_sort_bigo(int base_n, BigOReport* report);
+bool profile_merge_sort_bigo(int base_n, BigOReport* report);
+bool profile_linear_search_bigo(int base_n, BigOReport* report);
+bool profile_binary_search_bigo(int base_n, BigOReport* report);
+
 #endif /* BIGO_VERIFIER_H */

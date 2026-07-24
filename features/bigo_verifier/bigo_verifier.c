@@ -33,14 +33,6 @@ BigOComplexity deduce_bigo_from_ratio(double ratio, int n)
         return BIGO_UNKNOWN;
     }
 
-    // Expected theoretical growth ratios T(2N) / T(N):
-    // O(1)      => ~1.0
-    // O(log N)  => (log(2N) / log(N)) = 1 + (log 2 / log N)  => ~1.1 to 1.3
-    // O(N)      => ~2.0
-    // O(N log N)=> 2 * (1 + log 2 / log N)                   => ~2.2 to 2.5
-    // O(N^2)    => ~4.0
-    // O(N^3)    => ~8.0
-
     double log_factor = (n > 1) ? (1.0 + (log(2.0) / log((double)n))) : 1.2;
     double expected_onlogn_ratio = 2.0 * log_factor;
 
@@ -83,7 +75,6 @@ static double measure_execution_time_ms(AlgFunction func, int n)
         return 0.0;
     }
 
-    // Populate with pseudorandom numbers
     srand(42);
     for (int i = 0; i < n; i++)
     {
@@ -128,7 +119,6 @@ bool run_bigo_profile(const char* alg_name, const char* theoretical_str, AlgFunc
     {
         report->samples[i].n = current_n;
 
-        // Run 3 trials and average to reduce hardware noise
         double t1 = measure_execution_time_ms(func, current_n);
         double t2 = measure_execution_time_ms(func, current_n);
         double t3 = measure_execution_time_ms(func, current_n);
@@ -202,4 +192,172 @@ void print_bigo_report(const BigOReport* report)
     printf("Empirical Bound Deduced: %s\n", report->overall_empirical_str);
     printf("Theoretical Match: %s\n", report->matches_theoretical ? "[MATCHED]" : "[DIVERGED]");
     printf("========================================================================\n\n");
+}
+
+// Implementations for Sorting Algorithms
+static void alg_bubble_sort(int* data, int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (data[j] > data[j + 1])
+            {
+                int tmp = data[j];
+                data[j] = data[j + 1];
+                data[j + 1] = tmp;
+            }
+        }
+    }
+}
+
+static void alg_insertion_sort(int* data, int n)
+{
+    for (int i = 1; i < n; i++)
+    {
+        int key = data[i];
+        int j = i - 1;
+        while (j >= 0 && data[j] > key)
+        {
+            data[j + 1] = data[j];
+            j--;
+        }
+        data[j + 1] = key;
+    }
+}
+
+static void alg_selection_sort(int* data, int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int min_idx = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (data[j] < data[min_idx])
+            {
+                min_idx = j;
+            }
+        }
+        int tmp = data[i];
+        data[i] = data[min_idx];
+        data[min_idx] = tmp;
+    }
+}
+
+static int qsort_cmp(const void* a, const void* b)
+{
+    return (*(const int*)a - *(const int*)b);
+}
+
+static void alg_quick_sort(int* data, int n)
+{
+    qsort(data, (size_t)n, sizeof(int), qsort_cmp);
+}
+
+static void merge_sort_helper(int* data, int l, int r)
+{
+    if (l >= r)
+        return;
+    int m = l + (r - l) / 2;
+    merge_sort_helper(data, l, m);
+    merge_sort_helper(data, m + 1, r);
+
+    int n1 = m - l + 1;
+    int n2 = r - m;
+    int* L = (int*)malloc((size_t)n1 * sizeof(int));
+    int* R = (int*)malloc((size_t)n2 * sizeof(int));
+    if (!L || !R)
+    {
+        free(L);
+        free(R);
+        return;
+    }
+    for (int i = 0; i < n1; i++)
+        L[i] = data[l + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = data[m + 1 + j];
+
+    int i = 0, j = 0, k = l;
+    while (i < n1 && j < n2)
+    {
+        if (L[i] <= R[j])
+            data[k++] = L[i++];
+        else
+            data[k++] = R[j++];
+    }
+    while (i < n1)
+        data[k++] = L[i++];
+    while (j < n2)
+        data[k++] = R[j++];
+
+    free(L);
+    free(R);
+}
+
+static void alg_merge_sort(int* data, int n)
+{
+    merge_sort_helper(data, 0, n - 1);
+}
+
+static void alg_linear_search(int* data, int n)
+{
+    int target = -9999;
+    for (int i = 0; i < n; i++)
+    {
+        if (data[i] == target)
+        {
+            break;
+        }
+    }
+}
+
+static void alg_binary_search(int* data, int n)
+{
+    int target = data[n / 2];
+    int low = 0, high = n - 1;
+    while (low <= high)
+    {
+        int mid = low + (high - low) / 2;
+        if (data[mid] == target)
+            break;
+        if (data[mid] < target)
+            low = mid + 1;
+        else
+            high = mid - 1;
+    }
+}
+
+bool profile_bubble_sort_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("Bubble Sort", "O(N^2)", alg_bubble_sort, base_n, 4, report);
+}
+
+bool profile_insertion_sort_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("Insertion Sort", "O(N^2)", alg_insertion_sort, base_n, 4, report);
+}
+
+bool profile_selection_sort_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("Selection Sort", "O(N^2)", alg_selection_sort, base_n, 4, report);
+}
+
+bool profile_quick_sort_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("Quick Sort", "O(N log N)", alg_quick_sort, base_n, 4, report);
+}
+
+bool profile_merge_sort_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("Merge Sort", "O(N log N)", alg_merge_sort, base_n, 4, report);
+}
+
+bool profile_linear_search_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("Linear Search", "O(N)", alg_linear_search, base_n, 4, report);
+}
+
+bool profile_binary_search_bigo(int base_n, BigOReport* report)
+{
+    return run_bigo_profile("Binary Search", "O(log N)", alg_binary_search, base_n, 4, report);
 }

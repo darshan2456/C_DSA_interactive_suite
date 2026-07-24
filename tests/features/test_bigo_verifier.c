@@ -3,34 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-// Sample O(N^2) dummy algorithm (Bubble Sort variant)
-static void dummy_on2_alg(int* data, int n)
-{
-    for (int i = 0; i < n; i++)
-    {
-        for (int j = 0; j < n - 1; j++)
-        {
-            if (data[j] > data[j + 1])
-            {
-                int temp = data[j];
-                data[j] = data[j + 1];
-                data[j + 1] = temp;
-            }
-        }
-    }
-}
-
-// Sample O(N) dummy algorithm (Linear Scan)
-static void dummy_on_alg(int* data, int n)
-{
-    long long sum = 0;
-    for (int i = 0; i < n; i++)
-    {
-        sum += data[i];
-    }
-    (void)sum;
-}
-
 void test_ratio_deduction(void)
 {
     assert(deduce_bigo_from_ratio(1.0, 1000) == BIGO_O1);
@@ -41,28 +13,29 @@ void test_ratio_deduction(void)
     printf("test_ratio_deduction passed!\n");
 }
 
-void test_bigo_profiler_execution(void)
+void test_sorting_searching_profilers(void)
 {
     BigOReport report;
-    bool success = run_bigo_profile("Dummy O(N^2) Alg", "O(N^2)", dummy_on2_alg, 200, 3, &report);
-    assert(success == true);
-    assert(report.sample_count == 3);
-    assert(report.ratio_count == 2);
-    assert(strcmp(report.algorithm_name, "Dummy O(N^2) Alg") == 0);
 
+    assert(profile_bubble_sort_bigo(100, &report) == true);
+    assert(report.sample_count == 4);
+    assert(strcmp(report.algorithm_name, "Bubble Sort") == 0);
     print_bigo_report(&report);
 
-    BigOReport report_on;
-    success = run_bigo_profile("Dummy O(N) Alg", "O(N)", dummy_on_alg, 1000, 3, &report_on);
-    assert(success == true);
-    print_bigo_report(&report_on);
+    assert(profile_quick_sort_bigo(1000, &report) == true);
+    assert(strcmp(report.algorithm_name, "Quick Sort") == 0);
+    print_bigo_report(&report);
 
-    printf("test_bigo_profiler_execution passed!\n");
+    assert(profile_linear_search_bigo(10000, &report) == true);
+    assert(strcmp(report.algorithm_name, "Linear Search") == 0);
+    print_bigo_report(&report);
+
+    printf("test_sorting_searching_profilers passed!\n");
 }
 
 int main(void)
 {
     test_ratio_deduction();
-    test_bigo_profiler_execution();
+    test_sorting_searching_profilers();
     return 0;
 }
