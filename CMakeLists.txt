@@ -52,6 +52,7 @@ set(SRC_DIRS
     features/serialization
     features/dp_visualizer
     features/memory_inspector
+    features/bigo_verifier
 )
 
 # Header search paths
