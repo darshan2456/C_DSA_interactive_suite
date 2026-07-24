@@ -82,6 +82,8 @@ if(NOT WIN32)
     find_package(Curses REQUIRED)
     include_directories(${CURSES_INCLUDE_DIR})
     set(EXTRA_LIBS ${CURSES_LIBRARIES})
+    # Link math library for log(), pow(), etc. on POSIX systems
+    list(APPEND EXTRA_LIBS m)
 else()
     set(EXTRA_LIBS "")
 endif()
