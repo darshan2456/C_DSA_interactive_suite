@@ -46,7 +46,7 @@ The codebase is structured as a reusable **DSA library**, with an interactive, c
 This project includes a **Makefile** and **CMakeLists.txt** to simplify building across multiple directories.
 
 ### Requirements
-- GNU Make ≥ 4.4.1
+- CMake ≥ 3.31.6
 - GCC (or a compatible C compiler)
 
 ## TUI Requirements
@@ -67,16 +67,10 @@ sudo pacman -S ncurses
 ```
 > **Note:** The TUI is supported on Unix/Linux systems. On Windows, the project automatically falls back to the legacy CLI interface.
 
-### Build (Makefile)
-```bash
-make
-```
-This generates a single executable:
-* `dsa` (Linux / macOS)
-* `dsa.exe` (Windows)
-
 ### Build (CMake)
-Alternatively, you can compile the application and tests using CMake:
+
+The project uses CMake as its build system
+
 ```bash
 mkdir build && cd build
 cmake ..

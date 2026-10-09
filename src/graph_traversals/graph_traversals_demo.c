@@ -1,6 +1,7 @@
 #include "advanced_graph_algorithms.h"
 #include "display_header.h"
 #include "graph_traversals.h"
+#include "io_utility.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -89,5 +90,8 @@ void graph_traversals_demo(void)
                 floyd_warshall_demo();
                 break;
         }
+
+        printf("Press 'Enter' to continue....");
+        press_enter_to_continue();
     }
 }
