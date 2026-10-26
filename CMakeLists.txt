@@ -94,25 +94,16 @@ endforeach()
 list(REMOVE_ITEM SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/src/main.c")
 
 # Platform specific configurations
-if(NOT WIN32)
-    # Include TUI
-    include_directories(tui)
-    file(GLOB TUI_SRCS "tui/*.c")
-    list(APPEND SOURCES ${TUI_SRCS})
-    
-    # Find and link ncurses
-    find_package(Curses REQUIRED)
-    include_directories(${CURSES_INCLUDE_DIR})
-    set(EXTRA_LIBS ${CURSES_LIBRARIES})
-    # Link math library for log(), pow(), etc. on POSIX systems
-    list(APPEND EXTRA_LIBS m)
-else()
-    set(EXTRA_LIBS "")
-endif()
-
-if(WIN32)
-    list(APPEND EXTRA_LIBS "psapi")
-endif()
+# Include TUI
+include_directories(tui)
+file(GLOB TUI_SRCS "tui/*.c")
+list(APPEND SOURCES ${TUI_SRCS})
+# Find and link ncurses
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
+set(EXTRA_LIBS ${CURSES_LIBRARIES})
+# Link math library for log(), pow(), etc. on POSIX systems
+list(APPEND EXTRA_LIBS m)
 
 # Build library containing all common object files
 add_library(dsa_lib STATIC ${SOURCES})
