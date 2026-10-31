@@ -57,7 +57,7 @@ void linear_probing_demo(void)
                 printf("\nHash table full\n");
                 break;
             }
-            print_array(arr, length_of_array);
+	    print_array(arr, length_of_array);
         }
 
         while (1)

@@ -35,18 +35,15 @@ The codebase is structured as a reusable **DSA library**, with an interactive, c
 
 
 
-## String algos (Robin Karp)
-
-[![asciinema demo](https://asciinema.org/a/d2BU9AVDS94GVovS.svg)](https://asciinema.org/a/d2BU9AVDS94GVovS)
-
-
-
 ## Build Instructions
 
-This project includes a **Makefile** and **CMakeLists.txt** to simplify building across multiple directories.
+The project uses **CMake** as its build system
 
 ### Requirements
-- CMake ≥ 3.31.6
+
+(For debian users, you can run the shell script named `install.sh` from the project root and it will install all dependencies automatically, for other distro users, check the corresponding package name on your distro and install accordingly
+
+- CMake 
 - GCC (or a compatible C compiler)
 
 ## TUI Requirements
@@ -65,17 +62,11 @@ sudo dnf install ncurses-devel
 ```bash
 sudo pacman -S ncurses
 ```
-> **Note:** The TUI is supported on Unix/Linux systems. On Windows, the project automatically falls back to the legacy CLI interface.
 
 ### Build (CMake)
 
-The project uses CMake as its build system
+To build the project with latest changes and run in one go, run the bash script named `run.sh` from the project root
 
-```bash
-mkdir build && cd build
-cmake ..
-make
-```
 
 To execute all unit tests using CTest:
 ```bash
