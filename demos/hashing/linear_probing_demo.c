@@ -30,7 +30,7 @@ void linear_probing_demo(void)
 
         for (int i = 0; i < length_of_array; i++)
         {
-            arr[i] = INT_MIN; // empty slot is represented by INT_MIN
+            arr[i] = 0; // empty slot is represented by INT_MIN
         }
 
         while (1)
@@ -57,7 +57,6 @@ void linear_probing_demo(void)
                 printf("\nHash table full\n");
                 break;
             }
-            print_array(arr, length_of_array);
         }
 
         while (1)
