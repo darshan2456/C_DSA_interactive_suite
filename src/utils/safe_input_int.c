@@ -57,7 +57,7 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
 
         // 2. Parse the integer from our string buffer
         // Checks if it's a number, and ensures no trailing junk characters exist
-        if (sscanf(buffer, "%d%c", &value, &extra_char) == 1)
+        if (sscanf(buffer, "%d %c", &value, &extra_char) == 1)
         {
             // Successfully read an integer and nothing else (except maybe exit check)
         }
