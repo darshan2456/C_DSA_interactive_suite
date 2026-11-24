@@ -112,12 +112,7 @@ static void run_open_addressing_fuzz(FuzzerState* fuzzer, int ops, int type)
 
         int* table = (int*)malloc(capacity * sizeof(int));
         for (int k = 0; k < capacity; k++)
-            table[k] = INT_MIN;
-        // Wait, typical open addressing uses some struct or specific initialization.
-        // Let's assume -1 means empty based on standard DSA implementations?
-        // We need to check how linear_probing.c initializes!
-        // Actually, let's just test with a clean table. The user code in tests/hashing/ did not
-        // test linear probing. We will see how to initialize.
+            table[k] = HASH_EMPTY_SLOT;
 
         int truth_set[MAX_VALS];
         int truth_count = 0;

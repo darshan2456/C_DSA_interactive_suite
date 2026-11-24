@@ -66,7 +66,7 @@ bool double_hashing_insert(int arr[], int length_of_array, int value)
             probe_location += length_of_array;
         }
 
-        if (arr[probe_location] == INT_MIN)
+        if (arr[probe_location] == HASH_EMPTY_SLOT)
         {
             arr[probe_location] = value;
             return true;
@@ -104,7 +104,7 @@ int double_hashing_search(int arr[], int length_of_array, int search_val)
             return probe_location;
         }
 
-        if (arr[probe_location] == INT_MIN)
+        if (arr[probe_location] == HASH_EMPTY_SLOT)
         {
             break;
         }
