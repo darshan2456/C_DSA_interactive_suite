@@ -7,7 +7,7 @@
 
 #define MIN_HASH_LIMIT 1
 #define MAX_HASH_LIMIT 1000
-#define HASH_EMPTY_SLOT INT_MIN
+#define HASH_EMPTY_SLOT 0
 
 void linear_probing_demo(void);
 bool linear_probing_insert(int arr[], int length_of_array, int value);

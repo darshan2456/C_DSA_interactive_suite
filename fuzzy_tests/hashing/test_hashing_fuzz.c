@@ -123,8 +123,8 @@ static void run_open_addressing_fuzz(FuzzerState* fuzzer, int ops, int type)
 
         for (int j = 0; j < inserts; j++)
         {
-            int val =
-                fuzzer_rand_int(fuzzer, 0, 10000); // Using positive values to avoid -1 collision
+            int val = fuzzer_rand_int(
+                fuzzer, 1, 10000); // Positive values > 0 to avoid HASH_EMPTY_SLOT (0) collision
             if (!contains(truth_set, truth_count, val))
             {
                 bool success = false;
@@ -155,7 +155,7 @@ static void run_open_addressing_fuzz(FuzzerState* fuzzer, int ops, int type)
 
         for (int j = 0; j < 20; j++)
         {
-            int r = fuzzer_rand_int(fuzzer, 0, 10000);
+            int r = fuzzer_rand_int(fuzzer, 1, 10000);
             if (!contains(truth_set, truth_count, r))
             {
                 int search_res = -1;
