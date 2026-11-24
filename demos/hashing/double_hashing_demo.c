@@ -30,7 +30,7 @@ void double_hashing_demo(void)
 
         for (int i = 0; i < length_of_array; i++)
         {
-            arr[i] = INT_MIN; // empty slot is represented by INT_MIN
+            arr[i] = HASH_EMPTY_SLOT; // empty slot is represented by HASH_EMPTY_SLOT
         }
 
         // ---------- insertion phase ----------

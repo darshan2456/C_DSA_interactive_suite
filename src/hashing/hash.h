@@ -2,10 +2,12 @@
 #define HASH_H
 
 #include "sll.h"
+#include <limits.h>
 #include <stdbool.h>
 
 #define MIN_HASH_LIMIT 1
 #define MAX_HASH_LIMIT 1000
+#define HASH_EMPTY_SLOT 0
 
 void linear_probing_demo(void);
 bool linear_probing_insert(int arr[], int length_of_array, int value);
